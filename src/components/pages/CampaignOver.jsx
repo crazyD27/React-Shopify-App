@@ -83,7 +83,7 @@ const CampaignNew = () => {
                         <h2>UpPromote topic webinar</h2>
                         <p>Affiliate empowerment & motivation</p>
                         <div className="buttons">
-                            <a href="" className="button button-blue">Join the webinar</a>
+                            <Link to="/" className="button button-blue">Join the webinar</Link>
                         </div>
                     </div>
                 </div>

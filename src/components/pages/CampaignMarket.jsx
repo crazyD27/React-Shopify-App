@@ -20,6 +20,7 @@ const CampaignMarket = () => {
                     <div className='content'>
                         <img src={Luxe} alt="campaign-img" />
                         <p>Luxe & Lace</p>
+                        <span>3</span>
                     </div>
                     <Link to='/' className='button button-blue'>View Request</Link>
                 </div>
@@ -27,6 +28,7 @@ const CampaignMarket = () => {
                     <div className='content'>
                         <img src={Intrigue} alt="campaign-img" />
                         <p>Intrigue</p>
+                        <span>5</span>
                     </div>
                     <Link to='/' className='button button-blue'>View Request</Link>
                 </div>
@@ -34,6 +36,7 @@ const CampaignMarket = () => {
                     <div className='content'>
                         <img src={AT} alt="campaign-img" />
                         <p>at-ele</p>
+                        <span>3</span>
                     </div>
                     <Link to='/' className='button button-blue'>View Request</Link>
                 </div>
@@ -41,6 +44,7 @@ const CampaignMarket = () => {
                     <div className='content'>
                         <img src={Tetraleaf} alt="campaign-img" />
                         <p>Tetraleaf</p>
+                        <span>5</span>
                     </div>
                     <Link to='/' className='button button-blue'>View Request</Link>
                 </div>

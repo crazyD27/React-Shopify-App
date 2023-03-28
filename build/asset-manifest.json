@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4fa92533.css",
+    "main.js": "/static/js/main.80c1d295.js",
+    "static/js/787.8cd5769d.chunk.js": "/static/js/787.8cd5769d.chunk.js",
+    "static/media/events-1.png": "/static/media/events-1.8232684c17a2bfc9c356.png",
+    "static/media/events-2.png": "/static/media/events-2.a472095179d4a869a1dc.png",
+    "static/media/suggestion.png": "/static/media/suggestion.33a8845ccf619fe358da.png",
+    "static/media/webinar.png": "/static/media/webinar.618584dc10e7065532aa.png",
+    "index.html": "/index.html",
+    "main.4fa92533.css.map": "/static/css/main.4fa92533.css.map",
+    "main.80c1d295.js.map": "/static/js/main.80c1d295.js.map",
+    "787.8cd5769d.chunk.js.map": "/static/js/787.8cd5769d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4fa92533.css",
+    "static/js/main.80c1d295.js"
+  ]
+}
