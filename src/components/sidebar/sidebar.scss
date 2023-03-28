@@ -1,0 +1,46 @@
+.sidebar {
+    .sidebar-container {
+        .side-tab {
+            background: #1032BB;
+            width: 20%;
+            max-width: 20%;
+            .account-details {
+                span.user {
+                    background: #FF4E41;
+                    padding: 30px;
+                    border-radius: 5px;
+                    width: 20px;
+                    height: 20px;
+                }
+                h5.user-info {
+                    position: relative;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        bottom: -13px;
+                        left: 0;
+                        width: 165px;
+                        height: 25px;
+                        background: #fff;
+                        border-radius: 5px;
+                    }
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        height: 25px;
+                        width: 25px;
+                        transform: rotate(45deg);
+                        background: #1032BB;
+                        right: 58px;
+                        bottom: -12px;
+                    }
+                }
+            }
+            .nav-item {
+                a {
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+p,h2,h3,span {
+  text-align: left;
+}
+
+input {
+  outline: none;
+  border: 1px solid #ccc;
+  min-height: 52px;
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 18px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: #000;
+  background: none;
+  text-decoration: none;
+}
+.button-blue {
+  background: #1032BB;
+  color: #fff;
+}
