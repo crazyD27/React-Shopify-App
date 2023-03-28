@@ -1,11 +1,51 @@
-
-
+import React, {useState, useEffect} from 'react';
 import MenuBar from '../navbar/Navbar';
 import './pages.scss';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // Images
 
 const CampaignOver = () => {
+    const [productName, setProductName] = useState('');
+    const [influencerName, setInfluencerName] = useState('');
+    const [campaignName, setCampaignName] = useState('');
+    const [selectedDate, setSelectedDate] = useState("");
+
+    const handleProductChange = (event) => {
+        setProductName(event.target.value);
+    }
+
+    const handleCampaignNameChange = (event) => {
+        setCampaignName(event.target.value);
+    }
+
+    const handleInfluencerNameChange = (event) => {
+        setInfluencerName(event.target.value);
+    }
+
+    const handleDateChange = (event) => {
+        setSelectedDate(event.target.value);
+    }
+
+    console.log("selected-date", selectedDate)
+
+    const createNewCampaign = (e) => {
+        e.preventDefault();
+        axios.post('https://api.myrefera.com/campaign/campaign/create/', {
+            product_name: productName,
+            influencer_name: influencerName,
+            campaign_name: campaignName,
+            date: selectedDate
+        },)
+          .then(function (response) {
+            console.log("Created New Campaign", response);
+            toast.success("New Campaign Created!")
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+      }
   return (
     <div className="campaign-new p-4">
         <MenuBar />
@@ -15,7 +55,7 @@ const CampaignOver = () => {
             <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Campaign name</label>
-                    <input type="text" />
+                    <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Influencer need to visit you</label>
@@ -23,7 +63,7 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Campaign date or range</label>
-                    <input type="text" />
+                    <input type="date" onChange={handleDateChange} value={selectedDate} />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Offer to influencers</label>
@@ -31,7 +71,12 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product</label>
-                    <input type="text" />
+                    <select onChange={handleProductChange} value={productName}>
+                        <option value="">--Select an option--</option>
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </select>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product discount</label>
@@ -43,7 +88,12 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Influencer from the list.</label>
-                    <input type="text" />
+                    <select onChange={handleInfluencerNameChange} value={influencerName}>
+                        <option value="">--Select an option--</option>
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </select>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Gift coupon to influencers</label>
@@ -58,7 +108,7 @@ const CampaignOver = () => {
                     <input type="text" />
                 </div>
                 <div className="buttons d-flex justify-content-between">
-                    <button className='button button-blue'>Send request button</button>
+                    <button className='button button-blue' onClick={createNewCampaign}>Send request button</button>
                     <button className='button'>Save in draft</button>
                     <button className='button'>Request sent</button>
                 </div>

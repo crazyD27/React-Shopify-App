@@ -7,12 +7,13 @@ p,h2,h3,span {
   text-align: left;
 }
 
-input {
+input, select {
   outline: none;
   border: 1px solid #ccc;
   min-height: 52px;
   border-radius: 5px;
   box-shadow: none;
+  padding: 6px 20px;
 }
 
 .button {
