@@ -47,7 +47,7 @@ const CampaignNew = () => {
                     </div>
                     <div className="overview-box p-3 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
-                            <h5>Completed Campaigns</h5>
+                            <h5>Total Campaigns</h5>
                             <h3>10</h3>
                             <button>View</button>
                         </div>
@@ -57,7 +57,7 @@ const CampaignNew = () => {
                     </div>
                     <div className="overview-box p-3 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
-                            <h5>Cancelled Campaigns</h5>
+                            <h5>Sales Campaigns</h5>
                             <h3>10</h3>
                             <button>View</button>
                         </div>
@@ -88,7 +88,7 @@ const CampaignNew = () => {
                     </div>
                 </div>
             </div>
-            <div className="feature-container mt-4 bg-light w-100">
+            {/* <div className="feature-container mt-4 bg-light w-100">
                 <h3 className='p-3'>Feature Details</h3>
                 <div className="feature-list d-flex justify-content-between flex-wrap mt-4 p-3">
                     <div className="feature-box px-3 py-4">
@@ -181,7 +181,7 @@ const CampaignNew = () => {
                         <h5>View frequently asked questions</h5>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     </div>
   );

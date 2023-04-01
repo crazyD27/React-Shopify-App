@@ -14,7 +14,7 @@ const CampaignMarket = () => {
         <MenuBar />
         <div className="campaign-market-container d-flex flex-column mt-5 w-100">
             <h4>Active Marketplace</h4>
-            <h5 className='my-4'>Campaign Request</h5>
+            <h5 className='my-4'>Campaign Marketplace</h5>
             <div className='campaign-market-list d-flex flex-wrap justify-content-between'>
                 <div className='campaign-market-box d-flex flex-column align-items-center justify-content-center'>
                     <div className='content'>

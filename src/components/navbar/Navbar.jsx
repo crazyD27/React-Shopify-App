@@ -25,7 +25,7 @@ const MenuBar = () => {
             <Nav.Link href="#action1" className='px-2'><img src={Notification} alt='notification-icon' /></Nav.Link>
         </Nav>
         
-        <Navbar.Collapse id="navbarScroll">
+        {/* <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
@@ -56,7 +56,7 @@ const MenuBar = () => {
             />
             <Button variant="outline-success">Search</Button>
           </Form>
-        </Navbar.Collapse>
+        </Navbar.Collapse> */}
       </Container>
     </Navbar>
   );

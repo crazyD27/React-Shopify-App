@@ -38,49 +38,49 @@ const SideBar = () => {
                     <Nav variant="pills" className="flex-column side-main bg-none ps-2 pt-2">
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="first">
-                                <img src={CampaignOverview} className="me-3" alt='menu-img' />
+                                <img src={CampaignOverview} className="me-2" alt='menu-img' />
                                 Campaign Overview
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="second">
-                                <img src={Manage} className="me-3" alt='menu-img' />
+                                <img src={Manage} className="me-2" alt='menu-img' />
                                 Manage Campaign
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="third">
-                                <img src={CampNew} className="me-3" alt='menu-img' />
+                                <img src={CampNew} className="me-2" alt='menu-img' />
                                 Create new Campaign
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="fourth">
-                                <img src={MarketPlace} className="me-3" alt='menu-img' />
+                                <img src={MarketPlace} className="me-2" alt='menu-img' />
                                 Campaign Marketplace
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="fifth">
-                                <img src={Coupon} className="me-3" alt='menu-img' />
+                                <img src={Coupon} className="me-2" alt='menu-img' />
                                 Coupon
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="sixth">
-                                <img src={Analytics} className="me-3" alt='menu-img' />
+                                <img src={Analytics} className="me-2" alt='menu-img' />
                                 Analytics
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="seventh">
-                                <img src={Sales} className="me-3" alt='menu-img' />
+                                <img src={Sales} className="me-2" alt='menu-img' />
                                 Sales
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-3" eventKey="eighth">
-                                <img src={Profile} className="me-3" alt='menu-img' />
+                                <img src={Profile} className="me-2" alt='menu-img' />
                                 Profile
                             </Nav.Link>
                         </Nav.Item>
