@@ -25,12 +25,6 @@ import SalesImg from '../../assests/img/sales.png';
 import Profile from '../../assests/img/profile.png';
 
 const SideBar = () => {
-    const currentUrl = new URL(window.location.href);
-    const baseUrl = currentUrl.origin
-    console.log(currentUrl)
-    console.log(baseUrl);
-
-    
 
   useEffect(() => {
     axios.post('https://api.myrefera.com/campaign/get/token/', {

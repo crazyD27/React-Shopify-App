@@ -21,6 +21,7 @@ const CampaignNew = () => {
 
     console.log('///////////////////////////////')
     const url = window.location.href
+    console.log("URL", url)
     const queryString = url.split('?')[1];
     const urlParams = new URLSearchParams(queryString);
     const token = urlParams.get('token');
