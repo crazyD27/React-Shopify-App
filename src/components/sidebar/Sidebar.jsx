@@ -12,6 +12,7 @@ import Analytics from '../pages/Analytics';
 import Sales from '../pages/Sales';
 import './sidebar.scss';
 import axios from 'axios';
+import {useAppBridge} from "@shopify/app-bridge-react";
 
 // Images
 import CampaignOverview from '../../assests/img/campaign-over.png';
@@ -24,10 +25,10 @@ import SalesImg from '../../assests/img/sales.png';
 import Profile from '../../assests/img/profile.png';
 
 const SideBar = () => {
-    const currentUrl = new URL(window.location.href);
-    const baseUrl = currentUrl.origin
-    console.log(currentUrl)
-    console.log(baseUrl);
+
+    const bridge = useAppBridge();
+    const shopUrl = bridge.hostOrigin.replace('https://', '').replace('www.', '');
+    console.log("shopUrl" ,shopUrl);
 
   useEffect(() => {
     axios.post('https://api.myrefera.com/campaign/get/token/', {

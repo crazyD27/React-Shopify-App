@@ -1,20 +1,21 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.4908f23f.css",
-    "main.js": "/frontend/static/js/main.4b0480cd.js",
+    "main.css": "/frontend/static/css/main.6373203b.css",
+    "main.js": "/frontend/static/js/main.c6a005a5.js",
     "static/js/787.8cd5769d.chunk.js": "/frontend/static/js/787.8cd5769d.chunk.js",
     "static/media/events-1.png": "/frontend/static/media/events-1.8232684c17a2bfc9c356.png",
     "static/media/events-2.png": "/frontend/static/media/events-2.a472095179d4a869a1dc.png",
     "static/media/suggestion.png": "/frontend/static/media/suggestion.33a8845ccf619fe358da.png",
     "static/media/webinar.png": "/frontend/static/media/webinar.618584dc10e7065532aa.png",
+    "static/media/web-vitals.umd.cjs": "/frontend/static/media/web-vitals.umd.2bd3a2986f3ec4644d0a.cjs",
     "static/media/delete.svg": "/frontend/static/media/delete.fd6c6eae8a0b61502b4aad3760c551e8.svg",
     "index.html": "/frontend/index.html",
-    "main.4908f23f.css.map": "/frontend/static/css/main.4908f23f.css.map",
-    "main.4b0480cd.js.map": "/frontend/static/js/main.4b0480cd.js.map",
+    "main.6373203b.css.map": "/frontend/static/css/main.6373203b.css.map",
+    "main.c6a005a5.js.map": "/frontend/static/js/main.c6a005a5.js.map",
     "787.8cd5769d.chunk.js.map": "/frontend/static/js/787.8cd5769d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4908f23f.css",
-    "static/js/main.4b0480cd.js"
+    "static/css/main.6373203b.css",
+    "static/js/main.c6a005a5.js"
   ]
 }
