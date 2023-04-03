@@ -19,14 +19,21 @@ import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
 
-    console.log('///////////////////////////////')
-    const url = window.location.href
-    console.log("URL", url)
-    const queryString = url.split('?')[1];
-    const urlParams = new URLSearchParams(queryString);
-    const token = urlParams.get('token');
-    console.log(token);
-    console.log('///////////////////////////////')
+    
+    setTimeout(() => {
+        console.log('///////////////////////////////')
+        const url = window.location.href;
+        console.log(url);
+        const queryString = url.split('?')[1];
+        const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('token');
+        console.log(token);
+        console.log('///////////////////////////////')
+      }, 7000)
+      
+    
+    
+    
   return (
     <div className="campaign-over p-3">
         <MenuBar />
