@@ -3,8 +3,8 @@
         min-height: 100vh;
         .side-tab {
             background: #5172FC;
-            width: 20%;
-            max-width: 20%;
+            width: 19%;
+            max-width: 19%;
             padding-left: 0;
             padding-right: 0;
             .nav-item {
@@ -20,6 +20,9 @@
                     background-color: #4563DF;
                 }
             }
+        }
+        .tab-main {
+            width: 81%;
         }
     }
 }
