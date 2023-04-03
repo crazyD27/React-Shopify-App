@@ -19,11 +19,13 @@ import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
 
+    console.log('///////////////////////////////')
     const url = window.location.href
     const queryString = url.split('?')[1];
     const urlParams = new URLSearchParams(queryString);
     const token = urlParams.get('token');
     console.log(token);
+    console.log('///////////////////////////////')
   return (
     <div className="campaign-over p-3">
         <MenuBar />
