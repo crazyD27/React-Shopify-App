@@ -18,6 +18,12 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
+
+    const url = window.location.href
+    const queryString = url.split('?')[1];
+    const urlParams = new URLSearchParams(queryString);
+    const token = urlParams.get('token');
+    console.log(token);
   return (
     <div className="campaign-over p-3">
         <MenuBar />
