@@ -1,5 +1,9 @@
 import React from 'react';
 import MenuBar from '../navbar/Navbar';
+import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
+import Row from 'react-bootstrap/Row';
+import Tab from 'react-bootstrap/Tab';
 
 import Edit from '../../assests/img/edit.png';
 import Delete from '../../assests/img/delete.svg'
@@ -11,230 +15,226 @@ const CampaignManage = () => {
     <div className="campaign-manage-container p-3">
         <MenuBar />
         <h2 className='text-center my-5'>Manage Campaign</h2>
-        <div className="buttons mb-5 d-flex align-items-center">
-            <button>Active Campaigns</button>
-            <button>Pending Campaigns</button>
-        </div>
-        {/* <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>
-                    <div className="content-headings d-flex justify-content-between p-2 w-100">
-                        <h4>Active Campaign</h4>
-                        <h4>Pending Campaign</h4>
-                    </div>
-                </Accordion.Header>
-                <Accordion.Body>
-                <div className="manage-table">
-                    
-                    <Row>
-                        <Col md={4}>     
-                            <div className="details">
-                                <h5>Camping Details</h5>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>At-Ele</p>
-                                    <div className="buttons d-flex flex-column">
-                                        <Link to='/' className="button button-blue">Edit</Link>
-                                        <Link to='/' className="button">Delete</Link>
-                                    </div>
-                                </div>
-
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>Queenou Jewelry</p>
-                                    <div className="buttons d-flex flex-column">
-                                        <Link to='/' className="button button-blue">Edit</Link>
-                                        <Link to='/' className="button">Delete</Link>
-                                    </div>
-                                </div>
-
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>SofG Fragrances</p>
-                                    <div className="buttons d-flex flex-column">
-                                        <Link to='/' className="button button-blue">Edit</Link>
-                                        <Link to='/' className="button">Delete</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col md={4}>
-                            <div className="details">
-                                <h5></h5>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3"></div>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3"></div>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3"></div>
-                            </div>
-                        </Col>
-                        <Col md={4}>
-                            <div className="details">
-                                <h5></h5>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>At-Ele</p>
-                                    <div className="buttons d-flex flex-column">
-                                        <Link to='/' className="button button-blue">Edit</Link>
-                                        <Link to='/' className="button">Publish</Link>
-                                        <Link to='/' className="button">Delete</Link>
-                                    </div>
-                                </div>
-
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>Queenou Jewelry</p>
-                                    <div className="buttons d-flex flex-column">
-                                        <Link to='/' className="button button-blue">Edit</Link>
-                                        <Link to='/' className="button">Publish</Link>
-                                        <Link to='/' className="button">Delete</Link>
-                                    </div>
-                                </div>
-
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>SofG Fragrances</p>
-                                    <div className="buttons d-flex flex-column">
-                                        <Link to='/' className="button button-blue">Edit</Link>
-                                        <Link to='/' className="button">Publish</Link>
-                                        <Link to='/' className="button">Delete</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-                <Accordion.Header>
-                    <div className="content-headings d-flex justify-content-between w-100 p-2">
-                        <h4>Content Request</h4>
-                    </div>
-                </Accordion.Header>
-                <Accordion.Body>
-                <div className="manage-table">
-                    <Row>
-                        <Col md={4}>     
-                            <div className="details">
-                                <h5>Camping Details</h5>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>SofG Fragrances</p>
-                                    <div className="buttons d-flex flex-column">
-                                        <Link to='/' className="button button-blue">View Content</Link>
-                                        <Link to='/' className="button">Approve</Link>
-                                        <Link to='/' className="button">Disapprove</Link>
-                                    </div>
-                                </div>
-
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3">
-                                    <p>Queenou Jewelry</p>
-                                    <div className="buttons d-flex flex-column">
-                                    <Link to='/' className="button button-blue">View Content</Link>
-                                        <Link to='/' className="button">Approve</Link>
-                                        <Link to='/' className="button">Disapprove</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col md={4}>
-                            <div className="details">
-                                <h5></h5>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3"></div>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3"></div>
-                            </div>
-                        </Col>
-                        <Col md={4}>
-                            <div className="details">
-                                <h5></h5>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3"></div>
-                                <div className="detail-box d-flex align-items-start justify-content-between p-3"></div>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion> */}
-
-        <table className='w-100'>
-            <tbody className='w-100'>
-            <tr>
-                <td>1</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Nesta Technologies</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>FME Organizations Ltd</td>
-                <td>
-                    <button><img src={Edit} alt='edit' />Edit</button>
-                    <button><img src={Delete} alt='delete' />Delete</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-       
-        
+        <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Col sm={12}>
+            <Nav variant="pills" className="flex-row mb-4 tab-header">
+                <Nav.Item>
+                <Nav.Link eventKey="first">Active Campaigns</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                <Nav.Link eventKey="second">Pending Campaigns</Nav.Link>
+                </Nav.Item>
+            </Nav>
+            </Col>
+            <Col sm={12}>
+            <Tab.Content>
+                <Tab.Pane eventKey="first">
+                    <table className='w-100 campaign'>
+                        <tbody className='w-100'>
+                            <tr className='headings'>
+                                <th>Product Name</th>
+                                <th>Offer</th>
+                                <th>Categories</th>
+                                <th>Actions</th>
+                            </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 15.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nesta Technologies</td>
+                            <td>Percent Of Sale: 10.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 20.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 10.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 12.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 25.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 15.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 22.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 5.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 15.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </Tab.Pane>
+                <Tab.Pane eventKey="second" className='campaign'>
+                    <table className='w-100'>
+                        <tbody className='w-100'>
+                            <tr className='headings'>
+                                <th>Product Name</th>
+                                <th>Offer</th>
+                                <th>Categories</th>
+                                <th>Actions</th>
+                            </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 15.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nesta Technologies</td>
+                            <td>Percent Of Sale: 10.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 20.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 10.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 12.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 25.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 15.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 22.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 5.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FME Organizations Ltd</td>
+                            <td>Percent Of Sale: 15.00%</td>
+                            <td className='category'>#Fashion</td>
+                            <td>
+                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                <button><img src={Delete} alt='delete' />Delete</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </Tab.Pane>
+            </Tab.Content>
+            </Col>
+        </Tab.Container>
     </div>
   );
 }

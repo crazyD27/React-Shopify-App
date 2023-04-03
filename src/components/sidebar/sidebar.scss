@@ -1,51 +1,23 @@
 .sidebar {
     .sidebar-container {
+        min-height: 100vh;
         .side-tab {
-            background: #1032BB;
+            background: #5172FC;
             width: 20%;
             max-width: 20%;
-            .account-details {
-                span.user {
-                    background: #FF4E41;
-                    padding: 30px;
-                    border-radius: 5px;
-                    width: 20px;
-                    height: 20px;
-                }
-                h5.user-info {
-                    position: relative;
-                    &:before {
-                        content: '';
-                        position: absolute;
-                        bottom: -13px;
-                        left: 0;
-                        width: 165px;
-                        height: 25px;
-                        background: #fff;
-                        border-radius: 5px;
-                    }
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        height: 25px;
-                        width: 25px;
-                        transform: rotate(45deg);
-                        background: #1032BB;
-                        right: 0px;
-                        bottom: -12px;
-                    }
-                }
-            }
+            padding-left: 0;
+            padding-right: 0;
             .nav-item {
                 a {
                     border-radius: 0;
                     font-size: 14px;
-                    padding-left: 8px;
-                    padding-right: 8px;
                     img {
                         width: 20px;
                         object-fit: contain;
                     }
+                }
+                .nav-link.active {
+                    background-color: #4563DF;
                 }
             }
         }

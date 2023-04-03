@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.2972cf64.css",
-    "main.js": "/frontend/static/js/main.44fc1939.js",
+    "main.css": "/frontend/static/css/main.4908f23f.css",
+    "main.js": "/frontend/static/js/main.08020c80.js",
     "static/js/787.8cd5769d.chunk.js": "/frontend/static/js/787.8cd5769d.chunk.js",
     "static/media/events-1.png": "/frontend/static/media/events-1.8232684c17a2bfc9c356.png",
     "static/media/events-2.png": "/frontend/static/media/events-2.a472095179d4a869a1dc.png",
@@ -9,12 +9,12 @@
     "static/media/webinar.png": "/frontend/static/media/webinar.618584dc10e7065532aa.png",
     "static/media/delete.svg": "/frontend/static/media/delete.fd6c6eae8a0b61502b4aad3760c551e8.svg",
     "index.html": "/frontend/index.html",
-    "main.2972cf64.css.map": "/frontend/static/css/main.2972cf64.css.map",
-    "main.44fc1939.js.map": "/frontend/static/js/main.44fc1939.js.map",
+    "main.4908f23f.css.map": "/frontend/static/css/main.4908f23f.css.map",
+    "main.08020c80.js.map": "/frontend/static/js/main.08020c80.js.map",
     "787.8cd5769d.chunk.js.map": "/frontend/static/js/787.8cd5769d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2972cf64.css",
-    "static/js/main.44fc1939.js"
+    "static/css/main.4908f23f.css",
+    "static/js/main.08020c80.js"
   ]
 }

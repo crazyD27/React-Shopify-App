@@ -7,18 +7,20 @@ import CampaignOver from '../pages/CampaignOver';
 import CampaignNew from '../pages/CampaignNew';
 import CampaignManage from '../pages/CampaignManage';
 import CampaignMarket from '../pages/CampaignMarket.jsx';
+import CouponList from '../pages/CouponList';
+import Analytics from '../pages/Analytics';
+import Sales from '../pages/Sales';
 import './sidebar.scss';
 
 // Images
-import CampaignOverview from '../../assests/img/campaign-new.png';
+import CampaignOverview from '../../assests/img/campaign-over.png';
 import Manage from '../../assests/img/manage.png';
 import CampNew from '../../assests/img/campaign-new.png';
 import MarketPlace from '../../assests/img/marketplace.png';
 import Coupon from '../../assests/img/coupon.png';
-import Analytics from '../../assests/img/analytics.png';
-import Sales from '../../assests/img/sales.png';
+import AnalyticsImg from '../../assests/img/analytics.png';
+import SalesImg from '../../assests/img/sales.png';
 import Profile from '../../assests/img/profile.png';
-import DefaultUser from '../../assests/img/default-user.png';
 
 const SideBar = () => {
 
@@ -27,59 +29,51 @@ const SideBar = () => {
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Row className="justify-content-between tab-list m-0 sidebar-container">
                 <Col className="side-tab mb-5 mb-md-0 py-4">
-                    <div className="account-details p-2">
-                        <span className="user d-flex justify-content-center align-items-center">
-                            <img src={DefaultUser} alt="user" />
-                        </span>
-                        <h5 className="user-info text-white mt-3 mb-4 pb-4">
-                            Web developer
-                        </h5>
-                    </div>
-                    <Nav variant="pills" className="flex-column side-main bg-none ps-2 pt-2">
+                    <Nav variant="pills" className="flex-column side-main bg-none pt-2">
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="first">
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="first">
                                 <img src={CampaignOverview} className="me-2" alt='menu-img' />
                                 Campaign Overview
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="second">
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="second">
                                 <img src={Manage} className="me-2" alt='menu-img' />
                                 Manage Campaign
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="third">
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="third">
                                 <img src={CampNew} className="me-2" alt='menu-img' />
                                 Create new Campaign
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="fourth">
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="fourth">
                                 <img src={MarketPlace} className="me-2" alt='menu-img' />
                                 Campaign Marketplace
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="fifth">
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="fifth">
                                 <img src={Coupon} className="me-2" alt='menu-img' />
                                 Coupon
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="sixth">
-                                <img src={Analytics} className="me-2" alt='menu-img' />
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="sixth">
+                                <img src={AnalyticsImg} className="me-2" alt='menu-img' />
                                 Analytics
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="seventh">
-                                <img src={Sales} className="me-2" alt='menu-img' />
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="seventh">
+                                <img src={SalesImg} className="me-2" alt='menu-img' />
                                 Sales
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link className="text-white py-3" eventKey="eighth">
+                            <Nav.Link className="text-white py-2 mb-2" eventKey="eighth">
                                 <img src={Profile} className="me-2" alt='menu-img' />
                                 Profile
                             </Nav.Link>
@@ -99,6 +93,15 @@ const SideBar = () => {
                     </Tab.Pane>
                     <Tab.Pane eventKey="fourth" className='bg-light'>
                         <CampaignMarket />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="fifth" className='bg-light'>
+                        <CouponList />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="sixth" className='bg-light'>
+                        <Analytics />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="seventh" className='bg-light'>
+                        <Sales />
                     </Tab.Pane>
                 </Tab.Content>
                 </Col>

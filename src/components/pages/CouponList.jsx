@@ -1,11 +1,10 @@
 import MenuBar from '../navbar/Navbar';
 import { Link } from 'react-router-dom';
 import './pages.scss';
+import Plus from '../../assests/img/plus.png';
+import Download from '../../assests/img/download.png'
 
 // Images
-import YouTube from '../../assests/img/youtube.png';
-import Document from '../../assests/img/document.png';
-import IconAction from '../../assests/img/icon-action.png';
 import Search from '../../assests/img/search.png';
 
 const CouponList = () => {
@@ -13,38 +12,45 @@ const CouponList = () => {
     <div className="coupon p-4">
         <MenuBar />
         <div className="coupon-container d-flex flex-column mt-5 w-100">
-            <div className="coupon-video">
-                <div className="box">
-                    <img src={YouTube} alt="youtube" />
-                    <p>Watch the instruction video foe coupon</p>
-                </div>
-                <div className="box">
-                    <img src={Document} alt="youtube" />
-                    <p>Read the document</p>
-                </div>
-            </div>
-            <div className='coupon-list d-flex flex-wrap justify-content-between'>
-                <h3 className='w-100'>Coupon List</h3>
-                <div className="offer-search">
-                    <div className="offer-search-box">
-                        <h5>Offer & Tracking</h5>
-                        <div className="input-container">
-                            <input type="text" placeholder='Name/Email' />
-                            <button className='button'>Filter</button>
-                        </div>
+            <h4 className='mb-4'>Coupon List</h4>
+            <div className="filters d-flex justify-content-between align-items-center">
+                <div className="input-container d-flex flex-column">
+                    <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
+                    <div className="search-button d-flex align-items-center">
+                        <input type="text" placeholder='Name/Email' />
+                        <button type='button'>Filter</button>
                     </div>
-
-                    <div className="offer-search-box">
-                        <h5>Search</h5>
-                        <div className="input-container">
-                            <input type="text" placeholder='Search coupons' />
-                            <button className='button'>
-                                <img src={Search} alt="search" />
-                            </button>
-                        </div>
+                </div>
+                <div className="input-container d-flex flex-column">
+                    <label className='w-100 text-dark mb-3'>Search</label>
+                    <div className="search-button d-flex align-items-center">
+                        <input type="text" placeholder='Search coupons' />
+                        <img src={Search} alt='search' />
                     </div>
                 </div>
             </div>
+            <div className="coupon-buttons d-flex justify-content-end align-items-center">
+                <button><img src={Plus} aly='plus' /> Create Coupon</button>
+                <button><img src={Download} aly='download' /> Export Coupon</button>
+            </div>
+            <table className="coupon-table">
+                <tr className='table-heading'>
+                    <th><input type="checkbox" name="" id="" /></th>
+                    <th>Coupons</th>
+                    <th>Full name</th>
+                    <th>Description</th>
+                    <th>Created at</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>No data available in table</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
     </div>
   );

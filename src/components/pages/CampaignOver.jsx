@@ -25,49 +25,49 @@ const CampaignNew = () => {
             <div className="overview-container w-100 bg-light p-4">
                 <h3>Overview</h3>
                 <div className="overview-list d-flex flex-wrap justify-content-between align-items-center">
-                    <div className="overview-box p-3 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Active Campaigns</h5>
-                            <h3>10</h3>
-                            <button>View</button>
+                            <h3 className="mb-0">10</h3>
+                            {/* <button>View</button> */}
                         </div>
-                        <div className="overview-image">
+                        {/* <div className="overview-image">
                             <img src={People} alt="overview-img" />
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="overview-box p-3 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Pending Campaigns</h5>
-                            <h3>10</h3>
-                            <button>View</button>
+                            <h3 className="mb-0">10</h3>
+                            {/* <button>View</button> */}
                         </div>
-                        <div className="overview-image">
+                        {/* <div className="overview-image">
                             <img src={Cursor} alt="overview-img" />
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="overview-box p-3 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Total Campaigns</h5>
-                            <h3>10</h3>
-                            <button>View</button>
+                            <h3 className="mb-0">10</h3>
+                            {/* <button>View</button> */}
                         </div>
-                        <div className="overview-image">
+                        {/* <div className="overview-image">
                             <img src={Completed} alt="overview-img" />
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="overview-box p-3 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Sales Campaigns</h5>
-                            <h3>10</h3>
-                            <button>View</button>
+                            <h3 className="mb-0">10</h3>
+                            {/* <button>View</button> */}
                         </div>
-                        <div className="overview-image">
+                        {/* <div className="overview-image">
                             <img src={Money} alt="overview-img" />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
-            <div className="recommendation-container w-100 mt-4">
+            {/* <div className="recommendation-container w-100 mt-4">
                 <h3 className='bg-light p-2 mb-0'>Recommendations</h3>
                 <div className="recommendation-list d-flex justify-content-between p-4">
                     <div className="recommendation-box">
@@ -87,10 +87,10 @@ const CampaignNew = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* <div className="feature-container mt-4 bg-light w-100">
-                <h3 className='p-3'>Feature Details</h3>
-                <div className="feature-list d-flex justify-content-between flex-wrap mt-4 p-3">
+            </div> */}
+            <div className="feature-container mt-5 bg-light w-100">
+                <h3 className='p-3'>Feature directory</h3>
+                <div className="feature-list d-flex justify-content-between flex-wrap p-3">
                     <div className="feature-box px-3 py-4">
                         <div className="feature-heading d-flex justify-content-between align-items-start">
                             <h5>Offer & Tracking</h5>
@@ -153,7 +153,7 @@ const CampaignNew = () => {
                         <Link to='/' className='button button-blue'>View All</Link>
                     </div>
                     <div className="feature-content d-flex justify-content-between">
-                        <p className='text-dark me-5'>Do you find this feature directory helpful?</p>
+                        <p className='text-dark me-4'>Do you find this feature directory helpful?</p>
                         <div className="react-icons ms-5">
                             <button><img src={Like} alt="like" /></button>
                             <button><img src={Like} alt="dislike" /></button>
@@ -166,22 +166,22 @@ const CampaignNew = () => {
                 <div className="support-list d-flex justify-content-between flex-wrap">
                     <div className="support-box d-flex mb-5 p-4 align-items-start">
                         <img src={Chat} alt="support-img" className='me-3' />
-                        <h5>Chat with support team</h5>
+                        <h5 className='mb-0'>Chat with support team</h5>
                     </div>
                     <div className="support-box d-flex mb-5 p-4 align-items-start">
                         <img src={Join} alt="support-img" className='me-3' />
-                        <h5>Join our community</h5>
+                        <h5 className='mb-0'>Join our community</h5>
                     </div>
                     <div className="support-box d-flex mb-5 p-4 align-items-start">
                         <img src={Date} alt="support-img" className='me-3' />
-                        <h5>Join our webinar training series</h5>
+                        <h5 className='mb-0'>Join our webinar training series</h5>
                     </div>
                     <div className="support-box d-flex mb-5 p-4 align-items-start">
                         <img src={Question} alt="support-img" className='me-3' />
-                        <h5>View frequently asked questions</h5>
+                        <h5 className='mb-0'>View frequently asked questions</h5>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </div>
     </div>
   );

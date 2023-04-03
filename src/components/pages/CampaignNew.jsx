@@ -34,10 +34,13 @@ const CampaignOver = () => {
     const createNewCampaign = (e) => {
         e.preventDefault();
         axios.post('https://api.myrefera.com/campaign/campaign/create/', {
-            product_name: productName,
+            product: productName,
             influencer_name: influencerName,
             campaign_name: campaignName,
-            date: selectedDate
+            date: selectedDate,
+            coupon: '',
+            offer: '',
+            product_discount: ''
         },)
         .then(function (response) {
         console.log("Created New Campaign", response);
