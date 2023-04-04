@@ -23,34 +23,29 @@ const CampaignNew = () => {
     const [getUrl, setGetUrl] = useState();
     
     useEffect(() => {
-        setTimeout(() => {
-            console.log('///////////////////////////////');
-            const url = window.location.href;
-            console.log(url);
-            const queryString = url.split('?')[1];
-            const urlParams = new URLSearchParams(queryString);
-            const token = urlParams.get('shop');
-            console.log(token);
-            localStorage.setItem('shop_url', token)
-            console.log('///////////////////////////////');
-          }, 3000)
+        console.log('///////////////////////////////');
+        const url = window.location.href;
+        console.log(url);
+        const queryString = url.split('?')[1];
+        const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('shop');
+        console.log(token);
+        localStorage.setItem('shop_url', token)
+        console.log('///////////////////////////////');
     }, [])
-    
-    function getShop() {
-        axios.get('https://api.myrefera.com/store/callback/')
-        .then(function (response) {
-            console.log("Shop URL", response);
-            setGetUrl(response.data.shop_url)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-    }
 
     console.log("getUrl",getUrl)
     
     useEffect(() => {
-        getShop()
+        axios.get('https://api.myrefera.com/campaign/get/token/', {
+            shop: localStorage.getItem('shop_url')
+        })
+        .then(function (response) {
+            console.log("Shop Token", response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }, [])
     
   return (
