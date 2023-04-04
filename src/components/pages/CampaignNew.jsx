@@ -16,7 +16,8 @@ const CampaignOver = () => {
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
 
-    const token = localStorage.getItem("Token")
+    const token = localStorage.getItem("Token");
+    console.log(token)
 
     const handleProductChange = (event) => {
         setProductName(event.target.value);
@@ -75,7 +76,7 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
-        if(token) {
+        if(token != null || '') {
             axios.get('https://api.myrefera.com/campaign/product/list/',{
                 headers: {
                     Authorization: `Token ${token}`
