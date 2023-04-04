@@ -37,7 +37,7 @@ const CampaignNew = () => {
     console.log("getUrl",getUrl)
     
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/get/token/', {
+        axios.post('https://api.myrefera.com/campaign/get/token/', {
             shop: localStorage.getItem('shop_url')
         })
         .then(function (response) {
