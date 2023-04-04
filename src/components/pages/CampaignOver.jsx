@@ -20,7 +20,6 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
-    const [getUrl, setGetUrl] = useState();
     
     useEffect(() => {
         console.log('///////////////////////////////');
@@ -33,11 +32,10 @@ const CampaignNew = () => {
         localStorage.setItem('shop_url', token)
         console.log('///////////////////////////////');
     }, [])
-
-    console.log("getUrl",getUrl)
     
     useEffect(() => {
-        axios.post('https://api.myrefera.com/campaign/get/token/', {
+        if(!localStorage.getItem('shop_url')) {
+            axios.post('https://api.myrefera.com/campaign/get/token/', {
             shop_name: localStorage.getItem('shop_url')
         })
         .then(function (response) {
@@ -48,6 +46,7 @@ const CampaignNew = () => {
         .catch(function (error) {
             console.log(error);
         })
+        }
     }, [])
     
   return (
