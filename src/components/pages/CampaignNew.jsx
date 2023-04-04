@@ -35,7 +35,7 @@ const CampaignOver = () => {
 
     const createNewCampaign = (e) => {
         e.preventDefault();
-        axios.post('https://api.myrefera.com/campaign/campaign/create/', {
+        axios.post('https://api.myrefera.com/campaign/create/', {
             product: productName,
             influencer_name: influencerName,
             campaign_name: campaignName,
@@ -58,7 +58,7 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/product/list/', {
+        axios.get('https://api.myrefera.com/campaign/product/list/', {},{
             headers: {
                 Authorization: `Token ${token}`
             }
