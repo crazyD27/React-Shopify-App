@@ -26,18 +26,18 @@ import Profile from '../../assests/img/profile.png';
 
 const SideBar = () => {
 
-  useEffect(() => {
-    axios.post('https://api.myrefera.com/campaign/get/token/', {
-        shop_name: 'marketplacee-app.myshopify.com',
-        },)
-        .then(function (response) {
-        console.log("Get Token", response);
-        localStorage.setItem("token",response.data.token)
-        })
-        .catch(function (error) {
-        console.log(error);
-        })
-  }, [])
+//   useEffect(() => {
+//     axios.post('https://api.myrefera.com/campaign/get/token/', {
+//         shop_name: 'marketplacee-app.myshopify.com',
+//         },)
+//         .then(function (response) {
+//         console.log("Get Token", response);
+//         localStorage.setItem("token",response.data.token)
+//         })
+//         .catch(function (error) {
+//         console.log(error);
+//         })
+//   }, [])
 
   return (
     <div className="sidebar">
