@@ -12,11 +12,11 @@ const CampaignOver = () => {
     const [influencerName, setInfluencerName] = useState('');
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
-    const [influenceList, setInfluenceList] = useState('');
+    
     const [prodDiscount, setProdDiscount] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
-    const {userToken} = useContext(UserContext)
+    const {userToken, influenceList} = useContext(UserContext)
 
     const token = localStorage.getItem("Token");
     console.log( "UserToken",userToken)
@@ -76,35 +76,6 @@ const CampaignOver = () => {
         console.log(error);
         })
     }
-
-    useEffect(() => {
-        setTimeout(() => {
-            axios.get('https://api.myrefera.com/campaign/product/list/',{
-            headers: {
-                Authorization: `Token ${userToken}`
-            }
-            })
-            .then(function (response) {
-                console.log("Product List", response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-
-            axios.get('https://api.myrefera.com/campaign/influencer/list/',{
-                headers: {
-                    Authorization: `Token ${userToken}`
-            }})
-            .then(function (response) {
-                console.log("Influencer List", response);
-                setInfluenceList(response.data.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        }, 5000)
-        
-    }, [])
 
   return (
     <div className="campaign-new p-4">

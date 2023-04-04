@@ -1,12 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 
 const UserContext = React.createContext();
 
 export const AuthProvider = ({children})=>{
-    const [userToken, setUserToken] = React.useState('');   
+    const [userToken, setUserToken] = useState('');
+    const [influenceList, setInfluenceList] = useState('');
 
     return (
-        <UserContext.Provider value={{userToken, setUserToken}}>
+        <UserContext.Provider value={{userToken, setUserToken, influenceList, setInfluenceList}}>
             {children}
         </UserContext.Provider>
     )

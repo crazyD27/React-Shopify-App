@@ -21,7 +21,7 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
-    const {setUserToken} = useContext(UserContext);
+    const {setUserToken, setInfluenceList} = useContext(UserContext);
     
     useEffect(() => {
         console.log('///////////////////////////////');
@@ -44,6 +44,29 @@ const CampaignNew = () => {
             console.log("Shop Token", response);
             setUserToken(response.data.user_token);
             localStorage.setItem("Token", response.data.user_token);
+            axios.get('https://api.myrefera.com/campaign/product/list/',{
+            headers: {
+                Authorization: `Token ${response.data.user_token}`
+            }
+            })
+            .then(function (response) {
+                console.log("Product List", response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+            axios.get('https://api.myrefera.com/campaign/influencer/list/',{
+                headers: {
+                    Authorization: `Token ${response.data.user_token}`
+            }})
+            .then(function (response) {
+                console.log("Influencer List", response);
+                setInfluenceList(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         })
         .catch(function (error) {
             console.log(error);
