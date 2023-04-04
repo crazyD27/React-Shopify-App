@@ -58,7 +58,7 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/product/list/', {},{
+        axios.get('https://api.myrefera.com/campaign/product/list/',{
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -70,7 +70,10 @@ const CampaignOver = () => {
             console.log(error);
         })
 
-        axios.get('https://api.myrefera.com/campaign/influencer/list/')
+        axios.get('https://api.myrefera.com/campaign/influencer/list/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }})
         .then(function (response) {
             console.log("Influencer List", response);
             setInfluenceList(response.data.data);
