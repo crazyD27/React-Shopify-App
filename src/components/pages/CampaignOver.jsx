@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import UserContext from '../context/UserContext';
 import { Link } from 'react-router-dom';
 import MenuBar from '../navbar/Navbar';
 import './pages.scss';
@@ -20,6 +21,7 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
+    const {setUserToken} = useContext(UserContext);
     
     useEffect(() => {
         console.log('///////////////////////////////');
@@ -40,6 +42,7 @@ const CampaignNew = () => {
         })
         .then(function (response) {
             console.log("Shop Token", response);
+            setUserToken(response.data.user_token);
             localStorage.setItem("Token", response.data.user_token);
         })
         .catch(function (error) {

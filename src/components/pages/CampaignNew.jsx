@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import UserContext from '../context/UserContext';
 import MenuBar from '../navbar/Navbar';
 import './pages.scss';
 import axios from 'axios';
@@ -15,9 +16,10 @@ const CampaignOver = () => {
     const [prodDiscount, setProdDiscount] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
+    const {userToken} = useContext(UserContext)
 
     const token = localStorage.getItem("Token");
-    console.log(token)
+    console.log( "UserToken",userToken)
 
     const handleProductChange = (event) => {
         setProductName(event.target.value);
@@ -79,7 +81,7 @@ const CampaignOver = () => {
         setTimeout(() => {
             axios.get('https://api.myrefera.com/campaign/product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token ${userToken}`
             }
             })
             .then(function (response) {
@@ -91,7 +93,7 @@ const CampaignOver = () => {
 
             axios.get('https://api.myrefera.com/campaign/influencer/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token ${userToken}`
             }})
             .then(function (response) {
                 console.log("Influencer List", response);
