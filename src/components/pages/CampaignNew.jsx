@@ -11,7 +11,10 @@ const CampaignOver = () => {
     const [influencerName, setInfluencerName] = useState('');
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
-    const [influenceList, setInfluenceList] = useState('')
+    const [influenceList, setInfluenceList] = useState('');
+    const [prodDiscount, setProdDiscount] = useState('');
+    const [influenceOffer, setInfluenceOffer] = useState('');
+    const [selectedCoupon, setSelectedCoupon] = useState(null);
 
     const token = localStorage.getItem("Token")
 
@@ -31,6 +34,20 @@ const CampaignOver = () => {
         setSelectedDate(event.target.value);
     }
 
+    const handleProductDiscount = (event) => {
+        setProdDiscount(event.target.value);
+    }
+
+    const handleCouponClick = (e) => {
+        setSelectedCoupon(e.target.textContent);
+    };
+
+    const handleInfluenceOffer = (e) => {
+        setInfluenceOffer(e.target.value);
+    };
+
+    console.log('selectedCoupon', selectedCoupon)
+
     console.log("selected-date", selectedDate)
 
     const createNewCampaign = (e) => {
@@ -40,9 +57,9 @@ const CampaignOver = () => {
             influencer_name: influencerName,
             campaign_name: campaignName,
             date: selectedDate,
-            coupon: '',
-            offer: '',
-            product_discount: ''
+            coupon: selectedDate,
+            offer: influenceOffer,
+            product_discount: prodDiscount
         }, {
             headers: {
                 Authorization: `Token ${token}`
@@ -58,29 +75,33 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/product/list/',{
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(function (response) {
-            console.log("Product List", response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+        if(token) {
+            axios.get('https://api.myrefera.com/campaign/product/list/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Product List", response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
 
-        axios.get('https://api.myrefera.com/campaign/influencer/list/',{
-            headers: {
-                Authorization: `Token ${token}`
+            axios.get('https://api.myrefera.com/campaign/influencer/list/',{
+                headers: {
+                    Authorization: `Token ${token}`
             }})
-        .then(function (response) {
-            console.log("Influencer List", response);
-            setInfluenceList(response.data.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+            .then(function (response) {
+                console.log("Influencer List", response);
+                setInfluenceList(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
+
+        
     }, [])
 
   return (
@@ -113,10 +134,10 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Offer to influencers</label>
-                    <input type="text" />
+                    <input type="text" onChange={handleInfluenceOffer} value={influenceOffer} />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Product</label>
+                    <label className="mb-3">Produc Description</label>
                     <select onChange={handleProductChange} value={productName}>
                         <option value="">--Select an option--</option>
                         <option value="option1">Option 1</option>
@@ -126,10 +147,10 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product discount</label>
-                    <input type="text" />
+                    <input type="text" onChange={handleProductDiscount} value={prodDiscount} />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Upload a image</label>
+                    <label className="mb-3">Product url</label>
                     <input type="text" />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
@@ -148,17 +169,19 @@ const CampaignOver = () => {
                     </select>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Gift coupon to influencers</label>
-                    <div className="buttons d-flex justify-content-between discount-buttons p-2 mt-0">
-                        <button className='button button-blue'>100YBL</button>
-                        <button className='button'>150YBL</button>
-                        <button className='button'>300YBL</button>
-                    </div>
-                </div>
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Campaign name</label>
+                    <label className="mb-3">Upload a image</label>
                     <input type="text" />
                 </div>
+                
+                <div className="input-container d-flex flex-column mb-4">
+                    <label className="mb-3">Tracking coupon</label>
+                    <div className="buttons d-flex justify-content-between discount-buttons p-2 mt-0">
+                        <button type='button' className='button button-blue' onClick={handleCouponClick}>100YBL</button>
+                        <button type='button' className='button' onClick={handleCouponClick}>150YBL</button>
+                        <button type='button' className='button' onClick={handleCouponClick}>300YBL</button>
+                    </div>
+                </div>
+                
                 <div className="buttons d-flex justify-content-between">
                     <button className='button button-blue' onClick={createNewCampaign}>Send request button</button>
                     <button className='button'>Save in draft</button>
