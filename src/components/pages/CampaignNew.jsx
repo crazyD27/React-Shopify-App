@@ -13,7 +13,7 @@ const CampaignOver = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [influenceList, setInfluenceList] = useState('')
 
-    const token = localStorage.get('Token')
+    const token = localStorage.getItem("Token")
 
     const handleProductChange = (event) => {
         setProductName(event.target.value);
