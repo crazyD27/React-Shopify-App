@@ -34,19 +34,17 @@ const CampaignNew = () => {
     }, [])
     
     useEffect(() => {
-        if(!localStorage.getItem('shop_url')) {
-            axios.post('https://api.myrefera.com/campaign/get/token/', {
-            shop_name: localStorage.getItem('shop_url')
+        console.log("TOKEN APIIII")
+        axios.post('https://api.myrefera.com/campaign/get/token/', {
+        shop_name: localStorage.getItem('shop_url')
         })
         .then(function (response) {
             console.log("Shop Token", response);
             localStorage.setItem("Token", response.data.user_token);
-            window.location.reload()
         })
         .catch(function (error) {
             console.log(error);
         })
-        }
     }, [])
     
   return (

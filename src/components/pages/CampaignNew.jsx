@@ -76,11 +76,11 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
-        if(token != null || '') {
+        setTimeout(() => {
             axios.get('https://api.myrefera.com/campaign/product/list/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
+            headers: {
+                Authorization: `Token ${token}`
+            }
             })
             .then(function (response) {
                 console.log("Product List", response);
@@ -100,8 +100,7 @@ const CampaignOver = () => {
             .catch(function (error) {
                 console.log(error);
             })
-        }
-
+        }, 5000)
         
     }, [])
 
