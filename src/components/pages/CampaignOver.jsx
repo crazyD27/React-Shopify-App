@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MenuBar from '../navbar/Navbar';
 import './pages.scss';
@@ -20,16 +21,18 @@ import Question from '../../assests/img/question.png';
 const CampaignNew = () => {
 
     
-    setTimeout(() => {
-        console.log('///////////////////////////////')
-        const url = window.location.href;
-        console.log(url);
-        const queryString = url.split('?')[1];
-        const urlParams = new URLSearchParams(queryString);
-        const token = urlParams.get('token');
-        console.log(token);
-        console.log('///////////////////////////////')
-      }, 7000)
+    useEffect(() => {
+        setTimeout(() => {
+            console.log('///////////////////////////////');
+            const url = window.location.href;
+            console.log(url);
+            const queryString = url.split('?')[1];
+            const urlParams = new URLSearchParams(queryString);
+            const token = urlParams.get('token');
+            console.log(token);
+            console.log('///////////////////////////////');
+          }, 7000)
+    }, [])
       
     
     

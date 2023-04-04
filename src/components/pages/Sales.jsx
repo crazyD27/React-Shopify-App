@@ -31,17 +31,17 @@ function Sales() {
         <div className="sales-container">
             <h2 className='text-center'>Sales overview</h2>
             <div className="earnings-list d-flex justify-content-between">
-                <div className="earning-box">
+                <div className="earning-box px-3">
                     <h5>Total earnings</h5>
                     <p className='d-flex align-items-start fs-6'> <span>$</span><strong className='fs-3 fw-normal'>5,548.54</strong></p>
                     <img src={EarningsGraph} alt="earning" />
                 </div>
-                <div className="earning-box">
+                <div className="earning-box px-3">
                     <h5>Average cart size</h5>
                     <p className='d-flex align-items-start fs-6'><span>$</span> <strong className='fs-3 fw-normal'>232.32</strong></p>
                     <img src={AverageGraph} alt="average" />
                 </div>
-                <div className="earning-box">
+                <div className="earning-box px-3">
                     <h5>Total purchases</h5>
                     <p><strong className='fs-3 fw-normal'>20</strong></p>
                     <img src={TotalGraph} alt="total" />
