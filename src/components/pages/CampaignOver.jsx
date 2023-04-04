@@ -41,8 +41,9 @@ const CampaignNew = () => {
             shop_name: localStorage.getItem('shop_url')
         })
         .then(function (response) {
-            console.log("Shop Token", response)
-            localStorage.setItem("Token", response.data.user_token)
+            console.log("Shop Token", response);
+            localStorage.setItem("Token", response.data.user_token);
+            window.location.reload()
         })
         .catch(function (error) {
             console.log(error);
