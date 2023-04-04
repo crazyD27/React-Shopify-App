@@ -28,7 +28,7 @@ const CampaignNew = () => {
             console.log(url);
             const queryString = url.split('?')[1];
             const urlParams = new URLSearchParams(queryString);
-            const token = urlParams.get('token');
+            const token = urlParams.get('shop');
             console.log(token);
             console.log('///////////////////////////////');
           }, 7000)
