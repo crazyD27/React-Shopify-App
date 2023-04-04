@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MenuBar from '../navbar/Navbar';
 import './pages.scss';
+import axios from 'axios';
 
 // Images
 import People from '../../assests/img/people.png';
@@ -19,7 +20,7 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
-
+    const [getUrl, setGetUrl] = useState();
     
     useEffect(() => {
         setTimeout(() => {
@@ -30,12 +31,27 @@ const CampaignNew = () => {
             const urlParams = new URLSearchParams(queryString);
             const token = urlParams.get('shop');
             console.log(token);
+            localStorage.setItem('shop_url', token)
             console.log('///////////////////////////////');
-          }, 7000)
+          }, 3000)
     }, [])
-      
     
+    function getShop() {
+        axios.get('https://api.myrefera.com/store/callback/')
+        .then(function (response) {
+            console.log("Shop URL", response);
+            setGetUrl(response.data.shop_url)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    console.log("getUrl",getUrl)
     
+    useEffect(() => {
+        getShop()
+    }, [])
     
   return (
     <div className="campaign-over p-3">
