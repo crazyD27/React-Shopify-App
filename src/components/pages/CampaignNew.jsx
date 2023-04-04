@@ -13,6 +13,8 @@ const CampaignOver = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [influenceList, setInfluenceList] = useState('')
 
+    const token = localStorage.get('Token')
+
     const handleProductChange = (event) => {
         setProductName(event.target.value);
     }
@@ -41,7 +43,11 @@ const CampaignOver = () => {
             coupon: '',
             offer: '',
             product_discount: ''
-        },)
+        }, {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
         .then(function (response) {
         console.log("Created New Campaign", response);
         toast.success("New Campaign Created!")
@@ -52,7 +58,11 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/product/list/')
+        axios.get('https://api.myrefera.com/campaign/product/list/', {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
         .then(function (response) {
             console.log("Product List", response);
         })
