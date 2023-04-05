@@ -14,8 +14,9 @@ import './pages.scss';
 const CampaignManage = () => {
     const {userToken} = useContext(UserContext);
 
+    console.log("Campaign Manage")
     useEffect(() => {
-
+        console.log("Campaign Manage axios")
         axios.post('https://api.myrefera.com/campaign/list/',{
             headers: {
                 Authorization: `Token ${userToken}`
