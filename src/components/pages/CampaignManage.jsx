@@ -15,19 +15,18 @@ const CampaignManage = () => {
     const {userToken} = useContext(UserContext);
 
     useEffect(() => {
-        setTimeout(() => {
-            axios.post('https://api.myrefera.com/campaign/list/',{
-                headers: {
-                    Authorization: `Token ${userToken}`
-                }
-            })
-            .then(function (response) {
-                console.log("Campaign List", response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        }, 3000)
+
+        axios.post('https://api.myrefera.com/campaign/list/',{
+            headers: {
+                Authorization: `Token ${userToken}`
+            }
+        })
+        .then(function (response) {
+            console.log("Campaign List", response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }, [])
 
   return (
