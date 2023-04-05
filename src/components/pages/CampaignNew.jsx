@@ -69,8 +69,15 @@ const CampaignOver = () => {
             }
         })
         .then(function (response) {
-        console.log("Created New Campaign", response);
-        toast.success("New Campaign Created!")
+            console.log("Created New Campaign", response);
+            setProductName('')
+            setInfluencerName('')
+            setCampaignName('')
+            setSelectedDate('')
+            setProdDiscount('')
+            setInfluenceOffer('')
+            setSelectedCoupon('')
+            toast.success("New Campaign Created!");
         })
         .catch(function (error) {
         console.log(error);

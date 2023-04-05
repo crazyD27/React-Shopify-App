@@ -16,7 +16,7 @@ const CampaignManage = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            axios.post('https://api.myrefera.com/campaign/list/',{
+            axios.get('https://api.myrefera.com/campaign/list/',{
                 headers: {
                     Authorization: `Token ${userToken}`
                 }
