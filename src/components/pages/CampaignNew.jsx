@@ -19,7 +19,6 @@ const CampaignOver = () => {
     const {userToken, influenceList} = useContext(UserContext)
 
     const token = localStorage.getItem("Token");
-    console.log( "UserToken",userToken)
 
     const handleProductChange = (event) => {
         setProductName(event.target.value);
