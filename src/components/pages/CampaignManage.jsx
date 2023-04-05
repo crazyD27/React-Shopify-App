@@ -76,19 +76,26 @@ const CampaignManage = () => {
                                 <th>Categories</th>
                                 <th>Actions</th>
                             </tr>
-                            {campList?.map((name, i) => {
-                                return(
-                                    <tr>
-                                        <td>{name.product}</td>
-                                        <td>{name.offer}</td>
-                                        <td className='category'>{name.product_discount}</td>
-                                        <td>
-                                            <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                            <button><img src={Delete} alt='delete' />Delete</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
+                            {campList?.length > 0 ? (
+                                campList?.map((name, i) => {
+                                    return(
+                                        <tr>
+                                            <td>{name.product}</td>
+                                            <td>{name.offer}</td>
+                                            <td className='category'>{name.product_discount}</td>
+                                            <td>
+                                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                                <button><img src={Delete} alt='delete' />Delete</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                                
+                            )
+                            :
+                            (
+                                <h4 className='mt-4'>No Active Campaigns right now</h4>
+                            )}
                         
                         </tbody>
                     </table>
@@ -102,19 +109,26 @@ const CampaignManage = () => {
                                 <th>Categories</th>
                                 <th>Actions</th>
                             </tr>
-                            {campListPending?.map((name, i) => {
-                                return(
-                                    <tr>
-                                        <td>{name.product}</td>
-                                        <td>{name.offer}</td>
-                                        <td className='category'>{name.product_discount}</td>
-                                        <td>
-                                            <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                            <button><img src={Delete} alt='delete' />Delete</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
+                            {campListPending?.length > 0 ? (
+                                campListPending?.map((name, i) => {
+                                    return(
+                                        <tr>
+                                            <td>{name.product}</td>
+                                            <td>{name.offer}</td>
+                                            <td className='category'>{name.product_discount}</td>
+                                            <td>
+                                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                                <button><img src={Delete} alt='delete' />Delete</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                                
+                            )
+                            :
+                            (
+                                <h4 className='mt-4'>No Pending Campaigns right now</h4>
+                            )}
                         </tbody>
                     </table>
                 </Tab.Pane>
