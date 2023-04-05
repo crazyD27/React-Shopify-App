@@ -111,7 +111,7 @@ const CampaignOver = () => {
           })
           .then(function (response) {
               console.log("Get Product URL", response);
-              setProdDesc(response.data.success)
+              setProdDesc(response.data)
           })
           .catch(function (error) {
               console.log(error);
@@ -179,7 +179,7 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Produc URL</label>
-                    <textarea name="" id="" cols="30" rows="1" value={prodDesc} style={{color: '#666'}}></textarea>
+                    <textarea name="" id="" cols="30" rows="1" value={prodDesc?.URL} style={{color: '#666'}}></textarea>
                 </div>
                 <div className="input-container d-flex flex-column mb-4 prod-discount">
                     <label className="mb-3">Product discount</label>
@@ -187,7 +187,7 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product Description</label>
-                    <input type="text" />
+                    <textarea name="" id="" cols="30" rows="1" value={prodDesc?.description} style={{color: '#666'}}></textarea>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Influencer from the list.</label>
