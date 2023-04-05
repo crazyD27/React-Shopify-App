@@ -67,6 +67,18 @@ const CampaignOver = () => {
             .catch(function (error) {
                 console.log(error);
             })
+
+            axios.get(API.BASE_URL + 'product/url/?products=' + productName,{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+                })
+                .then(function (response) {
+                    console.log("Get Product URL", response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
     }, [])
 
     const createNewCampaign = (e) => {
@@ -142,7 +154,7 @@ const CampaignOver = () => {
                     </div>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Produc Description</label>
+                    <label className="mb-3">Product</label>
                     <select onChange={handleProductChange} value={productName}>
                     <option value="">---Select an option---</option>
                         {prodList?.length > 0 ? (
@@ -155,6 +167,10 @@ const CampaignOver = () => {
                         })
                         ) : ""}
                     </select>
+                </div>
+                <div className="input-container d-flex flex-column mb-4">
+                    <label className="mb-3">Produc Description</label>
+                    <textarea name="" id="" cols="30" rows="1"></textarea>
                 </div>
                 <div className="input-container d-flex flex-column mb-4 prod-discount">
                     <label className="mb-3">Product discount</label>
