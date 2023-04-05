@@ -23,7 +23,7 @@ const CampaignManage = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'list/',{
             headers: {
-                Authorization: 'Token ' + token
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -37,7 +37,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: 'Token ' + token
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {

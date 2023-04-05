@@ -64,7 +64,7 @@ const CampaignNew = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'count/',{
             headers: {
-                Authorization: 'Token ' + localStorage.getItem('Token')
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
