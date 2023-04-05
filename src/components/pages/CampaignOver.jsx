@@ -22,6 +22,8 @@ import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
     const {setUserToken, setInfluenceList} = useContext(UserContext);
+    const [countCamp, setCountCamp] = useState([]);
+    const token = localStorage.getItem('Token')
     
     useEffect(() => {
         console.log('///////////////////////////////');
@@ -56,6 +58,22 @@ const CampaignNew = () => {
             .catch(function (error) {
                 console.log(error);
             })
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }, [])
+
+    useEffect(() => {
+        axios.get('ttps://api.myrefera.com/campaign/campaign/count/',{
+            headers: {
+                Authorization: 'Token ' + token
+            }
+        })
+        .then(function (response) {
+            console.log("Campaign List", response);
+            setCountCamp(response);
+            console.log(countCamp)
         })
         .catch(function (error) {
             console.log(error);
