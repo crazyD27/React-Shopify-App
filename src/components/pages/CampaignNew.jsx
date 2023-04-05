@@ -180,7 +180,7 @@ const CampaignOver = () => {
                     </select>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Produc URL</label>
+                    <label className="mb-3">Product URL</label>
                     <textarea name="" id="" cols="30" rows="1" value={prodDesc?.URL} style={{color: '#666'}}></textarea>
                 </div>
                 <div className="input-container d-flex flex-column mb-4 prod-discount">
@@ -188,7 +188,7 @@ const CampaignOver = () => {
                     <input type="text" onChange={handleProductDiscount} value={prodDiscount} />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Product Description</label>
+                    <label className="mb-3">Description</label>
                     <textarea name="" id="" cols="30" rows="1" value={prodDesc?.description} style={{color: '#666'}}></textarea>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
