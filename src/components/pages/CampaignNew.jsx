@@ -22,6 +22,10 @@ const CampaignOver = () => {
 
     const token = localStorage.getItem("Token");
 
+    const handleProductChange = (event) => {
+        setProductName(event.target.value);
+    }
+
     const handleCampaignNameChange = (event) => {
         setCampaignName(event.target.value);
     }
@@ -97,7 +101,6 @@ const CampaignOver = () => {
     }
 
     const handleProducts = (e) => {
-        setProductName(e.target.value);
         axios.get(API.BASE_URL + 'product/url/?products=' + productName,{
             headers: {
                 Authorization: `Token ${token}`
@@ -154,7 +157,7 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product</label>
-                    <select onChange={handleProducts} value={productName}>
+                    <select onChange={(event) => { handleProductChange(event); handleProducts(event);}} value={productName}>
                     <option value="">---Select an option---</option>
                         {prodList?.length > 0 ? (
                             prodList?.map((name, i) => {
