@@ -16,6 +16,7 @@ const CampaignOver = () => {
     const [prodDiscount, setProdDiscount] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
+    const [prodList, setProdList] = useState('')
     const {userToken, influenceList} = useContext(UserContext)
 
     const token = localStorage.getItem("Token");
@@ -51,6 +52,21 @@ const CampaignOver = () => {
     console.log('selectedCoupon', selectedCoupon)
 
     console.log("selected-date", selectedDate)
+
+    useEffect(() => {
+        axios.get('https://api.myrefera.com/campaign/product/list/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+            })
+            .then(function (response) {
+                console.log("Product List", response);
+                setProdList(response.data.success.products)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }, [])
 
     const createNewCampaign = (e) => {
         e.preventDefault();
@@ -118,10 +134,16 @@ const CampaignOver = () => {
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Produc Description</label>
                     <select onChange={handleProductChange} value={productName}>
-                        <option value="">--Select an option--</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                    <option value="">---Select an option---</option>
+                        {prodList?.length > 0 ? (
+                            prodList?.map((name, i) => {
+                            return(
+                                <>
+                                    <option value={name.title} key={i}>{name.title}</option>
+                                </>
+                            )
+                        })
+                        ) : ""}
                     </select>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
