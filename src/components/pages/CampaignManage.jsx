@@ -13,6 +13,7 @@ import './pages.scss';
 
 const CampaignManage = () => {
     const {userToken} = useContext(UserContext);
+    const [campList, setCampList] = useState('')
     console.log("User Token", userToken)
     console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
 
@@ -25,6 +26,7 @@ const CampaignManage = () => {
             })
             .then(function (response) {
                 console.log("Campaign List", response);
+                setCampList(response.data.data)
             })
             .catch(function (error) {
                 console.log(error);
@@ -58,101 +60,24 @@ const CampaignManage = () => {
                                 <th>Categories</th>
                                 <th>Actions</th>
                             </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 15.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Nesta Technologies</td>
-                            <td>Percent Of Sale: 10.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 20.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 10.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 12.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 25.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 15.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 22.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 5.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 15.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
+                            {campList?.map((campData, i) => {
+                                return(
+                                    <tr key={i}>
+                                        <td>{campData.product}</td>
+                                        <td>{campData.offer}</td>
+                                        <td className='category'>{campData.product_discount}</td>
+                                        <td>
+                                            <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                            <button><img src={Delete} alt='delete' />Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </Tab.Pane>
                 <Tab.Pane eventKey="second" className='campaign'>
-                    <table className='w-100'>
+                    <table className='w-100 campaign'>
                         <tbody className='w-100'>
                             <tr className='headings'>
                                 <th>Product Name</th>
@@ -160,96 +85,19 @@ const CampaignManage = () => {
                                 <th>Categories</th>
                                 <th>Actions</th>
                             </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 15.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Nesta Technologies</td>
-                            <td>Percent Of Sale: 10.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 20.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 10.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 12.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 25.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 15.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 22.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 5.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>FME Organizations Ltd</td>
-                            <td>Percent Of Sale: 15.00%</td>
-                            <td className='category'>#Fashion</td>
-                            <td>
-                                <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                <button><img src={Delete} alt='delete' />Delete</button>
-                            </td>
-                        </tr>
+                            {campList?.map((campData, i) => {
+                                return(
+                                    <tr key={i}>
+                                        <td>{campData.product}</td>
+                                        <td>{campData.offer}</td>
+                                        <td className='category'>{campData.product_discount}</td>
+                                        <td>
+                                            <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
+                                            <button><img src={Delete} alt='delete' />Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </Tab.Pane>
