@@ -11,17 +11,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [renderCount, setRenderCount] = useState(0);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setRenderCount((count) => count + 1);
-    }, 3000); // re-render after 5 seconds
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [renderCount]);
   
   return (
     <div className="App">

@@ -13,12 +13,14 @@ import './pages.scss';
 
 const CampaignManage = () => {
     const {userToken} = useContext(UserContext);
+    console.log("User Token", userToken)
+    console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
 
     useEffect(() => {
         setTimeout(() => {
             axios.get('https://api.myrefera.com/campaign/list/',{
                 headers: {
-                    Authorization: `Token ${userToken}`
+                    Authorization: 'Token' + localStorage.getItem('Token')
                 }
             })
             .then(function (response) {
