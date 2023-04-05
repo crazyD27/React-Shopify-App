@@ -33,13 +33,13 @@ const MenuBar = () => {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Link to="/">
+              <Link to="/dashboard">
                 <img src={Notification} alt='notification' />
               </Link>
-              <Link to="/">
+              <Link to="/dashboard">
                 <img src={Message} alt='notification' />
               </Link>
-              <Link to="/">
+              <Link to="/dashboard">
                 <img src={User} alt='notification' />
                 <p>Web developer</p>
               </Link>

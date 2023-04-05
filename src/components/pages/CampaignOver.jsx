@@ -65,14 +65,14 @@ const CampaignNew = () => {
     }, [])
 
     useEffect(() => {
-        axios.get('ttps://api.myrefera.com/campaign/campaign/count/',{
+        axios.get('https://api.myrefera.com/campaign/count/',{
             headers: {
-                Authorization: 'Token ' + token
+                Authorization: 'Token 3938b81dbca2ea7f0d31776e4da4ce7cd841f2dd'
             }
         })
         .then(function (response) {
-            console.log("Campaign List", response);
-            setCountCamp(response);
+            console.log("Count List", response);
+            setCountCamp(response.data);
             console.log(countCamp)
         })
         .catch(function (error) {
@@ -90,7 +90,7 @@ const CampaignNew = () => {
                     <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Active Campaigns</h5>
-                            <h3 className="mb-0">10</h3>
+                            <h3 className="mb-0">{countCamp.active_campaign}</h3>
                             {/* <button>View</button> */}
                         </div>
                         {/* <div className="overview-image">
@@ -100,7 +100,7 @@ const CampaignNew = () => {
                     <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Pending Campaigns</h5>
-                            <h3 className="mb-0">10</h3>
+                            <h3 className="mb-0">{countCamp.pending_campaign}</h3>
                             {/* <button>View</button> */}
                         </div>
                         {/* <div className="overview-image">
@@ -110,7 +110,7 @@ const CampaignNew = () => {
                     <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Total Campaigns</h5>
-                            <h3 className="mb-0">10</h3>
+                            <h3 className="mb-0">{countCamp.total}</h3>
                             {/* <button>View</button> */}
                         </div>
                         {/* <div className="overview-image">
