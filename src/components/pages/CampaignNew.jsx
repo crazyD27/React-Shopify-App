@@ -56,18 +56,20 @@ const CampaignOver = () => {
     console.log("selected-date", selectedDate)
 
     useEffect(() => {
-        axios.get(API.BASE_URL + 'product/list/',{
-            headers: {
-                Authorization: `Token ${token}`
-            }
-            })
-            .then(function (response) {
-                console.log("Product List", response);
-                setProdList(response.data.success.products)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        if(token != "") {
+            axios.get(API.BASE_URL + 'product/list/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+                })
+                .then(function (response) {
+                    console.log("Product List", response);
+                    setProdList(response.data.success.products)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
     }, [])
 
     const createNewCampaign = (e) => {

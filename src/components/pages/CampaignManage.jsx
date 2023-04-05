@@ -21,33 +21,35 @@ const CampaignManage = () => {
     console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
 
     useEffect(() => {
-        axios.get(API.BASE_URL + 'list/',{
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(function (response) {
-            console.log("Campaign List", response);
-            setCampList(response.data.data);
-            console.log(campList)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-
-        axios.get(API.BASE_URL + 'pending/',{
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(function (response) {
-            console.log("Campaign List", response);
-            setCampListPending(response.data.data);
-            console.log(campListPending)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+        if(token != "") {
+            axios.get(API.BASE_URL + 'list/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Campaign List", response);
+                setCampList(response.data.data);
+                console.log(campList)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    
+            axios.get(API.BASE_URL + 'pending/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Campaign List", response);
+                setCampListPending(response.data.data);
+                console.log(campListPending)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
     }, [])
 
   return (

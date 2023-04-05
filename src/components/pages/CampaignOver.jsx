@@ -62,19 +62,21 @@ const CampaignNew = () => {
     }, [])
 
     useEffect(() => {
-        axios.get(API.BASE_URL + 'count/',{
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(function (response) {
-            console.log("Count List", response);
-            setCountCamp(response.data);
-            console.log(countCamp)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+        if(token != "") {
+            axios.get(API.BASE_URL + 'count/',{
+                headers: {
+                    Authorization: 'Token ' + localStorage.getItem('Token')
+                }
+            })
+            .then(function (response) {
+                console.log("Count List", response);
+                setCountCamp(response.data);
+                console.log(countCamp)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
     }, [])
     
   return (
