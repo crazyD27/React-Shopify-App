@@ -18,6 +18,7 @@ const CampaignOver = () => {
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
     const [prodList, setProdList] = useState('')
+    const [prodDesc, setProdDesc] = useState('')
     const {userToken, influenceList} = useContext(UserContext)
 
     const token = localStorage.getItem("Token");
@@ -100,19 +101,25 @@ const CampaignOver = () => {
         })
     }
 
-    const handleProducts = (e) => {
-        axios.get(API.BASE_URL + 'product/url/?products=' + productName,{
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(function (response) {
-            console.log("Get Product URL", response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-    }
+    useEffect(() => {
+        console.log("PRODUCT", productName)
+        if (productName) {
+          axios.get(API.BASE_URL + 'product/url/?product=' + productName,{
+              headers: {
+                  Authorization: `Token ${token}`
+              }
+          })
+          .then(function (response) {
+              console.log("Get Product URL", response);
+              setProdDesc(response.data.success)
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
+        }
+      }, [productName]);
+
+      console.log("prodDesc",prodDesc)
 
   return (
     <div className="campaign-new p-4">
@@ -157,7 +164,7 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product</label>
-                    <select onChange={(event) => { handleProductChange(event); handleProducts(event);}} value={productName}>
+                    <select  onChange={handleProductChange} value={productName}>
                     <option value="">---Select an option---</option>
                         {prodList?.length > 0 ? (
                             prodList?.map((name, i) => {
@@ -171,8 +178,8 @@ const CampaignOver = () => {
                     </select>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Produc Description</label>
-                    <textarea name="" id="" cols="30" rows="1"></textarea>
+                    <label className="mb-3">Produc URL</label>
+                    <textarea name="" id="" cols="30" rows="1" value={prodDesc} style={{color: '#666'}}></textarea>
                 </div>
                 <div className="input-container d-flex flex-column mb-4 prod-discount">
                     <label className="mb-3">Product discount</label>
