@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import UserContext from '../context/UserContext';
 import axios from 'axios';
+import { API } from '../../config/Api';
 
 import Edit from '../../assests/img/edit.png';
 import Delete from '../../assests/img/delete.svg'
@@ -20,7 +21,7 @@ const CampaignManage = () => {
     console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
 
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/list/',{
+        axios.get(API.BASE_URL + 'list/',{
             headers: {
                 Authorization: 'Token ' + token
             }
@@ -34,7 +35,7 @@ const CampaignManage = () => {
             console.log(error);
         })
 
-        axios.get('https://api.myrefera.com/campaign/pending/',{
+        axios.get(API.BASE_URL + 'pending/',{
             headers: {
                 Authorization: 'Token ' + token
             }

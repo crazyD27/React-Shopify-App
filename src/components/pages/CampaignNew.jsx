@@ -4,6 +4,7 @@ import MenuBar from '../navbar/Navbar';
 import './pages.scss';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API } from '../../config/Api';
 
 // Images
 
@@ -54,7 +55,7 @@ const CampaignOver = () => {
     console.log("selected-date", selectedDate)
 
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/product/list/',{
+        axios.get(API.BASE_URL + 'product/list/',{
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -70,7 +71,7 @@ const CampaignOver = () => {
 
     const createNewCampaign = (e) => {
         e.preventDefault();
-        axios.post('https://api.myrefera.com/campaign/create/', {
+        axios.post(API.BASE_URL + 'create/', {
             product: productName,
             influencer_name: influencerName,
             campaign_name: campaignName,

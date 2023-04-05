@@ -4,12 +4,9 @@ import { Link } from 'react-router-dom';
 import MenuBar from '../navbar/Navbar';
 import './pages.scss';
 import axios from 'axios';
+import { API } from '../../config/Api';
 
 // Images
-import People from '../../assests/img/people.png';
-import Cursor from '../../assests/img/cursor.png';
-import Completed from '../../assests/img/completed.png';
-import Money from '../../assests/img/money.png';
 import Tracking from '../../assests/img/tracking.png';
 import Recruit from '../../assests/img/recruit.png';
 import Setting from '../../assests/img/settings.png';
@@ -39,7 +36,7 @@ const CampaignNew = () => {
     
     useEffect(() => {
         console.log("TOKEN APIIII")
-        axios.post('https://api.myrefera.com/campaign/get/token/', {
+        axios.post(API.BASE_URL + 'get/token/', {
             shop_name: localStorage.getItem('shop_url')
         })
         .then(function (response) {
@@ -47,7 +44,7 @@ const CampaignNew = () => {
             setUserToken(response.data.user_token);
             localStorage.setItem("Token", response.data.user_token);
 
-            axios.get('https://api.myrefera.com/campaign/influencer/list/',{
+            axios.get(API.BASE_URL + 'influencer/list/',{
                 headers: {
                     Authorization: `Token ${response.data.user_token}`
             }})
@@ -65,9 +62,9 @@ const CampaignNew = () => {
     }, [])
 
     useEffect(() => {
-        axios.get('https://api.myrefera.com/campaign/count/',{
+        axios.get(API.BASE_URL + 'count/',{
             headers: {
-                Authorization: 'Token 3938b81dbca2ea7f0d31776e4da4ce7cd841f2dd'
+                Authorization: 'Token ' + localStorage.getItem('Token')
             }
         })
         .then(function (response) {
