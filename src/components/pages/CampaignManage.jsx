@@ -14,20 +14,20 @@ import './pages.scss';
 const CampaignManage = () => {
     const {userToken} = useContext(UserContext);
 
-    console.log("Campaign Manage")
     useEffect(() => {
-        console.log("Campaign Manage axios")
-        axios.post('https://api.myrefera.com/campaign/list/',{
-            headers: {
-                Authorization: `Token ${userToken}`
-            }
-        })
-        .then(function (response) {
-            console.log("Campaign List", response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+        setTimeout(() => {
+            axios.post('https://api.myrefera.com/campaign/list/',{
+                headers: {
+                    Authorization: `Token ${userToken}`
+                }
+            })
+            .then(function (response) {
+                console.log("Campaign List", response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }, 3000)
     }, [])
 
   return (
