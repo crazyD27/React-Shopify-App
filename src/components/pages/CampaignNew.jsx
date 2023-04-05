@@ -186,7 +186,7 @@ const CampaignOver = () => {
                     <input type="text" onChange={handleProductDiscount} value={prodDiscount} />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Product url</label>
+                    <label className="mb-3">Product Description</label>
                     <input type="text" />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
