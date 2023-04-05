@@ -53,7 +53,7 @@
                 width: 80%;
                 margin: 2rem auto 0;
                 button {
-                    width: 30%;
+                    width: 31%;
                 }
             }
             .discount-buttons {
@@ -69,15 +69,6 @@
 }
 
 .campaign-over {
-    .navbar {
-        background-color: #E0EFFE !important;
-        border-bottom: 1px solid #FFF;
-        .container-fluid {
-            background: #fff;
-            padding-top: 3px;
-            padding-bottom: 3px;
-        }
-    }
     .campaign-over-container {
         .overview-container {
             border-radius: 10px;
@@ -136,55 +127,6 @@
                 }
             }
         }
-        .recommendation-container {
-            h3 {
-                border-radius: 5px 5px 0 0;
-            }
-            .recommendation-list {
-                background: #5172FC;
-                .recommendation-box {
-                    background: #fff;
-                    width: 42%;
-                    border-radius: 10px;
-                    padding: 1.5rem;
-                    position: relative;
-                    z-index: 2;
-                    ul {
-                        width: 73%;
-                        li {
-                            font-style: italic;
-                            font-size: 14px;
-                        }
-                    }
-                    &::before {
-                        content: '';
-                        background-size: 100% 70%;
-                        background-repeat: no-repeat;
-                        background-position: right bottom;
-                        position: absolute;
-                        height: 100%;
-                        width: 190px;
-                        z-index: 1;
-                    }
-                    &:nth-child(odd) {
-                        &::before {
-                            background-image: url(../../assests/img/suggestion.png);
-                            right: -63px;
-                            bottom: 0;
-                        }
-                    }
-                    &:nth-child(even) {
-                        padding-left: 14%;
-                        background: #FDF2E3;
-                        &::before {
-                            background-image: url(../../assests/img/webinar.png);
-                            left: -63px;
-                            bottom: 0;
-                        }
-                    }
-                }
-            }
-        }
         .feature-container {
             border-radius: 5px;
             .buttons {
@@ -208,7 +150,7 @@
                         margin-top: 1rem;
                         li {
                             position: relative;
-                            padding-left: 16px;
+                            padding-left: 13px;
                             &::before {
                                 content: '>';
                                 position: absolute;
@@ -527,6 +469,9 @@
                         margin-right: 3px;
                     }
                 }
+                img {
+                    width: 100%;
+                }
             }
         }
 
@@ -552,6 +497,30 @@
                     margin: 0 auto;
                 }
             }
+        }
+    }
+}
+
+.profile {
+    .profile-form {
+        .input-container {
+            width: 48%;
+            label {
+                margin-bottom: 10px;
+                color: #000;
+                font-size: 18px;
+            }
+        }
+        .text-container {
+            width: 100%;
+        }
+        input, textarea {
+            background: linear-gradient(0deg, #EDF2F7, #EDF2F7), #FFFFFF;
+            border: 1px solid #E0E4EC;
+            outline: none;
+            resize: none;
+            padding: 10px 15px;
+            font-size: 16px;
         }
     }
 }

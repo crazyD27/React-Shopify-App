@@ -27,7 +27,7 @@ const Home = () => {
                                     <p>Promote your affiliate programe and get quick support</p>
                                 </div>
                                 <div className="buttons mt-3 mt-lg-0">
-                                    <Link to="/" className="button">View Info</Link>
+                                    <Link to="/" className="button button-blue">View Info</Link>
                                 </div>
                             </div>
                             <div className="customer-box col p-3 mb-4">
@@ -36,7 +36,7 @@ const Home = () => {
                                     <p>Promote your affiliate programe and get quick support</p>
                                 </div>
                                 <div className="buttons mt-3 mt-lg-0">
-                                    <Link to="/" className="button">View Info</Link>
+                                    <Link to="/" className="button button blue">View Info</Link>
                                 </div>
                             </div>
                             <div className="customer-box col p-3 mb-md-4">

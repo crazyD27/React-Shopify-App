@@ -10,14 +10,14 @@ function Analytics() {
     <div className="analytics p-4">
         <MenuBar />
         <div className="analytics-container d-flex justify-content-between mt-4">
-            <div className="analytics-status bg-light p-4 col-8">
+            <div className="analytics-status bg-light p-4 col-7">
                 <h3 className='fw-bold'>Analytics</h3>
                 <p className='mb-5'>Status</p>
                 <div className="graph">
                     <img src={AnalyticsGraph} alt="graph" />
                 </div>
             </div>
-            <div className="analytics-overview bg-light p-3 col-3">
+            <div className="analytics-overview bg-light p-3 col-4">
                 <h3>Activity Overview</h3>
                 <p className=' mb-4'><img className='me-3' src={ArrowUp} alt="arraw" />16% this month</p>
                 <div className="analytics-list mt-3">

@@ -1,15 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import MenuBar from '../navbar/Navbar';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
+import UserContext from '../context/UserContext';
+import axios from 'axios';
 
 import Edit from '../../assests/img/edit.png';
 import Delete from '../../assests/img/delete.svg'
 import './pages.scss';
 
 const CampaignManage = () => {
+    const {userToken} = useContext(UserContext);
+
+    useEffect(() => {
+        setTimeout(() => {
+            axios.post('https://api.myrefera.com/campaign/list/',{
+                headers: {
+                    Authorization: `Token ${userToken}`
+                }
+            })
+            .then(function (response) {
+                console.log("Campaign List", response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }, 3000)
+    }, [])
 
   return (
     <div className="campaign-manage-container p-3">

@@ -12,7 +12,7 @@ import Analytics from '../pages/Analytics';
 import Sales from '../pages/Sales';
 import './sidebar.scss';
 import axios from 'axios';
-import {useAppBridge} from "@shopify/app-bridge-react";
+import Profile from '../pages/Profile';
 
 // Images
 import CampaignOverview from '../../assests/img/campaign-over.png';
@@ -22,7 +22,7 @@ import MarketPlace from '../../assests/img/marketplace.png';
 import Coupon from '../../assests/img/coupon.png';
 import AnalyticsImg from '../../assests/img/analytics.png';
 import SalesImg from '../../assests/img/sales.png';
-import Profile from '../../assests/img/profile.png';
+import ProfileImg from '../../assests/img/profile.png';
 
 const SideBar = () => {
 
@@ -89,7 +89,7 @@ const SideBar = () => {
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link className="text-white py-2 mb-2" eventKey="eighth">
-                                <img src={Profile} className="me-2" alt='menu-img' />
+                                <img src={ProfileImg} className="me-2" alt='menu-img' />
                                 Profile
                             </Nav.Link>
                         </Nav.Item>
@@ -117,6 +117,9 @@ const SideBar = () => {
                     </Tab.Pane>
                     <Tab.Pane eventKey="seventh" className='bg-light'>
                         <Sales />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="eighth" className='bg-light'>
+                        <Profile />
                     </Tab.Pane>
                 </Tab.Content>
                 </Col>

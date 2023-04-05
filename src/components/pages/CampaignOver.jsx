@@ -38,7 +38,7 @@ const CampaignNew = () => {
     useEffect(() => {
         console.log("TOKEN APIIII")
         axios.post('https://api.myrefera.com/campaign/get/token/', {
-        shop_name: localStorage.getItem('shop_url')
+            shop_name: localStorage.getItem('shop_url')
         })
         .then(function (response) {
             console.log("Shop Token", response);
@@ -203,7 +203,7 @@ const CampaignNew = () => {
                         </div>
                     </div>
                 </div>
-                <div className="feature-bottom p-3 mt-3 d-flex justify-content-between align-items-center">
+                <div className="feature-bottom p-3 pt-4 mt-3 d-flex justify-content-between align-items-center">
                     <div className="buttons">
                         <Link to='/' className='button button-blue'>View All</Link>
                     </div>
