@@ -50,7 +50,7 @@ const CampaignManage = () => {
                 console.log(error);
             })
         }
-    }, [])
+    }, [token])
 
   return (
     <div className="campaign-manage-container p-3">

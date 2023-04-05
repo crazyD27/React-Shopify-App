@@ -79,7 +79,7 @@ const CampaignNew = () => {
                 console.log(error);
             })
         }
-    }, [])
+    }, [token])
     
   return (
     <div className="campaign-over p-3">

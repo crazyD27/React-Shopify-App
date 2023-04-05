@@ -70,7 +70,7 @@ const CampaignOver = () => {
                     console.log(error);
                 })
         }
-    }, [])
+    }, [token])
 
     const createNewCampaign = (e) => {
         e.preventDefault();
@@ -119,7 +119,7 @@ const CampaignOver = () => {
               console.log(error);
           })
         }
-      }, [productName]);
+      }, [productName, token]);
 
       console.log("prodDesc",prodDesc)
 
