@@ -21,7 +21,7 @@ const CampaignManage = () => {
     console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
 
     useEffect(() => {
-        if(token != "") {
+        if(token && token !== "") {
             axios.get(API.BASE_URL + 'list/',{
                 headers: {
                     Authorization: `Token ${token}`

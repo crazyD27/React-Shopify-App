@@ -56,7 +56,7 @@ const CampaignOver = () => {
     console.log("selected-date", selectedDate)
 
     useEffect(() => {
-        if(token != "") {
+        if(token && token !== "") {
             axios.get(API.BASE_URL + 'product/list/',{
                 headers: {
                     Authorization: `Token ${token}`

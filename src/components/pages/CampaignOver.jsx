@@ -20,7 +20,6 @@ import Question from '../../assests/img/question.png';
 const CampaignNew = () => {
     const {setUserToken, setInfluenceList} = useContext(UserContext);
     const [countCamp, setCountCamp] = useState([]);
-    const token = localStorage.getItem('Token')
     
     useEffect(() => {
         console.log('///////////////////////////////');
@@ -61,8 +60,11 @@ const CampaignNew = () => {
         })
     }, [])
 
+
+    const token = localStorage.getItem('Token')
+
     useEffect(() => {
-        if(token != "") {
+        if(token && token !== "") {
             axios.get(API.BASE_URL + 'count/',{
                 headers: {
                     Authorization: 'Token ' + localStorage.getItem('Token')
