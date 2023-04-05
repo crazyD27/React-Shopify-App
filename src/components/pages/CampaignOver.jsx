@@ -34,6 +34,8 @@ const CampaignNew = () => {
         localStorage.setItem('shop_url', token)
         console.log('///////////////////////////////');
     }, [])
+
+    console.log("//////////////////////////////Campaign Over////////////////////////////////")
     
     useEffect(() => {
         console.log("TOKEN APIIII")
