@@ -130,7 +130,16 @@ const CampaignOver = () => {
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Offer to influencers</label>
-                    <input type="text" onChange={handleInfluenceOffer} value={influenceOffer} />
+                    <div className="input d-flex align-items-center">
+                        <span className='d-flex align-items-center justify-content-center me-4'>
+                            <input type="radio" id="percentage" name="percentagee" value="percentage" onChange={handleInfluenceOffer} />
+                            <label for="percentage">Percentage</label>
+                        </span>
+                        <span className='d-flex align-items-center justify-content-center'>
+                            <input type="radio" id="commission" name="percentagee" value="commission" onChange={handleInfluenceOffer} />
+                            <label for="commission">Commission</label>
+                        </span>
+                    </div>
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Produc Description</label>
@@ -147,7 +156,7 @@ const CampaignOver = () => {
                         ) : ""}
                     </select>
                 </div>
-                <div className="input-container d-flex flex-column mb-4">
+                <div className="input-container d-flex flex-column mb-4 prod-discount">
                     <label className="mb-3">Product discount</label>
                     <input type="text" onChange={handleProductDiscount} value={prodDiscount} />
                 </div>
@@ -169,10 +178,6 @@ const CampaignOver = () => {
                     })
                     ) : ""}
                     </select>
-                </div>
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Upload a image</label>
-                    <input type="text" />
                 </div>
                 
                 <div className="input-container d-flex flex-column mb-4">
