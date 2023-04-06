@@ -1,5 +1,8 @@
 .campaign-new {
     .campaign-new-container {
+        .influence-buttons {
+            border-bottom: 1px solid #d3d3d3;
+        }
         form {
             .input-container {
                 width: 48%;
@@ -145,6 +148,9 @@
                 }
             }
         }
+        .influen-list {
+			display: none;
+		}
     }
 }
 

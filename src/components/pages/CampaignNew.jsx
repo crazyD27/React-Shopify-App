@@ -19,29 +19,18 @@ const CampaignOver = () => {
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
     const [prodList, setProdList] = useState('')
-    const [prodDesc, setProdDesc] = useState([])
+    const [prodDesc, setProdDesc] = useState([]);
+    const [influListVisible, setInfluListVisible] = useState(false);
     const {userToken, influenceList} = useContext(UserContext)
 
     const token = localStorage.getItem("Token");
 
-    const handleProductChange = (event) => {
-        const options = event.target.options;
-        const selectedValues = [];
-        for (let i = 0; i < options.length; i++) {
-          if (options[i].selected) {
-            selectedValues.push(options[i].value);
-          }
-        }
-        setProductName(selectedValues);
-    }
-
-    const handleInputClick = () => {
-        setShowOptions(!showOptions);
+    const showInfluList = () => {
+        setInfluListVisible(true);
       }
     
-      const handleOptionClick = (event) => {
-        setProductName(event.target.getAttribute('value'));
-        setShowOptions(false);
+      const hideInfluList = () => {
+        setInfluListVisible(false);
       }
 
     const handleCampaignNameChange = (event) => {
@@ -125,7 +114,7 @@ const CampaignOver = () => {
             return axios
               .get(API.BASE_URL + "product/url/?product=" + product, {
                 headers: {
-                  Authorization: `Token ${token}`
+                  Authorization: `Token ${token}`,
                 },
               })
               .then((response) => {
@@ -149,6 +138,12 @@ const CampaignOver = () => {
         <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center mt-4">
             <h2 className='mb-3'>Campaign request form</h2>
             <p>Create a campaign list. Please fill the form to create new campaign</p>
+
+            <div className="buttons d-flex align-items-center justify-content-center w-100 pt-3 pb-4 influence-buttons">
+                <button onClick={showInfluList} className={influListVisible ? "button button-blue active me-4" : " button me-4"}>Show Influencer List</button>
+                <button onClick={hideInfluList} className={!influListVisible ? "button button-blue active me-4" : "button me-4"}>Show Campaign List</button> 
+            </div>
+            
             <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Campaign name</label>
@@ -241,7 +236,8 @@ const CampaignOver = () => {
                     ></textarea>
                 </div>
 
-                <div className="input-container d-flex flex-column mb-4">
+                {influListVisible && (
+                <div className="input-container d-flex flex-column mb-4 influen-list">
                     <label className="mb-3">Influencer from the list.</label>
                     <select onChange={handleInfluencerNameChange} value={influencerName}>
                     <option value="">---Select an option---</option>
@@ -256,6 +252,7 @@ const CampaignOver = () => {
                     ) : ""}
                     </select>
                 </div>
+                )}
                 
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Tracking coupon</label>
