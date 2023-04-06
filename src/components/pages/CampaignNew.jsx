@@ -84,13 +84,13 @@ const CampaignOver = () => {
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
             product: productName.toString(),
-            influencer_name: influencerName,
-            campaign_name: campaignName,
-            date: selectedDate,
-            coupon: selectedDate,
-            offer: influenceOffer,
-            product_discount: prodDiscount,
-            influencer_visit: influencerVisit
+            // influencer_name: influencerName,
+            campaign_name: campaignName.toString(),
+            date: selectedDate.toString(),
+            coupon: selectedDate.toString(),
+            offer: influenceOffer.toString(),
+            product_discount: prodDiscount.toString(),
+            influencer_visit: influencerVisit.toString()
         }, {
             headers: {
                 Authorization: `Token ${token}`
@@ -98,13 +98,6 @@ const CampaignOver = () => {
         })
         .then(function (response) {
             console.log("Created New Campaign", response);
-            setProductName('')
-            setInfluencerName('')
-            setCampaignName('')
-            setSelectedDate('')
-            setProdDiscount('')
-            setInfluenceOffer('')
-            setSelectedCoupon('')
             toast.success("New Campaign Created!");
         })
         .catch(function (error) {
@@ -152,6 +145,8 @@ const CampaignOver = () => {
 
       console.log("prodDesc",prodDesc)
 
+      console.log(influencerVisit)
+
   return (
     <div className="campaign-new p-4">
         <MenuBar />
@@ -173,11 +168,11 @@ const CampaignOver = () => {
                     <label className="mb-3">Influencer need to visit you</label>
                     <div className="input d-flex align-items-center">
                         <span className='d-flex align-items-center justify-content-center me-4'>
-                            <input type="radio" id="yes" name="fav_language" value="Yes" onChange={setInfluencerVisit} />
+                            <input type="radio" id="yes" name="fav_language" value="Yes" onChange={handleInfluencerVisit} />
                             <label for="yes">Yes</label>
                         </span>
                         <span className='d-flex align-items-center justify-content-center'>
-                            <input type="radio" id="no" name="fav_language" value="No" onChange={setInfluencerVisit} />
+                            <input type="radio" id="no" name="fav_language" value="No" onChange={handleInfluencerVisit} />
                             <label for="no">No</label>
                         </span>
                     </div>

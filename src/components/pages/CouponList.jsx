@@ -1,13 +1,32 @@
+import React, {useEffect, useState} from 'react';
+
 import MenuBar from '../navbar/Navbar';
 import { Link } from 'react-router-dom';
 import './pages.scss';
 import Plus from '../../assests/img/plus.png';
-import Download from '../../assests/img/download.png'
+import Download from '../../assests/img/download.png';
+import axios from 'axios';
+import { API } from '../../config/Api';
 
 // Images
 import Search from '../../assests/img/search.png';
 
 const CouponList = () => {
+    const token = localStorage.getItem("Token");
+    const[couponData, setCouponData] = useState([]);
+    useEffect(() => {
+        axios.get('https://api.myrefera.com/shopify/coupon/list/',{
+            headers: {
+                Authorization: `Token ${token}`
+        }})
+        .then(function (response) {
+            console.log("Coupon List", response);
+            setCouponData(response.data.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }, [token])
   return (
     <div className="coupon p-4">
         <MenuBar />
@@ -42,14 +61,18 @@ const CouponList = () => {
                     <th>Created at</th>
                     <th>Actions</th>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>No data available in table</td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                {couponData?.map((couponData, i) => {
+                    return(
+                        <tr key={i}>
+                            <td>{couponData.id}</td>
+                            <td>{couponData.coupon}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{couponData.created_at}</td>
+                            <td></td>
+                        </tr>
+                    )
+                })}
             </table>
         </div>
     </div>

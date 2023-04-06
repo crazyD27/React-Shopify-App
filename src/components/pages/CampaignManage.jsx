@@ -22,7 +22,7 @@ const CampaignManage = () => {
     console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
 
     useEffect(() => {
-        axios.get(API.BASE_URL + 'list/',{
+        axios.get(API.BASE_URL + 'active/',{
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -60,7 +60,8 @@ const CampaignManage = () => {
         })
         .then(function (response) {
             console.log("Delete List", response);
-            toast.success("Campaign Deleted!")
+            toast.success("Campaign Deleted!");
+            window.location.reload();
         })
         .catch(function (error) {
             console.log(error);
