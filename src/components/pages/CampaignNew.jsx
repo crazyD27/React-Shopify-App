@@ -108,6 +108,21 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+          document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
+
+    const handleClickOutside = (event) => {
+        const input = document.querySelector(".test input");
+        const list = document.querySelector(".test ul");
+        if (!input?.contains(event.target) && !list?.contains(event.target)) {
+          setShowList(false);
+        }
+      };
+
+    useEffect(() => {
         const urls = [];
         Promise.all(
           productName.map((product) => {
@@ -119,8 +134,8 @@ const CampaignOver = () => {
               })
               .then((response) => {
                 return {
-                  URL: response.data.URL,
-                  description: response.data.description,
+                  URL: response?.data.URL,
+                  description: response?.data.description,
                 };
               })
               .catch((error) => console.log(error));
@@ -128,7 +143,7 @@ const CampaignOver = () => {
         ).then((responses) => {
           setProdDesc(responses);
         });
-      }, [productName, token]);
+    }, [productName, token]);
 
       console.log("prodDesc",prodDesc)
 
@@ -180,7 +195,7 @@ const CampaignOver = () => {
                     </div>
                 </div>
 
-                <div className="input-container d-flex flex-column mb-4 drop">
+                <div className="input-container test d-flex flex-column mb-4 drop">
                     <label className="mb-3">Product</label>
                     <input
                     type="text"
