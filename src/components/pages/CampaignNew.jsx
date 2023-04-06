@@ -13,7 +13,7 @@ const CampaignOver = () => {
     const [influencerName, setInfluencerName] = useState(null);
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
-    const [showOptions, setShowOptions] = useState(false);
+    const [influencerVisit, setInfluencerVisit] = useState('');
     const [showList, setShowList] = useState(false);
     const [prodDiscount, setProdDiscount] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
@@ -27,7 +27,7 @@ const CampaignOver = () => {
 
     const showInfluList = () => {
         setInfluListVisible(true);
-      }
+    }
     
       const hideInfluList = () => {
         setInfluListVisible(false);
@@ -35,6 +35,10 @@ const CampaignOver = () => {
 
     const handleCampaignNameChange = (event) => {
         setCampaignName(event.target.value);
+    }
+
+    const handleInfluencerVisit = (event) => {
+        setInfluencerVisit(event.target.value);
     }
 
     const handleInfluencerNameChange = (event) => {
@@ -79,13 +83,14 @@ const CampaignOver = () => {
     const createNewCampaign = (e) => {
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
-            product: productName,
+            product: productName.toString(),
             influencer_name: influencerName,
             campaign_name: campaignName,
             date: selectedDate,
             coupon: selectedDate,
             offer: influenceOffer,
-            product_discount: prodDiscount
+            product_discount: prodDiscount,
+            influencer_visit: ''
         }, {
             headers: {
                 Authorization: `Token ${token}`
@@ -168,11 +173,11 @@ const CampaignOver = () => {
                     <label className="mb-3">Influencer need to visit you</label>
                     <div className="input d-flex align-items-center">
                         <span className='d-flex align-items-center justify-content-center me-4'>
-                            <input type="radio" id="yes" name="fav_language" value="Yes" />
+                            <input type="radio" id="yes" name="fav_language" value="Yes" onChange={setInfluencerVisit} />
                             <label for="yes">Yes</label>
                         </span>
                         <span className='d-flex align-items-center justify-content-center'>
-                            <input type="radio" id="no" name="fav_language" value="No" />
+                            <input type="radio" id="no" name="fav_language" value="No" onChange={setInfluencerVisit} />
                             <label for="no">No</label>
                         </span>
                     </div>
