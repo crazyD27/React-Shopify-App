@@ -52,7 +52,7 @@ const CampaignManage = () => {
 
     function deleteCampaign(value) {
         console.log("Test" ,value)
-        axios.delete(API.BASE_URL + 'update/' + value,{
+        axios.delete(API.BASE_URL + 'delete/' + value,{
             headers: {
                 Authorization: `Token ${token}`
             }
