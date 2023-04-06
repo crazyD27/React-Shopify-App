@@ -9,23 +9,40 @@ import { API } from '../../config/Api';
 // Images
 
 const CampaignOver = () => {
-    const [productName, setProductName] = useState('');
+    const [productName, setProductName] = useState([]);
     const [influencerName, setInfluencerName] = useState('');
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
-    
+    const [showOptions, setShowOptions] = useState(false);
+    const [showList, setShowList] = useState(false);
     const [prodDiscount, setProdDiscount] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
     const [prodList, setProdList] = useState('')
-    const [prodDesc, setProdDesc] = useState('')
+    const [prodDesc, setProdDesc] = useState([])
     const {userToken, influenceList} = useContext(UserContext)
 
     const token = localStorage.getItem("Token");
 
     const handleProductChange = (event) => {
-        setProductName(event.target.value);
+        const options = event.target.options;
+        const selectedValues = [];
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].selected) {
+            selectedValues.push(options[i].value);
+          }
+        }
+        setProductName(selectedValues);
     }
+
+    const handleInputClick = () => {
+        setShowOptions(!showOptions);
+      }
+    
+      const handleOptionClick = (event) => {
+        setProductName(event.target.getAttribute('value'));
+        setShowOptions(false);
+      }
 
     const handleCampaignNameChange = (event) => {
         setCampaignName(event.target.value);
@@ -56,7 +73,6 @@ const CampaignOver = () => {
     console.log("selected-date", selectedDate)
 
     useEffect(() => {
-        if(token && token !== "") {
             axios.get(API.BASE_URL + 'product/list/',{
                 headers: {
                     Authorization: `Token ${token}`
@@ -69,8 +85,7 @@ const CampaignOver = () => {
                 .catch(function (error) {
                     console.log(error);
                 })
-        }
-    }, [token])
+    }, [])
 
     const createNewCampaign = (e) => {
         e.preventDefault();
@@ -104,21 +119,26 @@ const CampaignOver = () => {
     }
 
     useEffect(() => {
-        console.log("PRODUCT", productName)
-        if (productName) {
-          axios.get(API.BASE_URL + 'product/url/?product=' + productName,{
-              headers: {
+        const urls = [];
+        Promise.all(
+          productName.map((product) => {
+            return axios
+              .get(API.BASE_URL + "product/url/?product=" + product, {
+                headers: {
                   Authorization: `Token ${token}`
-              }
+                },
+              })
+              .then((response) => {
+                return {
+                  URL: response.data.URL,
+                  description: response.data.description,
+                };
+              })
+              .catch((error) => console.log(error));
           })
-          .then(function (response) {
-              console.log("Get Product URL", response);
-              setProdDesc(response.data)
-          })
-          .catch(function (error) {
-              console.log(error);
-          })
-        }
+        ).then((responses) => {
+          setProdDesc(responses);
+        });
       }, [productName, token]);
 
       console.log("prodDesc",prodDesc)
@@ -164,33 +184,63 @@ const CampaignOver = () => {
                         </span>
                     </div>
                 </div>
-                <div className="input-container d-flex flex-column mb-4">
+
+                <div className="input-container d-flex flex-column mb-4 drop">
                     <label className="mb-3">Product</label>
-                    <select  onChange={handleProductChange} value={productName}>
-                    <option value="">---Select an option---</option>
-                        {prodList?.length > 0 ? (
-                            prodList?.map((name, i) => {
-                            return(
-                                <>
-                                    <option value={name.title} key={i}>{name.title}</option>
-                                </>
-                            )
-                        })
-                        ) : ""}
-                    </select>
+                    <input
+                    type="text"
+                    placeholder="---Select an option---"
+                    onClick={() => setShowList(!showList)}
+                    value={productName?.join(", ")}
+                    />
+                    {showList && (
+                    <ul>
+                        {prodList?.map((name, i) => (
+                        <li
+                            key={i}
+                            onClick={() => {
+                            setProductName((prevValues) =>
+                                prevValues.includes(name.title)
+                                ? prevValues.filter((value) => value !== name.title)
+                                : [...prevValues, name.title]
+                            );
+                            setShowList(false);
+                            }}
+                        >
+                            {name.title}
+                        </li>
+                        ))}
+                    </ul>
+                    )}
                 </div>
+
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product URL</label>
-                    <textarea name="" id="" cols="30" rows="1" value={prodDesc?.URL} style={{color: '#666'}}></textarea>
+                    <textarea
+                        name=""
+                        id=""
+                        cols="30"
+                        value={prodDesc.map((desc) => desc.URL).join('\n')}
+                        style={{ color: '#666' }}
+                    ></textarea>
                 </div>
+
                 <div className="input-container d-flex flex-column mb-4 prod-discount">
                     <label className="mb-3">Product discount</label>
                     <input type="text" onChange={handleProductDiscount} value={prodDiscount} />
                 </div>
+                
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Description</label>
-                    <textarea name="" id="" cols="30" rows="1" value={prodDesc?.description} style={{color: '#666'}}></textarea>
+                    <textarea
+                        name=""
+                        id=""
+                        cols="30"
+                        value={prodDesc.map((desc) => desc.description).join('\n')}
+                        style={{ color: '#666' }}
+                    ></textarea>
                 </div>
+
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Influencer from the list.</label>
                     <select onChange={handleInfluencerNameChange} value={influencerName}>
