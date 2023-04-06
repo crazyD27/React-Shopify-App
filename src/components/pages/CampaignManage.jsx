@@ -7,6 +7,7 @@ import Tab from 'react-bootstrap/Tab';
 import UserContext from '../context/UserContext';
 import axios from 'axios';
 import { API } from '../../config/Api';
+import { toast } from 'react-toastify';
 
 import Edit from '../../assests/img/edit.png';
 import Delete from '../../assests/img/delete.svg'
@@ -59,6 +60,7 @@ const CampaignManage = () => {
         })
         .then(function (response) {
             console.log("Delete List", response);
+            toast.success("Campaign Deleted!")
         })
         .catch(function (error) {
             console.log(error);

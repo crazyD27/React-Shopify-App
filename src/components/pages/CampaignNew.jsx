@@ -66,7 +66,7 @@ const CampaignOver = () => {
     console.log("selected-date", selectedDate)
 
     useEffect(() => {
-        axios.get(API.BASE_URL + 'product/list/',{
+        axios.get(API.BASE_URL + 'product/active/',{
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -90,7 +90,7 @@ const CampaignOver = () => {
             coupon: selectedDate,
             offer: influenceOffer,
             product_discount: prodDiscount,
-            influencer_visit: ''
+            influencer_visit: influencerVisit
         }, {
             headers: {
                 Authorization: `Token ${token}`
