@@ -18,7 +18,7 @@ const CampaignOver = () => {
     const [prodDiscount, setProdDiscount] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
-    const [prodList, setProdList] = useState([])
+    const [prodList, setProdList] = useState('')
     const [prodDesc, setProdDesc] = useState([]);
     const [influListVisible, setInfluListVisible] = useState(false);
     const {userToken, influenceList} = useContext(UserContext)
@@ -66,14 +66,14 @@ const CampaignOver = () => {
     console.log("selected-date", selectedDate)
 
     useEffect(() => {
-        axios.get(API.BASE_URL + 'product/list',{
+        axios.get(API.BASE_URL + 'product/active/',{
             headers: {
                 Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
             console.log("Product List", response);
-            setProdList(response.data.data)
+            setProdList(response.data.success.products)
         })
         .catch(function (error) {
             console.log(error);
@@ -208,21 +208,21 @@ const CampaignOver = () => {
                     onClick={() => setShowList(!showList)}
                     value={productName?.join(", ")}
                     />
-                    {showList && prodList.length > 0 && (
+                    {showList && (
                     <ul>
                         {prodList?.map((name, i) => (
                         <li
                             key={i}
                             onClick={() => {
                             setProductName((prevValues) =>
-                                prevValues.includes(name.campaign_name)
-                                ? prevValues.filter((value) => value !== name.campaign_name)
-                                : [...prevValues, name.campaign_name]
+                                prevValues.includes(name.title)
+                                ? prevValues.filter((value) => value !== name.title)
+                                : [...prevValues, name.title]
                             );
                             setShowList(false);
                             }}
                         >
-                            {name.campaign_name}
+                            {name.title}
                         </li>
                         ))}
                     </ul>
