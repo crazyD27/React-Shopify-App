@@ -79,7 +79,7 @@ const CampaignOver = () => {
     const createNewCampaign = (e) => {
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
-            product: productName.toString(),
+            product: productName,
             influencer_name: influencerName,
             campaign_name: campaignName,
             date: selectedDate,
