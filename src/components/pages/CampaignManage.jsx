@@ -23,7 +23,7 @@ const CampaignManage = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'list/',{
             headers: {
-                Authorization: `Token 7e6170e28da6350da0ecdb0d08813cc9fc7e7980`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -37,7 +37,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: `Token 7e6170e28da6350da0ecdb0d08813cc9fc7e7980`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -54,7 +54,7 @@ const CampaignManage = () => {
         console.log("Test" ,value)
         axios.delete(API.BASE_URL + 'update/' + value,{
             headers: {
-                Authorization: `Token 7e6170e28da6350da0ecdb0d08813cc9fc7e7980`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
