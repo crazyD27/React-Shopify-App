@@ -21,36 +21,49 @@ const CampaignManage = () => {
     console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
 
     useEffect(() => {
-        if(token && token !== "") {
-            axios.get(API.BASE_URL + 'list/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            })
-            .then(function (response) {
-                console.log("Campaign List", response);
-                setCampList(response.data.data);
-                console.log(campList)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    
-            axios.get(API.BASE_URL + 'pending/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            })
-            .then(function (response) {
-                console.log("Campaign List", response);
-                setCampListPending(response.data.data);
-                console.log(campListPending)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        }
+        axios.get(API.BASE_URL + 'list/',{
+            headers: {
+                Authorization: `Token 7e6170e28da6350da0ecdb0d08813cc9fc7e7980`
+            }
+        })
+        .then(function (response) {
+            console.log("Campaign List", response);
+            setCampList(response.data.data);
+            console.log(campList)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
+        axios.get(API.BASE_URL + 'pending/',{
+            headers: {
+                Authorization: `Token 7e6170e28da6350da0ecdb0d08813cc9fc7e7980`
+            }
+        })
+        .then(function (response) {
+            console.log("Campaign List", response);
+            setCampListPending(response.data.data);
+            console.log(campListPending)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }, [token])
+
+    function deleteCampaign(value) {
+        console.log("Test" ,value)
+        axios.delete(API.BASE_URL + 'update/' + value,{
+            headers: {
+                Authorization: `Token 7e6170e28da6350da0ecdb0d08813cc9fc7e7980`
+            }
+        })
+        .then(function (response) {
+            console.log("Delete List", response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
 
   return (
     <div className="campaign-manage-container p-3">
@@ -87,7 +100,7 @@ const CampaignManage = () => {
                                             <td className='category'>{name.product_discount}</td>
                                             <td>
                                                 <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                                <button><img src={Delete} alt='delete' />Delete</button>
+                                                <button onClick={()=> {deleteCampaign(name.id)}}><img src={Delete} alt='delete' />Delete</button>
                                             </td>
                                         </tr>
                                     )
@@ -120,7 +133,7 @@ const CampaignManage = () => {
                                             <td className='category'>{name.product_discount}</td>
                                             <td>
                                                 <button className='me-3'><img src={Edit} alt='edit' />Edit</button>
-                                                <button><img src={Delete} alt='delete' />Delete</button>
+                                                <button onClick={()=> {deleteCampaign(name.id)}}><img src={Delete} alt='delete' />Delete</button>
                                             </td>
                                         </tr>
                                     )

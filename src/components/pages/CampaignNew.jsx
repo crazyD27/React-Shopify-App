@@ -10,7 +10,7 @@ import { API } from '../../config/Api';
 
 const CampaignOver = () => {
     const [productName, setProductName] = useState([]);
-    const [influencerName, setInfluencerName] = useState('');
+    const [influencerName, setInfluencerName] = useState(null);
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
     const [showOptions, setShowOptions] = useState(false);
@@ -62,24 +62,24 @@ const CampaignOver = () => {
     console.log("selected-date", selectedDate)
 
     useEffect(() => {
-            axios.get(API.BASE_URL + 'product/list/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-                })
-                .then(function (response) {
-                    console.log("Product List", response);
-                    setProdList(response.data.success.products)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+        axios.get(API.BASE_URL + 'product/list/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Product List", response);
+            setProdList(response.data.success.products)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }, [])
 
     const createNewCampaign = (e) => {
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
-            product: productName,
+            product: productName.toString(),
             influencer_name: influencerName,
             campaign_name: campaignName,
             date: selectedDate,
