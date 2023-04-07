@@ -115,7 +115,7 @@ const CampaignOver = () => {
         axios.post(API.BASE_URL + 'inflcampaign/create/', {
             product: productName.toString(),
             campaign_name: campaignName.toString(),
-            influencer_name: influencerName.toString(),
+            influencer_name: influencerName,
             date: selectedDate.toString(),
             coupon: selectedDate.toString(),
             offer: influenceOffer.toString(),
