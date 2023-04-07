@@ -280,7 +280,7 @@ const CampaignOver = () => {
                      ))}
                  </table>
                    ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
-                    <button onClick={handleContinue }>Continue</button>
+                    <button onClick={handleContinue } className='button button-blue'>Continue</button>
                 </div>
             )}
 
