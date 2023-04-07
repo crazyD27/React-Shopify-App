@@ -1,7 +1,14 @@
 .campaign-new {
+    min-height: 100vh;
     .campaign-new-container {
+        min-height: 82vh;
         .influence-buttons {
-            border-bottom: 1px solid #d3d3d3;
+            button {
+                padding: 20px 20px;
+                min-width: 35%;
+                font-size: 1.6vw;
+                min-height: 200px;
+            }
         }
         form {
             .input-container {
@@ -153,6 +160,38 @@
         .influen-list {
 			display: none;
 		}
+        .influencer-list {
+            .button {
+                min-width: unset;
+            }
+            table {
+                width: 100%;
+                border-bottom: 1px solid #e1e0e2;
+                margin: 3rem 0;
+                tr {
+                    border-right: 1px solid #e1e0e2;
+                    td {
+                        padding: 1px 8px;
+                    }
+                    th, td {
+                        border-right: 1px solid #e1e0e2;
+                        &:last-child {
+                            border-right: none;
+                        }
+                    }
+                    td {
+                        border-left: 1px solid #e1e0e2;
+                    }
+                    &:first-child {
+                        border: 1px solid #e1e0e2;
+                        th {
+                            padding: 10px 8px;
+                            
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
