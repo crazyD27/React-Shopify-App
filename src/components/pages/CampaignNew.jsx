@@ -404,7 +404,7 @@ const CampaignOver = () => {
 
             {showCampaignList && (
                 <>
-                    <button onClick={handleBack} className={"button button-blue"}>
+                    <button onClick={handleBack} className={"button button-blue d-flex me-auto"}>
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "25px", height: "25px", marginRight: 20 }} />
                         Back
                     </button>
