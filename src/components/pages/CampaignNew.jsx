@@ -103,7 +103,7 @@ const CampaignOver = () => {
         .catch(function (error) {
             console.log(error);
         })
-    }, [])
+    }, [token])
 
     const createNewCampaign = (e) => {
         e.preventDefault();
@@ -174,7 +174,7 @@ const CampaignOver = () => {
         return () => {
           document.removeEventListener("click", handleClickOutside);
         };
-    }, []);
+    }, [token]);
 
     const handleClickOutside = (event) => {
         const input = document.querySelector(".test input");
