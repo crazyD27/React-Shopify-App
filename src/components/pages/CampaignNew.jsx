@@ -84,7 +84,6 @@ const CampaignOver = () => {
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
             product: productName.toString(),
-            // influencer_name: influencerName,
             campaign_name: campaignName.toString(),
             date: selectedDate.toString(),
             coupon: selectedDate.toString(),
@@ -99,6 +98,44 @@ const CampaignOver = () => {
         .then(function (response) {
             console.log("Created New Campaign", response);
             toast.success("New Campaign Created!");
+            setProductName('');
+            setCampaignName('');
+            setSelectedDate('');
+            setInfluenceOffer('');
+            setProdDiscount('');
+            setInfluencerVisit('');
+        })
+        .catch(function (error) {
+        console.log(error);
+        })
+    }
+
+    const createIfluenceCampaign = (e) => {
+        e.preventDefault();
+        axios.post(API.BASE_URL + 'inflcampaign/create/', {
+            product: productName.toString(),
+            campaign_name: campaignName.toString(),
+            influencer_name: influencerName.toString(),
+            date: selectedDate.toString(),
+            coupon: selectedDate.toString(),
+            offer: influenceOffer.toString(),
+            product_discount: prodDiscount.toString(),
+            influencer_visit: influencerVisit.toString()
+        }, {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Created New Campaign", response);
+            toast.success("New Campaign Created!");
+            setProductName('');
+            setCampaignName('');
+            setSelectedDate('');
+            setInfluenceOffer('');
+            setProdDiscount('');
+            setInfluencerVisit('');
+            setInfluencerName('');
         })
         .catch(function (error) {
         console.log(error);
@@ -279,7 +316,8 @@ const CampaignOver = () => {
                 </div>
                 
                 <div className="buttons d-flex justify-content-between">
-                    <button className='button button-blue' onClick={createNewCampaign}>Send request button</button>
+                {influListVisible ? (<button className='button button-blue' onClick={createIfluenceCampaign}>Send request button</button>) : <button className='button button-blue' onClick={createNewCampaign}>Send request button</button>}
+                    
                     <button className='button'>Save in draft</button>
                     <button className='button'>Request sent</button>
                 </div>

@@ -61,7 +61,9 @@ const CampaignManage = () => {
         .then(function (response) {
             console.log("Delete List", response);
             toast.success("Campaign Deleted!");
-            window.location.reload();
+            // Update the state of the campaign lists
+            setCampList(campList.filter(campaign => campaign.id !== value));
+            setCampListPending(campListPending.filter(campaign => campaign.id !== value));
         })
         .catch(function (error) {
             console.log(error);
