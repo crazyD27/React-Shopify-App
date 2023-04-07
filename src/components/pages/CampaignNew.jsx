@@ -68,7 +68,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 7350ebf4509bd2efc36041919596206d9dccb0c0`
             }
         })
         .then(function (response) {
@@ -92,7 +92,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 7350ebf4509bd2efc36041919596206d9dccb0c0`
             }
         })
         .then(function (response) {
@@ -123,7 +123,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit.toString()
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 7350ebf4509bd2efc36041919596206d9dccb0c0`
             }
         })
         .then(function (response) {
@@ -164,7 +164,7 @@ const CampaignOver = () => {
             return axios
               .get(API.BASE_URL + "product/url/?product=" + product, {
                 headers: {
-                  Authorization: `Token ${token}`,
+                  Authorization: `Token 7350ebf4509bd2efc36041919596206d9dccb0c0`,
                 },
               })
               .then((response) => {
