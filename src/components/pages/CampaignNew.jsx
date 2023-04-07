@@ -113,14 +113,14 @@ const CampaignOver = () => {
     const createIfluenceCampaign = (e) => {
         e.preventDefault();
         axios.post(API.BASE_URL + 'inflcampaign/create/', {
-            product: productName.toString(),
-            campaign_name: campaignName.toString(),
+            product: productName,
+            campaign_name: campaignName,
             influencer_name: influencerName,
-            date: selectedDate.toString(),
-            coupon: selectedDate.toString(),
-            offer: influenceOffer.toString(),
-            product_discount: prodDiscount.toString(),
-            influencer_visit: influencerVisit.toString()
+            date: selectedDate,
+            coupon: selectedDate,
+            offer: influenceOffer,
+            product_discount: prodDiscount,
+            influencer_visit: influencerVisit
         }, {
             headers: {
                 Authorization: `Token 7350ebf4509bd2efc36041919596206d9dccb0c0`
