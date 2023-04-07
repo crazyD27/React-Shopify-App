@@ -449,7 +449,7 @@ const CampaignOver = () => {
                             type="text"
                             placeholder="---Select an option---"
                             onClick={() => setShowList(!showList)}
-                            value={productName?.join(", ")}
+                            value={productName}
                             />
                             {showList && (
                             <ul>
