@@ -84,12 +84,12 @@ const CampaignOver = () => {
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
             product: productName,
-            campaign_name: campaignName.toString(),
-            date: selectedDate.toString(),
-            coupon: selectedDate.toString(),
-            offer: influenceOffer.toString(),
-            product_discount: prodDiscount.toString(),
-            influencer_visit: influencerVisit.toString()
+            campaign_name: campaignName,
+            date: selectedDate,
+            coupon: selectedDate,
+            offer: influenceOffer,
+            product_discount: prodDiscount,
+            influencer_visit: influencerVisit
         }, {
             headers: {
                 Authorization: `Token ${token}`
