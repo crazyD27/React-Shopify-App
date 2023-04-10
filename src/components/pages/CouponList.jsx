@@ -66,6 +66,7 @@ const CouponList = () => {
         })
         .catch(function (error) {
             console.log(error);
+            toast.warn("Unable to Delete the Coupon")
         })
         .finally(() => setLoading(false));
     }
@@ -110,10 +111,11 @@ const CouponList = () => {
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
-                setCouponData(response.data.coupon)
+                setCouponData(response.data.coupon);
             })
             .catch(function (error) {
                 console.log(error);
+                toast.warn("Fields should not be empty!");
             })
             couponCross()
         })
