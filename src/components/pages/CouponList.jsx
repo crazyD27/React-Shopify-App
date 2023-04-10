@@ -93,7 +93,8 @@ const CouponList = () => {
         .finally(() => setLoading(false));
     }
 
-    const editCoupon = (value) => {
+    const editCoupon = (value, e) => {
+        e.preventDefault();
         setLoading(true);
         axios.post(API.SHOPIFY_URL +  'coupon/edit/?price=' + value, {
             discount_code: couponDesc,

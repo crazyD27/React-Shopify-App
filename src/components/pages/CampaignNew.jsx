@@ -134,6 +134,7 @@ const CampaignOver = () => {
             setProdDiscount('');
             setInfluencerVisit('');
             setInfluencerName('');
+            setProductIds([])
         })
         .catch(function (error) {
         console.log(error);
@@ -170,6 +171,7 @@ const CampaignOver = () => {
             setProdDiscount('');
             setInfluencerVisit('');
             setInfluencerName('');
+            setProductIds([])
         })
         .catch(function (error) {
         console.log(error);
