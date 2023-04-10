@@ -10,13 +10,14 @@ import { API } from '../../config/Api';
 import { toast } from 'react-toastify';
 
 import Edit from '../../assests/img/edit.png';
-import Delete from '../../assests/img/delete.svg'
+import Delete from '../../assests/img/delete.svg';
 import './pages.scss';
 
 const CampaignManage = () => {
     const {userToken} = useContext(UserContext);
     const [campList, setCampList] = useState([])
     const [campListPending, setCampListPending] = useState([])
+    const [loading, setLoading] = useState(false);
     const token = localStorage.getItem('Token');
     console.log("User Token", userToken)
     console.log("localStorage.getItem('Token')", localStorage.getItem('Token'))
@@ -52,6 +53,7 @@ const CampaignManage = () => {
     }, [token])
 
     function deleteCampaign(value) {
+        setLoading(true);
         console.log("Test" ,value)
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
@@ -68,11 +70,13 @@ const CampaignManage = () => {
         .catch(function (error) {
             console.log(error);
         })
+        .finally(() => setLoading(false));
     }
 
   return (
     <div className="campaign-manage-container p-3">
         <MenuBar />
+        {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
         <h2 className='text-center my-5'>Manage Campaign</h2>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Col sm={12}>

@@ -1,5 +1,6 @@
 .campaign-new {
     min-height: 100vh;
+    position: relative;
     .campaign-new-container {
         min-height: 82vh;
         .influence-buttons {
@@ -196,6 +197,7 @@
 }
 
 .campaign-over {
+    position: relative;
     .campaign-over-container {
         .overview-container {
             border-radius: 10px;
@@ -336,6 +338,7 @@
 }
 
 .campaign-manage-container {
+    position: relative;
     .tab-header {
         .nav-link {
             display: flex;
@@ -375,6 +378,7 @@
 }
 
 .campaign-market {
+    position: relative;
     .campaign-market-container {
         h4 {
             background: #1976D2;
@@ -424,6 +428,7 @@
 }
 
 .coupon {
+    position: relative;
     .coupon-container {
         .filters {
             .input-container {
@@ -509,7 +514,78 @@
                     }
                 }
             }
+            td {
+                button {
+                    width: fit-content;
+                    &:nth-child(even) {
+                        background: #FC5A5A;
+                        margin-left: 15px;
+                    }
+                }
+            }
             
+        }
+
+        .coupon-list,.tracking-coupon, .one-time-coupon, .get-coupon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            position: absolute;
+            inset: 0;
+            top: 0;
+            left: 0;
+            
+            .coupon-list-container, .tracking-container, .one-time-container, .get-coupon-contianer {
+                background: #fff;
+                border-radius: 15px;
+                width: 100%;
+                max-width: 600px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 4rem;
+                position: relative;
+                .close {
+                    position: absolute;
+                    border: none;
+                    background: none;
+                    outline: none;
+                    right: 15px;
+                    top: 15px;
+                }
+                .buttons {
+                    button {
+                        width: 100%;
+                        min-height: 56px;
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
+                }
+                form {
+                    .input-container {
+                        margin-top: 1.5rem;
+                        label {
+                            display: flex;
+                            margin-bottom: 10px;
+                        }
+                        input, select, textarea {
+                            width: 100%;
+                            border: 1px solid rgba(86, 103, 137, 0.26);
+                            border-radius: 8px;
+                        }
+                    }
+                    button {
+                        min-width: 200px;
+                        border-radius: 40px;
+                        min-height: 42px;
+                        padding: 7px 5rem;
+                    }
+                }
+            }
         }
     }
 }

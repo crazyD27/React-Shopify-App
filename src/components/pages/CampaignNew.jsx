@@ -25,8 +25,9 @@ const CampaignOver = () => {
     const [influListVisible, setInfluListVisible] = useState(false);
     const [showInfluList, setShowInfluList] = useState(false);
     const [showCampaignList, setShowCampaignList] = useState(false);
-    const[influForm, setInfluForm] = useState(false);
+    const [influForm, setInfluForm] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const token = localStorage.getItem("Token");
   
@@ -106,6 +107,7 @@ const CampaignOver = () => {
     }, [token])
 
     const createNewCampaign = (e) => {
+        setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
             product: newNames,
@@ -134,11 +136,12 @@ const CampaignOver = () => {
         .catch(function (error) {
         console.log(error);
         })
+        .finally(() => setLoading(false));
     }
     
     const createIfluenceCampaign = (e) => {
+        setLoading(true);
         e.preventDefault();
-        
         axios.post(API.BASE_URL + 'inflcampaign/create/', {
             product: newNames,
             campaign_name: campaignName,
@@ -167,6 +170,7 @@ const CampaignOver = () => {
         .catch(function (error) {
         console.log(error);
         })
+        .finally(() => setLoading(false));
     }
 
     useEffect(() => {
@@ -238,6 +242,7 @@ const CampaignOver = () => {
 
   return (
     <div className="campaign-new p-4">
+        {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
         <MenuBar />
         <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center">
             {/* <h2 className='mb-3'>Campaign request form</h2>
@@ -513,12 +518,6 @@ const CampaignOver = () => {
                     </form>
                 </>
             )}
-            {/* <div className="buttons d-flex align-items-center justify-content-center w-100 pt-3 pb-4 influence-buttons">
-                <button onClick={showInfluList} className={"button button-blue me-4"}>Show Influencer List <FontAwesomeIcon icon={faChevronRight} style={{ color: "#fff", width: "25px", height: "25px", marginLeft: 20 }} /></button>
-                <button onClick={hideInfluList} className={"button button-blue"}>Show Campaign List <FontAwesomeIcon icon={faChevronRight} style={{ color: "#fff", width: "25px", height: "25px", marginLeft: 20 }} /></button>
-            </div> */}
-            
-            
         </div>
     </div>
   );
