@@ -10,6 +10,7 @@ import { faChevronRight, faChevronLeft   } from '@fortawesome/free-solid-svg-ico
 
 const CampaignOver = () => {
     const [productName, setProductName] = useState([]);
+    const [productIds, setProductIds] = useState([]);
     const [influencerList, setInfluencerList] = useState([]);
     const [influencerName, setInfluencerName] = useState(null);
     const [newNames, setNewNames] = useState("")
@@ -106,11 +107,12 @@ const CampaignOver = () => {
         })
     }, [token])
 
+    console.log("productIds", productIds)
     const createNewCampaign = (e) => {
         setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
-            product: newNames,
+            product: productIds.toString(),
             campaign_name: campaignName,
             date: selectedDate,
             coupon: selectedDate,
@@ -138,14 +140,16 @@ const CampaignOver = () => {
         })
         .finally(() => setLoading(false));
     }
+
+    console.log("newNames", productName)
     
     const createIfluenceCampaign = (e) => {
         setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'inflcampaign/create/', {
-            product: newNames,
+            product: productIds.toString(),
             campaign_name: campaignName,
-            influencer_name: selectedUsernames.toString(),
+            influencer_name: selectedUsersId.toString(),
             date: selectedDate,
             coupon: selectedDate,
             offer: influenceOffer,
@@ -229,10 +233,13 @@ const CampaignOver = () => {
     console.log("prodDesc",prodDesc)
 
     console.log(influencerVisit)
+    console.log("productIds", productIds)
 
-    console.log("selectedRows",selectedRows)
 
     const selectedUsernames = selectedRows.map(row => row.username);
+    const selectedUsersId = selectedRows.map(row => row.id);
+    console.log("selectedRows",selectedRows)
+    console.log("selectedUsersId",selectedUsersId)
 
     useEffect(() => {
         setNewNames(productName.toString());
@@ -348,6 +355,11 @@ const CampaignOver = () => {
                                         prevValues.includes(name.title)
                                         ? prevValues.filter((value) => value !== name.title)
                                         : [...prevValues, name.title]
+                                    );
+                                    setProductIds(prevIds =>
+                                        prevIds.includes(name.id)
+                                            ? prevIds.filter(value => value !== name.id)
+                                            : [...prevIds, name.id]
                                     );
                                     setShowList(false);
                                     }}
@@ -466,6 +478,11 @@ const CampaignOver = () => {
                                         prevValues.includes(name.title)
                                         ? prevValues.filter((value) => value !== name.title)
                                         : [...prevValues, name.title]
+                                    );
+                                    setProductIds(prevIds =>
+                                        prevIds.includes(name.id)
+                                            ? prevIds.filter(value => value !== name.id)
+                                            : [...prevIds, name.id]
                                     );
                                     setShowList(false);
                                     }}

@@ -121,7 +121,7 @@ const CampaignNew = () => {
                     <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Sales Campaigns</h5>
-                            <h3 className="mb-0">10</h3>
+                            <h3 className="mb-0">0</h3>
                             {/* <button>View</button> */}
                         </div>
                         {/* <div className="overview-image">

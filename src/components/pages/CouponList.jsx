@@ -71,7 +71,8 @@ const CouponList = () => {
         .finally(() => setLoading(false));
     }
 
-    const createCoupon = () => {
+    const createCoupon = (e) => {
+        e.preventDefault()
         setLoading(true);
         axios.post(API.SHOPIFY_URL +  'create/code/', {
             discount_code: couponDesc,
