@@ -87,6 +87,9 @@ const CouponList = () => {
             console.log("Coupon Created", response);
             setCouponData([...couponData, response.data]);
             toast.success("Coupon Created Successfully");
+            setCouponDesc('')
+            setDiscountType('')
+            setCouponAmount('')
         })
         .catch(function (error) {
             console.log(error);
@@ -108,6 +111,9 @@ const CouponList = () => {
         .then(function (response) {
             console.log("Coupon Edited", response);
             toast.success("Coupon Edited Successfully");
+            setCouponDesc('')
+            setDiscountType('')
+            setCouponAmount('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
                     Authorization: `Token ${token}`
@@ -118,12 +124,12 @@ const CouponList = () => {
             })
             .catch(function (error) {
                 console.log(error);
-                toast.warn("Fields should not be empty!");
             })
             couponCross()
         })
         .catch(function (error) {
             console.log(error);
+            toast.warn("Fields should not be empty!");
         })
         .finally(() => setLoading(false));
     }

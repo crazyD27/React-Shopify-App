@@ -14,9 +14,7 @@ import Delete from '../../assests/img/delete.svg';
 import './pages.scss';
 
 const CampaignManage = () => {
-    const {userToken} = useContext(UserContext);
-    const [campList, setCampList] = useState([])
-    const [campListPending, setCampListPending] = useState([])
+    const {userToken, campList, setCampList, campListPending, setCampListPending} = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const token = localStorage.getItem('Token');
     console.log("User Token", userToken)
@@ -137,7 +135,7 @@ const CampaignManage = () => {
                                 campListPending?.map((name, i) => {
                                     return(
                                         <tr>
-                                            <td>{name.product}</td>
+                                            <td>{name.campaign_name}</td>
                                             <td>{name.offer}</td>
                                             <td className='category'>{name.product_discount}</td>
                                             <td>

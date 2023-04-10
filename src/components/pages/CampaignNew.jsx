@@ -29,6 +29,7 @@ const CampaignOver = () => {
     const [influForm, setInfluForm] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
     const [loading, setLoading] = useState(false);
+    const {campList, setCampList, campListPending, setCampListPending} = useContext(UserContext);
 
     const token = localStorage.getItem("Token");
   
@@ -43,11 +44,27 @@ const CampaignOver = () => {
     const handleBack = () => {
       setShowInfluList(false);
       setShowCampaignList(false);
+      setProductName([]);
+        setCampaignName('');
+        setSelectedDate('');
+        setInfluenceOffer('');
+        setProdDiscount('');
+        setInfluencerVisit('');
+        setInfluencerName('');
+        setProductIds([]);
     };
 
     const handleInfluBack = () => {
         setInfluForm(false);
         setShowInfluList(true);
+        setProductName([]);
+        setCampaignName('');
+        setSelectedDate('');
+        setInfluenceOffer('');
+        setProdDiscount('');
+        setInfluencerVisit('');
+        setInfluencerName('');
+        setProductIds([]);
     };
 
     const handleContinue = () => {
@@ -127,6 +144,7 @@ const CampaignOver = () => {
         .then(function (response) {
             console.log("Created New Campaign", response);
             toast.success("New Campaign Created!");
+            setCampList([...campList, response.data.product_details])
             setProductName([]);
             setCampaignName('');
             setSelectedDate('');
@@ -137,7 +155,28 @@ const CampaignOver = () => {
             setProductIds([])
         })
         .catch(function (error) {
-        console.log(error);
+            console.log(error);
+            if(error.response.data.campaign_name) {
+                toast.warn("Campaign Name may not be blank.");
+            }
+            else if(error.response.data.influencer_visit) {
+                toast.warn("Influencer Visit may not be blank.");
+            }
+            else if(error.response.data.date) {
+                toast.warn("Date may not be blank.");
+            }
+            else if(error.response.data.offer) {
+                toast.warn("Offer may not be blank.");
+            }
+            else if(error.response.data.product) {
+                toast.warn("Please selecta any Product.");
+            }
+            else if(error.response.data.product_discount) {
+                toast.warn("Please select any value of Product Discount.");
+            }
+            else if(error.response.data.coupon) {
+                toast.warn("Coupon may not be blank.");
+            }
         })
         .finally(() => setLoading(false));
     }
@@ -164,6 +203,7 @@ const CampaignOver = () => {
         .then(function (response) {
             console.log("Created New Campaign", response);
             toast.success("New Campaign Created!");
+            setCampListPending([...campListPending, response.data.product_details])
             setProductName([]);
             setCampaignName('');
             setSelectedDate('');
@@ -171,10 +211,31 @@ const CampaignOver = () => {
             setProdDiscount('');
             setInfluencerVisit('');
             setInfluencerName('');
-            setProductIds([])
+            setProductIds([]);
         })
         .catch(function (error) {
-        console.log(error);
+            console.log(error);
+            if(error.response.data.campaign_name) {
+                toast.warn("Campaign Name may not be blank.");
+            }
+            else if(error.response.data.influencer_visit) {
+                toast.warn("Influencer Visit may not be blank.");
+            }
+            else if(error.response.data.date) {
+                toast.warn("Date may not be blank.");
+            }
+            else if(error.response.data.offer) {
+                toast.warn("Offer may not be blank.");
+            }
+            else if(error.response.data.product) {
+                toast.warn("Please selecta any Product.");
+            }
+            else if(error.response.data.product_discount) {
+                toast.warn("Please select any value of Product Discount.");
+            }
+            else if(error.response.data.coupon) {
+                toast.warn("Coupon may not be blank.");
+            }
         })
         .finally(() => setLoading(false));
     }
