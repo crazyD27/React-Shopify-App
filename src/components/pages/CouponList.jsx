@@ -42,7 +42,7 @@ const CouponList = () => {
     useEffect(() => {
         axios.get(API.SHOPIFY_URL +  'coupon/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -53,11 +53,12 @@ const CouponList = () => {
         })
     }, [token])
 
-    const deleteCoupon = (value) => {
+    const deleteCoupon = (value, event) => {
+        event.preventDefault();
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'coupon/delete/?price=' + value,{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -71,8 +72,8 @@ const CouponList = () => {
         .finally(() => setLoading(false));
     }
 
-    const createCoupon = (e) => {
-        e.preventDefault()
+    const createCoupon = (event) => {
+        event.preventDefault()
         setLoading(true);
         axios.post(API.SHOPIFY_URL +  'create/code/', {
             discount_code: couponDesc,
@@ -80,7 +81,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
         }})
         .then(function (response) {
             console.log("Coupon Created", response);
@@ -93,8 +94,8 @@ const CouponList = () => {
         .finally(() => setLoading(false));
     }
 
-    const editCoupon = (value, e) => {
-        e.preventDefault();
+    const editCoupon = (value, event) => {
+        event.preventDefault();
         setLoading(true);
         axios.post(API.SHOPIFY_URL +  'coupon/edit/?price=' + value, {
             discount_code: couponDesc,
@@ -102,14 +103,14 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
             toast.success("Coupon Edited Successfully");
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -127,11 +128,12 @@ const CouponList = () => {
         .finally(() => setLoading(false));
     }
 
-    const getSingleCoupon = (value) => {
+    const getSingleCoupon = (value, event) => {
+        event.preventDefault();
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'single/data/?price=' + value, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -205,9 +207,9 @@ const CouponList = () => {
                                 <td>{couponData.title}</td>
                                 <td>{couponData.created_at}</td>
                                 <td>
-                                    <button onClick={() => {getSingleCoupon(couponData.id)}}><img src={Delete} style={{ marginRight: 5 }} /> Edit</button>
+                                    <button onClick={(event) => {getSingleCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Edit</button>
                                     {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
-                                    <button onClick={() => {deleteCoupon(couponData.id)}}><img src={Delete} style={{ marginRight: 5 }} /> Delete</button>
+                                    <button onClick={(event) => {deleteCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Delete</button>
                                     
                                 </td>
                             </tr>
@@ -318,7 +320,7 @@ const CouponList = () => {
                             <label>Amount</label>
                             <input type="text" placeholder={getCouponInfo? getCouponInfo.amount :'Amount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
-                        <button onClick={() => {editCoupon(getCouponInfo?.id)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                        <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
                     </form>
                     </div>
                 </div>

@@ -82,7 +82,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
             }
         })
         .then(function (response) {
@@ -95,7 +95,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
             }
         })
         .then(function (response) {
@@ -121,7 +121,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
             }
         })
         .then(function (response) {
@@ -158,7 +158,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
             }
         })
         .then(function (response) {
@@ -203,7 +203,7 @@ const CampaignOver = () => {
             return axios
               .get(API.BASE_URL + "product/url/?product=" + product, {
                 headers: {
-                  Authorization: `Token ${token}`,
+                  Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`,
                 },
               })
               .then((response) => {
