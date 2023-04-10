@@ -42,7 +42,7 @@ const CouponList = () => {
     useEffect(() => {
         axios.get(API.SHOPIFY_URL +  'coupon/list/',{
             headers: {
-                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -58,7 +58,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'coupon/delete/?price=' + value,{
             headers: {
-                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -81,7 +81,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon Created", response);
@@ -103,14 +103,14 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
             toast.success("Coupon Edited Successfully");
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
-                    Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
+                    Authorization: `Token ${token}`
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -133,7 +133,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'single/data/?price=' + value, {
             headers: {
-                Authorization: `Token 6fd30418c6e3fbef5f87085bfc3e533aadfa28f1`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
