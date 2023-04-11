@@ -1,23 +1,25 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect, useContext} from 'react';
 import MenuBar from '../navbar/Navbar';
 import axios from 'axios';
 import { API } from '../../config/Api';
+import UserContext from '../context/UserContext';
 import './pages.scss';
 
 const CampaignMarket = () => {
-    const [marketList, setMarketList] = useState([]);
     const [productNames, setProductNames] = useState([]);
+    const [testing, setTesting] = useState([]);
     const token = localStorage.getItem('Token');
+    const {marketList, setMarketList, marketId, setMarketId} = useContext(UserContext);
     
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
-            console.log("Campaign Marketplacee", response.data.data);
             setMarketList(response.data.data);
+            setMarketId(response.data.product_id);
         })
         .catch(function (error) {
             console.log(error);
@@ -25,17 +27,41 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
-            console.log("Product List Market", response);
-            setProductNames(response.data.success.products)
+            setProductNames(response.data.success.products);
         })
         .catch(function (error) {
             console.log(error);
         })
+
+       
     }, [token])
+
+    
+
+    const getnameProduct = () => {
+        const names = [];
+        marketId.forEach((ids) => {
+            const productNamesArr = [];
+            ids.forEach((id) => {
+                const product = productNames.find((p) => p.id === id);
+                if (product) {
+                    productNamesArr.push(product.title);
+                }
+            });
+            names.push(productNamesArr);
+        });
+        setTesting(names);
+    };
+
+    console.log("Testing in Market", testing)
+    useEffect(() => {
+        getnameProduct()
+    }, [productNames])
+
 
   return (
     <div className="campaign-market p-4">
@@ -56,7 +82,7 @@ const CampaignMarket = () => {
                                 <tr>
                                     <td>{marketContent.campaign_name}</td>
                                     <td>{marketContent.offer} - {marketContent.product_discount}%</td>
-                                    <td className='category'>#Fashion</td>
+                                    <td className='category'>{testing[i]?.join(", ")}</td>
                                     <td>
                                         <button>Send Request</button>
                                     </td>

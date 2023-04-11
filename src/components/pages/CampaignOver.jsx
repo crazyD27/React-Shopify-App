@@ -18,8 +18,7 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignNew = () => {
-    const {setUserToken, setInfluenceList} = useContext(UserContext);
-    const [countCamp, setCountCamp] = useState([]);
+    const {setUserToken, setInfluenceList, countCamp, setCountCamp} = useContext(UserContext);
     
     useEffect(() => {
         console.log('///////////////////////////////');

@@ -19,6 +19,7 @@ const CampaignOver = () => {
     const [influencerVisit, setInfluencerVisit] = useState('');
     const [showList, setShowList] = useState(false);
     const [prodDiscount, setProdDiscount] = useState('');
+    const [campaignDesc, setCampaignDesc] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
     const [prodList, setProdList] = useState('')
@@ -29,7 +30,11 @@ const CampaignOver = () => {
     const [influForm, setInfluForm] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
     const [loading, setLoading] = useState(false);
-    const {campList, setCampList, campListPending, setCampListPending} = useContext(UserContext);
+    const [isChecked, setIsChecked] = useState(false);
+    const [checkboxStates, setCheckboxStates] = useState({});
+    
+
+    const {marketId, setMarketId, marketList, setMarketList, campListPending, setCampListPending, countCamp, setCountCamp} = useContext(UserContext);
 
     const token = localStorage.getItem("Token");
   
@@ -54,6 +59,10 @@ const CampaignOver = () => {
         setProductIds([]);
     };
 
+    const handleCampDesc = (event) => {
+        setCampaignDesc(event.target.value);
+    }
+
     const handleInfluBack = () => {
         setInfluForm(false);
         setShowInfluList(true);
@@ -68,6 +77,10 @@ const CampaignOver = () => {
     };
 
     const handleContinue = () => {
+        if (!isChecked) {
+            toast.warn('Please select at least one influencer');
+            return;
+          }
         setShowInfluList(false);
         setInfluForm(true);
     };
@@ -99,7 +112,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
@@ -112,7 +125,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
@@ -124,7 +137,23 @@ const CampaignOver = () => {
         })
     }, [token])
 
-    console.log("productIds", productIds)
+    const countList = () => {
+        axios.get(API.BASE_URL + 'count/',{
+            headers: {
+                Authorization: 'Token ' + localStorage.getItem('Token')
+            }
+        })
+        .then(function (response) {
+            console.log("Count List in New", response);
+            setCountCamp(response.data);
+            console.log(countCamp)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    
     const createNewCampaign = (e) => {
         setLoading(true);
         e.preventDefault();
@@ -138,13 +167,12 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
             console.log("Created New Campaign", response);
             toast.success("New Campaign Created!");
-            setCampList([...campList, response.data.product_details])
             setProductName([]);
             setCampaignName('');
             setSelectedDate('');
@@ -153,6 +181,20 @@ const CampaignOver = () => {
             setInfluencerVisit('');
             setInfluencerName('');
             setProductIds([])
+            setCampaignDesc('');
+            axios.get(API.BASE_URL + 'market/list/',{
+                headers: {
+                    Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                }
+            })
+            .then(function (response) {
+                setMarketList(response.data.data);
+                setMarketId(response.data.product_id);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            countList()
         })
         .catch(function (error) {
             console.log(error);
@@ -180,8 +222,7 @@ const CampaignOver = () => {
         })
         .finally(() => setLoading(false));
     }
-
-    console.log("newNames", productName)
+    
     
     const createIfluenceCampaign = (e) => {
         setLoading(true);
@@ -197,7 +238,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
@@ -211,7 +252,10 @@ const CampaignOver = () => {
             setProdDiscount('');
             setInfluencerVisit('');
             setInfluencerName('');
+            setCampaignDesc('')
             setProductIds([]);
+
+            countList()
         })
         .catch(function (error) {
             console.log(error);
@@ -264,7 +308,7 @@ const CampaignOver = () => {
             return axios
               .get(API.BASE_URL + "product/url/?product=" + product, {
                 headers: {
-                  Authorization: `Token ${token}`,
+                  Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`,
                 },
               })
               .then((response) => {
@@ -281,7 +325,13 @@ const CampaignOver = () => {
     }
     }, [productName, token]);
 
-    const handleCheckboxChange = (event, row) => {
+    const handleCheckboxChange = (event, row, index) => {
+        const checked = event.target.checked;
+        setCheckboxStates({
+            ...checkboxStates,
+            [index]: checked
+          });
+        setIsChecked(checked);
         if (event.target.checked) {
           setSelectedRows([...selectedRows, row]);
         } else {
@@ -289,26 +339,28 @@ const CampaignOver = () => {
         }
     };
 
-    console.log('selectedCoupon', selectedCoupon)
-
-    console.log("selected-date", selectedDate)
-
-    console.log("prodDesc",prodDesc)
-
-    console.log(influencerVisit)
-    console.log("productIds", productIds)
-
+    useEffect(() => {
+        const checkbox = document.querySelector('input[type="checkbox"]');
+        if (checkbox) {
+          setIsChecked(checkbox.checked);
+        }
+    }, []);
 
     const selectedUsernames = selectedRows.map(row => row.username);
     const selectedUsersId = selectedRows.map(row => row.id);
-    console.log("selectedRows",selectedRows)
-    console.log("selectedUsersId",selectedUsersId)
+
+    useEffect(() => {
+        // Set initial checkbox states when component mounts
+        const initialStates = {};
+        influencerList.forEach((list, i) => {
+          initialStates[i] = false;
+        });
+        setCheckboxStates(initialStates);
+      }, [influencerList]);
 
     useEffect(() => {
         setNewNames(productName.toString());
     }, [productName])
-
-    console.log('newNames', newNames)
 
   return (
     <div className="campaign-new p-4">
@@ -342,20 +394,22 @@ const CampaignOver = () => {
                      <tr>
                          <th></th>
                          <th>Name</th>
-                         <th>Email</th>
-                         <th>Country</th>
+                         <th>Followers(in Millions)</th>
+                         <th>Engagement Rate</th>
                      </tr>
                      {influencerList?.map((list, i) => (
                          <tr key={i}>
-                             <td><input type="checkbox" onChange={event => handleCheckboxChange(event, list)} /></td>
+                             <td><input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} /></td>
                              <td>{list.username}</td>
-                             <td>{list.email}</td>
-                             <td>{list.country}</td>
+                             <td>{list.follower / 1000000} M</td>
+                             <td>{list.engagement_rate}</td>
                          </tr>
                      ))}
                  </table>
                    ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
-                    <button onClick={handleContinue } className='button button-blue'>Continue</button>
+                    <button onClick={handleContinue} className='button button-blue'>
+                        Continue
+                    </button>
                 </div>
             )}
 
@@ -404,7 +458,7 @@ const CampaignOver = () => {
                             <label className="mb-3">Product</label>
                             <input
                             type="text"
-                            placeholder="---Select an option---"
+                            placeholder={prodList?.length > 0 ? "---Select an option---" : "---No Products Available---"}
                             onClick={() => setShowList(!showList)}
                             value={productName}
                             />
@@ -439,7 +493,7 @@ const CampaignOver = () => {
                                 name=""
                                 id=""
                                 cols="30"
-                                value={prodDesc.map((desc) => desc.URL).join('\n')}
+                                value={prodDesc?.map((desc) => desc.URL).join('\n')}
                                 style={{ color: '#666' }}
                             ></textarea>
                         </div>
@@ -453,7 +507,9 @@ const CampaignOver = () => {
                                 name=""
                                 id=""
                                 cols="30"
-                                value={prodDesc.map((desc) => desc.description).join('\n')}
+                                onChange={handleCampDesc}
+                                value={campaignDesc}
+                                // value={prodDesc.map((desc) => desc.description).join('\n')}
                                 style={{ color: '#666' }}
                             ></textarea>
                         </div>
@@ -472,11 +528,9 @@ const CampaignOver = () => {
                                 <button type='button' className='button' onClick={handleCouponClick}>300YBL</button>
                             </div>
                         </div>
-                        <div className="buttons d-flex justify-content-between">
-                            <button className='button button-blue' onClick={createIfluenceCampaign}>Send request button</button>
-                            
-                            <button className='button'>Save in draft</button>
-                            <button className='button'>Request sent</button>
+                        <div className="buttons d-flex justify-content-center">
+                            <button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>
+                            <button className='button ms-4'>Request sent</button>
                         </div>
                     </form>
                 </div>
@@ -576,7 +630,9 @@ const CampaignOver = () => {
                                 name=""
                                 id=""
                                 cols="30"
-                                value={prodDesc.map((desc) => desc.description).join('\n')}
+                                onChange={handleCampDesc}
+                                value={campaignDesc}
+                                // value={prodDesc.map((desc) => desc.description).join('\n')}
                                 style={{ color: '#666' }}
                             ></textarea>
                         </div>
@@ -589,11 +645,9 @@ const CampaignOver = () => {
                                 <button type='button' className='button' onClick={handleCouponClick}>300YBL</button>
                             </div>
                         </div>
-                        <div className="buttons d-flex justify-content-between">
-                        {influListVisible ? (<button className='button button-blue' onClick={createIfluenceCampaign}>Send request button</button>) : <button className='button button-blue' onClick={createNewCampaign}>Send request button</button>}
-                            
-                            <button className='button'>Save in draft</button>
-                            <button className='button'>Request sent</button>
+                        <div className="buttons d-flex justify-content-center">
+                        {influListVisible ? (<button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>) : <button className='button button-blue' onClick={createNewCampaign}>Save in draft</button>}
+                            <button className='button ms-4'>Request sent</button>
                         </div>
                     </form>
                 </>
