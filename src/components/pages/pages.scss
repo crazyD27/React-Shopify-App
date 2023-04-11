@@ -193,6 +193,15 @@
                 }
             }
         }
+        .back {
+            background-color: transparent;
+            background: none;
+            color: #000;
+            border: none;
+            width: fit-content;
+            min-width: unset;
+            text-decoration: underline;
+        }
     }
 }
 
@@ -374,6 +383,12 @@
         border-radius: 10px;
         outline: none;
     }
+    .campaign-inputs {
+        input {
+            min-height: unset;
+            width: 100%;
+        }
+    }
     
 }
 
@@ -526,67 +541,7 @@
             
         }
 
-        .coupon-list,.tracking-coupon, .one-time-coupon, .get-coupon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-            background: rgba(0, 0, 0, 0.4);
-            position: absolute;
-            inset: 0;
-            top: 0;
-            left: 0;
-            
-            .coupon-list-container, .tracking-container, .one-time-container, .get-coupon-contianer {
-                background: #fff;
-                border-radius: 15px;
-                width: 100%;
-                max-width: 600px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                padding: 4rem;
-                position: relative;
-                .close {
-                    position: absolute;
-                    border: none;
-                    background: none;
-                    outline: none;
-                    right: 15px;
-                    top: 15px;
-                }
-                .buttons {
-                    button {
-                        width: 100%;
-                        min-height: 56px;
-                        font-size: 16px;
-                        font-weight: bold;
-                    }
-                }
-                form {
-                    .input-container {
-                        margin-top: 1.5rem;
-                        label {
-                            display: flex;
-                            margin-bottom: 10px;
-                        }
-                        input, select, textarea {
-                            width: 100%;
-                            border: 1px solid rgba(86, 103, 137, 0.26);
-                            border-radius: 8px;
-                        }
-                    }
-                    button {
-                        min-width: 200px;
-                        border-radius: 40px;
-                        min-height: 42px;
-                        padding: 7px 5rem;
-                    }
-                }
-            }
-        }
+        
     }
 }
 
@@ -726,6 +681,68 @@
             resize: none;
             padding: 10px 15px;
             font-size: 16px;
+        }
+    }
+}
+
+.coupon-list,.tracking-coupon, .one-time-coupon, .get-coupon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    inset: 0;
+    top: 0;
+    left: 0;
+    
+    .coupon-list-container, .tracking-container, .one-time-container, .get-coupon-contianer {
+        background: #fff;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 4rem;
+        position: relative;
+        .close {
+            position: absolute;
+            border: none;
+            background: none;
+            outline: none;
+            right: 15px;
+            top: 15px;
+        }
+        .buttons {
+            button {
+                width: 100%;
+                min-height: 56px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+        }
+        form {
+            .input-container {
+                margin-top: 1.5rem;
+                label {
+                    display: flex;
+                    margin-bottom: 10px;
+                }
+                input, select, textarea {
+                    width: 100%;
+                    border: 1px solid rgba(86, 103, 137, 0.26);
+                    border-radius: 8px;
+                }
+            }
+            button {
+                min-width: 200px;
+                border-radius: 40px;
+                min-height: 42px;
+                padding: 7px 5rem;
+            }
         }
     }
 }

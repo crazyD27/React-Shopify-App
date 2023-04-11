@@ -84,6 +84,11 @@ table {
               border-radius: 5px;
           }
       }
+      td.category.edit-mode {
+        &::before {
+          content: none;
+        }
+      }
   }
 }
 

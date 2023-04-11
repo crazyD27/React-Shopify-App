@@ -333,8 +333,8 @@ const CampaignOver = () => {
 
             {showInfluList && (
                 <div className='w-100 influencer-list'>
-                    <button onClick={handleBack} className={"button button-blue"}>
-                        <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "25px", height: "25px", marginRight: 20 }} />
+                    <button onClick={handleBack} className="button button-blue back">
+                        <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
                     </button>
                    {influencerList.length > 0 ? (
@@ -361,8 +361,8 @@ const CampaignOver = () => {
 
             {influForm && (
                 <div className='w-100'>
-                    <button onClick={handleInfluBack} className={"button button-blue"}>
-                        <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "25px", height: "25px", marginRight: 20 }} />
+                    <button onClick={handleInfluBack} className={"button button-blue back"}>
+                        <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
                     </button>
                     <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
@@ -484,8 +484,8 @@ const CampaignOver = () => {
 
             {showCampaignList && (
                 <>
-                    <button onClick={handleBack} className={"button button-blue d-flex me-auto"}>
-                        <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "25px", height: "25px", marginRight: 20 }} />
+                    <button onClick={handleBack} className={"button button-blue d-flex me-auto back"}>
+                        <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
                     </button>
                     <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
