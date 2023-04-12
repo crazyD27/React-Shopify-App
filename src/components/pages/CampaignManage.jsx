@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 import Delete from '../../assests/img/delete.svg';
+import NoData from '../../assests/img/no-data.png';
 import './pages.scss';
 
 const CampaignManage = () => {
@@ -48,7 +49,7 @@ const CampaignManage = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'active/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -61,7 +62,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -74,7 +75,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -86,7 +87,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'draft/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -102,7 +103,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -133,7 +134,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             setGetMarketInfo(response.data.data)
@@ -155,7 +156,7 @@ const CampaignManage = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -163,7 +164,7 @@ const CampaignManage = () => {
             toast.success("Campaign Edited!");
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
                 }
             })
             .then(function (response) {
@@ -175,7 +176,7 @@ const CampaignManage = () => {
     
             axios.get(API.BASE_URL + 'pending/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
                 }
             })
             .then(function (response) {
@@ -252,6 +253,7 @@ const CampaignManage = () => {
             <Col sm={12}>
             <Tab.Content>
                 <Tab.Pane eventKey="first">
+                {campList?.length > 0 ? (
                     <table className='w-100 campaign'>
                         <tbody className='w-100'>
                             <tr className='headings'>
@@ -262,8 +264,8 @@ const CampaignManage = () => {
                                 <th>Product</th>
                                 <th>Actions</th>
                             </tr>
-                            {campList?.length > 0 ? (
-                                campList?.map((name, i) => {
+                           
+                                {campList?.map((name, i) => {
                                     return(
                                         <>
                                         <tr key={i} className='campaign-inputs'>
@@ -315,16 +317,18 @@ const CampaignManage = () => {
                                         </>
                                         
                                     )
-                                })
-                                
-                            )
-                            :
-                            (
-                                <h4 className='mt-4'>No Active Campaigns right now</h4>
-                            )}
+                                })}
                         
                         </tbody>
                     </table>
+                    )
+                    :
+                    (
+                        <>
+                            <h5 className='mt-4 text-center'>No Active Campaigns right now</h5>
+                            <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                        </>
+                    )}
                 </Tab.Pane>
                 <Tab.Pane eventKey="second" className='campaign'>
                     {campListPending?.length > 0 ? (
@@ -396,7 +400,10 @@ const CampaignManage = () => {
                     ) 
                     : 
                     (
-                    <h4 className='mt-4'>No Pending Campaigns right now</h4>
+                        <>
+                    <h5 className='mt-4 text-center'>No Pending Campaigns right now</h5>
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    </>
                     )}
                 </Tab.Pane>
                 <Tab.Pane eventKey="third" className='campaign'>
@@ -469,7 +476,10 @@ const CampaignManage = () => {
                     ) 
                     : 
                     (
-                    <h4 className='mt-4'>No Campaigns in Draft right now</h4>
+                        <>
+                    <h5 className='mt-4 text-center'>No Campaigns in Draft right now</h5>
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    </>
                     )}
                 </Tab.Pane>
             </Tab.Content>

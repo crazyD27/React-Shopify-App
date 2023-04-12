@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 // Images
 import Search from '../../assests/img/search.png';
 import Delete from '../../assests/img/delete.svg';
+import NoData from '../../assests/img/no-data.png';
 
 const CouponList = () => {
     const token = localStorage.getItem("Token");
@@ -46,7 +47,7 @@ const CouponList = () => {
     useEffect(() => {
         axios.get(API.SHOPIFY_URL +  'coupon/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -61,7 +62,7 @@ const CouponList = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -78,7 +79,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'coupon/delete/?price=' + value,{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -101,7 +102,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             console.log("Coupon Created", response);
@@ -126,7 +127,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
@@ -136,7 +137,7 @@ const CouponList = () => {
             setCouponAmount('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -159,7 +160,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'single/data/?price=' + value, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -203,7 +204,7 @@ const CouponList = () => {
             product_id: productIds?.toString()
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -224,6 +225,8 @@ const CouponList = () => {
         <MenuBar />
         <div className="coupon-container d-flex flex-column mt-5 w-100">
             <h4 className='mb-4'>Coupon List</h4>
+            {couponData.length > 0 ? (
+                <>
             <div className="filters d-flex justify-content-between align-items-center">
                 <div className="input-container d-flex flex-column">
                     <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
@@ -244,6 +247,7 @@ const CouponList = () => {
                 <button onClick={couponCreateShow}><img src={Plus} aly='plus' /> Create Coupon</button>
                 <button><img src={Download} aly='download' /> Export Coupon</button>
             </div>
+            
             <table className="coupon-table">
                 <tr className='table-heading'>
                     <th><input type="checkbox" name="" id="" /></th>
@@ -251,8 +255,8 @@ const CouponList = () => {
                     <th>Created at</th>
                     <th>Actions</th>
                 </tr>
-                {couponData.length > 0 ? (
-                    couponData?.map((couponData, i) => {
+                
+                    {couponData?.map((couponData, i) => {
                         return(
                             <tr key={i}>
                                 <td>{couponData.id}</td>
@@ -266,26 +270,30 @@ const CouponList = () => {
                                 </td>
                             </tr>
                         )
-                    })
-                    
-                )
-                :
-                    (
-                        <tr><td>No Coupons Available</td></tr>
-                    )
-                }
+                    })}
+                
             </table>
             
+            </>
+            )
+            :
+                (
+                    <>
+                        <h5 className='mt-4 text-center'>No Coupons Available</h5>
+                        <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    </>
+                )
+            }
             {couponList && (
                 <div className="coupon-list">
                     <div className="coupon-list-container">
-                        <h3>Assign Coupon</h3>
+                        <h3>Create Coupon</h3>
                         <p>Please select the one options to add the Coupon</p>
                         <button className='close' onClick={couponCross}>
                             <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
                         </button>
                         <div className="buttons">
-                            <button className="button mb-3" onClick={trackingShow}>Tracking Coupon</button>
+                            <button className="button mb-3" onClick={trackingShow}>Coupon</button>
                             <button className="button" onClick={oneTimeShow}>One Time Use</button>
                         </div>
                     </div>
@@ -294,7 +302,7 @@ const CouponList = () => {
 
             {tracking && <div className="tracking-coupon">
                 <div className="tracking-container">
-                    <h3>Product Coupon</h3>
+                    <h3>Create Coupon</h3>
                     <button className='close' onClick={couponCross}>
                         <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
                     </button>
@@ -355,7 +363,7 @@ const CouponList = () => {
 
             {oneTime && <div className="one-time-coupon">
                 <div className="one-time-container">
-                    <h3>One Time Use</h3>
+                    <h3>Create One Time Coupon</h3>
                     <button className='close' onClick={couponCross}>
                         <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
                     </button>

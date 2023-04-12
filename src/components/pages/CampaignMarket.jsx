@@ -8,6 +8,7 @@ import { faClose, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Delete from '../../assests/img/delete.svg';
 import { toast } from 'react-toastify';
 import './pages.scss';
+import NoData from '../../assests/img/no-data.png';
 
 const CampaignMarket = () => {
     const [productNames, setProductNames] = useState([]);
@@ -25,7 +26,7 @@ const CampaignMarket = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -39,7 +40,7 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -92,7 +93,7 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -117,7 +118,7 @@ const CampaignMarket = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -129,7 +130,7 @@ const CampaignMarket = () => {
             setInfluenceVisit('');
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
                 }
             })
             .then(function (response) {
@@ -155,7 +156,7 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
         }})
         .then(function (response) {
             console.log(response.data)
@@ -179,16 +180,17 @@ const CampaignMarket = () => {
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
         <div className="campaign-market-container d-flex flex-column w-100">
             <h2 className='text-center my-5'>Campaign Marketplace</h2>
+            {marketList?.length > 0 ? (
             <table className='w-100 campaign'>
                 <tbody className='w-100'>
                     <tr className='headings'>
-                        <th>Product Name</th>
+                        <th>Campaign Name</th>
                         <th>Offer</th>
                         <th>Categories</th>
                         <th>Actions</th>
                     </tr>
-                    {marketList?.length > 0 ? (
-                        marketList?.map((marketContent, i) => {
+                    
+                        {marketList?.map((marketContent, i) => {
                             return(
                                 <>
                                 <tr>
@@ -260,14 +262,17 @@ const CampaignMarket = () => {
                                 }
                                 </>
                             )
-                        })
-                    ) :(
-                        <h3>No Campaign</h3>
-                    ) }
+                        })}
+                    
                     
                 </tbody>
             </table>
-            
+            ) :(
+                <>
+                    <h5 className='mt-4 text-center'>No Campaign</h5>
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                </>
+            ) }
         </div>
     </div>
   );

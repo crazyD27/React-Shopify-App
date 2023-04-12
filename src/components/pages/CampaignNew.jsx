@@ -19,6 +19,7 @@ const CampaignOver = () => {
     const [influencerVisit, setInfluencerVisit] = useState('');
     const [showList, setShowList] = useState(false);
     const [prodDiscount, setProdDiscount] = useState([]);
+    const [selectedCouponIndex, setSelectedCouponIndex] = useState(-1);
     const [campaignDesc, setCampaignDesc] = useState('');
     const [productCoupon, setProductCoupon] = useState([]);
     const [influenceOffer, setInfluenceOffer] = useState('');
@@ -84,6 +85,10 @@ const CampaignOver = () => {
         setInfluForm(true);
     };
 
+    const handleProdDiscount = (event) => {
+        setProdDiscount(event.target.value);
+    }
+
     const handleCampaignNameChange = (event) => {
         setCampaignName(event.target.value);
     }
@@ -97,7 +102,14 @@ const CampaignOver = () => {
     }
 
     const handleCouponClick = (e) => {
+        const index = e.target.selectedIndex - 1; // Subtract 1 to account for the disabled option
         setSelectedCoupon(e.target.value);
+        if (index >= 0) {
+            const selectedCouponName = couponName[index];
+            setProdDiscount(selectedCouponName); // Set prodDiscount to the selected coupon name
+        } else {
+            setProdDiscount(''); // Set prodDiscount to empty string if no coupon is selected
+        }
     };
 
     const handleInfluenceOffer = (e) => {
@@ -107,7 +119,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -120,7 +132,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -161,7 +173,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -179,7 +191,7 @@ const CampaignOver = () => {
             setSelectedCoupon('')
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
                 }
             })
             .then(function (response) {
@@ -236,7 +248,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -301,7 +313,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
             }
         })
         .then(function (response) {
@@ -371,45 +383,72 @@ const CampaignOver = () => {
         const urls = [];
         if (Array.isArray(productName)) {
 
-        Promise.all(
-          productName?.map((product) => {
-            return axios
-              .get(API.BASE_URL + "product/url/?product=" + product, {
-                headers: {
-                  Authorization: `Token ${token}`,
-                },
-              })
-              .then((response) => {
-                return {
-                  URL: response?.data.URL,
-                  description: response?.data.description,
-                };
-              })
-              .catch((error) => console.log(error));
-          })
-        ).then((responses) => {
-          setProdDesc(responses);
-        });
-    }
+            Promise.all(
+            productName?.map((product) => {
+                return axios
+                .get(API.BASE_URL + "product/url/?product=" + productIds, {
+                    headers: {
+                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`,
+                    },
+                })
+                .then((response) => {
+                    return {
+                    URL: response?.data.URL,
+                    description: response?.data.description,
+                    };
+                })
+                .catch((error) => console.log(error));
+            })
+            ).then((responses) => {
+                setProdDesc(
+                    responses.reduce((acc, curr) => {
+                      const urls = curr.URL.filter(url => !acc.includes(url));
+                      return [...acc, ...urls];
+                    }, [])
+                  );
+            });
+
+            Promise.all(
+                productName?.map((product) => {
+                  setLoading(true);
+                  return axios
+                    .get(API.BASE_URL +  'discount/?product=' + productIds, {
+                      headers: {
+                        Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`,
+                      },
+                    })
+                    .then((response) => {
+                      console.log("Product Coupon", response)
+                      setCouponName(response.data.code);
+                      setProdDiscount(prevState => [...prevState, response.data.amount]); // update prodDiscount state with amount array
+                    })
+                    .catch((error) => console.log(error));
+                })
+              )
+              .finally(() => setLoading(false));
+        }
     }, [productName, token]);
 
+    const handleCouponClicked = (e) => {
+        setSelectedCouponIndex(e.target.selectedIndex - 1); // subtract 1 to account for the disabled option
+      };
 
-    const getProdCoupon = (value) => {
-        setLoading(true);
-        axios.get('https://api.myrefera.com/campaign/discount/?product=' + productIds, {
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-        })
-        .then((response) => {
-            console.log("Product Coupon", response)
-            setCouponName(response.data.code);
-            setProdDiscount(response.data.amount)
-        })
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-        console.log("IDDDDDD",productIds)
-    }
+
+    // const getProdCoupon = (value) => {
+    //     setLoading(true);
+    //     axios.get(API.BASE_URL +  'discount/?product=' + productIds, {
+    //         headers: {
+    //             Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`,
+    //         },
+    //     })
+    //     .then((response) => {
+    //         console.log("Product Coupon", response)
+    //         setCouponName(response.data.code);
+    //     })
+    //     .catch((error) => console.log(error))
+    //     .finally(() => setLoading(false));
+    //     console.log("IDDDDDD",productIds)
+    // }
 
     const handleCheckboxChange = (event, row, index) => {
         const checked = event.target.checked;
@@ -470,29 +509,26 @@ const CampaignOver = () => {
             )}
 
             {showInfluList && (
-                <div className='w-100 influencer-list'>
+                <div className='w-100 influencer-list px-5'>
                     <h3>Influencer List</h3>
                     <button onClick={handleBack} className="button button-blue back">
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
                     </button>
                    {influencerList.length > 0 ? (
-                     <table>
-                     <tr>
-                         <th></th>
-                         <th>Name</th>
-                         <th>Followers(in Millions)</th>
-                         <th>Engagement Rate</th>
-                     </tr>
+                     <div className='influencer-list-main'>
                      {influencerList?.map((list, i) => (
-                         <tr key={i}>
-                             <td><input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} /></td>
-                             <td>{list.username}</td>
-                             <td>{list.follower / 1000000} M</td>
-                             <td>{list.engagement_rate}</td>
-                         </tr>
+                         <div className='influencer-list-container d-flex align-items-center justify-content-between'>
+                             <div className='d-flex align-items-center'>
+                                <input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
+                                <img src={list.image} alt='profile-pic' />
+                                <p className='ms-4'>{list.username}</p>
+                             </div>
+                             <p className='d-flex flex-column align-items-center'><strong>{(list.follower / 1000000).toFixed(2)} M</strong> <span>Followers</span> </p>
+                             <p className='d-flex flex-column align-items-center'><strong>{list.engagement_rate.toFixed(2)}</strong> <span>Engagement</span> </p>
+                         </div>
                      ))}
-                 </table>
+                     </div>
                    ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
                     <button onClick={handleContinue} className='button button-blue'>
                         Continue
@@ -573,7 +609,6 @@ const CampaignOver = () => {
                                                         : [...prevIds, name.id]
                                                 );
                                                 setShowList(false);
-                                                getProdCoupon(productIds)
                                                 }}
                                             >
                                                 {name.title}
@@ -624,21 +659,16 @@ const CampaignOver = () => {
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Tracking coupon</label>
                             <select onChange={handleCouponClick} value={selectedCoupon}>
-                                {couponName.length > 0 ?
-                                    (
+                                {couponName.length > 0 ? (
                                     <>
-                                    <option value='' disabled>Select a Coupon</option>
-                                        {couponName.map((name, i) => {
-                                            return(
-                                                <option value={name}>{name}</option>
-                                            )
-                                        })}
-                                        </>
-                                    )
-                                    :
+                                        <option value='' disabled>Select a Coupon</option>
+                                        {couponName.map((name, i) => (
+                                            <option key={i} value={name}>{name}</option>
+                                        ))}
+                                    </>
+                                ) : (
                                     <option disabled>No Coupons</option>
-                                }
-                                
+                                )}
                             </select>
                         </div>
 
@@ -723,7 +753,6 @@ const CampaignOver = () => {
                                                     : [...prevIds, name.id]
                                             );
                                             setShowList(false);
-                                            getProdCoupon(productIds)
                                             }}
                                         >
                                             {name.title}
@@ -743,14 +772,18 @@ const CampaignOver = () => {
                                 name=""
                                 id=""
                                 cols="30"
-                                value={prodDesc?.map((desc) => desc.URL).join('\n')}
+                                value={
+                                    prodDesc?.length > 0
+                                      ? prodDesc?.join("\n")
+                                      : ""
+                                  }
                                 style={{ color: '#666' }}
                             ></textarea>
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4 prod-discount">
                             <label className="mb-3">Product discount</label>
-                            <input type="text" value={prodDiscount} />
+                            <input type="text" value={prodDiscount} onChange={handleProdDiscount} />
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
@@ -768,19 +801,18 @@ const CampaignOver = () => {
                     
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Tracking coupon</label>
-                            <select  onChange={handleCouponClick} value={selectedCoupon}>
-                                {couponName.length > 0 ?
-                                    (
-                                        <>
-                                        <option value='' disabled>Select a Coupon</option>
-                                        <option value={couponName}>{couponName}</option>
-                                        </>
-                                    )
-                                    :
+                            <select onChange={handleCouponClicked} value={selectedCouponIndex !== -1 ? couponName[selectedCouponIndex] : ''}>
+                                {couponName.length > 0 ? (
+                                    <>
+                                    <option value='' disabled>Select a Coupon</option>
+                                    {couponName.map((name, i) => (
+                                        <option key={i} value={name}>{name}</option>
+                                    ))}
+                                    </>
+                                ) : (
                                     <option disabled>No Coupons</option>
-                                }
-                                
-                            </select>
+                                )}
+                                </select>
                         </div>
 
                         <div className="buttons d-flex justify-content-center">

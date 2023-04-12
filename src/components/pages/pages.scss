@@ -1,6 +1,32 @@
 .campaign-new {
     min-height: 100vh;
     position: relative;
+    .influencer-list-main {
+        margin-bottom: 30px;
+        .influencer-list-container {
+            padding: 15px 30px;
+            border-bottom: 1px solid #ebebeb;
+            width: 100%;
+            input {
+                margin-right: 1.5rem;
+            }
+            img {
+                border-radius: 50%;
+                height: 50px;
+                width: 50px;
+                object-fit: contain;
+            }
+            p {
+                margin-bottom: 0;
+                span {
+                    color: #7c7c7c;
+                }
+            }
+            &:nth-child(odd) {
+                background-color: #ededed;
+            }
+        }
+    }
     table {
         tr {
             td {
