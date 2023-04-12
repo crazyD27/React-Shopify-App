@@ -633,13 +633,19 @@
 }
 
 .profile {
+    position: relative;
     .profile-form {
+        max-width: 800px;
+        margin: 0 auto;
         .input-container {
             width: 48%;
             label {
                 margin-bottom: 10px;
                 color: #000;
                 font-size: 18px;
+            }
+            &:last-child {
+                width: 100%;
             }
             
         }
@@ -655,6 +661,10 @@
             font-size: 16px;
         }
     }
+    .buttons {
+        max-width: 800px;
+        margin: 0 auto;
+    }
 }
 
 .coupon-list,.tracking-coupon, .one-time-coupon, .get-coupon {
@@ -669,12 +679,12 @@
     inset: 0;
     top: 0;
     left: 0;
+    padding: 40px 0;
     
     .coupon-list-container, .tracking-container, .one-time-container, .get-coupon-contianer {
         background: #fff;
         border-radius: 15px;
         width: 100%;
-        height: 90%;
         max-width: 600px;
         display: flex;
         flex-direction: column;
@@ -698,6 +708,13 @@
             }
         }
         form {
+            display: flex;
+            flex-direction: column;
+            max-height: 400px;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                display: none;
+            }
             .input-container {
                 margin-top: 1.5rem;
                 label {

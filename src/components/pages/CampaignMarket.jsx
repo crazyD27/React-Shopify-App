@@ -14,7 +14,7 @@ const CampaignMarket = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -27,7 +27,7 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {

@@ -41,6 +41,7 @@ const CampaignNew = () => {
             console.log("Shop Token", response);
             setUserToken(response.data.user_token);
             localStorage.setItem("Token", response.data.user_token);
+            localStorage.setItem("Token_ID", response.data.user_id)
 
             axios.get(API.BASE_URL + 'influencer/list/',{
                 headers: {

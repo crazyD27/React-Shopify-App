@@ -112,7 +112,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -125,7 +125,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -167,7 +167,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -184,7 +184,7 @@ const CampaignOver = () => {
             setCampaignDesc('');
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
@@ -238,7 +238,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -308,7 +308,7 @@ const CampaignOver = () => {
             return axios
               .get(API.BASE_URL + "product/url/?product=" + product, {
                 headers: {
-                  Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`,
+                  Authorization: `Token ${token}`,
                 },
               })
               .then((response) => {
