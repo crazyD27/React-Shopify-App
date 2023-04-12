@@ -20,6 +20,7 @@ const CampaignOver = () => {
     const [showList, setShowList] = useState(false);
     const [prodDiscount, setProdDiscount] = useState('');
     const [campaignDesc, setCampaignDesc] = useState('');
+    const [productCoupon, setProductCoupon] = useState([]);
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState(null);
     const [prodList, setProdList] = useState('')
@@ -32,10 +33,8 @@ const CampaignOver = () => {
     const [loading, setLoading] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [checkboxStates, setCheckboxStates] = useState({});
-    
-
-    const {marketId, setMarketId, marketList, setMarketList, campListPending, setCampListPending, countCamp, setCountCamp} = useContext(UserContext);
-
+    const [couponName, setCouponName] = useState([]);
+    const {setDraftList, draftList, setMarketId, marketList, setMarketList, campListPending, setCampListPending, countCamp, setCountCamp} = useContext(UserContext);
     const token = localStorage.getItem("Token");
   
     const handleShowInfluList = () => {
@@ -97,12 +96,8 @@ const CampaignOver = () => {
         setSelectedDate(event.target.value);
     }
 
-    const handleProductDiscount = (event) => {
-        setProdDiscount(event.target.value);
-    }
-
     const handleCouponClick = (e) => {
-        setSelectedCoupon(e.target.textContent);
+        setSelectedCoupon(e.target.value);
     };
 
     const handleInfluenceOffer = (e) => {
@@ -112,7 +107,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
@@ -125,7 +120,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
@@ -152,9 +147,8 @@ const CampaignOver = () => {
             console.log(error);
         })
     }
-
     
-    const createNewCampaign = (e) => {
+    const createNewCampaign = (e) => {  
         setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
@@ -167,7 +161,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
@@ -182,9 +176,10 @@ const CampaignOver = () => {
             setInfluencerName('');
             setProductIds([])
             setCampaignDesc('');
+            setSelectedCoupon('')
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
                 }
             })
             .then(function (response) {
@@ -219,10 +214,13 @@ const CampaignOver = () => {
             else if(error.response.data.coupon) {
                 toast.warn("Coupon may not be blank.");
             }
+            
+            else {
+                toast.warn("Request failed. Please try again later");
+            }
         })
         .finally(() => setLoading(false));
     }
-    
     
     const createIfluenceCampaign = (e) => {
         setLoading(true);
@@ -238,13 +236,13 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
             }
         })
         .then(function (response) {
-            console.log("Created New Campaign", response);
+            console.log("Campaign Saved in Draft", response);
             toast.success("New Campaign Created!");
-            setCampListPending([...campListPending, response.data.product_details])
+            setDraftList([...draftList, response.data.product_details])
             setProductName([]);
             setCampaignName('');
             setSelectedDate('');
@@ -254,6 +252,7 @@ const CampaignOver = () => {
             setInfluencerName('');
             setCampaignDesc('')
             setProductIds([]);
+            setSelectedCoupon('')
 
             countList()
         })
@@ -280,6 +279,75 @@ const CampaignOver = () => {
             else if(error.response.data.coupon) {
                 toast.warn("Coupon may not be blank.");
             }
+            
+            else {
+                toast.warn("Request failed. Please try again later");
+            }
+        })
+        .finally(() => setLoading(false));
+    }
+
+    const createIfluenceRequest = (e) => {
+        setLoading(true);
+        e.preventDefault();
+        axios.post(API.BASE_URL + 'request/', {
+            product: productIds.toString(),
+            campaign_name: campaignName,
+            influencer_name: selectedUsersId.toString(),
+            date: selectedDate,
+            coupon: selectedDate,
+            offer: influenceOffer,
+            product_discount: prodDiscount,
+            influencer_visit: influencerVisit
+        }, {
+            headers: {
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+            }
+        })
+        .then(function (response) {
+            console.log("Created New Campaign", response);
+            toast.success("New Campaign Created!");
+            setCampListPending([...campListPending, response.data.product_details])
+            setProductName([]);
+            setCampaignName('');
+            setSelectedDate('');
+            setInfluenceOffer('');
+            setProdDiscount('');
+            setInfluencerVisit('');
+            setInfluencerName('');
+            setCampaignDesc('')
+            setProductIds([]);
+            setSelectedCoupon('')
+
+            countList()
+        })
+        .catch(function (error) {
+            console.log(error);
+            if(error.response.data.campaign_name) {
+                toast.warn("Campaign Name may not be blank.");
+            }
+            else if(error.response.data.influencer_visit) {
+                toast.warn("Influencer Visit may not be blank.");
+            }
+            else if(error.response.data.date) {
+                toast.warn("Date may not be blank.");
+            }
+            else if(error.response.data.offer) {
+                toast.warn("Offer may not be blank.");
+            }
+            else if(error.response.data.product) {
+                toast.warn("Please selecta any Product.");
+            }
+            else if(error.response.data.product_discount) {
+                toast.warn("Please select any value of Product Discount.");
+            }
+            else if(error.response.data.coupon) {
+                toast.warn("Coupon may not be blank.");
+            }
+            else {
+                toast.warn("Request failed. Please try again later");
+            }
+            
         })
         .finally(() => setLoading(false));
     }
@@ -308,7 +376,7 @@ const CampaignOver = () => {
             return axios
               .get(API.BASE_URL + "product/url/?product=" + product, {
                 headers: {
-                  Authorization: `Token ${token}`,
+                  Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`,
                 },
               })
               .then((response) => {
@@ -324,6 +392,24 @@ const CampaignOver = () => {
         });
     }
     }, [productName, token]);
+
+
+    const getProdCoupon = (value) => {
+        setLoading(true);
+        axios.get('https://api.myrefera.com/campaign/discount/?product=' + productIds, {
+            headers: {
+                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`,
+            },
+        })
+        .then((response) => {
+            console.log("Product Coupon", response)
+            setCouponName(response.data.code);
+            setProdDiscount(response.data.amount)
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+        console.log("IDDDDDD",productIds)
+    }
 
     const handleCheckboxChange = (event, row, index) => {
         const checked = event.target.checked;
@@ -362,13 +448,13 @@ const CampaignOver = () => {
         setNewNames(productName.toString());
     }, [productName])
 
+    console.log("Product IDD", productIds)
+
   return (
     <div className="campaign-new p-4">
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
         <MenuBar />
         <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center">
-            {/* <h2 className='mb-3'>Campaign request form</h2>
-            <p>Create a campaign list. Please fill the form to create new campaign</p> */}
 
             {!showInfluList && !showCampaignList && !influForm && (
                 <div className='buttons d-flex align-items-center justify-content-center w-100 pt-3 pb-4 influence-buttons'>
@@ -385,6 +471,7 @@ const CampaignOver = () => {
 
             {showInfluList && (
                 <div className='w-100 influencer-list'>
+                    <h3>Influencer List</h3>
                     <button onClick={handleBack} className="button button-blue back">
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
@@ -415,6 +502,7 @@ const CampaignOver = () => {
 
             {influForm && (
                 <div className='w-100'>
+                    <h3>Create Campaign for Influencer</h3>
                     <button onClick={handleInfluBack} className={"button button-blue back"}>
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
@@ -424,6 +512,7 @@ const CampaignOver = () => {
                             <label className="mb-3">Campaign name</label>
                             <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Influencer need to visit you</label>
                             <div className="input d-flex align-items-center">
@@ -437,10 +526,12 @@ const CampaignOver = () => {
                                 </span>
                             </div>
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign date or range</label>
                             <input type="date" onChange={handleDateChange} value={selectedDate} />
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Offer to influencers</label>
                             <div className="input d-flex align-items-center">
@@ -454,6 +545,7 @@ const CampaignOver = () => {
                                 </span>
                             </div>
                         </div>
+
                         <div className="input-container test d-flex flex-column mb-4 drop">
                             <label className="mb-3">Product</label>
                             <input
@@ -464,43 +556,53 @@ const CampaignOver = () => {
                             />
                             {showList && (
                             <ul>
-                                {prodList?.map((name, i) => (
-                                <li
-                                    key={i}
-                                    onClick={() => {
-                                    setProductName((prevValues) =>
-                                        prevValues.includes(name.title)
-                                        ? prevValues.filter((value) => value !== name.title)
-                                        : [...prevValues, name.title]
-                                    );
-                                    setProductIds(prevIds =>
-                                        prevIds.includes(name.id)
-                                            ? prevIds.filter(value => value !== name.id)
-                                            : [...prevIds, name.id]
-                                    );
-                                    setShowList(false);
-                                    }}
-                                >
-                                    {name.title}
-                                </li>
-                                ))}
+                                {
+                                    prodList?.length > 0 ? (
+                                        prodList?.map((name, i) => (
+                                            <li
+                                                key={i}
+                                                onClick={() => {
+                                                setProductName((prevValues) =>
+                                                    prevValues.includes(name.title)
+                                                    ? prevValues.filter((value) => value !== name.title)
+                                                    : [...prevValues, name.title]
+                                                );
+                                                setProductIds(prevIds =>
+                                                    prevIds.includes(name.id)
+                                                        ? prevIds.filter(value => value !== name.id)
+                                                        : [...prevIds, name.id]
+                                                );
+                                                setShowList(false);
+                                                getProdCoupon(productIds)
+                                                }}
+                                            >
+                                                {name.title}
+                                            </li>
+                                            ))
+                                    )
+                                    :
+                                    "No Products"
+                                }
                             </ul>
                             )}
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Product URL</label>
                             <textarea
                                 name=""
                                 id=""
                                 cols="30"
-                                value={prodDesc?.map((desc) => desc.URL).join('\n')}
+                                value={prodDesc?.length > 0 ? prodDesc?.map((desc) => desc.URL).join('\n') : ""}
                                 style={{ color: '#666' }}
                             ></textarea>
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4 prod-discount">
                             <label className="mb-3">Product discount</label>
-                            <input type="text" onChange={handleProductDiscount} value={prodDiscount} />
+                            <input type="text" value={prodDiscount} />
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Description</label>
                             <textarea
@@ -514,7 +616,6 @@ const CampaignOver = () => {
                             ></textarea>
                         </div>
 
-
                         <div className="input-container d-flex flex-column mb-4 influen-list">
                             <label className="mb-3">Influencer from the list.</label>
                             <textarea name="" id="" cols="30" rows="2" value={selectedUsernames} disabled></textarea>
@@ -522,15 +623,28 @@ const CampaignOver = () => {
                     
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Tracking coupon</label>
-                            <div className="buttons d-flex justify-content-between discount-buttons p-2 mt-0">
-                                <button type='button' className='button button-blue' onClick={handleCouponClick}>100YBL</button>
-                                <button type='button' className='button' onClick={handleCouponClick}>150YBL</button>
-                                <button type='button' className='button' onClick={handleCouponClick}>300YBL</button>
-                            </div>
+                            <select onChange={handleCouponClick} value={selectedCoupon}>
+                                {couponName.length > 0 ?
+                                    (
+                                    <>
+                                    <option value='' disabled>Select a Coupon</option>
+                                        {couponName.map((name, i) => {
+                                            return(
+                                                <option value={name}>{name}</option>
+                                            )
+                                        })}
+                                        </>
+                                    )
+                                    :
+                                    <option disabled>No Coupons</option>
+                                }
+                                
+                            </select>
                         </div>
+
                         <div className="buttons d-flex justify-content-center">
                             <button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>
-                            <button className='button ms-4'>Request sent</button>
+                            <button className='button ms-4' onClick={(e) => createIfluenceRequest(e)}>Save Request</button>
                         </div>
                     </form>
                 </div>
@@ -538,6 +652,7 @@ const CampaignOver = () => {
 
             {showCampaignList && (
                 <>
+                <h3>Create Campaign for Marketplace</h3>
                     <button onClick={handleBack} className={"button button-blue d-flex me-auto back"}>
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
@@ -547,6 +662,7 @@ const CampaignOver = () => {
                             <label className="mb-3">Campaign name</label>
                             <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Influencer need to visit you</label>
                             <div className="input d-flex align-items-center">
@@ -560,10 +676,12 @@ const CampaignOver = () => {
                                 </span>
                             </div>
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign date or range</label>
                             <input type="date" onChange={handleDateChange} value={selectedDate} />
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Offer to influencers</label>
                             <div className="input d-flex align-items-center">
@@ -577,6 +695,7 @@ const CampaignOver = () => {
                                 </span>
                             </div>
                         </div>
+
                         <div className="input-container test d-flex flex-column mb-4 drop">
                             <label className="mb-3">Product</label>
                             <input
@@ -587,43 +706,53 @@ const CampaignOver = () => {
                             />
                             {showList && (
                             <ul>
-                                {prodList?.map((name, i) => (
-                                <li
-                                    key={i}
-                                    onClick={() => {
-                                    setProductName((prevValues) =>
-                                        prevValues.includes(name.title)
-                                        ? prevValues.filter((value) => value !== name.title)
-                                        : [...prevValues, name.title]
-                                    );
-                                    setProductIds(prevIds =>
-                                        prevIds.includes(name.id)
-                                            ? prevIds.filter(value => value !== name.id)
-                                            : [...prevIds, name.id]
-                                    );
-                                    setShowList(false);
-                                    }}
-                                >
-                                    {name.title}
-                                </li>
-                                ))}
-                            </ul>
+                            {
+                                prodList?.length > 0 ? (
+                                    prodList?.map((name, i) => (
+                                        <li
+                                            key={i}
+                                            onClick={() => {
+                                            setProductName((prevValues) =>
+                                                prevValues.includes(name.title)
+                                                ? prevValues.filter((value) => value !== name.title)
+                                                : [...prevValues, name.title]
+                                            );
+                                            setProductIds(prevIds =>
+                                                prevIds.includes(name.id)
+                                                    ? prevIds.filter(value => value !== name.id)
+                                                    : [...prevIds, name.id]
+                                            );
+                                            setShowList(false);
+                                            getProdCoupon(productIds)
+                                            }}
+                                        >
+                                            {name.title}
+                                        </li>
+                                        ))
+                                )
+                                :
+                                "No Products"
+                            }
+                        </ul>
                             )}
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Product URL</label>
                             <textarea
                                 name=""
                                 id=""
                                 cols="30"
-                                value={prodDesc.map((desc) => desc.URL).join('\n')}
+                                value={prodDesc?.map((desc) => desc.URL).join('\n')}
                                 style={{ color: '#666' }}
                             ></textarea>
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4 prod-discount">
                             <label className="mb-3">Product discount</label>
-                            <input type="text" onChange={handleProductDiscount} value={prodDiscount} />
+                            <input type="text" value={prodDiscount} />
                         </div>
+
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Description</label>
                             <textarea
@@ -639,15 +768,24 @@ const CampaignOver = () => {
                     
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Tracking coupon</label>
-                            <div className="buttons d-flex justify-content-between discount-buttons p-2 mt-0">
-                                <button type='button' className='button button-blue' onClick={handleCouponClick}>100YBL</button>
-                                <button type='button' className='button' onClick={handleCouponClick}>150YBL</button>
-                                <button type='button' className='button' onClick={handleCouponClick}>300YBL</button>
-                            </div>
+                            <select  onChange={handleCouponClick} value={selectedCoupon}>
+                                {couponName.length > 0 ?
+                                    (
+                                        <>
+                                        <option value='' disabled>Select a Coupon</option>
+                                        <option value={couponName}>{couponName}</option>
+                                        </>
+                                    )
+                                    :
+                                    <option disabled>No Coupons</option>
+                                }
+                                
+                            </select>
                         </div>
+
                         <div className="buttons d-flex justify-content-center">
                         {influListVisible ? (<button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>) : <button className='button button-blue' onClick={createNewCampaign}>Save in draft</button>}
-                            <button className='button ms-4'>Request sent</button>
+                            <button className='button ms-4'>Save Request</button>
                         </div>
                     </form>
                 </>

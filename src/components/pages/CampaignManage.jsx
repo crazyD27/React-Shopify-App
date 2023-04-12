@@ -14,7 +14,7 @@ import Delete from '../../assests/img/delete.svg';
 import './pages.scss';
 
 const CampaignManage = () => {
-    const {userToken, campList, setCampList, campListPending, setCampListPending, countCamp, setCountCamp} = useContext(UserContext);
+    const {userToken, campList, setCampList, campListPending, setCampListPending, countCamp, setCountCamp, draftList, setDraftList} = useContext(UserContext);
     const [campName, setCampName] = useState('');
     const [influenceVisit, setInfluenceVisit] = useState('');
     const [prodDiscount, setProdDiscount] = useState('');
@@ -48,7 +48,7 @@ const CampaignManage = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'active/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
             }
         })
         .then(function (response) {
@@ -61,7 +61,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
             }
         })
         .then(function (response) {
@@ -74,11 +74,24 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
             }
         })
         .then(function (response) {
             setProductNames(response.data.success.products);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
+        axios.get(API.BASE_URL + 'draft/list/',{
+            headers: {
+                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
+            }
+        })
+        .then(function (response) {
+            console.log("Draft List",response)
+            setDraftList(response.data.data);
         })
         .catch(function (error) {
             console.log(error);
@@ -89,7 +102,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
             }
         })
         .then(function (response) {
@@ -120,7 +133,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
         }})
         .then(function (response) {
             setGetMarketInfo(response.data.data)
@@ -142,7 +155,7 @@ const CampaignManage = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
             }
         })
         .then(function (response) {
@@ -150,7 +163,7 @@ const CampaignManage = () => {
             toast.success("Campaign Edited!");
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
                 }
             })
             .then(function (response) {
@@ -162,7 +175,7 @@ const CampaignManage = () => {
     
             axios.get(API.BASE_URL + 'pending/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
                 }
             })
             .then(function (response) {
@@ -226,10 +239,13 @@ const CampaignManage = () => {
             <Col sm={12}>
             <Nav variant="pills" className="flex-row mb-4 tab-header">
                 <Nav.Item>
-                <Nav.Link eventKey="first">Active Campaigns</Nav.Link>
+                    <Nav.Link eventKey="first">Active Campaigns</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                <Nav.Link eventKey="second">Pending Campaigns</Nav.Link>
+                    <Nav.Link eventKey="second">Pending Campaigns</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="third">Draft Campaigns</Nav.Link>
                 </Nav.Item>
             </Nav>
             </Col>
@@ -381,6 +397,79 @@ const CampaignManage = () => {
                     : 
                     (
                     <h4 className='mt-4'>No Pending Campaigns right now</h4>
+                    )}
+                </Tab.Pane>
+                <Tab.Pane eventKey="third" className='campaign'>
+                    {draftList?.length > 0 ? (
+                        <table className='w-100'>
+                            <tbody className='w-100'>
+                                <tr className='headings'>
+                                    <th>Campaign Name</th>
+                                    <th>Offer</th>
+                                    <th>Discount</th>
+                                    <th>Influencer Visit</th>
+                                    <th>Product</th>
+                                    <th>Actions</th>
+                                </tr>
+                                {draftList?.length > 0 && draftList?.map((name, i) => {
+                                    return(
+                                        <>
+                                        <tr key={i} className='campaign-inputs'>
+                                            <td>{name.campaign_name}</td>
+                                            <td>{name.offer}</td>
+                                            <td className='category'>{name.product_discount + '%'}</td>
+                                            <td>{name.influencer_visit}</td>
+                                            <td>{pendingNames?.length > 0 ? pendingNames[i]?.join(", ") : "Test"}</td>
+                                            <td className='category'>{name.product_discount + '%'}</td>
+                                            <td>
+                                                <button onClick={(event) => {getSingleMarket(name.id, event)}} style={{marginRight: 15}}>
+                                                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
+                                                    </button>
+                                                <button onClick={() => { deleteCampaign(name.id)}}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                            </td>
+                                        </tr>
+                                        {getMarket && 
+                                            <div className="get-coupon">
+                                                <div className="get-coupon-contianer">
+                                                <h3>Edit Campaign</h3>
+                                                <button className='close' onClick={couponCross}>
+                                                    <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                                </button>
+                                                <form action="">
+                                                    <div className="input-container">
+                                                        <label>Campaign Name</label>
+                                                        <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
+                                                    </div>
+                                                    <div className="input-container">
+                                                        <label>Offer</label>
+                                                        <select onChange={handleProdOffer}>
+                                                            <option value="" disabled>{getMarketInfo?.offer}</option>
+                                                            <option value="fixed_amount">Fixed Amount</option>
+                                                            <option value="percentage">Precentage</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="input-container">
+                                                        <label>Discount</label>
+                                                        <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
+                                                    </div>
+                                                    <div className="input-container">
+                                                        <label>Description</label>
+                                                        <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
+                                                    </div>
+                                                    <button onClick={(event) => {editCampaign(name?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                                                </form>
+                                                </div>
+                                            </div>
+                                        }
+                                        </>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    ) 
+                    : 
+                    (
+                    <h4 className='mt-4'>No Campaigns in Draft right now</h4>
                     )}
                 </Tab.Pane>
             </Tab.Content>

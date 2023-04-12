@@ -10,9 +10,10 @@ export const AuthProvider = ({children})=>{
     const [countCamp, setCountCamp] = useState([]);
     const [marketList, setMarketList] = useState([]);
     const [marketId, setMarketId] = useState([]);
+    const [draftList, setDraftList] = useState([]);
 
     return (
-        <UserContext.Provider value={{marketId, setMarketId, marketList, setMarketList, countCamp, setCountCamp, userToken, setUserToken, influenceList, setInfluenceList, campList, setCampList, campListPending, setCampListPending}}>
+        <UserContext.Provider value={{draftList, setDraftList, marketId, setMarketId, marketList, setMarketList, countCamp, setCountCamp, userToken, setUserToken, influenceList, setInfluenceList, campList, setCampList, campListPending, setCampListPending}}>
             {children}
         </UserContext.Provider>
     )
