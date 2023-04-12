@@ -18,7 +18,7 @@ const CampaignOver = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [influencerVisit, setInfluencerVisit] = useState('');
     const [showList, setShowList] = useState(false);
-    const [prodDiscount, setProdDiscount] = useState('');
+    const [prodDiscount, setProdDiscount] = useState([]);
     const [campaignDesc, setCampaignDesc] = useState('');
     const [productCoupon, setProductCoupon] = useState([]);
     const [influenceOffer, setInfluenceOffer] = useState('');
@@ -107,7 +107,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -120,7 +120,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -161,7 +161,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -179,7 +179,7 @@ const CampaignOver = () => {
             setSelectedCoupon('')
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
@@ -236,7 +236,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -301,7 +301,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -376,7 +376,7 @@ const CampaignOver = () => {
             return axios
               .get(API.BASE_URL + "product/url/?product=" + product, {
                 headers: {
-                  Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`,
+                  Authorization: `Token ${token}`,
                 },
               })
               .then((response) => {
@@ -398,7 +398,7 @@ const CampaignOver = () => {
         setLoading(true);
         axios.get('https://api.myrefera.com/campaign/discount/?product=' + productIds, {
             headers: {
-                Authorization: `Token 080448d91dbfd8ada4e87341d05f58a474fb79da`,
+                Authorization: `Token ${token}`,
             },
         })
         .then((response) => {
