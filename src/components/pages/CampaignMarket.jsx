@@ -25,7 +25,7 @@ const CampaignMarket = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
             headers: {
-                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -39,7 +39,7 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -92,7 +92,7 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -117,7 +117,7 @@ const CampaignMarket = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -129,7 +129,7 @@ const CampaignMarket = () => {
             setInfluenceVisit('');
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
@@ -155,7 +155,7 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token a5c2ab07779c1758d4a99e6d1975cad1756e859b`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log(response.data)
