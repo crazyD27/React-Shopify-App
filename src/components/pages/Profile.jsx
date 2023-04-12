@@ -25,7 +25,7 @@ function Profile() {
             instagram_url: instagramUrl,
         }, {
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {

@@ -49,7 +49,7 @@ const CampaignManage = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'active/',{
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -62,7 +62,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -75,7 +75,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -87,7 +87,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'draft/list/',{
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -103,7 +103,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -134,7 +134,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             setGetMarketInfo(response.data.data)
@@ -156,7 +156,7 @@ const CampaignManage = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -164,7 +164,7 @@ const CampaignManage = () => {
             toast.success("Campaign Edited!");
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
-                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
@@ -176,7 +176,7 @@ const CampaignManage = () => {
     
             axios.get(API.BASE_URL + 'pending/',{
                 headers: {
-                    Authorization: `Token aac4356fac707274b5a781be4bddf24bd73f5d8e`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
