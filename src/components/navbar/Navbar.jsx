@@ -14,6 +14,8 @@ import Notification from '../../assests/img/bell.png';
 import Message from '../../assests/img/message.png';
 
 const MenuBar = () => {
+
+  const userName = localStorage.getItem("User_Name")
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
@@ -41,7 +43,7 @@ const MenuBar = () => {
               </Link> */}
               <Link to="/dashboard">
                 <img src={User} alt='notification' />
-                <p>Web developer</p>
+                <p>{userName}</p>
               </Link>
             </Nav>
           </Navbar.Collapse>

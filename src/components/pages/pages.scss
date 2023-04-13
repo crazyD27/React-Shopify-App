@@ -24,7 +24,80 @@
             }
             &:nth-child(odd) {
                 background-color: #ededed;
+            } 
+        }
+    }
+    .no-url {
+        color: #a7a7a7;
+        border: 1px solid #ccc;
+        min-height: 52px;
+        border-radius: 5px;
+        padding: 15px;
+    }
+    .product-urls {
+        height: 70px;
+        overflow-y: scroll;
+        &::-webkit-scrollbar-track
+        {
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar
+        {
+            background-color: transparent;
+            height: 7px;
+            width: 7px;
+            cursor: pointer;
+        }
+        &::-webkit-scrollbar-thumb
+        {
+            background-color: #5172fc;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #5172fc;
+            border: 2px solid #5172fc;
+            border-radius: 20px;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            &:last-child {
+                margin-bottom: 0;
             }
+        }
+    }
+    .prod-coupons ul {
+        display: flex;
+        width: 1000px;
+        overflow-x: scroll;
+        &::-webkit-scrollbar-track
+        {
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar
+        {
+            background-color: transparent;
+            height: 7px;
+        }
+        &::-webkit-scrollbar-thumb
+        {
+            background-color: #5172fc;
+            border-radius: 20px;
+        }
+        li {
+            background-color: #d9d9d9;
+            padding: 8px;
+            border-radius: 3px;
+            margin: 0 5px;
+            min-width: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
         }
     }
     table {

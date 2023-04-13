@@ -13,11 +13,12 @@ function Profile() {
 
     const tokenId = localStorage.getItem('Token_ID');
     const token = localStorage.getItem("Token");
+    const userId = localStorage.getItem("User_ID")
 
     const createProfile = (e) => {
         setLoading(true);
         e.preventDefault();
-        axios.put('https://api.myrefera.com/campaign/profile/' + tokenId, {
+        axios.put('https://api.myrefera.com/campaign/profile/' + userId + '/', {
             username: userName,
             email: email,
             password: password,
@@ -31,6 +32,7 @@ function Profile() {
         .then(function (response) {
             console.log("Profile", response);
             toast.success("Profile Edited Successfully!");
+            localStorage.setItem("User_Name", response.data.username)
             setUserName('');
             setPassword('');
             setShopifyUrl('');

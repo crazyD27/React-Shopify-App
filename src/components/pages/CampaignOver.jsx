@@ -41,7 +41,6 @@ const CampaignNew = () => {
             console.log("Shop Token", response);
             setUserToken(response.data.user_token);
             localStorage.setItem("Token", response.data.user_token);
-            localStorage.setItem("Token_ID", response.data.user_id)
 
             axios.get(API.BASE_URL + 'influencer/list/',{
                 headers: {
@@ -58,6 +57,19 @@ const CampaignNew = () => {
         .catch(function (error) {
             console.log(error);
         })
+        axios.get(API.BASE_URL + 'user/id/',{
+            headers: {
+                Authorization: `Token ${token}`
+        }})
+        .then(function (response) {
+            console.log("User ID", response);
+            localStorage.setItem("User_ID", response.data.user_id)
+            localStorage.setItem("User_Name", response.data.username)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
     }, [])
 
 
