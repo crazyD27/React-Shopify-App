@@ -221,10 +221,10 @@ const CampaignMarket = () => {
             <Col sm={12}>
             <Nav variant="pills" className="flex-row mb-4 tab-header">
                 <Nav.Item>
-                    <Nav.Link eventKey="first">Active Campaigns</Nav.Link>
+                    <Nav.Link eventKey="first">Pending Campaigns</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="second">Pending Campaigns</Nav.Link>
+                    <Nav.Link eventKey="second">Draft Campaigns</Nav.Link>
                 </Nav.Item>
             </Nav>
             </Col>
@@ -237,7 +237,7 @@ const CampaignMarket = () => {
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
                                     <th>Offer</th>
-                                    <th>Categories</th>
+                                    <th>Products</th>
                                     <th>Actions</th>
                                 </tr>
                                 

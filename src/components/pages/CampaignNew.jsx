@@ -882,7 +882,7 @@ const CampaignOver = () => {
 
                         <div className="buttons d-flex justify-content-center">
                         <button className='button button-blue' onClick={createNewCampaignDraft}>Save in draft</button>
-                        <button className='button ms-4' onClick={createNewCampaign}>Save Request</button>
+                        <button className='button ms-4' onClick={createNewCampaign}>Request Sent to MarketPlace</button>
                         </div>
                     </form>
                 </>
