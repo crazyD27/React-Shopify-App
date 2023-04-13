@@ -15,7 +15,6 @@ import NoData from '../../assests/img/no-data.png';
 
 const CampaignMarket = () => {
     const [productNames, setProductNames] = useState([]);
-    const [testing, setTesting] = useState([]);
     const [draftProds, setDraftProds] = useState([]);
     const token = localStorage.getItem('Token');
     const [getMarketInfo, setGetMarketInfo] = useState([]);
@@ -25,7 +24,7 @@ const CampaignMarket = () => {
     const [campName, setCampName] = useState('');
     const [prodDiscount, setProdDiscount] = useState('');
     const [influenceVisit, setInfluenceVisit] = useState('');
-    const {marketDraftId, setMarketDraftId, marketDraftList, setMarketDraftList, marketList, setMarketList, marketId, setMarketId, countCamp, setCountCamp} = useContext(UserContext);
+    const {testing, setTesting, marketDraftId, setMarketDraftId, marketDraftList, setMarketDraftList, marketList, setMarketList, marketId, setMarketId} = useContext(UserContext);
     
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
@@ -85,24 +84,21 @@ const CampaignMarket = () => {
     const handleInfluenceVisit = (event) => {
         setInfluenceVisit(event.target.value);
     }
-
-    const getnameProduct = () => {
+    useEffect(() => {
         const names = [];
         marketId.forEach((ids) => {
             const productNamesArr = [];
             ids.forEach((id) => {
-                const product = productNames.find((p) => p.id === id);
-                if (product) {
-                    productNamesArr.push(product.title);
-                }
+            const product = productNames.find((p) => p.id === id);
+            if (product) {
+                productNamesArr.push(product.title);
+            }
             });
             names.push(productNamesArr);
         });
         setTesting(names);
-    };
-
-    const getDraftnameProduct = () => {
-        const names = [];
+        
+        const draftNames = [];
         marketDraftId.forEach((ids) => {
             const productNamesArr = [];
             ids.forEach((id) => {
@@ -111,17 +107,14 @@ const CampaignMarket = () => {
                     productNamesArr.push(product.title);
                 }
             });
-            names.push(productNamesArr);
+            draftNames.push(productNamesArr);
         });
-        setDraftProds(names);
-    };
+        setDraftProds(draftNames);
+
+    }, [productNames, marketId, marketDraftId])
+
 
     console.log("Testing in Market", testing)
-
-    useEffect(() => {
-        getnameProduct()
-        getDraftnameProduct()
-    }, [productNames])
 
     function deleteCampaign(value) {
         setLoading(true);
@@ -146,43 +139,47 @@ const CampaignMarket = () => {
         event.preventDefault();
         setLoading(true);
         axios.put(API.BASE_URL + 'update/' + value + '/',{
-            campaign_name: campName,
-            description: influenceVisit,
-            offer: prodOffer,
-            product_discount: prodDiscount
+          campaign_name: campName,
+          description: influenceVisit,
+          offer: prodOffer,
+          product_discount: prodDiscount
         },{
-            headers: {
-                Authorization: `Token ${token}`
-            }
+          headers: {
+            Authorization: `Token ${token}`
+          }
         })
         .then(function (response) {
-            console.log("EDITED MARKET", response)
-            toast.success("Coupon Edited Successfully");
-            setCampName('');
-            setProdOffer('');
-            setProdDiscount('');
-            setInfluenceVisit('');
-            axios.get(API.BASE_URL + 'market/list/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            })
-            .then(function (response) {
-                setMarketList(response.data.data);
-                setMarketId(response.data.product_id);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            
-            couponCross();
+          console.log("EDITED MARKET", response)
+          toast.success("Coupon Edited Successfully");
+          setCampName('');
+          setProdOffer('');
+          setProdDiscount('');
+          setInfluenceVisit('');
+          
+          // update marketList with the new data
+          const updatedMarketList = marketDraftList.map((market) => {
+            if (market.id === value) {
+              return {
+                ...market,
+                campaign_name: campName,
+                description: influenceVisit,
+                offer: prodOffer,
+                product_discount: prodDiscount
+              };
+            } else {
+              return market;
+            }
+          });
+          setMarketDraftList(updatedMarketList);
+          
+          couponCross();
         })
         .catch(function (error) {
-            console.log(error);
-            toast.warn("Unable to edit. Please try again later")
+          console.log(error);
+          toast.warn("Unable to edit. Please try again later")
         })
         .finally(() => setLoading(false));
-    }
+      }
 
     const getSingleMarket = (value, event) => {
         console.log("VLSE", value)
@@ -236,7 +233,7 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Offer</th>
+                                    <th>Discount Type</th>
                                     <th>Products</th>
                                     <th>Actions</th>
                                 </tr>
@@ -333,8 +330,8 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Offer</th>
-                                    <th>Categories</th>
+                                    <th>Discount Type</th>
+                                    <th>Products</th>
                                     <th>Actions</th>
                                 </tr>
                                 

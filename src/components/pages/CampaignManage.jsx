@@ -130,6 +130,7 @@ const CampaignManage = () => {
     }
 
     const getSingleMarket = (value, event) => {
+        console.log("ID", value)
         event.preventDefault();
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
@@ -147,6 +148,7 @@ const CampaignManage = () => {
     }
 
     const editCampaign = (value, event) => {
+        console.log(value)
         event.preventDefault();
         setLoading(true);
         axios.put(API.BASE_URL + 'update/' + value + '/',{
@@ -169,6 +171,56 @@ const CampaignManage = () => {
             })
             .then(function (response) {
                 setCampList(response.data.data);
+                axios.get(API.BASE_URL + 'active/',{
+                    headers: {
+                        Authorization: `Token ${token}`
+                    }
+                })
+                .then(function (response) {
+                    setCampList(response.data.data);
+                    setActiveId(response.data.product_id)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        
+                axios.get(API.BASE_URL + 'pending/',{
+                    headers: {
+                        Authorization: `Token ${token}`
+                    }
+                })
+                .then(function (response) {
+                    setCampListPending(response.data.data);
+                    setPendingId(response.data.product_id)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        
+                axios.get(API.BASE_URL + 'product/list/',{
+                    headers: {
+                        Authorization: `Token ${token}`
+                    }
+                })
+                .then(function (response) {
+                    setProductNames(response.data.success.products);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        
+                axios.get(API.BASE_URL + 'draft/list/',{
+                    headers: {
+                        Authorization: `Token ${token}`
+                    }
+                })
+                .then(function (response) {
+                    console.log("Draft List",response)
+                    setDraftList(response.data.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
             })
             .catch(function (error) {
                 console.log(error);
@@ -309,7 +361,7 @@ const CampaignManage = () => {
                                                         <label>Description</label>
                                                         <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
                                                     </div>
-                                                    <button onClick={(event) => {editCampaign(name?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                                                    <button className='button button-blue mt-4 mx-auto' onClick={(event) => editCampaign(name.id, event)}>Edit</button>
                                                 </form>
                                                 </div>
                                             </div>
