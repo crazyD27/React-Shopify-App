@@ -72,7 +72,7 @@
     }
     .prod-coupons ul {
         display: flex;
-        width: 1000px;
+        width: 800px;
         overflow-x: scroll;
         &::-webkit-scrollbar-track
         {
@@ -98,6 +98,10 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
+        }
+        .selected {
+            background-color: #5172fc;
+            color: #fff;
         }
     }
     table {
@@ -520,6 +524,31 @@
             }
         }
     }
+    .tab-header {
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            padding: 8px 10px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            padding: 12px 22px;
+            background: #fff;
+            border: 1px solid #7c7c7c;
+            color: #000;
+            &:nth-child(1) {
+                margin-right: 1rem;
+            }
+        }
+        .nav-link.active {
+            background: #5172FC;
+            margin-right: 1rem;
+            border: 1px solid #5172FC;
+            color: #fff;
+        }
+    }
 }
 
 .coupon {
@@ -598,6 +627,7 @@
                     border-right: 1px solid #fff;
                     font-weight: normal;
                     line-height: 1;
+                    padding: 14px 0;
                     &:last-child {
                         border-right: none;
                     }

@@ -250,7 +250,7 @@ const CouponList = () => {
             
             <table className="coupon-table">
                 <tr className='table-heading'>
-                    <th><input type="checkbox" name="" id="" /></th>
+                    {/* <th><input type="checkbox" name="" id="" /></th> */}
                     <th>Coupons</th>
                     <th>Created at</th>
                     <th>Actions</th>
@@ -259,7 +259,7 @@ const CouponList = () => {
                     {couponData?.map((couponData, i) => {
                         return(
                             <tr key={i}>
-                                <td>{couponData.id}</td>
+                                {/* <td>{couponData.id}</td> */}
                                 <td>{couponData.title}</td>
                                 <td>{couponData.created_at}</td>
                                 <td>

@@ -36,7 +36,7 @@ const CampaignOver = () => {
     const [checkboxStates, setCheckboxStates] = useState({});
     const [couponName, setCouponName] = useState([]);
     const [productUrl, setProductUrl] = useState([]);
-    const {setDraftList, draftList, setMarketId, marketList, setMarketList, campListPending, setCampListPending, countCamp, setCountCamp} = useContext(UserContext);
+    const {setDraftList, draftList, setMarketId, setMarketList, campListPending, setCampListPending,setMarketDraftId, setMarketDraftList, countCamp, setCountCamp} = useContext(UserContext);
     const token = localStorage.getItem("Token");
 
     const [couponAmounts, setCouponAmounts] = useState('');
@@ -160,10 +160,87 @@ const CampaignOver = () => {
         })
     }
     
+    const createNewCampaignDraft = (e) => {  
+        setLoading(true);
+        e.preventDefault();
+        axios.post(API.BASE_URL + 'create/', {
+            product: productIds.toString(),
+            campaign_name: campaignName,
+            date: selectedDate,
+            coupon: selectedCoupon,
+            offer: influenceOffer,
+            product_discount: couponAmounts,
+            influencer_visit: influencerVisit
+        }, {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Campaign Saved in Draft", response);
+            toast.success("Campaign Saved in Draft!");
+            setProductName([]);
+            setCampaignName('');
+            setSelectedDate('');
+            setInfluenceOffer('');
+            setProdDiscount('');
+            setInfluencerVisit('');
+            setInfluencerName('');
+            setCampaignDesc('')
+            setProductIds([]);
+            setSelectedCoupon('')
+            setProductDetails([])
+            setCouponAmounts('')
+            setProductUrl([])
+            countList()
+            axios.get(API.BASE_URL + 'markdraft/list/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                setMarketDraftList(response.data.data);
+                setMarketDraftId(response.data.product_id);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        })
+        .catch(function (error) {
+            console.log(error);
+            if(error.response.data.campaign_name) {
+                toast.warn("Campaign Name may not be blank.");
+            }
+            else if(error.response.data.influencer_visit) {
+                toast.warn("Influencer Visit may not be blank.");
+            }
+            else if(error.response.data.date) {
+                toast.warn("Date may not be blank.");
+            }
+            else if(error.response.data.offer) {
+                toast.warn("Offer may not be blank.");
+            }
+            else if(error.response.data.product) {
+                toast.warn("Please selecta any Product.");
+            }
+            else if(error.response.data.product_discount) {
+                toast.warn("Please select any value of Product Discount.");
+            }
+            else if(error.response.data.coupon) {
+                toast.warn("Coupon may not be blank.");
+            }
+            
+            else {
+                toast.warn("Request failed. Please try again later");
+            }
+        })
+        .finally(() => setLoading(false));
+    }
+
     const createNewCampaign = (e) => {  
         setLoading(true);
         e.preventDefault();
-        axios.post(API.BASE_URL + 'campaign/create/', {
+        axios.post(API.BASE_URL + 'markplace/camp', {
             product: productIds.toString(),
             campaign_name: campaignName,
             date: selectedDate,
@@ -190,6 +267,7 @@ const CampaignOver = () => {
             setCampaignDesc('');
             setSelectedCoupon('')
             setCouponAmounts('')
+            setProductDetails([])
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
                     Authorization: `Token ${token}`
@@ -241,12 +319,12 @@ const CampaignOver = () => {
         axios.post(API.BASE_URL + 'inflcampaign/create/', {
             product: productIds.toString(),
             campaign_name: campaignName,
-            influencer_name: selectedUsersId.toString(),
             date: selectedDate,
-            coupon: selectedDate,
+            coupon: selectedCoupon,
             offer: influenceOffer,
-            product_discount: prodDiscount,
-            influencer_visit: influencerVisit
+            product_discount: couponAmounts,
+            influencer_visit: influencerVisit,
+            influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
                 Authorization: `Token ${token}`
@@ -254,7 +332,7 @@ const CampaignOver = () => {
         })
         .then(function (response) {
             console.log("Campaign Saved in Draft", response);
-            toast.success("New Campaign Created!");
+            toast.success("Campaign Saved in Draft!");
             setDraftList([...draftList, response.data.product_details])
             setProductName([]);
             setCampaignName('');
@@ -266,7 +344,9 @@ const CampaignOver = () => {
             setCampaignDesc('')
             setProductIds([]);
             setSelectedCoupon('')
-
+            setProductDetails([])
+            setCouponAmounts('')
+            setProductUrl([])
             countList()
         })
         .catch(function (error) {
@@ -306,12 +386,12 @@ const CampaignOver = () => {
         axios.post(API.BASE_URL + 'request/', {
             product: productIds.toString(),
             campaign_name: campaignName,
-            influencer_name: selectedUsersId.toString(),
             date: selectedDate,
             coupon: selectedCoupon,
             offer: influenceOffer,
             product_discount: couponAmounts,
-            influencer_visit: influencerVisit
+            influencer_visit: influencerVisit,
+            influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
                 Authorization: `Token ${token}`
@@ -331,7 +411,9 @@ const CampaignOver = () => {
             setCampaignDesc('')
             setProductIds([]);
             setSelectedCoupon('')
-
+            setProductDetails([])
+            setCouponAmounts('')
+            setProductUrl([])
             countList()
         })
         .catch(function (error) {
@@ -385,6 +467,7 @@ const CampaignOver = () => {
 
             Promise.all(
                 productName?.map((product) => {
+                    setLoading(true);
                     return axios
                     .post(API.BASE_URL + "product/url/", {
                         product: productIds.toString()
@@ -398,7 +481,8 @@ const CampaignOver = () => {
                         setProductDetails(response.data.product_details);
                         setProductUrl(response.data.product_url)
                     })
-                    .catch((error) => console.log(error));
+                    .catch((error) => console.log(error))
+                    .finally(() => setLoading(false));
                 })
             ).then((responses) => {
                 setProdDesc(
@@ -449,6 +533,9 @@ const CampaignOver = () => {
     }, [productName])
 
     console.log("Product IDD", productIds)
+
+    console.log("PRDODDD", productIds.length)
+    console.log("selectedCoupon",selectedCoupon)
 
   return (
     <div className="campaign-new p-4">
@@ -505,7 +592,7 @@ const CampaignOver = () => {
                         Back
                     </button>
                     <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
-                        <div className="input-container d-flex flex-column mb-4">
+                    <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign name</label>
                             <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
                         </div>
@@ -547,56 +634,66 @@ const CampaignOver = () => {
                             <label className="mb-3">Product</label>
                             <input
                             type="text"
-                            placeholder={prodList?.length > 0 ? "---Select an option---" : "---No Products Available---"}
+                            placeholder="---Select an option---"
                             onClick={() => setShowList(!showList)}
                             value={productName}
                             />
                             {showList && (
-                            <ul>
-                                {
-                                    prodList?.length > 0 ? (
-                                        prodList?.map((name, i) => (
-                                            <li
-                                                key={i}
-                                                onClick={() => {
-                                                setProductName((prevValues) =>
-                                                    prevValues.includes(name.title)
-                                                    ? prevValues.filter((value) => value !== name.title)
-                                                    : [...prevValues, name.title]
-                                                );
-                                                setProductIds(prevIds =>
-                                                    prevIds.includes(name.id)
-                                                        ? prevIds.filter(value => value !== name.id)
-                                                        : [...prevIds, name.id]
-                                                );
-                                                setShowList(false);
-                                                }}
-                                            >
-                                                {name.title}
-                                            </li>
-                                            ))
-                                    )
-                                    :
-                                    "No Products"
-                                }
-                            </ul>
+                            <ul className='product-list'>
+                            {
+                                prodList?.length > 0 ? (
+                                    prodList?.map((name, i) => (
+                                        <li
+                                            key={i}
+                                            onClick={() => {
+                                            setProductName((prevValues) =>
+                                                prevValues.includes(name.title)
+                                                ? prevValues.filter((value) => value !== name.title)
+                                                : [...prevValues, name.title]
+                                            );
+                                            setProductIds(prevIds =>
+                                                prevIds.includes(name.id)
+                                                    ? prevIds.filter(value => value !== name.id)
+                                                    : [...prevIds, name.id]
+                                            );
+                                            setShowList(false);
+                                            }}
+                                        >
+                                            {name.title}
+                                        </li>
+                                        ))
+                                )
+                                :
+                                "No Products"
+                            }
+                        </ul>
                             )}
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Product URL</label>
-                            <textarea
-                                name=""
-                                id=""
-                                cols="30"
-                                value={prodDesc?.length > 0 ? prodDesc?.map((desc) => desc.URL).join('\n') : ""}
-                                style={{ color: '#666' }}
-                            ></textarea>
+                            {productIds.length > 0 ? (
+                                <div className='product-urls'>
+                                    {productUrl?.map((url, index) => (
+                                        <a key={index} href={url} target="_blank">
+                                            <FontAwesomeIcon icon={faSearch} style={{ color: "#5172fc", width: "15px", height: "15px", marginRight: 10 }} />
+                                            {url}
+                                        </a>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className='no-url'>No products selected.</p>
+                            )}
                         </div>
 
-                        <div className="input-container d-flex flex-column mb-4 prod-discount">
-                            <label className="mb-3">Product discount</label>
-                            <input type="text" value={prodDiscount} />
+                        <div className="input-container d-flex flex-column mb-4 influen-list">
+                            <label className="mb-3">Influencer from the list.</label>
+                            <textarea name="" id="" cols="30" rows="2" value={selectedUsernames} disabled></textarea>
+                        </div>
+                    
+                        <div className="input-container d-flex flex-column mb-4 prod-coupon-amount">
+                            <label className="mb-3">Coupon Amount</label>
+                            <input type="text" value={productDetails?.length > 0 ? (couponAmounts.substring(1)) : "Select a Coupon"} onChange={(event) => setCouponAmounts(event.target.value)} disabled />
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
@@ -611,26 +708,26 @@ const CampaignOver = () => {
                                 style={{ color: '#666' }}
                             ></textarea>
                         </div>
-
-                        <div className="input-container d-flex flex-column mb-4 influen-list">
-                            <label className="mb-3">Influencer from the list.</label>
-                            <textarea name="" id="" cols="30" rows="2" value={selectedUsernames} disabled></textarea>
-                        </div>
                     
-                        <div className="input-container d-flex flex-column mb-4">
-                            <label className="mb-3">Tracking coupon</label>
-                            <select onChange={handleCouponClick} value={selectedCoupon}>
-                                {couponName.length > 0 ? (
-                                    <>
-                                        <option value='' disabled>Select a Coupon</option>
-                                        {couponName.map((name, i) => (
-                                            <option key={i} value={name}>{name}</option>
-                                        ))}
-                                    </>
-                                ) : (
-                                    <option disabled>No Coupons</option>
-                                )}
-                            </select>
+                        <div className="input-container d-flex flex-column mb-4 prod-coupons w-100">
+                            <label className="mb-3">Product coupons</label>
+                            <ul>
+                            {productIds?.length > 0 ? (
+                                    productDetails?.length > 0 ?(
+                                        productDetails.map((product) => (
+                                            <li key={product.coupons} onClick={() => {
+                                                const selectedCouponAmount = product.amount ?? "";
+                                                setCouponAmounts(selectedCouponAmount);
+                                                setSelectedCoupon(product.coupons);
+                                            }} className={selectedCoupon === product.coupons ? "selected" : ""}>
+                                                {product.coupons}
+                                            </li>
+                                            ))
+                                            
+                                    ):
+                                    <p className='no-url'>No Coupon Available</p>
+                                ): <p className='no-url'>Please Select a Coupon</p>}
+                            </ul>
                         </div>
 
                         <div className="buttons d-flex justify-content-center">
@@ -745,7 +842,7 @@ const CampaignOver = () => {
 
                         <div className="input-container d-flex flex-column mb-4 prod-coupon-amount">
                             <label className="mb-3">Coupon Amount</label>
-                            <input type="text" value={couponAmounts} onChange={(event) => setCouponAmounts(event.target.value)} />
+                            <input type="text" value={productDetails?.length > 0 ? (couponAmounts.substring(1)) : "Select a Coupon"} onChange={(event) => setCouponAmounts(event.target.value)} disabled />
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
@@ -764,22 +861,28 @@ const CampaignOver = () => {
                         <div className="input-container d-flex flex-column mb-4 prod-coupons">
                             <label className="mb-3">Product coupons</label>
                             <ul>
-                                {productDetails.map((product) => (
-                                <li key={product.coupons} onClick={() => {
-                                    const selectedCouponAmount = product.amount ?? "";
-                                    setCouponAmounts(selectedCouponAmount);
-                                    setSelectedCoupon(product.coupons);
-                                }} className={selectedCoupon === product.coupons ? "selected" : ""}>
-                                    {product.coupons}
-                                </li>
-                                ))}
+                                {productIds?.length > 0 ? (
+                                    productDetails?.length > 0 ?(
+                                        productDetails.map((product) => (
+                                            <li key={product.coupons} onClick={() => {
+                                                const selectedCouponAmount = product.amount ?? "";
+                                                setCouponAmounts(selectedCouponAmount);
+                                                setSelectedCoupon(product.coupons);
+                                            }} className={selectedCoupon === product.coupons ? "selected" : ""}>
+                                                {product.coupons}
+                                            </li>
+                                            ))
+                                            
+                                    ):
+                                    <p className='no-url'>No Coupon Available</p>
+                                ): <p className='no-url'>Please Select a Coupon</p>}
                             </ul>
                         </div>
 
 
                         <div className="buttons d-flex justify-content-center">
-                        {influListVisible ? (<button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>) : <button className='button button-blue' onClick={createNewCampaign}>Save in draft</button>}
-                            <button className='button ms-4'>Save Request</button>
+                        <button className='button button-blue' onClick={createNewCampaignDraft}>Save in draft</button>
+                        <button className='button ms-4' onClick={createNewCampaign}>Save Request</button>
                         </div>
                     </form>
                 </>
