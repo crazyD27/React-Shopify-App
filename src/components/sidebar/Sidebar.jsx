@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
@@ -23,6 +24,7 @@ import Coupon from '../../assests/img/coupon.png';
 import AnalyticsImg from '../../assests/img/analytics.png';
 import SalesImg from '../../assests/img/sales.png';
 import ProfileImg from '../../assests/img/profile.png';
+import User from '../../assests/img/user.png';
 
 const SideBar = () => {
 
@@ -39,11 +41,18 @@ const SideBar = () => {
 //         })
 //   }, [])
 
+const userName = localStorage.getItem("User_Name")
   return (
     <div className="sidebar">
+        
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Row className="justify-content-between tab-list m-0 sidebar-container">
+            
                 <Col className="side-tab mb-5 mb-md-0 py-4">
+                    <Link to="/dashboard" className='px-4 d-flex align-items-center mb-3'>
+                        <img src={User} alt='notification' style={{width: 45}} />
+                        <p className='text-white mb-0 ms-3'>Hello, {userName}</p>
+                    </Link>
                     <Nav variant="pills" className="flex-column side-main bg-none pt-2">
                         <Nav.Item>
                             <Nav.Link className="text-white py-2 mb-2" eventKey="first">

@@ -166,6 +166,9 @@ const CouponList = () => {
             console.log("Single Coupon", response.data);
             setGetCouponInfo(response.data)
             setGetCoupon(true);
+            setCouponDesc(response.data.title)
+            setDiscountType(response.data.discount_type)
+            setCouponAmount(response.data.amount.substring(1))
         })
         .catch(function (error) {
             console.log(error);
@@ -222,7 +225,7 @@ const CouponList = () => {
 
     return (
     <div className="coupon p-4">
-        <MenuBar />
+        {/* <MenuBar /> */}
         <div className="coupon-container d-flex flex-column mt-5 w-100">
             <h4 className='mb-4'>Coupon List</h4>
             {couponData.length > 0 ? (
@@ -399,7 +402,7 @@ const CouponList = () => {
                     <form action="">
                         <div className="input-container">
                             <label>Coupon</label>
-                            <input type="text" placeholder={getCouponInfo? getCouponInfo.title : 'Enter your coupon'} value={couponDesc} onChange={handleCouponDesc} />
+                            <input type="text" value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
                             <label>Discount Types</label>
@@ -411,7 +414,7 @@ const CouponList = () => {
                         </div>
                         <div className="input-container">
                             <label>Amount</label>
-                            <input type="text" placeholder={getCouponInfo? getCouponInfo.amount :'Amount'} value={couponAmount} onChange={handleCouponAmount} />
+                            <input type="text" value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
                     </form>

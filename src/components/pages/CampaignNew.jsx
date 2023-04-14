@@ -6,7 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft, faSearch  } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faChevronLeft, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const CampaignOver = () => {
     const [productName, setProductName] = useState([]);
@@ -19,14 +19,12 @@ const CampaignOver = () => {
     const [influencerVisit, setInfluencerVisit] = useState('');
     const [showList, setShowList] = useState(false);
     const [prodDiscount, setProdDiscount] = useState([]);
-    const [selectedCouponIndex, setSelectedCouponIndex] = useState(-1);
     const [campaignDesc, setCampaignDesc] = useState('');
-    const [productCoupon, setProductCoupon] = useState([]);
     const [influenceOffer, setInfluenceOffer] = useState('');
-    const [selectedCoupon, setSelectedCoupon] = useState(null);
+    const [selectedCoupon, setSelectedCoupon] = useState({ name: "", product: "" });
     const [prodList, setProdList] = useState('')
     const [prodDesc, setProdDesc] = useState([]);
-    const [influListVisible, setInfluListVisible] = useState(false);
+    const [prodAmount, setProdAmount] = useState([]);
     const [showInfluList, setShowInfluList] = useState(false);
     const [showCampaignList, setShowCampaignList] = useState(false);
     const [influForm, setInfluForm] = useState(false);
@@ -34,12 +32,12 @@ const CampaignOver = () => {
     const [loading, setLoading] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [checkboxStates, setCheckboxStates] = useState({});
-    const [couponName, setCouponName] = useState([]);
     const [productUrl, setProductUrl] = useState([]);
+    const [selectedCoupons, setSelectedCoupons] = useState([]);
     const {setDraftList, draftList, setMarketId, setMarketList, campListPending, setCampListPending,setMarketDraftId, setMarketDraftList, countCamp, setCountCamp} = useContext(UserContext);
     const token = localStorage.getItem("Token");
 
-    const [couponAmounts, setCouponAmounts] = useState('');
+    const [couponAmounts, setCouponAmounts] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
   
     const handleShowInfluList = () => {
@@ -101,17 +99,6 @@ const CampaignOver = () => {
         setSelectedDate(event.target.value);
     }
 
-    const handleCouponClick = (e) => {
-        const index = e.target.selectedIndex - 1; // Subtract 1 to account for the disabled option
-        setSelectedCoupon(e.target.value);
-        if (index >= 0) {
-            const selectedCouponName = couponName[index];
-            setProdDiscount(selectedCouponName); // Set prodDiscount to the selected coupon name
-        } else {
-            setProdDiscount(''); // Set prodDiscount to empty string if no coupon is selected
-        }
-    };
-
     const handleInfluenceOffer = (e) => {
         setInfluenceOffer(e.target.value);
     };
@@ -169,7 +156,7 @@ const CampaignOver = () => {
             date: selectedDate,
             coupon: selectedCoupon,
             offer: influenceOffer,
-            product_discount: couponAmounts,
+            product_discount: selectedCoupons.toString(),
             influencer_visit: influencerVisit
         }, {
             headers: {
@@ -464,7 +451,6 @@ const CampaignOver = () => {
 
     useEffect(() => {
         if (Array.isArray(productName)) {
-
             Promise.all(
                 productName?.map((product) => {
                     setLoading(true);
@@ -532,15 +518,30 @@ const CampaignOver = () => {
         setNewNames(productName.toString());
     }, [productName])
 
-    console.log("Product IDD", productIds)
+    const removeCouponAmount = (coupon, event) => {
+        event.preventDefault();
+        setCouponAmounts(prevCouponAmounts =>
+          prevCouponAmounts.filter(prevCoupon => prevCoupon.name !== coupon.name)
+        );
+    };
 
-    console.log("PRDODDD", productIds.length)
-    console.log("selectedCoupon",selectedCoupon)
+    function removeItem(index) {
+        setSelectedCoupons(prevState => {
+          const newSelectedCoupons = [...prevState];
+          newSelectedCoupons.splice(index, 1);
+          return newSelectedCoupons;
+        });
+    }
+
+    console.log("selectedCoupons",selectedCoupons);
+    console.log("productDetails",productDetails);
+    
+    console.log("prodAmount",prodAmount)
 
   return (
     <div className="campaign-new p-4">
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
-        <MenuBar />
+        {/* <MenuBar /> */}
         <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center">
 
             {!showInfluList && !showCampaignList && !influForm && (
@@ -686,6 +687,8 @@ const CampaignOver = () => {
                             )}
                         </div>
 
+                        
+
                         <div className="input-container d-flex flex-column mb-4 influen-list">
                             <label className="mb-3">Influencer from the list.</label>
                             <textarea name="" id="" cols="30" rows="2" value={selectedUsernames} disabled></textarea>
@@ -693,7 +696,20 @@ const CampaignOver = () => {
                     
                         <div className="input-container d-flex flex-column mb-4 prod-coupon-amount">
                             <label className="mb-3">Coupon Amount</label>
-                            <input type="text" value={productDetails?.length > 0 ? (couponAmounts.substring(1)) : "Select a Coupon"} onChange={(event) => setCouponAmounts(event.target.value)} disabled />
+                            <ol>
+                            {couponAmounts?.length > 0 ? (
+                                couponAmounts.map((coupon, index) => (
+                                    <li key={index}>
+                                    {coupon.name.replace(/-/g, "")} ({coupon.product})
+                                    <button type="button" onClick={(event) => removeCouponAmount(coupon, event)}>
+                                        Remove
+                                    </button>
+                                    </li>
+                                ))
+                                ) : (
+                                <li>Select a Coupon</li>
+                                )}
+                            </ol>
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
@@ -710,24 +726,42 @@ const CampaignOver = () => {
                         </div>
                     
                         <div className="input-container d-flex flex-column mb-4 prod-coupons w-100">
-                            <label className="mb-3">Product coupons</label>
-                            <ul>
-                            {productIds?.length > 0 ? (
-                                    productDetails?.length > 0 ?(
-                                        productDetails.map((product) => (
-                                            <li key={product.coupons} onClick={() => {
-                                                const selectedCouponAmount = product.amount ?? "";
-                                                setCouponAmounts(selectedCouponAmount);
-                                                setSelectedCoupon(product.coupons);
-                                            }} className={selectedCoupon === product.coupons ? "selected" : ""}>
-                                                {product.coupons}
-                                            </li>
-                                            ))
-                                            
-                                    ):
-                                    <p className='no-url'>No Coupon Available</p>
-                                ): <p className='no-url'>Please Select a Coupon</p>}
-                            </ul>
+                        <label className="mb-3">Product coupons</label>
+                        <select onChange={(e) => {
+                            const selectedCoupon = productDetails.find((product) => product.coupons === e.target.value);
+                            const selectedCouponAmount = selectedCoupon?.amount ?? "";
+                            const selectedCouponObject = {
+                            name: selectedCoupon.coupons,
+                            amount: selectedCouponAmount,
+                            productName: selectedCoupon.product_id
+                            };
+
+                            if (selectedCoupons.some((coupon) => coupon.name === selectedCouponObject.name)) {
+                            // Remove the selected coupon from the array
+                            setSelectedCoupons((prevSelectedCoupons) =>
+                                prevSelectedCoupons.filter((coupon) => coupon.name !== selectedCouponObject.name)
+                            );
+                            } else {
+                            // Add the selected coupon to the array
+                            setSelectedCoupons((prevSelectedCoupons) => [...prevSelectedCoupons, selectedCouponObject]);
+                            }
+                            setSelectedCoupon(selectedCouponObject.name);
+                        }}>
+                            <option value="">---Select an option---</option>
+                            {productDetails?.length > 0 ? (
+                            productDetails.map(product => (
+                                <option
+                                key={product.coupons}
+                                value={product.coupons}
+                                selected={selectedCoupon?.name === product.coupons}
+                                >
+                                {product.coupons}
+                                </option>
+                            ))
+                            ) : (
+                            <option value="">No Coupon Available</option>
+                            )}
+                        </select>
                         </div>
 
                         <div className="buttons d-flex justify-content-center">
@@ -740,7 +774,7 @@ const CampaignOver = () => {
 
             {showCampaignList && (
                 <>
-                <h3>Create Campaign for Marketplace</h3>
+                <h3 className='my-5'>Create Campaign for Marketplace</h3>
                     <button onClick={handleBack} className={"button button-blue d-flex me-auto back"}>
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
@@ -840,10 +874,23 @@ const CampaignOver = () => {
                             )}
                         </div>
 
-                        <div className="input-container d-flex flex-column mb-4 prod-coupon-amount">
+                        {/* <div className="input-container d-flex flex-column mb-4 prod-coupon-amount">
                             <label className="mb-3">Coupon Amount</label>
-                            <input type="text" value={productDetails?.length > 0 ? (couponAmounts.substring(1)) : "Select a Coupon"} onChange={(event) => setCouponAmounts(event.target.value)} disabled />
-                        </div>
+                            <ol>
+                            {couponAmounts?.length > 0 ? (
+                                couponAmounts.map((coupon, index) => (
+                                    <li key={index}>
+                                    {coupon.name.replace(/-/g, "")} ({coupon.product})
+                                    <button type="button" onClick={(event) => removeCouponAmount(coupon, event)}>
+                                        Remove
+                                    </button>
+                                    </li>
+                                ))
+                                ) : (
+                                <li>Select a Coupon</li>
+                                )}
+                            </ol>
+                        </div> */}
 
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Description</label>
@@ -858,25 +905,64 @@ const CampaignOver = () => {
                             ></textarea>
                         </div>
                     
-                        <div className="input-container d-flex flex-column mb-4 prod-coupons">
-                            <label className="mb-3">Product coupons</label>
-                            <ul>
-                                {productIds?.length > 0 ? (
-                                    productDetails?.length > 0 ?(
-                                        productDetails.map((product) => (
-                                            <li key={product.coupons} onClick={() => {
-                                                const selectedCouponAmount = product.amount ?? "";
-                                                setCouponAmounts(selectedCouponAmount);
-                                                setSelectedCoupon(product.coupons);
-                                            }} className={selectedCoupon === product.coupons ? "selected" : ""}>
-                                                {product.coupons}
-                                            </li>
-                                            ))
-                                            
-                                    ):
-                                    <p className='no-url'>No Coupon Available</p>
-                                ): <p className='no-url'>Please Select a Coupon</p>}
-                            </ul>
+                        <div className="input-container d-flex flex-column mb-4">
+                        <label className="mb-3">Product coupons</label>
+                        <select onChange={(e) => {
+                            const selectedCoupon = productDetails.find((product) => product.coupons === e.target.value);
+                            const selectedCouponAmount = selectedCoupon?.amount ?? "";
+                            const selectedCouponObject = {
+                            name: selectedCoupon.coupons,
+                            amount: selectedCouponAmount,
+                            productName: selectedCoupon.product_id,
+                            discout_type: selectedCoupon.discout_type
+                            };
+
+                            if (selectedCoupons.some((coupon) => coupon.name === selectedCouponObject.name)) {
+                            // Remove the selected coupon from the array
+                            setSelectedCoupons((prevSelectedCoupons) =>
+                                prevSelectedCoupons.filter((coupon) => coupon.name !== selectedCouponObject.name)
+                            );
+                            } else {
+                            // Add the selected coupon to the array
+                            setSelectedCoupons((prevSelectedCoupons) => [...prevSelectedCoupons, selectedCouponObject]);
+                            }
+                            setSelectedCoupon(selectedCouponObject.name);
+                        }}>
+                            <option value="">---Select an option---</option>
+                            {productDetails?.length > 0 ? (
+                            productDetails.map(product => (
+                                <option
+                                key={product.coupons}
+                                value={product.coupons}
+                                selected={selectedCoupon?.name === product.coupons}
+                                >
+                                {product.coupons}
+                                </option>
+                            ))
+                            ) : (
+                            <option value="">No Coupon Available</option>
+                            )}
+                        </select>
+                        </div>
+
+                        <div className="input-container d-flex flex-column mb-4 prod-coupons w-100">
+                            {selectedCoupons?.length > 0 ? (
+                                <ul className="coupons">
+                                {selectedCoupons.map((coupons, i) => {
+                                    return (
+                                        <li key={i}>
+                                        <span>{coupons.productName}</span>
+                                        <span className="names" onClick={() => removeItem(i)}>
+                                            {coupons.name} - {coupons.discout_type == "fixed_amount" ? "$" : ""}
+                                            {(coupons.amount).substring(1)}
+                                            {coupons.discout_type == "percentage" ? "%" : ""}
+                                            <FontAwesomeIcon icon={faXmark} style={{ color: "#000", width: "15px", height: "15px", marginLeft: 20 }} />
+                                        </span>
+                                        </li>
+                                    );
+                                })}
+                                </ul>
+                            ): " "}
                         </div>
 
 

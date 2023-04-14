@@ -193,6 +193,10 @@ const CampaignMarket = () => {
             console.log(response.data)
             setGetMarketInfo(response.data.data)
             setGetMarket(true);
+            setCampName(response.data.data.campaign_name)
+            setProdOffer(response.data.data.offer)
+            setProdDiscount(response.data.data.product_discount)
+            setInfluenceVisit(response.data.data.description)
         })
         .catch(function (error) {
             console.log(error);
@@ -208,7 +212,7 @@ const CampaignMarket = () => {
 
   return (
     <div className="campaign-market p-4">
-        <MenuBar />
+        {/* <MenuBar /> */}
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
 
         <div className="campaign-market-container d-flex flex-column w-100">
@@ -285,19 +289,18 @@ const CampaignMarket = () => {
                                                     <form action="">
                                                         <div className="input-container">
                                                             <label>Campaign Name</label>
-                                                            <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
+                                                            <input type="text" value={campName} />
                                                         </div>
                                                         <div className="input-container">
                                                             <label>Offer</label>
                                                             <select onChange={handleProdOffer}>
-                                                                <option value="" disabled>{getMarketInfo?.offer}</option>
                                                                 <option value="fixed_amount">Fixed Amount</option>
                                                                 <option value="percentage">Precentage</option>
                                                             </select>
                                                         </div>
                                                         <div className="input-container">
                                                             <label>Discount</label>
-                                                            <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
+                                                            <input type="text" onChange={handleProdDiscount} value={prodDiscount} />
                                                         </div>
                                                         <div className="input-container">
                                                             <label>Description</label>
@@ -382,23 +385,22 @@ const CampaignMarket = () => {
                                                     <form action="">
                                                         <div className="input-container">
                                                             <label>Campaign Name</label>
-                                                            <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
+                                                            <input type="text" onChange={handleCampName} value={campName} />
                                                         </div>
                                                         <div className="input-container">
                                                             <label>Offer</label>
                                                             <select onChange={handleProdOffer}>
-                                                                <option value="" disabled>{getMarketInfo?.offer}</option>
                                                                 <option value="fixed_amount">Fixed Amount</option>
                                                                 <option value="percentage">Precentage</option>
                                                             </select>
                                                         </div>
                                                         <div className="input-container">
                                                             <label>Discount</label>
-                                                            <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
+                                                            <input type="text" onChange={handleProdDiscount} value={prodDiscount} />
                                                         </div>
                                                         <div className="input-container">
                                                             <label>Description</label>
-                                                            <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
+                                                            <input type="text" onChange={handleInfluenceVisit} value={influenceVisit} />
                                                         </div>
                                                         <button className='button button-blue mt-4 mx-auto' onClick={(event) => { console.log("Product ID:", getMarketInfo?.id); editCampaign(getMarketInfo?.id, event) }}>Edit Campaign</button>
                                                     </form>

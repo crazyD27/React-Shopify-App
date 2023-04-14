@@ -285,7 +285,7 @@ const CampaignManage = () => {
 
   return (
     <div className="campaign-manage-container p-3">
-        <MenuBar />
+        {/* <MenuBar /> */}
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
         <h2 className='text-center my-5'>Manage Campaign</h2>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">

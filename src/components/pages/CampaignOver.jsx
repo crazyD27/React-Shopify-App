@@ -95,7 +95,7 @@ const CampaignNew = () => {
     
   return (
     <div className="campaign-over p-3">
-        <MenuBar />
+        {/* <MenuBar /> */}
         <div className="campaign-over-container d-flex flex-column justify-content-center align-items-center mt-5 w-100">
             <div className="overview-container w-100 bg-light p-4">
                 <h3>Overview</h3>

@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MenuBar from '../navbar/Navbar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API } from '../../config/Api';
 
 function Profile() {
     const [userName, setUserName] = useState('');
@@ -9,16 +10,38 @@ function Profile() {
     const [shopifyUrl, setShopifyUrl] = useState('');
     const [instagramUrl, setInstagramUrl] = useState('');
     const [email, setEmail] = useState('');
+    const[userDetails, setUserDetails] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const tokenId = localStorage.getItem('Token_ID');
     const token = localStorage.getItem("Token");
     const userId = localStorage.getItem("User_ID")
 
+    useEffect(() => {
+        setLoading(true);
+        axios.get(API.BASE_URL + 'user/id/',  {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Profile Details", response);
+            setUserDetails(response.data);
+            setUserName(response.data.username);
+            setEmail(response.data.email)
+            setInstagramUrl(response.data.Instagram_url)
+            setShopifyUrl(response.data.shop_url)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .finally(() => setLoading(false));
+    }, [token])
+
     const createProfile = (e) => {
         setLoading(true);
         e.preventDefault();
-        axios.put('https://api.myrefera.com/campaign/profile/' + userId + '/', {
+        axios.put(API.BASE_URL + 'profile/' + userId + '/', {
             username: userName,
             email: email,
             password: password,
