@@ -247,7 +247,7 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                <td>{marketContent.offer} - {marketContent.product_discount}%</td>
+                                                <td>{marketContent.offer} - {marketContent.product_discount.substring(1)}</td>
                                                 <td className='category'>{testing[i]?.join(", ")}</td>
                                                 <td>
                                                     <button onClick={(event) => {getSingleMarket(marketContent.id, event)}} style={{marginRight: 15}}>

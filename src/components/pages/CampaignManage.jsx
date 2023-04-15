@@ -138,8 +138,12 @@ const CampaignManage = () => {
                 Authorization: `Token ${token}`
         }})
         .then(function (response) {
+            console.log("Manage Product Single", response.data.data)
             setGetMarketInfo(response.data.data)
             setGetMarket(true);
+            setCampName(response.data.data.campaign_name)
+            setProdDiscount(response.data.data.product_discount)
+            setInfluenceVisit(response.data.data.description)
         })
         .catch(function (error) {
             console.log(error);
@@ -421,7 +425,7 @@ const CampaignManage = () => {
                                                 <form action="">
                                                     <div className="input-container">
                                                         <label>Campaign Name</label>
-                                                        <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
+                                                        <input type="text" onChange={handleCampName} value={campName} />
                                                     </div>
                                                     <div className="input-container">
                                                         <label>Offer</label>
@@ -433,13 +437,13 @@ const CampaignManage = () => {
                                                     </div>
                                                     <div className="input-container">
                                                         <label>Discount</label>
-                                                        <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
+                                                        <input type="text" onChange={handleProdDiscount} value={prodDiscount} />
                                                     </div>
                                                     <div className="input-container">
                                                         <label>Description</label>
-                                                        <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
+                                                        <input type="text" onChange={handleInfluenceVisit} value={influenceVisit} />
                                                     </div>
-                                                    <button onClick={(event) => {editCampaign(name?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                                                    <button onClick={(event) => {editCampaign(getMarketInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
                                                 </form>
                                                 </div>
                                             </div>

@@ -70,7 +70,7 @@ function Profile() {
 
   return (
     <div className="profile p-4">
-        {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
+        {loading && <div className='loader'><span></span></div>}
         <MenuBar />
         <form className="profile-form d-flex flex-wrap justify-content-between mt-4">
             <div className="input-container d-flex flex-column mb-4">
