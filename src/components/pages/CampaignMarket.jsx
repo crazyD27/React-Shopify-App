@@ -99,7 +99,7 @@ const CampaignMarket = () => {
         setTesting(names);
         
         const draftNames = [];
-        marketDraftId.forEach((ids) => {
+        marketDraftId?.forEach((ids) => {
             const productNamesArr = [];
             ids.forEach((id) => {
                 const product = productNames.find((p) => p.id === id);
