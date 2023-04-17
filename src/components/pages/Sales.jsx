@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { MDBContainer, MDBDatatable } from 'mdb-react-ui-kit';
 
 import MenuBar from '../navbar/Navbar';
+import SideBar from '../sidebar/Sidebar';
 import './pages.scss';
 
 import EarningsGraph from '../../assests/img/earning-graph.png';
@@ -26,8 +27,9 @@ function Sales() {
         );
     });
   return (
-    <div className="sales p-4">
-        <MenuBar />
+    <>
+    <SideBar />
+    <div className="sales p-4 page">
         <div className="sales-container">
             <h2 className='text-center'>Sales overview</h2>
             <div className="earnings-list d-flex justify-content-between">
@@ -81,6 +83,7 @@ function Sales() {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

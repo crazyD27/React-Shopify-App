@@ -3,6 +3,7 @@ import MenuBar from '../navbar/Navbar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
+import SideBar from '../sidebar/Sidebar';
 
 function Profile() {
     const [userName, setUserName] = useState('');
@@ -21,7 +22,7 @@ function Profile() {
         setLoading(true);
         axios.get(API.BASE_URL + 'user/id/',  {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -49,7 +50,7 @@ function Profile() {
             instagram_url: instagramUrl,
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -69,9 +70,10 @@ function Profile() {
     }
 
   return (
-    <div className="profile p-4">
+    <>
+    <SideBar />
+    <div className="profile p-4 page">
         {loading && <div className='loader'><span></span></div>}
-        <MenuBar />
         <form className="profile-form d-flex flex-wrap justify-content-between mt-4">
             <div className="input-container d-flex flex-column mb-4">
                 <label>Username</label>
@@ -98,6 +100,7 @@ function Profile() {
             <button className='button button-blue' onClick={(e) => {createProfile(e)}}>Update Profile</button>
         </div>
     </div>
+    </>
   )
 }
 

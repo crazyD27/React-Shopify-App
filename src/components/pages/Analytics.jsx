@@ -1,14 +1,15 @@
 import React from 'react';
 import MenuBar from '../navbar/Navbar';
 import './pages.scss';
+import SideBar from '../sidebar/Sidebar';
 
 import AnalyticsGraph from '../../assests/img/analytics-graph.png';
 import ArrowUp from '../../assests/img/arrow-up.png';
 
 function Analytics() {
   return (
+    <>
     <div className="analytics p-4">
-        <MenuBar />
         <div className="analytics-container d-flex justify-content-between mt-4">
             <div className="analytics-status bg-light p-4 col-7">
                 <h3 className='fw-bold'>Analytics</h3>
@@ -43,6 +44,7 @@ function Analytics() {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

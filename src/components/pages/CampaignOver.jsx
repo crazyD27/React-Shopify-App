@@ -5,6 +5,7 @@ import MenuBar from '../navbar/Navbar';
 import './pages.scss';
 import axios from 'axios';
 import { API } from '../../config/Api';
+import SideBar from '../sidebar/Sidebar';
 
 // Images
 import Tracking from '../../assests/img/tracking.png';
@@ -17,7 +18,7 @@ import Chat from '../../assests/img/chat.png';
 import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
-const CampaignNew = () => {
+const CampaignOver = () => {
     const {setUserToken, setInfluenceList, countCamp, setCountCamp} = useContext(UserContext);
     
     useEffect(() => {
@@ -59,7 +60,7 @@ const CampaignNew = () => {
         })
         axios.get(API.BASE_URL + 'user/id/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("User ID", response);
@@ -94,7 +95,8 @@ const CampaignNew = () => {
     }, [token])
     
   return (
-    <div className="campaign-over p-3">
+    <>
+    <div className="campaign-over p-3 page">
         {/* <MenuBar /> */}
         <div className="campaign-over-container d-flex flex-column justify-content-center align-items-center mt-5 w-100">
             <div className="overview-container w-100 bg-light p-4">
@@ -259,7 +261,8 @@ const CampaignNew = () => {
             </div>
         </div>
     </div>
+    </>
   );
 }
 
-export default CampaignNew;
+export default CampaignOver;

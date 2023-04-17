@@ -7,24 +7,21 @@ import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
+import SideBar from '../sidebar/Sidebar';
 
-const CampaignOver = () => {
+const CampaignNew = () => {
     const [productName, setProductName] = useState([]);
     const [productIds, setProductIds] = useState([]);
     const [influencerList, setInfluencerList] = useState([]);
-    const [influencerName, setInfluencerName] = useState(null);
-    const [newNames, setNewNames] = useState("")
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
     const [influencerVisit, setInfluencerVisit] = useState('');
     const [showList, setShowList] = useState(false);
-    const [prodDiscount, setProdDiscount] = useState([]);
     const [campaignDesc, setCampaignDesc] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState({ name: "", product: "" });
     const [prodList, setProdList] = useState('')
     const [prodDesc, setProdDesc] = useState([]);
-    const [prodAmount, setProdAmount] = useState([]);
     const [showInfluList, setShowInfluList] = useState(false);
     const [showCampaignList, setShowCampaignList] = useState(false);
     const [influForm, setInfluForm] = useState(false);
@@ -39,11 +36,15 @@ const CampaignOver = () => {
     const [couponClicked, setCouponClicked] = useState('');
     const [selectedCouponNames, setSelectedCouponNames] = useState([]);
     const [selectedCouponAmounts ,setSelectedCouponAmounts] = useState([]);
+    const [isVisitChecked, setIsVisitChecked] = useState(false);
+    const [isOfferChecked, setIsOfferChecked] = useState(false);
     const {setDraftList, draftList, setMarketId, setMarketList, campListPending, setCampListPending,setMarketDraftId, setMarketDraftList, countCamp, setCountCamp} = useContext(UserContext);
     const token = localStorage.getItem("Token");
 
     const [couponAmounts, setCouponAmounts] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
+  
+    const today = new Date().toISOString().substr(0, 10);
   
     const handleShowInfluList = () => {
       setShowInfluList(true);
@@ -60,9 +61,7 @@ const CampaignOver = () => {
         setCampaignName('');
         setSelectedDate('');
         setInfluenceOffer('');
-        setProdDiscount('');
         setInfluencerVisit('');
-        setInfluencerName('');
         setProductIds([]);
         setProductDetails([]);
         setSelectedRows([]);
@@ -71,7 +70,7 @@ const CampaignOver = () => {
             initialStates[i] = false;
         });
         setCheckboxStates(initialStates);
-        };
+    };
 
     const handleCampDesc = (event) => {
         setCampaignDesc(event.target.value);
@@ -84,9 +83,7 @@ const CampaignOver = () => {
         setCampaignName('');
         setSelectedDate('');
         setInfluenceOffer('');
-        setProdDiscount('');
         setInfluencerVisit('');
-        setInfluencerName('');
         setProductIds([]);
         setProductDetails([]);
         setSelectedRows([]);
@@ -119,20 +116,22 @@ const CampaignOver = () => {
 
     const handleInfluencerVisit = (event) => {
         setInfluencerVisit(event.target.value);
+        setIsVisitChecked(!isVisitChecked)
     }
+
+    const handleInfluenceOffer = (e) => {
+        setInfluenceOffer(e.target.value);
+        setIsOfferChecked(!isOfferChecked)
+    };
 
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
     }
 
-    const handleInfluenceOffer = (e) => {
-        setInfluenceOffer(e.target.value);
-    };
-
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -145,7 +144,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -186,7 +185,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -196,9 +195,7 @@ const CampaignOver = () => {
             setCampaignName('');
             setSelectedDate('');
             setInfluenceOffer('');
-            setProdDiscount('');
             setInfluencerVisit('');
-            setInfluencerName('');
             setCampaignDesc('')
             setProductIds([]);
             setSelectedCoupon('')
@@ -206,9 +203,11 @@ const CampaignOver = () => {
             setCouponAmounts('')
             setProductUrl([])
             countList()
+            setIsVisitChecked(false);
+            setIsOfferChecked(false);
             axios.get(API.BASE_URL + 'markdraft/list/',{
                 headers: {
-                    Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
@@ -263,7 +262,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -273,17 +272,17 @@ const CampaignOver = () => {
             setCampaignName('');
             setSelectedDate('');
             setInfluenceOffer('');
-            setProdDiscount('');
             setInfluencerVisit('');
-            setInfluencerName('');
             setProductIds([])
             setCampaignDesc('');
             setSelectedCoupon('')
             setCouponAmounts('')
             setProductDetails([])
+            setIsVisitChecked(false);
+            setIsOfferChecked(false);
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
@@ -340,7 +339,7 @@ const CampaignOver = () => {
             influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -351,15 +350,15 @@ const CampaignOver = () => {
             setCampaignName('');
             setSelectedDate('');
             setInfluenceOffer('');
-            setProdDiscount('');
             setInfluencerVisit('');
-            setInfluencerName('');
             setCampaignDesc('')
             setProductIds([]);
             setSelectedCoupon('')
             setProductDetails([])
             setCouponAmounts('')
             setProductUrl([])
+            setIsVisitChecked(false);
+            setIsOfferChecked(false);
             countList()
         })
         .catch(function (error) {
@@ -407,7 +406,7 @@ const CampaignOver = () => {
             influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -418,15 +417,15 @@ const CampaignOver = () => {
             setCampaignName('');
             setSelectedDate('');
             setInfluenceOffer('');
-            setProdDiscount('');
             setInfluencerVisit('');
-            setInfluencerName('');
             setCampaignDesc('')
             setProductIds([]);
             setSelectedCoupon('')
             setProductDetails([])
             setCouponAmounts('')
             setProductUrl([])
+            setIsVisitChecked(false);
+            setIsOfferChecked(false);
             countList()
         })
         .catch(function (error) {
@@ -485,7 +484,7 @@ const CampaignOver = () => {
                         products: productIds.toString()
                     }, {
                         headers: {
-                            Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`,
+                            Authorization: `Token ${token}`,
                         },
                     })
                     .then((response) => {
@@ -541,26 +540,16 @@ const CampaignOver = () => {
       }, [influencerList]);
 
     useEffect(() => {
-        setNewNames(productName.toString());
-    }, [productName]);
-
-    useEffect(() => {
         setPrevCouponClicked(couponClicked);
     }, [couponClicked, selectedCoupon]);
 
-    console.log("setSelectedCoupons",selectedCouponProducts);
-    console.log("productDetails",productDetails);
-    
-    console.log("prodAmount",prodAmount)
-    console.log("couponClicked",couponClicked);
-    console.log("selectedCouponAmounts", selectedCouponAmounts)
-    console.log("influencerList", checkboxStates)
+    console.log("influencerVisit", influencerVisit)
+    console.log("isVisitChecked", isVisitChecked)
 
 
   return (
-    <div className="campaign-new p-4">
+    <div className="campaign-new p-4 page">
         {loading && <div className='loader'><span></span></div>}
-        {/* <MenuBar /> */}
         <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center">
 
             {!showInfluList && !showCampaignList && !influForm && (
@@ -621,31 +610,32 @@ const CampaignOver = () => {
                             <label className="mb-3">Influencer need to visit you</label>
                             <div className="input d-flex align-items-center">
                                 <span className='d-flex align-items-center justify-content-center me-4'>
-                                    <input type="radio" id="yes" name="fav_language" value="Yes" onChange={handleInfluencerVisit} />
-                                    <label for="yes">Yes</label>
+                                    <input type="radio" id="yes" name="influencerVisit" value="Yes" checked={influencerVisit === "Yes"} onChange={handleInfluencerVisit} />
+                                    <label htmlFor="yes">Yes</label>
                                 </span>
                                 <span className='d-flex align-items-center justify-content-center'>
-                                    <input type="radio" id="no" name="fav_language" value="No" onChange={handleInfluencerVisit} />
-                                    <label for="no">No</label>
+                                    <input type="radio" id="no" name="influencerVisit" value="No" checked={influencerVisit === "No"} onChange={handleInfluencerVisit} />
+                                    <label htmlFor="no">No</label>
                                 </span>
                             </div>
+
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign date or range</label>
-                            <input type="date" onChange={handleDateChange} value={selectedDate} />
+                            <input type="date" min={today} onChange={handleDateChange} value={selectedDate} />
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Offer to influencers</label>
                             <div className="input d-flex align-items-center">
                                 <span className='d-flex align-items-center justify-content-center me-4'>
-                                    <input type="radio" id="percentage" name="percentagee" value="percentage" onChange={handleInfluenceOffer} />
-                                    <label for="percentage">Percentage</label>
+                                    <input type="radio" id="percentage" name="influenceOffer" value="percentage" checked={influenceOffer === "percentage"} onChange={handleInfluenceOffer} />
+                                    <label htmlFor="percentage">Percentage</label>
                                 </span>
                                 <span className='d-flex align-items-center justify-content-center'>
-                                    <input type="radio" id="commission" name="percentagee" value="commission" onChange={handleInfluenceOffer} />
-                                    <label for="commission">Commission</label>
+                                    <input type="radio" id="commission" name="influenceOffer" value="commission" checked={influenceOffer === "commission"} onChange={handleInfluenceOffer} />
+                                    <label htmlFor="commission">Commission</label>
                                 </span>
                             </div>
                         </div>
@@ -787,7 +777,7 @@ const CampaignOver = () => {
                                     </li>
                                     ))
                                 ) : (
-                                    <li>No Coupon Available</li>
+                                    <li className='align-items-start'>No Coupon Available</li>
                                     )}
                             </ul>
                         </div>
@@ -817,31 +807,31 @@ const CampaignOver = () => {
                             <label className="mb-3">Influencer need to visit you</label>
                             <div className="input d-flex align-items-center">
                                 <span className='d-flex align-items-center justify-content-center me-4'>
-                                    <input type="radio" id="yes" name="fav_language" value="Yes" onChange={handleInfluencerVisit} />
-                                    <label for="yes">Yes</label>
+                                    <input type="radio" id="yes" name="influencerVisit" value="Yes" checked={influencerVisit === "Yes"} onChange={handleInfluencerVisit} />
+                                    <label htmlFor="yes">Yes</label>
                                 </span>
                                 <span className='d-flex align-items-center justify-content-center'>
-                                    <input type="radio" id="no" name="fav_language" value="No" onChange={handleInfluencerVisit} />
-                                    <label for="no">No</label>
+                                    <input type="radio" id="no" name="influencerVisit" value="No" checked={influencerVisit === "No"} onChange={handleInfluencerVisit} />
+                                    <label htmlFor="no">No</label>
                                 </span>
                             </div>
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign date or range</label>
-                            <input type="date" onChange={handleDateChange} value={selectedDate} />
+                            <input type="date" min={today} onChange={handleDateChange} value={selectedDate} />
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Offer to influencers</label>
                             <div className="input d-flex align-items-center">
                                 <span className='d-flex align-items-center justify-content-center me-4'>
-                                    <input type="radio" id="percentage" name="percentagee" value="percentage" onChange={handleInfluenceOffer} />
-                                    <label for="percentage">Percentage</label>
+                                    <input type="radio" id="percentage" name="influenceOffer" value="percentage" checked={influenceOffer === "percentage"} onChange={handleInfluenceOffer} />
+                                    <label htmlFor="percentage">Percentage</label>
                                 </span>
                                 <span className='d-flex align-items-center justify-content-center'>
-                                    <input type="radio" id="commission" name="percentagee" value="commission" onChange={handleInfluenceOffer} />
-                                    <label for="commission">Commission</label>
+                                    <input type="radio" id="commission" name="influenceOffer" value="commission" checked={influenceOffer === "commission"} onChange={handleInfluenceOffer} />
+                                    <label htmlFor="commission">Commission</label>
                                 </span>
                             </div>
                         </div>
@@ -978,7 +968,7 @@ const CampaignOver = () => {
                                     </li>
                                     ))
                                 ) : (
-                                    <li>No Coupon Available</li>
+                                    <li className='align-items-start'>No Coupon Available</li>
                                     )}
                             </ul>
                         </div>
@@ -995,4 +985,4 @@ const CampaignOver = () => {
   );
 }
 
-export default CampaignOver;
+export default CampaignNew;

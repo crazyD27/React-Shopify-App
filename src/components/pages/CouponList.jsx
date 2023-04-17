@@ -9,6 +9,7 @@ import { API } from '../../config/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import SideBar from '../sidebar/Sidebar';
 
 // Images
 import Search from '../../assests/img/search.png';
@@ -47,7 +48,7 @@ const CouponList = () => {
     useEffect(() => {
         axios.get(API.SHOPIFY_URL +  'coupon/list/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -62,7 +63,7 @@ const CouponList = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -79,7 +80,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'coupon/delete/?price=' + value,{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -102,7 +103,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon Created", response);
@@ -127,7 +128,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
@@ -137,7 +138,7 @@ const CouponList = () => {
             setCouponAmount('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
-                    Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                    Authorization: `Token ${token}`
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -160,7 +161,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'single/data/?price=' + value, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -207,7 +208,7 @@ const CouponList = () => {
             product_id: productIds?.toString()
         }, {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -224,7 +225,8 @@ const CouponList = () => {
     console.log("productIds", productIds.toString())
 
     return (
-    <div className="coupon p-4">
+    <>
+    <div className="coupon p-4 page">
         {/* <MenuBar /> */}
         <div className="coupon-container d-flex flex-column mt-5 w-100">
             <h4 className='mb-4'>Coupon List</h4>
@@ -424,6 +426,7 @@ const CouponList = () => {
 
         </div>
     </div>
+    </>
     );
 }
 

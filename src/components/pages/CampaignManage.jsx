@@ -12,6 +12,7 @@ import { faClose, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 import Delete from '../../assests/img/delete.svg';
 import NoData from '../../assests/img/no-data.png';
+import SideBar from '../sidebar/Sidebar';
 import './pages.scss';
 
 const CampaignManage = () => {
@@ -22,6 +23,7 @@ const CampaignManage = () => {
     const [prodOffer, setProdOffer] = useState('');
     const [getMarketInfo, setGetMarketInfo] = useState([]);
     const [getMarket, setGetMarket] = useState(false);
+    const [getDeleteConfirm, setDeleteConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
     const [pendingId, setPendingId] = useState([]);
     const [activeId, setActiveId] = useState([]);
@@ -49,7 +51,7 @@ const CampaignManage = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'active/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -62,7 +64,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -75,7 +77,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -87,7 +89,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'draft/list/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -103,7 +105,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -129,13 +131,17 @@ const CampaignManage = () => {
         .finally(() => setLoading(false));
     }
 
+    function deleteConfirm() {
+        setDeleteConfirm(true);
+    }
+
     const getSingleMarket = (value, event) => {
         console.log("ID", value)
         event.preventDefault();
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("Manage Product Single", response.data.data)
@@ -162,7 +168,7 @@ const CampaignManage = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -170,14 +176,14 @@ const CampaignManage = () => {
             toast.success("Campaign Edited!");
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
-                    Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
                 setCampList(response.data.data);
                 axios.get(API.BASE_URL + 'active/',{
                     headers: {
-                        Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                        Authorization: `Token ${token}`
                     }
                 })
                 .then(function (response) {
@@ -190,7 +196,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'pending/',{
                     headers: {
-                        Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                        Authorization: `Token ${token}`
                     }
                 })
                 .then(function (response) {
@@ -203,7 +209,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'product/list/',{
                     headers: {
-                        Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                        Authorization: `Token ${token}`
                     }
                 })
                 .then(function (response) {
@@ -215,7 +221,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'draft/list/',{
                     headers: {
-                        Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                        Authorization: `Token ${token}`
                     }
                 })
                 .then(function (response) {
@@ -232,7 +238,7 @@ const CampaignManage = () => {
     
             axios.get(API.BASE_URL + 'pending/',{
                 headers: {
-                    Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
+                    Authorization: `Token ${token}`
                 }
             })
             .then(function (response) {
@@ -250,6 +256,7 @@ const CampaignManage = () => {
 
     const couponCross = () => {
         setGetMarket(false)
+        setDeleteConfirm(false)
     }
 
     const getPendingProduct = () => {
@@ -288,7 +295,8 @@ const CampaignManage = () => {
     }, [])
 
   return (
-    <div className="campaign-manage-container p-3">
+    <>
+    <div className="campaign-manage-container p-3 page">
         {/* <MenuBar /> */}
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
         <h2 className='text-center my-5'>Manage Campaign</h2>
@@ -334,9 +342,26 @@ const CampaignManage = () => {
                                                 <button onClick={(event) => {getSingleMarket(name.id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
-                                                <button onClick={() => { deleteCampaign(name.id)}}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                                    <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
                                             </td>
                                         </tr>
+
+                                        {getDeleteConfirm && 
+                                        <div className="get-coupon">
+                                        <div className="get-coupon-contianer">
+                                        <button className='close' onClick={couponCross}>
+                                            <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                        </button>
+                                        <div className="confirm">
+                                            <h4 className='mb-4 text-center'>Delete Campaign?</h4>
+                                            <div className="buttons d-flex justify-content-center align-items-center">
+                                                <button onClick={() => { deleteCampaign(name.id)}} className='btn btn-danger w-25 me-4'>Confirm</button>
+                                                <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    }
                                         {getMarket && 
                                             <div className="get-coupon">
                                                 <div className="get-coupon-contianer">
@@ -412,9 +437,26 @@ const CampaignManage = () => {
                                                 <button onClick={(event) => {getSingleMarket(name.id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
-                                                <button onClick={() => { deleteCampaign(name.id)}}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                                    <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
                                             </td>
                                         </tr>
+
+                                        {getDeleteConfirm && 
+                                        <div className="get-coupon">
+                                        <div className="get-coupon-contianer">
+                                        <button className='close' onClick={couponCross}>
+                                            <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                        </button>
+                                        <div className="confirm">
+                                            <h4 className='mb-4 text-center'>Delete Campaign?</h4>
+                                            <div className="buttons d-flex justify-content-center align-items-center">
+                                                <button onClick={() => { deleteCampaign(name.id)}} className='btn btn-danger w-25 me-4'>Confirm</button>
+                                                <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    }
                                         {getMarket && 
                                             <div className="get-coupon">
                                                 <div className="get-coupon-contianer">
@@ -482,15 +524,31 @@ const CampaignManage = () => {
                                             <td>{name.offer}</td>
                                             <td className='category'>{name.product_discount + '%'}</td>
                                             <td>{name.influencer_visit}</td>
-                                            <td>{pendingNames?.length > 0 ? pendingNames[i]?.join(", ") : "Test"}</td>
-                                            <td className='category'>{name.product_discount + '%'}</td>
+                                            <td>{pendingNames?.length > 0 ? pendingNames[i] : "Test"}</td>
                                             <td>
                                                 <button onClick={(event) => {getSingleMarket(name.id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
-                                                <button onClick={() => { deleteCampaign(name.id)}}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                                    <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
                                             </td>
                                         </tr>
+
+                                        {getDeleteConfirm && 
+                                        <div className="get-coupon">
+                                        <div className="get-coupon-contianer">
+                                        <button className='close' onClick={couponCross}>
+                                            <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                        </button>
+                                        <div className="confirm">
+                                            <h4 className='mb-4 text-center'>Delete Campaign?</h4>
+                                            <div className="buttons d-flex justify-content-center align-items-center">
+                                                <button onClick={() => { deleteCampaign(name.id)}} className='btn btn-danger w-25 me-4'>Confirm</button>
+                                                <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    }
                                         {getMarket && 
                                             <div className="get-coupon">
                                                 <div className="get-coupon-contianer">
@@ -543,6 +601,7 @@ const CampaignManage = () => {
         </Tab.Container>
         
     </div>
+    </>
   );
 }
 

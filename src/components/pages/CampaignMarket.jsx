@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Delete from '../../assests/img/delete.svg';
 import { toast } from 'react-toastify';
+import SideBar from '../sidebar/Sidebar';
 import './pages.scss';
 import NoData from '../../assests/img/no-data.png';
 
@@ -211,7 +212,8 @@ const CampaignMarket = () => {
     console.log("draftProd", testing)
 
   return (
-    <div className="campaign-market p-4">
+    <>
+    <div className="campaign-market p-4 page">
         {/* <MenuBar /> */}
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
 
@@ -237,8 +239,9 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Discount Type</th>
+                                    {/* <th>Discount Type</th> */}
                                     <th>Products</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                                 
@@ -247,8 +250,9 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                <td>{marketContent.offer} - {marketContent.product_discount.substring(1)}</td>
+                                                {/* <td>{marketContent.offer} - {marketContent.product_discount.substring(1)}</td> */}
                                                 <td className='category'>{testing[i]?.join(", ")}</td>
+                                                <td>{marketContent.date}</td>
                                                 <td>
                                                     <button onClick={(event) => {getSingleMarket(marketContent.id, event)}} style={{marginRight: 15}}>
                                                         <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
@@ -333,8 +337,9 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Discount Type</th>
+                                    {/* <th>Discount Type</th> */}
                                     <th>Products</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                                 
@@ -343,8 +348,9 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                <td>{marketContent.offer} - {marketContent.product_discount}%</td>
+                                                {/* <td>{marketContent.offer} - {marketContent.product_discount}%</td> */}
                                                 <td className='category'>{draftProds[i]?.join(", ")}</td>
+                                                <td>{marketContent.date}</td>
                                                 <td>
                                                     <button onClick={(event) => {getSingleMarket(marketContent.id, event)}} style={{marginRight: 15}}>
                                                         <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
@@ -430,6 +436,7 @@ const CampaignMarket = () => {
 
         </div>
     </div>
+    </>
   );
 }
 
