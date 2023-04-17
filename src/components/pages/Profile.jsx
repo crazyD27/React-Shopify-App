@@ -21,7 +21,7 @@ function Profile() {
         setLoading(true);
         axios.get(API.BASE_URL + 'user/id/',  {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -49,7 +49,7 @@ function Profile() {
             instagram_url: instagramUrl,
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {

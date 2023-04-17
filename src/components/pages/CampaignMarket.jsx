@@ -29,7 +29,7 @@ const CampaignMarket = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -43,7 +43,7 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'markdraft/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -57,7 +57,7 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -120,7 +120,7 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -145,7 +145,7 @@ const CampaignMarket = () => {
           product_discount: prodDiscount
         },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
           }
         })
         .then(function (response) {
@@ -187,7 +187,7 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
         }})
         .then(function (response) {
             console.log(response.data)

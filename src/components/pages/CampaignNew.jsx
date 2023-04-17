@@ -132,7 +132,7 @@ const CampaignOver = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -145,7 +145,7 @@ const CampaignOver = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -186,7 +186,7 @@ const CampaignOver = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -208,7 +208,7 @@ const CampaignOver = () => {
             countList()
             axios.get(API.BASE_URL + 'markdraft/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
                 }
             })
             .then(function (response) {
@@ -259,11 +259,11 @@ const CampaignOver = () => {
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
             offer: influenceOffer,
-            product_discount: selectedCouponAmounts.toString(),
+            product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -283,7 +283,7 @@ const CampaignOver = () => {
             setProductDetails([])
             axios.get(API.BASE_URL + 'market/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
                 }
             })
             .then(function (response) {
@@ -340,7 +340,7 @@ const CampaignOver = () => {
             influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -407,7 +407,7 @@ const CampaignOver = () => {
             influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`
             }
         })
         .then(function (response) {
@@ -485,7 +485,7 @@ const CampaignOver = () => {
                         products: productIds.toString()
                     }, {
                         headers: {
-                            Authorization: `Token ${token}`,
+                            Authorization: `Token 9671dc28ed8ca0f7ec972739b0a5abb76b479fbe`,
                         },
                     })
                     .then((response) => {
@@ -987,7 +987,7 @@ const CampaignOver = () => {
                             <button className='button button-blue' onClick={createNewCampaignDraft}>Save in draft</button>
                             <button className='button ms-4' onClick={createNewCampaign}>Send to MarketPlace</button>
                         </div>
-                    </form> 
+                    </form>
                 </>
             )}
         </div>
