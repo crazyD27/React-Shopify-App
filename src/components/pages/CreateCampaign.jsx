@@ -130,6 +130,7 @@ const CreateCampaign = () => {
             setSelectedCoupon('')
             setProductDetails([])
             setProductUrl([])
+            setSelectedCoupons([])
             countList()
             setIsVisitChecked(false);
             setIsOfferChecked(false);
@@ -203,6 +204,7 @@ const CreateCampaign = () => {
             setInfluencerVisit('');
             setProductIds([])
             setCampaignDesc('');
+            setSelectedCoupons([])
             setSelectedCoupon('')
             setProductDetails([])
             setIsVisitChecked(false);

@@ -192,6 +192,7 @@ const CreateInfluencer = () => {
             setCampaignDesc('')
             setProductIds([]);
             setSelectedCoupon('')
+            setSelectedCoupons([])
             setProductDetails([])
             setCouponAmounts('')
             setProductUrl([])
@@ -262,6 +263,7 @@ const CreateInfluencer = () => {
             setProductDetails([])
             setCouponAmounts('')
             setProductUrl([])
+            setSelectedCoupons([])
             setIsVisitChecked(false);
             setIsOfferChecked(false);
             countList()
