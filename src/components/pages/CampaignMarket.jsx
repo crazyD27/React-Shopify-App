@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Delete from '../../assests/img/delete.svg';
 import { toast } from 'react-toastify';
-import { forEach } from 'ramda';
 import './pages.scss';
 import NoData from '../../assests/img/no-data.png';
 

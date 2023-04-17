@@ -182,7 +182,7 @@ const CampaignOver = () => {
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
             offer: influenceOffer,
-            product_discount: selectedCouponAmounts.toString(),
+            product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit
         }, {
             headers: {
@@ -335,7 +335,7 @@ const CampaignOver = () => {
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
             offer: influenceOffer,
-            product_discount: selectedCouponAmounts.toString(),
+            product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit,
             influencer_name: selectedUsersId.toString(),
         }, {
@@ -402,7 +402,7 @@ const CampaignOver = () => {
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
             offer: influenceOffer,
-            product_discount: selectedCouponAmounts.toString(),
+            product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit,
             influencer_name: selectedUsersId.toString(),
         }, {
