@@ -167,11 +167,18 @@
     .campaign-new-container {
         min-height: 82vh;
         .influence-buttons {
-            button {
+            a {
                 padding: 20px 20px;
                 min-width: 35%;
                 font-size: 1.6vw;
+                background: #5172FC;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px;
                 min-height: 200px;
+                text-decoration: none;
+                color: #fff;
             }
         }
         form {
@@ -934,6 +941,25 @@
                 min-height: 42px;
                 padding: 7px 5rem;
             }
+        }
+    }
+    ul {
+        border: 1px solid #a5a5a5;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+        position: absolute;
+        left: 0;
+        bottom: -58px;
+        width: 100%;
+        max-height: 60px;
+        z-index: 2;
+        overflow-y: scroll;
+        li {
+            padding: 5px 10px;
+            border-bottom: 1px solid #efefef;
+            cursor: pointer;
         }
     }
 }

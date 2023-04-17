@@ -32,6 +32,7 @@ const CouponList = () => {
     const [showList, setShowList] = useState(false);
     const [productName, setProductName] = useState([]);
     const [productIds, setProductIds] = useState([]);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     const handleCouponDesc = (event) => {
         setCouponDesc(event.target.value);
@@ -214,6 +215,9 @@ const CouponList = () => {
             console.log("Single Coupon", response.data);
             toast.success("Tracking Coupon Created");
             setCouponData([...couponData, response.data]);
+            setCouponDesc('')
+            setDiscountType('')
+            setProductIds([]);
             couponCross()
         })
         .catch(function (error) {
@@ -221,6 +225,29 @@ const CouponList = () => {
         })
         .finally(() => setLoading(false));
     }
+
+    const handleClick = (name) => {
+        if (selectedItem === name) {
+          setSelectedItem(null);
+        } else {
+          setSelectedItem(name);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+          document.removeEventListener("click", handleClickOutside);
+        };
+    }, [token]);
+
+    const handleClickOutside = (event) => {
+        const input = document.querySelector(".tracking-container input");
+        const list = document.querySelector(".tracking-container ul");
+        if (!input?.contains(event.target) && !list?.contains(event.target)) {
+          setShowList(false);
+        }
+    };
 
     console.log("productIds", productIds.toString())
 
@@ -336,7 +363,8 @@ const CouponList = () => {
                                             ? prevIds.filter(value => value !== name.id)
                                             : [...prevIds, name.id]
                                     );
-                                    setShowList(false);
+                                    handleClick(name.title, name.id)
+                                    // setShowList(false);
                                     }}
                                 >
                                     {name.title}

@@ -9,6 +9,8 @@ import CouponList from '../components/pages/CouponList';
 import Analytics from '../components/pages/Analytics';
 import Sales from '../components/pages/Sales';
 import Profile from '../components/pages/Profile';
+import CreateCampaign from '../components/pages/CreateCampaign';
+import CreateInfluencer from '../components/pages/CreateInfluencer';
 
 const Routing = () => {
   return (
@@ -26,6 +28,8 @@ const Routing = () => {
         <Route path='/analytics' element={<Analytics />} />
         <Route path='/sales' element={<Sales />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/create-campaign' element={<CreateCampaign />} />
+        <Route path='/create-influencer' element={<CreateInfluencer />} />
       </Routes>
     </div>
   );

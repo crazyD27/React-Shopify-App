@@ -65,13 +65,36 @@ function Profile() {
         })
         .catch(function (error) {
             console.log(error);
+            if(error.response.data.username) {
+                toast.warn("Username may not be blank")
+            }
+            else if(error.response.data.email == "This field may not be blank.") {
+                toast.warn("Email may not be blank")
+            }
+            else if(error.response.data.email == "Enter a valid email address.") {
+                toast.warn("Enter a valid email address")
+            }
+            else if (error.response.data.password == "This field may not be blank.") {
+                toast.warn("Passsword may not be blank")
+            }
+
+            else if(error.response.data.password) {
+                toast.warn("Password must be more than 8 character")
+            }
+            else if(error.response.data.instagram_url) {
+                toast.warn("Instagram URL cannot be empty")
+            }
+            else if(error.response.data.shopify_url) {
+                toast.warn("Shopify URL cannot be empty")
+            }
+            else {
+                toast.warn("Can not Update Profile right now.")
+            }
         })
         .finally(() => setLoading(false));
     }
 
   return (
-    <>
-    <SideBar />
     <div className="profile p-4 page">
         {loading && <div className='loader'><span></span></div>}
         <form className="profile-form d-flex flex-wrap justify-content-between mt-4">
@@ -100,7 +123,6 @@ function Profile() {
             <button className='button button-blue' onClick={(e) => {createProfile(e)}}>Update Profile</button>
         </div>
     </div>
-    </>
   )
 }
 

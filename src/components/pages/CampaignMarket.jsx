@@ -180,7 +180,7 @@ const CampaignMarket = () => {
           toast.warn("Unable to edit. Please try again later")
         })
         .finally(() => setLoading(false));
-      }
+    }
 
     const getSingleMarket = (value, event) => {
         console.log("VLSE", value)
@@ -191,8 +191,8 @@ const CampaignMarket = () => {
                 Authorization: `Token ${token}`
         }})
         .then(function (response) {
-            console.log(response.data)
-            setGetMarketInfo(response.data.data)
+            console.log("Single Market Data" ,response.data.data)
+            setGetMarketInfo(response.data.data[0])
             setGetMarket(true);
             setCampName(response.data.data.campaign_name)
             setProdOffer(response.data.data.offer)
@@ -239,7 +239,7 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    {/* <th>Discount Type</th> */}
+                                    <th>Discount Type</th>
                                     <th>Products</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
@@ -250,7 +250,7 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                {/* <td>{marketContent.offer} - {marketContent.product_discount.substring(1)}</td> */}
+                                                <td>{marketContent.offer}</td>
                                                 <td className='category'>{testing[i]?.join(", ")}</td>
                                                 <td>{marketContent.date}</td>
                                                 <td>
@@ -337,7 +337,7 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    {/* <th>Discount Type</th> */}
+                                    <th>Discount Type</th>
                                     <th>Products</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
@@ -348,7 +348,7 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                {/* <td>{marketContent.offer} - {marketContent.product_discount}%</td> */}
+                                                <td>{marketContent.offer}</td>
                                                 <td className='category'>{draftProds[i]?.join(", ")}</td>
                                                 <td>{marketContent.date}</td>
                                                 <td>
