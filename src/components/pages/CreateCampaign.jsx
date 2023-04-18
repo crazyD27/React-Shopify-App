@@ -61,7 +61,7 @@ const CreateCampaign = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -74,7 +74,7 @@ const CreateCampaign = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -116,7 +116,7 @@ const CreateCampaign = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -183,7 +183,7 @@ const CreateCampaign = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -227,7 +227,6 @@ const CreateCampaign = () => {
             else if(error.response.data.coupon) {
                 toast.warn("Coupon may not be blank.");
             }
-            
             else {
                 toast.warn("Request failed. Please try again later");
             }
@@ -260,7 +259,7 @@ const CreateCampaign = () => {
                         products: productIds.toString()
                     }, {
                         headers: {
-                            Authorization: `Token ${token}`,
+                            Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`,
                         },
                     })
                     .then((response) => {

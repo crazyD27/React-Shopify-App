@@ -124,7 +124,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -137,7 +137,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -181,7 +181,7 @@ const CreateInfluencer = () => {
             influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -251,7 +251,7 @@ const CreateInfluencer = () => {
             influencer_name: selectedUsersId.toString(),
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`
             }
         })
         .then(function (response) {
@@ -331,7 +331,7 @@ const CreateInfluencer = () => {
                         products: productIds.toString()
                     }, {
                         headers: {
-                            Authorization: `Token ${token}`,
+                            Authorization: `Token c8072f6d72e7be9fc7dead41e82804b745c8afa1`,
                         },
                     })
                     .then((response) => {
@@ -366,7 +366,6 @@ const CreateInfluencer = () => {
           setSelectedRows(selectedRows.filter(selectedRow => selectedRow !== row));
         }
     };
-    
 
     useEffect(() => {
         const checkbox = document.querySelector('input[type="checkbox"]');
