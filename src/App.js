@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import Routing from './routes/Routes';
 import GoToTop from './GoToTop';
 import './App.scss';
-
+import UserContext from './components/context/UserContext';
+import axios from 'axios';
+import { API } from './config/Api';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +13,21 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  
+  const {setUserToken, setInfluenceList, countCamp, setCountCamp} = useContext(UserContext);
+  const token = localStorage.getItem('Token')
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('///////////////////////////////');
+      const url = window.location.href;
+      console.log(url);
+      const queryString = url.split('?')[1];
+      const urlParams = new URLSearchParams(queryString);
+      const token = urlParams.get('shop');
+      console.log(token);
+      localStorage.setItem('shop_url', token)
+      console.log('///////////////////////////////');
+    }, 3000)
+  }, [])
   return (
     <div className="App">
       <Routing />
