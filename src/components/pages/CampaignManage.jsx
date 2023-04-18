@@ -55,6 +55,7 @@ const CampaignManage = () => {
             }
         })
         .then(function (response) {
+            console.log("Active", response.data.data)
             setCampList(response.data.data);
             setActiveId(response.data.product_id)
         })
@@ -69,7 +70,8 @@ const CampaignManage = () => {
         })
         .then(function (response) {
             setCampListPending(response.data.data);
-            setPendingId(response.data.product_id)
+            setPendingId(response.data.product_id);
+            console.log("Pending", response.data)
         })
         .catch(function (error) {
             console.log(error);
@@ -322,10 +324,9 @@ const CampaignManage = () => {
                         <tbody className='w-100'>
                             <tr className='headings'>
                                 <th>Campaign Name</th>
-                                <th>Offer</th>
-                                <th>Discount</th>
-                                <th>Description</th>
                                 <th>Product</th>
+                                <th>Coupons</th>
+                                <th>Discount</th>
                                 <th>Actions</th>
                             </tr>
                            
@@ -334,12 +335,11 @@ const CampaignManage = () => {
                                         <>
                                         <tr key={i} className='campaign-inputs'>
                                             <td>{name.campaign_name}</td>
-                                            <td>{name.offer}</td>
-                                            <td className='category'>{name.product_discount + '%'}</td>
-                                            <td>{name.description}</td>
-                                            <td>{activeNames?.length > 0 ? activeNames[i]?.join(", ") : "Test"}</td>
+                                            <td>{name.product_name}</td>
+                                            <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
+                                            <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
                                             <td>
-                                                <button onClick={(event) => {getSingleMarket(name.id, event)}} style={{marginRight: 15}}>
+                                                <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
                                                     <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
@@ -417,10 +417,9 @@ const CampaignManage = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Offer</th>
-                                    <th>Discount</th>
-                                    <th>Influencer Visit</th>
                                     <th>Product</th>
+                                    <th>Coupons</th>
+                                    <th>Discount</th>
                                     <th>Actions</th>
                                 </tr>
                                 {campListPending?.length > 0 && campListPending?.map((name, i) => {
@@ -428,13 +427,11 @@ const CampaignManage = () => {
                                         <>
                                         <tr key={i} className='campaign-inputs'>
                                             <td>{name.campaign_name}</td>
-                                            <td>{name.offer}</td>
-                                            <td className='category'>{name.product_discount + '%'}</td>
-                                            <td>{name.influencer_visit}</td>
-                                            <td>{pendingNames?.length > 0 ? pendingNames[i]?.join(", ") : "Test"}</td>
-                                            <td className='category'>{name.product_discount + '%'}</td>
+                                            <td>{name.product_name}</td>
+                                            <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
+                                            <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
                                             <td>
-                                                <button onClick={(event) => {getSingleMarket(name.id, event)}} style={{marginRight: 15}}>
+                                                <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
                                                     <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
@@ -510,23 +507,21 @@ const CampaignManage = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Offer</th>
-                                    <th>Discount</th>
-                                    <th>Influencer Visit</th>
                                     <th>Product</th>
+                                    <th>Coupons</th>
+                                    <th>Discount</th>
                                     <th>Actions</th>
                                 </tr>
                                 {draftList?.length > 0 && draftList?.map((name, i) => {
                                     return(
                                         <>
                                         <tr key={i} className='campaign-inputs'>
-                                            <td>{name.campaign_name}</td>
-                                            <td>{name.offer}</td>
-                                            <td className='category'>{name.product_discount + '%'}</td>
-                                            <td>{name.influencer_visit}</td>
-                                            <td>{pendingNames?.length > 0 ? pendingNames[i] : "Test"}</td>
+                                        <td>{name.campaign_name}</td>
+                                            <td>{name.product_name}</td>
+                                            <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
+                                            <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
                                             <td>
-                                                <button onClick={(event) => {getSingleMarket(name.id, event)}} style={{marginRight: 15}}>
+                                                <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
                                                     <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>

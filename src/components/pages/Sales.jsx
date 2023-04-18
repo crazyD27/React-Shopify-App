@@ -28,7 +28,6 @@ function Sales() {
     });
   return (
     <>
-    <SideBar />
     <div className="sales p-4 page">
         <div className="sales-container">
             <h2 className='text-center'>Sales overview</h2>

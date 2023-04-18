@@ -257,65 +257,61 @@ const CouponList = () => {
         {/* <MenuBar /> */}
         <div className="coupon-container d-flex flex-column mt-5 w-100">
             <h4 className='mb-4'>Coupon List</h4>
-            {couponData.length > 0 ? (
-                <>
-            <div className="filters d-flex justify-content-between align-items-center">
-                <div className="input-container d-flex flex-column">
-                    <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
-                    <div className="search-button d-flex align-items-center">
-                        <input type="text" placeholder='Name/Email' />
-                        <button type='button'>Filter</button>
+                <div className="filters d-flex justify-content-between align-items-center">
+                    <div className="input-container d-flex flex-column">
+                        <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
+                        <div className="search-button d-flex align-items-center">
+                            <input type="text" placeholder='Name/Email' />
+                            <button type='button'>Filter</button>
+                        </div>
+                    </div>
+                    <div className="input-container d-flex flex-column">
+                        <label className='w-100 text-dark mb-3'>Search</label>
+                        <div className="search-button d-flex align-items-center">
+                            <input type="text" placeholder='Search coupons' />
+                            <img src={Search} alt='search' />
+                        </div>
                     </div>
                 </div>
-                <div className="input-container d-flex flex-column">
-                    <label className='w-100 text-dark mb-3'>Search</label>
-                    <div className="search-button d-flex align-items-center">
-                        <input type="text" placeholder='Search coupons' />
-                        <img src={Search} alt='search' />
-                    </div>
+                <div className="coupon-buttons d-flex justify-content-end align-items-center">
+                    <button onClick={couponCreateShow}><img src={Plus} aly='plus' /> Create Coupon</button>
+                    <button><img src={Download} aly='download' /> Export Coupon</button>
                 </div>
-            </div>
-            <div className="coupon-buttons d-flex justify-content-end align-items-center">
-                <button onClick={couponCreateShow}><img src={Plus} aly='plus' /> Create Coupon</button>
-                <button><img src={Download} aly='download' /> Export Coupon</button>
-            </div>
+                {couponData.length > 0 ? (
+                    <table className="coupon-table">
+                        <tr className='table-heading'>
+                            {/* <th><input type="checkbox" name="" id="" /></th> */}
+                            <th>Coupons</th>
+                            <th>Created at</th>
+                            <th>Actions</th>
+                        </tr>
+                        
+                            {couponData?.map((couponData, i) => {
+                                return(
+                                    <tr key={i}>
+                                        {/* <td>{couponData.id}</td> */}
+                                        <td>{couponData.title}</td>
+                                        <td>{couponData.created_at}</td>
+                                        <td>
+                                            <button onClick={(event) => {getSingleCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Edit</button>
+                                            {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
+                                            <button onClick={(event) => {deleteCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Delete</button>
+                                            
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        
+                    </table>
             
-            <table className="coupon-table">
-                <tr className='table-heading'>
-                    {/* <th><input type="checkbox" name="" id="" /></th> */}
-                    <th>Coupons</th>
-                    <th>Created at</th>
-                    <th>Actions</th>
-                </tr>
-                
-                    {couponData?.map((couponData, i) => {
-                        return(
-                            <tr key={i}>
-                                {/* <td>{couponData.id}</td> */}
-                                <td>{couponData.title}</td>
-                                <td>{couponData.created_at}</td>
-                                <td>
-                                    <button onClick={(event) => {getSingleCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Edit</button>
-                                    {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
-                                    <button onClick={(event) => {deleteCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Delete</button>
-                                    
-                                </td>
-                            </tr>
-                        )
-                    })}
-                
-            </table>
-            
-            </>
-            )
-            :
+                )
+                :
                 (
                     <>
                         <h5 className='mt-4 text-center'>No Coupons Available</h5>
                         <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
                     </>
-                )
-            }
+                )}
             {couponList && (
                 <div className="coupon-list">
                     <div className="coupon-list-container">

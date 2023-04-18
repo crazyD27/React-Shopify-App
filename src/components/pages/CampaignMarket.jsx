@@ -239,9 +239,9 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Discount Type</th>
                                     <th>Products</th>
-                                    <th>Created At</th>
+                                    <th>Coupons</th>
+                                    <th>Discount</th>
                                     <th>Actions</th>
                                 </tr>
                                 
@@ -250,9 +250,9 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                <td>{marketContent.offer}</td>
-                                                <td className='category'>{testing[i]?.join(", ")}</td>
-                                                <td>{marketContent.date}</td>
+                                                <td className='category'>{marketContent.product_name}</td>
+                                                <td>{marketContent.coupon_name?.length > 0 ? marketContent.coupon_name?.join(", ") : "No Couopns"}</td>
+                                                <td>{marketContent.amount?.length > 0 ? marketContent.amount?.join(", ") : "No Discount"}</td>
                                                 <td>
                                                     <button onClick={(event) => {getSingleMarket(marketContent.id, event)}} style={{marginRight: 15}}>
                                                         <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
@@ -337,9 +337,9 @@ const CampaignMarket = () => {
                             <tbody className='w-100'>
                                 <tr className='headings'>
                                     <th>Campaign Name</th>
-                                    <th>Discount Type</th>
                                     <th>Products</th>
-                                    <th>Created At</th>
+                                    <th>Coupons</th>
+                                    <th>Discount</th>
                                     <th>Actions</th>
                                 </tr>
                                 
@@ -348,9 +348,9 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                <td>{marketContent.offer}</td>
-                                                <td className='category'>{draftProds[i]?.join(", ")}</td>
-                                                <td>{marketContent.date}</td>
+                                                <td className='category'>{marketContent.product_name}</td>
+                                                <td>{marketContent.coupon_name?.length > 0 ? marketContent.coupon_name?.join(", ") : "No Couopns"}</td>
+                                                <td>{marketContent.amount?.length > 0 ? marketContent.amount?.join(", ") : "No Discount"}</td>
                                                 <td>
                                                     <button onClick={(event) => {getSingleMarket(marketContent.id, event)}} style={{marginRight: 15}}>
                                                         <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />

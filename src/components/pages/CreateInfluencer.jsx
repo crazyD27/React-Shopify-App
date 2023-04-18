@@ -120,6 +120,7 @@ const CreateInfluencer = () => {
     }
 
     useEffect(() => {
+        setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
                 Authorization: `Token ${token}`
@@ -145,6 +146,7 @@ const CreateInfluencer = () => {
         .catch(function (error) {
             console.log(error);
         })
+        .finally(() => setLoading(false));
     }, [token])
 
     const countList = () => {
