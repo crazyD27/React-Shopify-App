@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import UserContext from '../context/UserContext';
 import './pages.scss';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,6 +42,7 @@ const CreateInfluencer = () => {
 
     const [couponAmounts, setCouponAmounts] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
+    const navigate = useNavigate();
   
     const today = new Date().toISOString().substr(0, 10);
   
@@ -174,6 +175,7 @@ const CreateInfluencer = () => {
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
             offer: influenceOffer,
+            product_name: productName,
             product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit,
             influencer_name: selectedUsersId.toString(),
@@ -201,6 +203,7 @@ const CreateInfluencer = () => {
             setIsVisitChecked(false);
             setIsOfferChecked(false);
             countList()
+            navigate("/manage");
         })
         .catch(function (error) {
             console.log(error);
@@ -241,6 +244,7 @@ const CreateInfluencer = () => {
             campaign_name: campaignName,
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
+            product_name: productName,
             offer: influenceOffer,
             product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit,
@@ -269,6 +273,7 @@ const CreateInfluencer = () => {
             setIsVisitChecked(false);
             setIsOfferChecked(false);
             countList()
+            navigate("/manage");
         })
         .catch(function (error) {
             console.log(error);

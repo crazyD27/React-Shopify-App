@@ -875,6 +875,12 @@
     }
 }
 
+.get-coupon h4 {
+    background: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+}
+
 .coupon-list,.tracking-coupon, .one-time-coupon, .get-coupon {
     display: flex;
     justify-content: center;

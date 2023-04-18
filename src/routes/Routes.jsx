@@ -18,8 +18,7 @@ const Routing = () => {
     <div className="routes">
       <SideBar />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/dashboard' element={<CampaignOver />} />
+        <Route exact path='/' element={<CampaignOver />} />
         <Route path='/overview' element={<CampaignOver />} />
         <Route path='/create' element={<CampaignNew />} />
         <Route path='/manage' element={<CampaignManage />} />

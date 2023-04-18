@@ -4,7 +4,7 @@ import './pages.scss';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -34,6 +34,7 @@ const CreateCampaign = () => {
     const [productDetails, setProductDetails] = useState([]);
   
     const today = new Date().toISOString().substr(0, 10);
+    const navigate = useNavigate();
 
     const handleCampDesc = (event) => {
         setCampaignDesc(event.target.value);
@@ -110,6 +111,7 @@ const CreateCampaign = () => {
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
             offer: influenceOffer,
+            product_name: productName,
             product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit
         }, {
@@ -134,18 +136,7 @@ const CreateCampaign = () => {
             countList()
             setIsVisitChecked(false);
             setIsOfferChecked(false);
-            axios.get(API.BASE_URL + 'markdraft/list/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            })
-            .then(function (response) {
-                setMarketDraftList(response.data.data);
-                setMarketDraftId(response.data.product_id);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+            navigate('/market')
         })
         .catch(function (error) {
             console.log(error);
@@ -188,6 +179,7 @@ const CreateCampaign = () => {
             coupon: selectedCouponNames.toString(),
             offer: influenceOffer,
             product_discount: selectedCouponAmounts,
+            product_name: productName,
             influencer_visit: influencerVisit
         }, {
             headers: {
@@ -209,19 +201,8 @@ const CreateCampaign = () => {
             setProductDetails([])
             setIsVisitChecked(false);
             setIsOfferChecked(false);
-            axios.get(API.BASE_URL + 'market/list/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            })
-            .then(function (response) {
-                setMarketList(response.data.data);
-                setMarketId(response.data.product_id);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
             countList()
+            navigate('/market')
         })
         .catch(function (error) {
             console.log(error);

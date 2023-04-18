@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './sidebar.scss';
@@ -17,21 +17,20 @@ import ProfileImg from '../../assests/img/profile.png';
 import User from '../../assests/img/user.png';
 
 const SideBar = () => {
-    const [activeLink, setActiveLink] = useState('overview');
+    const [activeLink, setActiveLink] = useState('1');
+    const userName = localStorage.getItem('User_Name');
 
-    const handleLinkClick = (link) => {
-        setActiveLink(link);
+    const handleLinkClick = (event) => {
+        setActiveLink(event.target.getAttribute('data-nav-link'));
     };
-
-const userName = localStorage.getItem("User_Name")
   return (
     <div className="sidebar">
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
-                <Link to="/overview" className='px-4 d-flex align-items-center mb-3 user'>
+                <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
                     <img src={User} alt='notification' style={{width: 45}} />
                     <p className='text-white mb-0 ms-3'>Hello, {userName}</p>
-                </Link>
+                </NavLink>
                 <Navbar.Collapse id="navbarScroll">
                 <Nav
                     className="me-auto my-2 my-lg-0"
@@ -39,36 +38,38 @@ const userName = localStorage.getItem("User_Name")
                     navbarScroll
                     defaultActiveKey="1"
                 >
-                    <Link to='/overview' className="text-white py-2 mb-2">
+                    <NavLink to='/overview' className='text-white py-2'>
                         <img src={CampaignOverview} className="me-2" alt='menu-img' />
                         Campaign Overview
-                    </Link><Link to='/manage' className="text-white py-2 mb-2">
+                    </NavLink>
+                    <NavLink to='/manage' className='text-white py-2'>
                         <img src={Manage} className="me-2" alt='menu-img' />
                         Manage Campaign
-                    </Link><Link to='/create' className="text-white py-2 mb-2">
+                    </NavLink>
+                    <NavLink to='/create' className='text-white py-2'>
                         <img src={CampNew} className="me-2" alt='menu-img' />
                         Create new Campaign
-                    </Link>
-                    <Link to='/market' className="text-white py-2 mb-2">
+                    </NavLink>
+                    <NavLink to='/market' className='text-white py-2'>
                         <img src={MarketPlace} className="me-2" alt='menu-img' />
                         Campaign Marketplace
-                    </Link>
-                    <Link to='/create-coupon' className="text-white py-2 mb-2">
+                    </NavLink>
+                    <NavLink to='/create-coupon' className='text-white py-2'>
                         <img src={Coupon} className="me-2" alt='menu-img' />
                         Coupon
-                    </Link>
-                    <Link to='/analytics' className="text-white py-2 mb-2">
+                    </NavLink>
+                    <NavLink to='/analytics' className='text-white py-2'>
                         <img src={AnalyticsImg} className="me-2" alt='menu-img' />
                         Analytics
-                    </Link>
-                    <Link to='/sales' className="text-white py-2 mb-2">
+                    </NavLink>
+                    <NavLink to='/sales' className='text-white py-2'>
                         <img src={SalesImg} className="me-2" alt='menu-img' />
                         Sales
-                    </Link>
-                    <Link to='/profile' className="text-white py-2 mb-2">
+                    </NavLink>
+                    <NavLink to='/profile' className='text-white py-2'>
                         <img src={ProfileImg} className="me-2" alt='menu-img' />
                         Profile
-                    </Link>
+                    </NavLink>
                 </Nav>
                 </Navbar.Collapse>
             </Container>
@@ -76,5 +77,4 @@ const userName = localStorage.getItem("User_Name")
     </div>
   )
 }
-
 export default SideBar;

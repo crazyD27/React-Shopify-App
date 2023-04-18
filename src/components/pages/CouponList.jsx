@@ -218,6 +218,7 @@ const CouponList = () => {
             setCouponDesc('')
             setDiscountType('')
             setProductIds([]);
+            setCouponAmount('')
             couponCross()
         })
         .catch(function (error) {

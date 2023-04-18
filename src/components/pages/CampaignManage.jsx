@@ -30,6 +30,7 @@ const CampaignManage = () => {
     const [productNames, setProductNames] = useState([]);
     const [pendingNames, setPendingNames] = useState([]);
     const [activeNames, setActiveNames] = useState([]);
+    const [getId, setGetId] = useState('');
     const token = localStorage.getItem('Token');
 
     const handleCampName = (event) => {
@@ -111,29 +112,23 @@ const CampaignManage = () => {
             }
         })
         .then(function (response) {
+            console.log("Delete" ,response)
             toast.success("Campaign Deleted!");
-            // Update the state of the campaign lists
-            setCampList(campList.filter(campaign => campaign.id !== value));
-            setCampListPending(campListPending.filter(campaign => campaign.id !== value));
-            axios.get(API.BASE_URL + 'count/',{
-                headers: {
-                    Authorization: 'Token ' + localStorage.getItem('Token')
-                }
-            })
-            .then(function (response) {
-                setCountCamp(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+            setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
+            setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
+            setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
+            setDeleteConfirm(false);
         })
         .catch(function (error) {
             console.log(error);
+            toast.warn("Cannot Delete right now. Please try again later")
         })
         .finally(() => setLoading(false));
     }
 
-    function deleteConfirm() {
+    function deleteConfirm(value) {
+        console.log(value);
+        setGetId(value);
         setDeleteConfirm(true);
     }
 
@@ -155,6 +150,7 @@ const CampaignManage = () => {
         })
         .catch(function (error) {
             console.log(error);
+            toast.warn("Cannot edit the information right now. Please try again later")
         })
         .finally(() => setLoading(false));
     }
@@ -342,26 +338,26 @@ const CampaignManage = () => {
                                                 <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
-                                                    <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                                    <button onClick={() => { deleteConfirm(name.campaignid_id) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
                                             </td>
                                         </tr>
 
                                         {getDeleteConfirm && 
-                                        <div className="get-coupon">
-                                        <div className="get-coupon-contianer">
-                                        <button className='close' onClick={couponCross}>
-                                            <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                        </button>
-                                        <div className="confirm">
-                                            <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                            <div className="buttons d-flex justify-content-center align-items-center">
-                                                <button onClick={() => { deleteCampaign(name.id)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                            <div className="get-coupon">
+                                                <div className="get-coupon-contianer">
+                                                    <button className='close' onClick={couponCross}>
+                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                                    </button>
+                                                    <div className="confirm">
+                                                        <h4 className='mb-4 text-center'>Delete Campaign?</h4>
+                                                        <div className="buttons d-flex justify-content-center align-items-center">
+                                                            <button onClick={() => { deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
+                                                            <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    }
+                                        }
                                         {getMarket && 
                                             <div className="get-coupon">
                                                 <div className="get-coupon-contianer">
@@ -434,26 +430,26 @@ const CampaignManage = () => {
                                                 <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
                                                     </button>
-                                                    <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                                    <button onClick={() => { deleteConfirm(name.campaignid_id ) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
                                             </td>
                                         </tr>
 
                                         {getDeleteConfirm && 
-                                        <div className="get-coupon">
-                                        <div className="get-coupon-contianer">
-                                        <button className='close' onClick={couponCross}>
-                                            <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                        </button>
-                                        <div className="confirm">
-                                            <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                            <div className="buttons d-flex justify-content-center align-items-center">
-                                                <button onClick={() => { deleteCampaign(name.id)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                            <div className="get-coupon">
+                                                <div className="get-coupon-contianer">
+                                                    <button className='close' onClick={couponCross}>
+                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                                    </button>
+                                                    <div className="confirm">
+                                                        <h4 className='mb-4 text-center'>Delete Campaign?</h4>
+                                                        <div className="buttons d-flex justify-content-center align-items-center">
+                                                            <button onClick={() => { deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
+                                                            <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                                        </div>
+                                                    </div>
+                                             </div>
                                             </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    }
+                                        }
                                         {getMarket && 
                                             <div className="get-coupon">
                                                 <div className="get-coupon-contianer">
@@ -515,35 +511,35 @@ const CampaignManage = () => {
                                 {draftList?.length > 0 && draftList?.map((name, i) => {
                                     return(
                                         <>
-                                        <tr key={i} className='campaign-inputs'>
-                                        <td>{name.campaign_name}</td>
-                                            <td>{name.product_name}</td>
-                                            <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
-                                            <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
-                                            <td>
-                                                <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
-                                                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
-                                                    </button>
-                                                    <button onClick={() => { deleteConfirm() }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
-                                            </td>
-                                        </tr>
+                                            <tr key={i} className='campaign-inputs'>
+                                                <td>{name.campaign_name}</td>
+                                                    <td>{name.product_name}</td>
+                                                    <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
+                                                    <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
+                                                    <td>
+                                                        <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
+                                                            <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
+                                                            </button>
+                                                            <button onClick={() => { deleteConfirm(name.campaignid_id) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                                    </td>
+                                                </tr>
 
                                         {getDeleteConfirm && 
-                                        <div className="get-coupon">
-                                        <div className="get-coupon-contianer">
-                                        <button className='close' onClick={couponCross}>
-                                            <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                        </button>
-                                        <div className="confirm">
-                                            <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                            <div className="buttons d-flex justify-content-center align-items-center">
-                                                <button onClick={() => { deleteCampaign(name.id)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                            <div className="get-coupon">
+                                                <div className="get-coupon-contianer">
+                                                    <button className='close' onClick={couponCross}>
+                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                                    </button>
+                                                    <div className="confirm">
+                                                        <h4 className='mb-4 text-center'>Delete Campaign?</h4>
+                                                        <div className="buttons d-flex justify-content-center align-items-center">
+                                                            <button onClick={() => {deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
+                                                            <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    }
+                                        }
                                         {getMarket && 
                                             <div className="get-coupon">
                                                 <div className="get-coupon-contianer">
