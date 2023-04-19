@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import SideBar from '../sidebar/Sidebar';
 import './pages.scss';
 import NoData from '../../assests/img/no-data.png';
+import { useNavigate } from 'react-router-dom';
 
 const CampaignMarket = () => {
     const [productNames, setProductNames] = useState([]);
@@ -28,11 +29,12 @@ const CampaignMarket = () => {
     const [getId, setGetId] = useState('');
     const [getDeleteConfirm, setDeleteConfirm] = useState(false);
     const {testing, setTesting, marketDraftId, setMarketDraftId, marketDraftList, setMarketDraftList, marketList, setMarketList, marketId, setMarketId} = useContext(UserContext);
+    const navigate = useNavigate()
     
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -46,7 +48,7 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'markdraft/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -60,7 +62,7 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -130,7 +132,7 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -145,69 +147,23 @@ const CampaignMarket = () => {
         .finally(() => setLoading(false));
     }
 
-    const editCampaign = (value, event) => {
-        console.log("Product ID:", value);
-        event.preventDefault();
-        setLoading(true);
-        axios.put(API.BASE_URL + 'update/' + value + '/',{
-          campaign_name: campName,
-          description: influenceVisit,
-          offer: prodOffer,
-          product_discount: prodDiscount
-        },{
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        })
-        .then(function (response) {
-          console.log("EDITED MARKET", response)
-          toast.success("Coupon Edited Successfully");
-          setCampName('');
-          setProdOffer('');
-          setProdDiscount('');
-          setInfluenceVisit('');
-          
-          // update marketList with the new data
-          const updatedMarketList = marketDraftList.map((market) => {
-            if (market.id === value) {
-              return {
-                ...market,
-                campaign_name: campName,
-                description: influenceVisit,
-                offer: prodOffer,
-                product_discount: prodDiscount
-              };
-            } else {
-              return market;
-            }
-          });
-          setMarketDraftList(updatedMarketList);
-          
-          couponCross();
-        })
-        .catch(function (error) {
-          console.log(error);
-          toast.warn("Unable to edit. Please try again later")
-        })
-        .finally(() => setLoading(false));
-    }
-
     const getSingleMarket = (value, event) => {
         console.log("VLSE", value)
         event.preventDefault();
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Single Market Data" ,response.data.data)
             setGetMarketInfo(response.data.data[0])
-            setGetMarket(true);
+            // setGetMarket(true);
             setCampName(response.data.data.campaign_name)
             setProdOffer(response.data.data.offer)
             setProdDiscount(response.data.data.product_discount)
             setInfluenceVisit(response.data.data.description)
+            navigate(`/create-campaign/${response.data.data[0].campaignid_id}`)
         })
         .catch(function (error) {
             console.log(error);
@@ -271,29 +227,6 @@ const CampaignMarket = () => {
                                                     <button onClick={() => { deleteConfirm(marketContent.campaignid_id)}}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
                                                 </td>
                                             </tr>
-                                            <form action="">
-                                                <div className="input-container">
-                                                    <label>Campaign Name</label>
-                                                    <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
-                                                </div>
-                                                <div className="input-container">
-                                                    <label>Offer</label>
-                                                    <select onChange={handleProdOffer} value={prodOffer}>
-                                                        <option value="" disabled>{getMarketInfo?.offer}</option>
-                                                        <option value="fixed_amount">Fixed Amount</option>
-                                                        <option value="percentage">Precentage</option>
-                                                    </select>
-                                                </div>
-                                                <div className="input-container">
-                                                    <label>Discount</label>
-                                                    <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
-                                                </div>
-                                                <div className="input-container">
-                                                    <label>Description</label>
-                                                    <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
-                                                </div>
-                                                <button onClick={(event) => {editCampaign(marketContent?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
-                                            </form>
                                             {getDeleteConfirm && 
                                                 <div className="get-coupon">
                                                     <div className="get-coupon-contianer">
@@ -307,38 +240,6 @@ const CampaignMarket = () => {
                                                                 <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            {getMarket && 
-                                                <div className="get-coupon">
-                                                    <div className="get-coupon-contianer">
-                                                    <h3>Edit Campaign</h3>
-                                                    <button className='close' onClick={couponCross}>
-                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                    </button>
-                                                    <form action="">
-                                                        <div className="input-container">
-                                                            <label>Campaign Name</label>
-                                                            <input type="text" value={campName} />
-                                                        </div>
-                                                        <div className="input-container">
-                                                            <label>Offer</label>
-                                                            <select onChange={handleProdOffer}>
-                                                                <option value="fixed_amount">Fixed Amount</option>
-                                                                <option value="percentage">Precentage</option>
-                                                            </select>
-                                                        </div>
-                                                        <div className="input-container">
-                                                            <label>Discount</label>
-                                                            <input type="text" onChange={handleProdDiscount} value={prodDiscount} />
-                                                        </div>
-                                                        <div className="input-container">
-                                                            <label>Description</label>
-                                                            <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
-                                                        </div>
-                                                        <button className='button button-blue mt-4 mx-auto' onClick={(event) => { console.log("Product ID:", getMarketInfo?.id); editCampaign(getMarketInfo?.id, event) }}>Edit Campaign</button>
-                                                    </form>
                                                     </div>
                                                 </div>
                                             }
@@ -406,7 +307,6 @@ const CampaignMarket = () => {
                                                     <label>Description</label>
                                                     <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
                                                 </div>
-                                                <button onClick={(event) => {editCampaign(marketContent?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
                                             </form>
                                             {getDeleteConfirm && 
                                                 <div className="get-coupon">
@@ -421,38 +321,6 @@ const CampaignMarket = () => {
                                                                 <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            {getMarket && 
-                                                <div className="get-coupon">
-                                                    <div className="get-coupon-contianer">
-                                                    <h3>Edit Campaign</h3>
-                                                    <button className='close' onClick={couponCross}>
-                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                    </button>
-                                                    <form action="">
-                                                        <div className="input-container">
-                                                            <label>Campaign Name</label>
-                                                            <input type="text" onChange={handleCampName} value={campName} />
-                                                        </div>
-                                                        <div className="input-container">
-                                                            <label>Offer</label>
-                                                            <select onChange={handleProdOffer}>
-                                                                <option value="fixed_amount">Fixed Amount</option>
-                                                                <option value="percentage">Precentage</option>
-                                                            </select>
-                                                        </div>
-                                                        <div className="input-container">
-                                                            <label>Discount</label>
-                                                            <input type="text" onChange={handleProdDiscount} value={prodDiscount} />
-                                                        </div>
-                                                        <div className="input-container">
-                                                            <label>Description</label>
-                                                            <input type="text" onChange={handleInfluenceVisit} value={influenceVisit} />
-                                                        </div>
-                                                        <button className='button button-blue mt-4 mx-auto' onClick={(event) => { console.log("Product ID:", getMarketInfo?.id); editCampaign(getMarketInfo?.id, event) }}>Edit Campaign</button>
-                                                    </form>
                                                     </div>
                                                 </div>
                                             }

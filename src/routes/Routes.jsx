@@ -28,7 +28,9 @@ const Routing = () => {
         <Route path='/sales' element={<Sales />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/create-campaign' element={<CreateCampaign />} />
+        <Route path='/create-campaign/:id' element={<CreateCampaign />} />
         <Route path='/create-influencer' element={<CreateInfluencer />} />
+        <Route path='/create-influencer/:id' element={<CreateInfluencer />} />
       </Routes>
     </div>
   );

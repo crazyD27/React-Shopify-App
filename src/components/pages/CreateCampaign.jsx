@@ -4,7 +4,7 @@ import './pages.scss';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -35,6 +35,7 @@ const CreateCampaign = () => {
   
     const today = new Date().toISOString().substr(0, 10);
     const navigate = useNavigate();
+    const {id} = useParams();
 
     const handleCampDesc = (event) => {
         setCampaignDesc(event.target.value);
@@ -61,7 +62,7 @@ const CreateCampaign = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -74,7 +75,7 @@ const CreateCampaign = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -116,7 +117,7 @@ const CreateCampaign = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -183,7 +184,7 @@ const CreateCampaign = () => {
             influencer_visit: influencerVisit
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -259,7 +260,7 @@ const CreateCampaign = () => {
                         products: productIds.toString()
                     }, {
                         headers: {
-                            Authorization: `Token ${token}`,
+                            Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`,
                         },
                     })
                     .then((response) => {
@@ -278,16 +279,68 @@ const CreateCampaign = () => {
         setPrevCouponClicked(couponClicked);
     }, [couponClicked, selectedCoupon]);
 
+    const editCampaign = (event) => {
+        console.log("Product ID:");
+        event.preventDefault();
+        setLoading(true);
+        axios.put(API.BASE_URL + 'update/' + id + '/',{
+            campaign_name: campaignName,
+            description: influencerVisit,
+            offer: influenceOffer,
+            product_discount: selectedCouponAmounts
+          },{
+          headers: {
+            Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
+          }
+        })
+        .then(function (response) {
+          console.log("EDITED MARKET", response)
+          toast.success("Coupon Edited Successfully");
+          navigate('/market')
+        })
+        .catch(function (error) {
+          console.log(error);
+          toast.warn("Unable to edit. Please try again later")
+        })
+        .finally(() => setLoading(false));
+    }
+
+    useEffect(() => {
+        if(id?.length > 0) {
+            axios.get(API.BASE_URL +  'single/' + id + '/', {
+                headers: {
+                    Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
+            }})
+            .then(function (response) {
+                console.log("Single Market Data" ,response.data.data);
+                setCampaignName(response.data.data[0].campaign_name);
+                setSelectedDate(response.data.data[0].date);
+                setInfluenceOffer(response.data.data[0].offer);
+                setInfluencerVisit(response.data.data[0].influencer_visit);
+                setProductName( [response.data.data[0].product_name]);
+                setProductIds([response.data.data[0].product_id]);
+                setSelectedCouponNames([response.data.data[0].coupon_name]);
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        }
+    },[id])
+
+    console.log("PRDDDDDDDDD", productName)
+    console.log("Coupons Name", selectedCouponNames[0])
+    console.log("Product Details", productDetails)
 
   return (
     <div className="campaign-new p-4 page">
         {loading && <div className='loader'><span></span></div>}
         <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center">
-            <h3 className='my-5'>Create Campaign for Marketplace</h3>
             <Link to='/create' className={"button button-blue d-flex me-auto back"}>
                 <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                 Back
             </Link>
+            <h3 className='my-4'>{id?.length > 0 ? "Edit Campaign for Marketplace" : "Create Campaign for Marketplace"}</h3>
+            
             <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Campaign name</label>
@@ -367,6 +420,13 @@ const CreateCampaign = () => {
                     )}
                 </div>
 
+                {influenceOffer.length > 0 ? (
+                    <div className="input-container d-flex flex-column mb-4">
+                    <label className="mb-3">{influenceOffer === "percentage" ? "Percentage" : "Amount"}</label>
+                    <input type="text" />
+                </div>
+                ): ""}
+
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Product URL</label>
                     {productIds.length > 0 ? (
@@ -402,9 +462,9 @@ const CreateCampaign = () => {
                         {productDetails?.length > 0 ? (
                             productDetails?.map(product => (
                             <li className='d-flex flex-row align-items-center'>
-                                <span>{product.product_name}</span>
+                                <span>{product?.product_name}</span>
                                 <div className='d-flex align-items-center'>
-                                {product.coupons?.map((coupon, i) => {
+                                {product?.coupons?.map((coupon, i) => {
                                     const couponObject = {
                                         name: coupon,
                                         product_name: product.product_name,
@@ -413,37 +473,37 @@ const CreateCampaign = () => {
                                     };
                                     const isCouponSelected = selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
                                     const handleClick = () => {
-                                    const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
-                                    if (selectedCouponIndex !== -1) {
-                                        setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
-                                        setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
-                                        setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
-                                    } else {
-                                        setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
-                                        setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
-                                        setSelectedCouponAmounts(prevSelectedCouponAmounts => {
-                                        const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
-                                        if (existingProductIndex !== -1) {
-                                            const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
-                                            return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
-                                            if (index === existingProductIndex) {
-                                                return {
-                                                ...existingProduct,
-                                                name: [...existingProduct.name, couponObject.name],
-                                                amount: [...existingProduct.amount, couponObject.amount]
-                                                };
+                                        const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
+                                        if (selectedCouponIndex !== -1) {
+                                            setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
+                                            setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
+                                            setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
+                                        } else {
+                                            setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
+                                            setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
+                                            setSelectedCouponAmounts(prevSelectedCouponAmounts => {
+                                            const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
+                                            if (existingProductIndex !== -1) {
+                                                const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
+                                                return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
+                                                if (index === existingProductIndex) {
+                                                    return {
+                                                    ...existingProduct,
+                                                    name: [...existingProduct.name, couponObject.name],
+                                                    amount: [...existingProduct.amount, couponObject.amount]
+                                                    };
+                                                }
+                                                return selectedCouponAmount;
+                                                });
                                             }
-                                            return selectedCouponAmount;
+                                            return [...prevSelectedCouponAmounts, {
+                                                product_name: product.product_name,
+                                                product_id: product.product_id,
+                                                name: [couponObject.name],
+                                                amount: [couponObject.amount]
+                                            }];
                                             });
                                         }
-                                        return [...prevSelectedCouponAmounts, {
-                                            product_name: product.product_name,
-                                            product_id: product.product_id,
-                                            name: [couponObject.name],
-                                            amount: [couponObject.amount]
-                                        }];
-                                        });
-                                    }
                                     };
                                     return (
                                     <p
@@ -465,8 +525,13 @@ const CreateCampaign = () => {
                 </div>
 
                 <div className="buttons d-flex justify-content-center">
-                    <button className='button button-blue' onClick={createNewCampaignDraft}>Save in draft</button>
-                    <button className='button ms-4' onClick={createNewCampaign}>Send to MarketPlace</button>
+                    {id?.length > 0 ? 
+                    <button type='button' className='button button-blue' onClick={(e) => {editCampaign(e)}}>Edit Campaign</button> 
+                    :
+                    <>
+                        <button className='button button-blue' onClick={createNewCampaignDraft}>Save in draft</button>
+                        <button className='button ms-4' onClick={createNewCampaign}>Send to MarketPlace</button>
+                    </>}
                 </div>
             </form>
         </div>

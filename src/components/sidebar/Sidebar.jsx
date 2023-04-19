@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { Container } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import UserContext from '../context/UserContext';
 import './sidebar.scss';
+import axios from 'axios';
+import { API } from '../../config/Api';
 
 // Images
 import CampaignOverview from '../../assests/img/campaign-over.png';
@@ -19,16 +22,33 @@ import User from '../../assests/img/user.png';
 const SideBar = () => {
     const [activeLink, setActiveLink] = useState('1');
     const userName = localStorage.getItem('User_Name');
-
+    const {image, setImage} = useContext(UserContext);
+    const token = localStorage.getItem("Token");
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
     };
+
+    useEffect(() => {
+        axios.get(API.BASE_URL + 'user/id/',  {
+            headers: {
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
+            }
+        })
+        .then(function (response) {
+            console.log("Profile Details", response);
+            setImage(response.data.url)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }, [token])
+    console.log("Image", image)
   return (
     <div className="sidebar">
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
                 <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
-                    <img src={User} alt='notification' style={{width: 45}} />
+                    <img src={image ? image : User} alt='notification' style={{width: 45}} />
                     <p className='text-white mb-0 ms-3'>Hello, {userName}</p>
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">

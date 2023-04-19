@@ -33,6 +33,7 @@ const CouponList = () => {
     const [productName, setProductName] = useState([]);
     const [productIds, setProductIds] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [filterValue, setFilterValue] = useState("");
 
     const handleCouponDesc = (event) => {
         setCouponDesc(event.target.value);
@@ -49,7 +50,7 @@ const CouponList = () => {
     useEffect(() => {
         axios.get(API.SHOPIFY_URL +  'coupon/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -64,7 +65,7 @@ const CouponList = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -81,7 +82,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'coupon/delete/?price=' + value,{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -104,7 +105,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Coupon Created", response);
@@ -129,7 +130,7 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
@@ -139,7 +140,7 @@ const CouponList = () => {
             setCouponAmount('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -162,7 +163,7 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'single/data/?price=' + value, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -209,7 +210,7 @@ const CouponList = () => {
             product_id: productIds?.toString()
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -262,7 +263,7 @@ const CouponList = () => {
                     <div className="input-container d-flex flex-column">
                         <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
                         <div className="search-button d-flex align-items-center">
-                            <input type="text" placeholder='Name/Email' />
+                            <input type="text" placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
                             <button type='button'>Filter</button>
                         </div>
                     </div>
@@ -287,7 +288,12 @@ const CouponList = () => {
                             <th>Actions</th>
                         </tr>
                         
-                            {couponData?.map((couponData, i) => {
+                            {couponData?.filter(
+                                (coupon) =>
+                                    coupon.title?.toLowerCase().includes(filterValue.toLowerCase()) ||
+                                    coupon.email?.toLowerCase().includes(filterValue.toLowerCase())
+                            )
+                            .map((couponData, i) => {
                                 return(
                                     <tr key={i}>
                                         {/* <td>{couponData.id}</td> */}
@@ -295,7 +301,7 @@ const CouponList = () => {
                                         <td>{couponData.created_at}</td>
                                         <td>
                                             <button onClick={(event) => {getSingleCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Edit</button>
-                                            {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
+                                            {loading && <div className='loader'><span></span></div>}
                                             <button onClick={(event) => {deleteCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Delete</button>
                                             
                                         </td>
@@ -383,8 +389,8 @@ const CouponList = () => {
                             </select>
                         </div>
                         <div className="input-container">
-                            <label>Amount</label>
-                            <input type="text" placeholder='Amount' value={couponAmount} onChange={handleCouponAmount} />
+                            <label>{discountType == "fixed_amount" ? "Amount" : "Percent"}</label>
+                            <input type="text" placeholder={discountType == "fixed_amount" ? "Amount" : "Percent"} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={(e) => {trackingApi(e)}} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>
@@ -411,8 +417,8 @@ const CouponList = () => {
                             </select>
                         </div>
                         <div className="input-container">
-                            <label>Amount</label>
-                            <input type="text" placeholder='Amount' value={couponAmount} onChange={handleCouponAmount} />
+                            <label>{discountType == "fixed_amount" ? "Amount" : "Percent"}</label>
+                            <input type="text" placeholder={discountType == "fixed_amount" ? "Amount" : "Percent"} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={createCoupon} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>

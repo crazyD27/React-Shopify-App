@@ -49,7 +49,7 @@ const CampaignOver = () => {
         })
         axios.get(API.BASE_URL + 'user/id/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("User ID", response);
@@ -86,15 +86,16 @@ const CampaignOver = () => {
   return (
     <>
     <div className="campaign-over p-3 page">
+        <h2 className='text-left w-100 main-heading mt-3'>Welcome to Marketplace</h2>
         {/* <MenuBar /> */}
-        <div className="campaign-over-container d-flex flex-column justify-content-center align-items-center mt-5 w-100">
+        <div className="campaign-over-container d-flex flex-column justify-content-center align-items-center mt-4 w-100">
             <div className="overview-container w-100 bg-light p-4">
-                <h3>Overview</h3>
+                <h3 className='mb-3'>Overview</h3>
                 <div className="overview-list d-flex flex-wrap justify-content-between align-items-center">
                     <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Active Campaigns</h5>
-                            <h3 className="mb-0">{countCamp.active_campaign}</h3>
+                            <h3 className="mb-0">{countCamp.active_campaign ? countCamp.active_campaign : 0}</h3>
                             {/* <button>View</button> */}
                         </div>
                         {/* <div className="overview-image">
@@ -104,7 +105,7 @@ const CampaignOver = () => {
                     <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Pending Campaigns</h5>
-                            <h3 className="mb-0">{countCamp.pending_campaign}</h3>
+                            <h3 className="mb-0">{countCamp.pending_campaign ? countCamp.pending_campaign : 0}</h3>
                             {/* <button>View</button> */}
                         </div>
                         {/* <div className="overview-image">
@@ -114,7 +115,7 @@ const CampaignOver = () => {
                     <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Total Campaigns</h5>
-                            <h3 className="mb-0">{countCamp.total}</h3>
+                            <h3 className="mb-0">{countCamp.total ? countCamp.total : 0}</h3>
                             {/* <button>View</button> */}
                         </div>
                         {/* <div className="overview-image">
@@ -154,7 +155,7 @@ const CampaignOver = () => {
                     </div>
                 </div>
             </div> */}
-            <div className="feature-container mt-5 bg-light w-100">
+            {/* <div className="feature-container mt-5 bg-light w-100">
                 <h3 className='p-3'>Feature directory</h3>
                 <div className="feature-list d-flex justify-content-between flex-wrap p-3">
                     <div className="feature-box px-3 py-4">
@@ -226,7 +227,7 @@ const CampaignOver = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="support-container mt-4 bg-light w-100 p-3">
                 <h3>Get Support</h3>
                 <div className="support-list d-flex justify-content-between flex-wrap">

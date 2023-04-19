@@ -11,18 +11,27 @@ function Profile() {
     const [shopifyUrl, setShopifyUrl] = useState('');
     const [instagramUrl, setInstagramUrl] = useState('');
     const [email, setEmail] = useState('');
-    const[userDetails, setUserDetails] = useState([]);
+    const [userDetails, setUserDetails] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const tokenId = localStorage.getItem('Token_ID');
     const token = localStorage.getItem("Token");
     const userId = localStorage.getItem("User_ID")
 
+    const onFileChange = event => {
+        setSelectedFile(event.target.files[0]);
+        console.log(event.target.files[0])
+        
+    };
+
+    console.log("Selected File", selectedFile)
+
     useEffect(() => {
         setLoading(true);
         axios.get(API.BASE_URL + 'user/id/',  {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -40,19 +49,24 @@ function Profile() {
     }, [token])
 
     const createProfile = (e) => {
+        const formData = new FormData();
+        formData.append('image',selectedFile);
+        formData.append("username", userName)
+        formData.append("email", email)
+        formData.append("password", password)
+        formData.append("shopify_url", shopifyUrl)
+        formData.append("instagram_url", instagramUrl)
+        formData.append('type','normal');
+        console.log(formData)
         setLoading(true);
         e.preventDefault();
-        axios.put(API.BASE_URL + 'profile/' + userId + '/', {
-            username: userName,
-            email: email,
-            password: password,
-            shopify_url: shopifyUrl,
-            instagram_url: instagramUrl,
-        }, {
+        axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
             headers: {
-                Authorization: `Token ${token}`
-            }
-        })
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`,
+                'Content-Type': 'multipart/form-data'
+            },
+        }
+        )
         .then(function (response) {
             console.log("Profile", response);
             toast.success("Profile Edited Successfully!");
@@ -109,6 +123,10 @@ function Profile() {
             <div className="input-container d-flex flex-column mb-4">
                 <label>Password</label>
                 <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+            </div>
+            <div className="input-container d-flex flex-column mb-4">
+                <label>Image</label>
+                <input type="file" onChange={onFileChange} />
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Instagram URL</label>

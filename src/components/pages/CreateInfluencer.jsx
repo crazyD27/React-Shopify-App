@@ -18,6 +18,7 @@ const CreateInfluencer = () => {
     const [showList, setShowList] = useState(false);
     const [campaignDesc, setCampaignDesc] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
+    const [influenceFee, setInfluenceFee] = useState('');
     const [selectedCoupon, setSelectedCoupon] = useState({ name: "", product: "" });
     const [prodList, setProdList] = useState('')
     const [prodDesc, setProdDesc] = useState([]);
@@ -124,7 +125,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -137,7 +138,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -179,9 +180,11 @@ const CreateInfluencer = () => {
             product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit,
             influencer_name: selectedUsersId.toString(),
+            influencer_fee: influenceFee,
+            description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -202,6 +205,7 @@ const CreateInfluencer = () => {
             setProductUrl([])
             setIsVisitChecked(false);
             setIsOfferChecked(false);
+            setCampaignDesc('')
             countList()
             navigate("/manage");
         })
@@ -249,9 +253,11 @@ const CreateInfluencer = () => {
             product_discount: selectedCouponAmounts,
             influencer_visit: influencerVisit,
             influencer_name: selectedUsersId.toString(),
+            influencer_fee: influenceFee,
+            description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -268,6 +274,7 @@ const CreateInfluencer = () => {
             setSelectedCoupon('')
             setProductDetails([])
             setCouponAmounts('')
+            setCampaignDesc('')
             setProductUrl([])
             setSelectedCoupons([])
             setIsVisitChecked(false);
@@ -331,7 +338,7 @@ const CreateInfluencer = () => {
                         products: productIds.toString()
                     }, {
                         headers: {
-                            Authorization: `Token ${token}`,
+                            Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`,
                         },
                     })
                     .then((response) => {
@@ -400,23 +407,24 @@ const CreateInfluencer = () => {
 
             {showInfluList && (
                 <div className='w-100 influencer-list px-5'>
-                    <h3>Influencer List</h3>
                     <Link to='/create' onClick={handleBack} className="button button-blue back">
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
                     </Link>
+                    <h3>Influencer List</h3>
+                    
                    {influencerList.length > 0 ? (
                      <div className='influencer-list-main'>
                      {influencerList?.map((list, i) => (
-                         <div className='influencer-list-container d-flex align-items-center justify-content-between'>
+                         <label  for={list.username} className='influencer-list-container d-flex align-items-center justify-content-between'>
                              <div className='d-flex align-items-center'>
-                                <input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
+                                <input id={list.username} type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
                                 <img src={list.image} alt='profile-pic' />
                                 <p className='ms-4'>{list.username}</p>
                              </div>
                              <p className='d-flex flex-column align-items-center'><strong>{(list.follower / 1000000).toFixed(2)} M</strong> <span>Followers</span> </p>
-                             <p className='d-flex flex-column align-items-center'><strong>{list.engagement_rate.toFixed(2)}</strong> <span>Engagement</span> </p>
-                         </div>
+                             <p className='d-flex flex-column align-items-center'><strong>{list.engagement_rate.toFixed(2)}%</strong> <span>Engagement</span> </p>
+                         </label>
                      ))}
                      </div>
                    ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
@@ -434,7 +442,7 @@ const CreateInfluencer = () => {
                         Back
                     </button>
                     <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
-                    <div className="input-container d-flex flex-column mb-4">
+                        <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign name</label>
                             <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
                         </div>
@@ -464,11 +472,11 @@ const CreateInfluencer = () => {
                             <div className="input d-flex align-items-center">
                                 <span className='d-flex align-items-center justify-content-center me-4'>
                                     <input type="radio" id="percentage" name="influenceOffer" value="percentage" checked={influenceOffer === "percentage"} onChange={handleInfluenceOffer} />
-                                    <label htmlFor="percentage">Percentage</label>
+                                    <label htmlFor="percentage">Commission</label>
                                 </span>
                                 <span className='d-flex align-items-center justify-content-center'>
                                     <input type="radio" id="commission" name="influenceOffer" value="commission" checked={influenceOffer === "commission"} onChange={handleInfluenceOffer} />
-                                    <label htmlFor="commission">Commission</label>
+                                    <label htmlFor="commission">Fixed Fee</label>
                                 </span>
                             </div>
                         </div>
@@ -512,6 +520,13 @@ const CreateInfluencer = () => {
                         </ul>
                             )}
                         </div>
+
+                        {influenceOffer.length > 0 ? (
+                            <div className="input-container d-flex flex-column mb-4">
+                                <label className="mb-3">{influenceOffer === "percentage" ? "Commission" : "Fixed Fee"}</label>
+                                <input type="text" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
+                            </div>
+                        ): ""}
 
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Product URL</label>
@@ -617,7 +632,7 @@ const CreateInfluencer = () => {
 
                         <div className="buttons d-flex justify-content-center">
                             <button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>
-                            <button className='button ms-4' onClick={(e) => createIfluenceRequest(e)}>Save Request</button>
+                            <button className='button ms-4' onClick={(e) => createIfluenceRequest(e)}>Send Request</button>
                         </div>
                     </form>
                 </div>
