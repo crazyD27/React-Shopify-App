@@ -125,7 +125,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -138,7 +138,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -184,7 +184,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -257,7 +257,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -338,7 +338,7 @@ const CreateInfluencer = () => {
                         products: productIds.toString()
                     }, {
                         headers: {
-                            Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`,
+                            Authorization: `Token ${token}`,
                         },
                     })
                     .then((response) => {
