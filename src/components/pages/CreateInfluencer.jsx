@@ -417,13 +417,16 @@ const CreateInfluencer = () => {
                      <div className='influencer-list-main'>
                      {influencerList?.map((list, i) => (
                          <label  for={list.username} className='influencer-list-container d-flex align-items-center justify-content-between'>
-                             <div className='d-flex align-items-center'>
+                             <div className='d-flex align-items-center col-4'>
                                 <input id={list.username} type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
                                 <img src={list.image} alt='profile-pic' />
-                                <p className='ms-4'>{list.username}</p>
+                                <div className='ms-4'>
+                                    <p>{list.fullname}</p>
+                                    <span>@{list.username}</span>
+                                </div>
                              </div>
-                             <p className='d-flex flex-column align-items-center'><strong>{(list.follower / 1000000).toFixed(2)} M</strong> <span>Followers</span> </p>
-                             <p className='d-flex flex-column align-items-center'><strong>{list.engagement_rate.toFixed(2)}%</strong> <span>Engagement</span> </p>
+                             <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M</strong> <span>Followers</span> </p>
+                             <p className='d-flex flex-column align-items-end col-4'><strong>{list.engagement_rate.toFixed(2)}%</strong> <span>Engagement</span> </p>
                          </label>
                      ))}
                      </div>

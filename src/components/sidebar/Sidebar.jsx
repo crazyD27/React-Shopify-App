@@ -21,35 +21,36 @@ import User from '../../assests/img/user.png';
 
 const SideBar = () => {
     const [activeLink, setActiveLink] = useState('1');
-    const userName = localStorage.getItem('User_Name');
-    const {image, setImage} = useContext(UserContext);
     const token = localStorage.getItem("Token");
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
     };
+    const {name, image} = useContext(UserContext)
 
-    useEffect(() => {
-        axios.get(API.BASE_URL + 'user/id/',  {
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(function (response) {
-            console.log("Profile Details", response);
-            setImage(response.data.url)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-    }, [token])
-    console.log("Image", image)
+    console.log("Name in Sidebar", name)
+    console.log("Image in SIdebar", image)
+
+    // useEffect(() => {
+    //     axios.get(API.BASE_URL + 'user/id/',  {
+    //         headers: {
+    //             Authorization: `Token ${token}`
+    //         }
+    //     })
+    //     .then(function (response) {
+    //         console.log("Profile Details", response);
+    //         // setImage(response.data.url)
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error);
+    //     })
+    // }, [token])
   return (
     <div className="sidebar">
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
                 <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
-                    <img src={image ? image : User} alt='notification' style={{width: 45}} />
-                    <p className='text-white mb-0 ms-3'>Hello, {userName}</p>
+                    <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
+                    <p className='text-white mb-0 ms-3'>Hello, {name != "" ? name : localStorage.getItem("User_Name")}</p>
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">
                 <Nav

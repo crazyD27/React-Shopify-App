@@ -13,7 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const {setUserToken, setInfluenceList, countCamp, setCountCamp} = useContext(UserContext);
+  const {image, name} = useContext(UserContext);
   const token = localStorage.getItem('Token')
   useEffect(() => {
     setTimeout(() => {
@@ -28,6 +28,8 @@ function App() {
       console.log('///////////////////////////////');
     }, 3000)
   }, [])
+  console.log("NAMEEEEE", name)
+  console.log("Image", image)
   return (
     <div className="App">
       <Routing />

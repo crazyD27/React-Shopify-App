@@ -86,13 +86,13 @@ const CampaignOver = () => {
   return (
     <>
     <div className="campaign-over p-3 page">
-        <h2 className='text-left w-100 main-heading mt-3'>Welcome to Marketplace</h2>
+        <h2 className='text-left w-100 main-heading mt-3'>Welcome to <strong>Dashboard</strong></h2>
         {/* <MenuBar /> */}
         <div className="campaign-over-container d-flex flex-column justify-content-center align-items-center mt-4 w-100">
             <div className="overview-container w-100 bg-light p-4">
                 <h3 className='mb-3'>Overview</h3>
                 <div className="overview-list d-flex flex-wrap justify-content-between align-items-center">
-                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Active Campaigns</h5>
                             <h3 className="mb-0">{countCamp.active_campaign ? countCamp.active_campaign : 0}</h3>
@@ -102,7 +102,7 @@ const CampaignOver = () => {
                             <img src={People} alt="overview-img" />
                         </div> */}
                     </div>
-                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Pending Campaigns</h5>
                             <h3 className="mb-0">{countCamp.pending_campaign ? countCamp.pending_campaign : 0}</h3>
@@ -112,7 +112,7 @@ const CampaignOver = () => {
                             <img src={Cursor} alt="overview-img" />
                         </div> */}
                     </div>
-                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Total Campaigns</h5>
                             <h3 className="mb-0">{countCamp.total ? countCamp.total : 0}</h3>
@@ -122,7 +122,7 @@ const CampaignOver = () => {
                             <img src={Completed} alt="overview-img" />
                         </div> */}
                     </div>
-                    <div className="overview-box p-4 d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
                         <div className="overview-content">
                             <h5>Sales Campaigns</h5>
                             <h3 className="mb-0">0</h3>

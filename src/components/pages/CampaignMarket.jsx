@@ -217,7 +217,7 @@ const CampaignMarket = () => {
                                             <>
                                             <tr>
                                                 <td>{marketContent.campaign_name}</td>
-                                                <td className='category'>{marketContent.product_name}</td>
+                                                <td className='category'>{marketContent.product?.map((prod) => {return(prod.product_name)})}</td>
                                                 <td>{marketContent.coupon_name?.length > 0 ? marketContent.coupon_name?.join(", ") : "No Couopns"}</td>
                                                 <td>{marketContent.amount?.length > 0 ? marketContent.amount?.join(", ") : "No Discount"}</td>
                                                 <td>

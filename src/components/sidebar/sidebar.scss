@@ -8,12 +8,15 @@
         height: 100%;
         .container-fluid {
             flex-direction: column;
-            background: #5172FC;
+            background: #2657b3;
             align-items: flex-start;
             height: 100%;
             padding-top: 1.5rem;
             padding-left: 0;
             padding-right: 0;
+            a {
+                text-decoration: none;
+            }
             .navbar-collapse {
                 flex-direction: column;
                 height: 100%;
@@ -31,8 +34,18 @@
                         padding: .8rem 1rem !important;
                     }
                     a.active {
-                        background: #4563DF;
+                        background: #3965c0;
                     }
+                }
+            }
+            .user {
+                img {
+                    height: 45%;
+                    border-radius: 50%;
+                    min-width: 45px;
+                    min-height: 45px;
+                    object-fit: cover;
+                    max-height: 45px;
                 }
             }
         }

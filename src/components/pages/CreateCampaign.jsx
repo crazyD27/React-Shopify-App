@@ -23,6 +23,7 @@ const CreateCampaign = () => {
     const [loading, setLoading] = useState(false);
     const [productUrl, setProductUrl] = useState([]);
     const [selectedCoupons, setSelectedCoupons] = useState([]);
+    const [influenceFee, setInfluenceFee] = useState('');
     const [prevCouponClicked, setPrevCouponClicked] = useState('');
     const [couponClicked, setCouponClicked] = useState('');
     const [selectedCouponNames, setSelectedCouponNames] = useState([]);
@@ -114,7 +115,8 @@ const CreateCampaign = () => {
             offer: influenceOffer,
             product_name: productName,
             product_discount: selectedCouponAmounts,
-            influencer_visit: influencerVisit
+            influencer_visit: influencerVisit,
+            influencer_fee: influenceFee,
         }, {
             headers: {
                 Authorization: `Token ${token}`
@@ -181,6 +183,7 @@ const CreateCampaign = () => {
             offer: influenceOffer,
             product_discount: selectedCouponAmounts,
             product_name: productName,
+            influencer_fee: influenceFee,
             influencer_visit: influencerVisit
         }, {
             headers: {
@@ -343,8 +346,8 @@ const CreateCampaign = () => {
             
             <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
                 <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Campaign name</label>
-                    <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
+                            <label className="mb-3">Campaign name</label>
+                            <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
                 </div>
 
                 <div className="input-container d-flex flex-column mb-4">
@@ -359,6 +362,7 @@ const CreateCampaign = () => {
                             <label htmlFor="no">No</label>
                         </span>
                     </div>
+
                 </div>
 
                 <div className="input-container d-flex flex-column mb-4">
@@ -371,11 +375,11 @@ const CreateCampaign = () => {
                     <div className="input d-flex align-items-center">
                         <span className='d-flex align-items-center justify-content-center me-4'>
                             <input type="radio" id="percentage" name="influenceOffer" value="percentage" checked={influenceOffer === "percentage"} onChange={handleInfluenceOffer} />
-                            <label htmlFor="percentage">Percentage</label>
+                            <label htmlFor="percentage">Commission</label>
                         </span>
                         <span className='d-flex align-items-center justify-content-center'>
                             <input type="radio" id="commission" name="influenceOffer" value="commission" checked={influenceOffer === "commission"} onChange={handleInfluenceOffer} />
-                            <label htmlFor="commission">Commission</label>
+                            <label htmlFor="commission">Fixed Fee</label>
                         </span>
                     </div>
                 </div>
@@ -422,9 +426,9 @@ const CreateCampaign = () => {
 
                 {influenceOffer.length > 0 ? (
                     <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">{influenceOffer === "percentage" ? "Percentage" : "Amount"}</label>
-                    <input type="text" />
-                </div>
+                        <label className="mb-3">{influenceOffer === "percentage" ? "Commission" : "Fixed Fee"}</label>
+                        <input type="text" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
+                    </div>
                 ): ""}
 
                 <div className="input-container d-flex flex-column mb-4">

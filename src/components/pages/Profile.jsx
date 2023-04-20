@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import MenuBar from '../navbar/Navbar';
+import React, {useState, useEffect, useContext} from 'react';
+import UserContext from '../context/UserContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
 import SideBar from '../sidebar/Sidebar';
@@ -13,17 +14,32 @@ function Profile() {
     const [email, setEmail] = useState('');
     const [userDetails, setUserDetails] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [formData, setFormData] = useState(new FormData());
     const [loading, setLoading] = useState(false);
+    const {setImage, setName} = useContext(UserContext);
 
     const tokenId = localStorage.getItem('Token_ID');
     const token = localStorage.getItem("Token");
     const userId = localStorage.getItem("User_ID")
+    const navigatePath = useNavigate()
 
     const onFileChange = event => {
         setSelectedFile(event.target.files[0]);
         console.log(event.target.files[0])
         
     };
+
+    useEffect(() => {
+        const newFormData = new FormData();
+        newFormData.append('image', selectedFile);
+        newFormData.append('username', userName);
+        newFormData.append('email', email);
+        newFormData.append('password', password);
+        newFormData.append('shopify_url', shopifyUrl);
+        newFormData.append('instagram_url', instagramUrl);
+        newFormData.append('type', 'normal');
+        setFormData(newFormData);
+    }, [selectedFile, userName, email, password, shopifyUrl, instagramUrl]);
 
     console.log("Selected File", selectedFile)
 
@@ -49,15 +65,6 @@ function Profile() {
     }, [token])
 
     const createProfile = (e) => {
-        const formData = new FormData();
-        formData.append('image',selectedFile);
-        formData.append("username", userName)
-        formData.append("email", email)
-        formData.append("password", password)
-        formData.append("shopify_url", shopifyUrl)
-        formData.append("instagram_url", instagramUrl)
-        formData.append('type','normal');
-        console.log(formData)
         setLoading(true);
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
@@ -70,12 +77,17 @@ function Profile() {
         .then(function (response) {
             console.log("Profile", response);
             toast.success("Profile Edited Successfully!");
-            localStorage.setItem("User_Name", response.data.username)
             setUserName('');
             setPassword('');
             setShopifyUrl('');
             setInstagramUrl('');
             setEmail('');
+            localStorage.setItem("User_Name", response.data.data.username);
+            localStorage.setItem("Image", response.data.url);
+            setName(response.data.data.username);
+            setImage(response.data.url);
+            navigatePath('/profile')
+
         })
         .catch(function (error) {
             console.log(error);
@@ -108,6 +120,7 @@ function Profile() {
         .finally(() => setLoading(false));
     }
 
+    // localStorage.setItem("Image", image)
   return (
     <div className="profile p-4 page">
         {loading && <div className='loader'><span></span></div>}

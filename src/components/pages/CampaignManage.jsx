@@ -314,7 +314,7 @@ const CampaignManage = () => {
             <Col sm={12}>
             <Tab.Content>
                 <Tab.Pane eventKey="first">
-                {campList?.length > 0 ? (
+                    {campList?.length > 0 ? (
                     <table className='w-100 campaign'>
                         <tbody className='w-100'>
                             <tr className='headings'>
@@ -330,9 +330,15 @@ const CampaignManage = () => {
                                         <>
                                         <tr key={i} className='campaign-inputs'>
                                             <td>{name.campaign_name}</td>
-                                            <td>{name.product_name}</td>
-                                            <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
-                                            <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
+                                            <td>
+                                                {name.product?.map((prod) => {return(prod.product_name)})}
+                                            </td>
+                                            <td>
+                                                {name.product?.map((prod) => {return(prod.coupon_name?.length > 0 ? prod.coupon_name?.join(", ") : "")})}
+                                            </td>
+                                            <td className='category'>
+                                                {name.product?.map((prod) => {return(prod.amount?.length > 0 ? prod.amount?.join(", ") : "")})}
+                                            </td>
                                             <td>
                                                 <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
@@ -422,9 +428,15 @@ const CampaignManage = () => {
                                         <>
                                         <tr key={i} className='campaign-inputs'>
                                             <td>{name.campaign_name}</td>
-                                            <td>{name.product_name}</td>
-                                            <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
-                                            <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
+                                            <td>
+                                                {name.product?.map((prod) => {return(prod.product_name)})}
+                                            </td>
+                                            <td>
+                                                {name.product?.map((prod) => {return(prod.coupon_name?.length > 0 ? prod.coupon_name?.join(", ") : "")})}
+                                            </td>
+                                            <td className='category'>
+                                                {name.product?.map((prod) => {return(prod.amount?.length > 0 ? prod.amount?.join(", ") : "")})}
+                                            </td>
                                             <td>
                                                 <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
@@ -512,15 +524,21 @@ const CampaignManage = () => {
                                         <>
                                             <tr key={i} className='campaign-inputs'>
                                                 <td>{name.campaign_name}</td>
-                                                    <td>{name.product_name}</td>
-                                                    <td>{name.coupon_name?.length > 0 ? name.coupon_name?.join(", ") : ""}</td>
-                                                    <td className='category'>{name.amount?.length > 0 ? name.amount?.join(", ") : ""}</td>
-                                                    <td>
-                                                        <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
-                                                            <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
-                                                            </button>
-                                                            <button onClick={() => { deleteConfirm(name.campaignid_id) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
-                                                    </td>
+                                                <td>
+                                                {name.product?.map((prod) => {return(prod.product_name)})}
+                                            </td>
+                                            <td>
+                                                {name.product?.map((prod) => {return(prod.coupon_name?.length > 0 ? prod.coupon_name?.join(", ") : "")})}
+                                            </td>
+                                            <td className='category'>
+                                                {name.product?.map((prod) => {return(prod.amount?.length > 0 ? prod.amount?.join(", ") : "")})}
+                                            </td>
+                                                <td>
+                                                    <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
+                                                        <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
+                                                        </button>
+                                                        <button onClick={() => { deleteConfirm(name.campaignid_id) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
+                                                </td>
                                                 </tr>
 
                                         {getDeleteConfirm && 
