@@ -14,7 +14,6 @@ function Profile() {
     const [email, setEmail] = useState('');
     const [userDetails, setUserDetails] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [formData, setFormData] = useState(new FormData());
     const [loading, setLoading] = useState(false);
     const {setImage, setName} = useContext(UserContext);
 
@@ -28,18 +27,6 @@ function Profile() {
         console.log(event.target.files[0])
         
     };
-
-    useEffect(() => {
-        const newFormData = new FormData();
-        newFormData.append('image', selectedFile);
-        newFormData.append('username', userName);
-        newFormData.append('email', email);
-        newFormData.append('password', password);
-        newFormData.append('shopify_url', shopifyUrl);
-        newFormData.append('instagram_url', instagramUrl);
-        newFormData.append('type', 'normal');
-        setFormData(newFormData);
-    }, [selectedFile, userName, email, password, shopifyUrl, instagramUrl]);
 
     console.log("Selected File", selectedFile)
 
@@ -65,6 +52,16 @@ function Profile() {
     }, [token])
 
     const createProfile = (e) => {
+        const formData = new FormData();
+        formData.append('image',selectedFile);
+        formData.append("username", userName)
+        formData.append("email", email)
+        formData.append("password", password)
+        formData.append("shopify_url", shopifyUrl)
+        formData.append("instagram_url", instagramUrl)
+        formData.append('type','normal');
+        console.log("FormData" ,formData)
+        console.log("selectedFile",selectedFile)
         setLoading(true);
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
