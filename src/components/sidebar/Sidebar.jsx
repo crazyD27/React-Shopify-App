@@ -49,7 +49,7 @@ const SideBar = () => {
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
                 <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
-                    {image != "" || localStorage.getItem("Image") != "" ? (
+                    {image != "" || localStorage.getItem("Image") != ""|| localStorage.getItem("Image") != undefined || localStorage.getItem("Image") != null || image != null || image != undefined ? (
                         <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     ) :
                     <img src={User} alt='notification' style={{width: 45}} />}

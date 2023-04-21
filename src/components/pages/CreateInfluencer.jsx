@@ -584,7 +584,7 @@ const CreateInfluencer = () => {
                         {influenceOffer.length > 0 ? (
                             <div className="input-container d-flex flex-column mb-4">
                                 <label className="mb-3">{influenceOffer === "percentage" ? "Commission" : "Fixed Fee"}</label>
-                                <input type="text" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
+                                <input type="number" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
                             </div>
                         ): ""}
 
