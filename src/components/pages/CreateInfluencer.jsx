@@ -2,11 +2,12 @@ import React, {useState, useEffect, useContext} from 'react';
 import UserContext from '../context/UserContext';
 import './pages.scss';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import Verified from '../../assests/img/check.png'
 
 const CreateInfluencer = () => {
     const [productName, setProductName] = useState([]);
@@ -46,6 +47,7 @@ const CreateInfluencer = () => {
     const navigate = useNavigate();
   
     const today = new Date().toISOString().substr(0, 10);
+    const {id} = useParams();
   
     const handleBack = () => {
       setShowInfluList(false);
@@ -396,6 +398,59 @@ const CreateInfluencer = () => {
         setPrevCouponClicked(couponClicked);
     }, [couponClicked, selectedCoupon]);
 
+    const editCampaign = (event) => {
+        console.log("Product ID:");
+        event.preventDefault();
+        setLoading(true);
+        axios.put(API.BASE_URL + 'update/' + id + '/',{
+            campaign_name: campaignName,
+            description: influencerVisit,
+            offer: influenceOffer,
+            product_discount: selectedCouponAmounts
+          },{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        .then(function (response) {
+          console.log("EDITED MARKET", response)
+          toast.success("Coupon Edited Successfully");
+          navigate('/market')
+        })
+        .catch(function (error) {
+          console.log(error);
+          toast.warn("Unable to edit. Please try again later")
+        })
+        .finally(() => setLoading(false));
+    }
+
+    useEffect(() => {
+        if(id?.length > 0) {
+            axios.get(API.BASE_URL +  'single/' + id + '/', {
+                headers: {
+                    Authorization: `Token ${token}`
+            }})
+            .then(function (response) {
+                console.log("Single Influencer Data" ,response.data.data);
+                setCampaignName(response.data.data[0].campaign_name);
+                setSelectedDate(response.data.data[0].date);
+                setInfluenceOffer(response.data.data[0].offer);
+                setInfluencerVisit(response.data.data[0].influencer_visit);
+                const products = response.data.data[0].product;
+                const productNames = products.map(product => product.product_name);
+                const productIds = products.map(product => product.product_id);
+                const couponNames = products.flatMap(product => product.coupon_name);
+                setProductName(productNames);
+                setProductIds(productIds);
+                setSelectedCouponNames(couponNames);
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        }
+    },[id])
+    
+
     console.log("influencerVisit", influencerVisit)
     console.log("isVisitChecked", isVisitChecked)
 
@@ -403,47 +458,49 @@ const CreateInfluencer = () => {
   return (
     <div className="campaign-new p-4 page">
         {loading && <div className='loader'><span></span></div>}
-        <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center">
+        <div className="campaign-new-container d-flex flex-column justify-content-start align-items-center">
 
             {showInfluList && (
-                <div className='w-100 influencer-list px-5'>
-                    <Link to='/create' onClick={handleBack} className="button button-blue back">
+                <>
+                    <Link to='/create' onClick={handleBack} className="button button-blue back w-100 justify-content-start mt-4 mb-5">
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
                     </Link>
-                    <h3>Influencer List</h3>
-                    
-                   {influencerList.length > 0 ? (
-                     <div className='influencer-list-main'>
-                     {influencerList?.map((list, i) => (
-                         <label  for={list.username} className='influencer-list-container d-flex align-items-center justify-content-between'>
-                             <div className='d-flex align-items-center col-4'>
-                                <input id={list.username} type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
-                                <img src={list.image} alt='profile-pic' />
-                                <div className='ms-4'>
-                                    <p>{list.fullname}</p>
-                                    <span>@{list.username}</span>
+                    <div className='w-100 influencer-list px-5'>
+                        <h3>Influencer List</h3>
+                    {influencerList.length > 0 ? (
+                        <div className='influencer-list-main'>
+                        {influencerList?.map((list, i) => (
+                            <label  for={list.username} className='influencer-list-container d-flex align-items-center justify-content-between'>
+                                <div className='d-flex align-items-center col-4'>
+                                    <input id={list.username} type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
+                                    <img src={list.image} alt='profile-pic' />
+                                    <div className='ms-4'>
+                                        <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
+                                        <span>@{list.username}</span>
+                                    </div>
                                 </div>
-                             </div>
-                             <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M</strong> <span>Followers</span> </p>
-                             <p className='d-flex flex-column align-items-end col-4'><strong>{list.engagement_rate.toFixed(2)}%</strong> <span>Engagement</span> </p>
-                         </label>
-                     ))}
-                     </div>
-                   ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
-                    <button onClick={handleContinue} className='button button-blue'>
-                        Continue
-                    </button>
-                </div>
+                                <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
+                                <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
+                            </label>
+                        ))}
+                        </div>
+                    ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
+                        <button onClick={handleContinue} className='button button-blue'>
+                            Continue
+                        </button>
+                    </div>
+                </>
             )}
 
             {influForm && (
+                <>
+                <button onClick={handleInfluBack} className="button button-blue back justify-content-start w-100 my-4">
+                    <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
+                    Back
+                </button>
                 <div className='w-100'>
                     <h3>Create Campaign for Influencer</h3>
-                    <button onClick={handleInfluBack} className={"button button-blue back"}>
-                        <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
-                        Back
-                    </button>
                     <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign name</label>
@@ -639,6 +696,7 @@ const CreateInfluencer = () => {
                         </div>
                     </form>
                 </div>
+                </>
             )}
         </div>
     </div>

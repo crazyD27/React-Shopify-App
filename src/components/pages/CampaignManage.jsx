@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import UserContext from '../context/UserContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { API } from '../../config/Api';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,6 +33,7 @@ const CampaignManage = () => {
     const [activeNames, setActiveNames] = useState([]);
     const [getId, setGetId] = useState('');
     const token = localStorage.getItem('Token');
+    const navigate = useNavigate();
 
     const handleCampName = (event) => {
         setCampName(event.target.value);
@@ -133,7 +135,7 @@ const CampaignManage = () => {
     }
 
     const getSingleMarket = (value, event) => {
-        console.log("ID", value)
+        console.log("VLSE", value)
         event.preventDefault();
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
@@ -141,16 +143,17 @@ const CampaignManage = () => {
                 Authorization: `Token ${token}`
         }})
         .then(function (response) {
-            console.log("Manage Product Single", response.data.data)
-            setGetMarketInfo(response.data.data)
-            setGetMarket(true);
+            console.log("Single Market Data" ,response.data.data)
+            setGetMarketInfo(response.data.data[0])
+            // setGetMarket(true);
             setCampName(response.data.data.campaign_name)
+            setProdOffer(response.data.data.offer)
             setProdDiscount(response.data.data.product_discount)
             setInfluenceVisit(response.data.data.description)
+            navigate(`/create-influencer/${response.data.data[0].campaignid_id}`)
         })
         .catch(function (error) {
             console.log(error);
-            toast.warn("Cannot edit the information right now. Please try again later")
         })
         .finally(() => setLoading(false));
     }
@@ -294,7 +297,7 @@ const CampaignManage = () => {
 
   return (
     <>
-    <div className="campaign-manage-container p-3 page">
+    <div className="campaign-manage-container p-4 page">
         {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
         <h2 className='text-center my-5'>Manage Campaign</h2>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">

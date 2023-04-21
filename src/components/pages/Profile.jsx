@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { API } from '../../config/Api';
-import SideBar from '../sidebar/Sidebar';
 
 function Profile() {
     const [userName, setUserName] = useState('');
@@ -16,6 +15,7 @@ function Profile() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const {setImage, setName} = useContext(UserContext);
+    const [imagePath, setImagePath] = useState('');
 
     const tokenId = localStorage.getItem('Token_ID');
     const token = localStorage.getItem("Token");
@@ -44,12 +44,13 @@ function Profile() {
             setEmail(response.data.email)
             setInstagramUrl(response.data.Instagram_url)
             setShopifyUrl(response.data.shop_url)
+            setImagePath(response.data.url)
         })
         .catch(function (error) {
             console.log(error);
         })
         .finally(() => setLoading(false));
-    }, [token])
+    }, [token, imagePath])
 
     const createProfile = (e) => {
         const formData = new FormData();
@@ -62,6 +63,7 @@ function Profile() {
         formData.append('type','normal');
         console.log("FormData" ,formData)
         console.log("selectedFile",selectedFile)
+        console.log("name", selectedFile.name)
         setLoading(true);
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
@@ -84,6 +86,24 @@ function Profile() {
             setName(response.data.data.username);
             setImage(response.data.url);
             navigatePath('/profile')
+            axios.get(API.BASE_URL + 'user/id/',  {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Profile Details", response);
+                setUserDetails(response.data);
+                setUserName(response.data.username);
+                setEmail(response.data.email)
+                setInstagramUrl(response.data.Instagram_url)
+                setShopifyUrl(response.data.shop_url)
+                setImagePath(response.data.url)
+                setImage(response.data.url);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
 
         })
         .catch(function (error) {
@@ -136,7 +156,10 @@ function Profile() {
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Image</label>
-                <input type="file" onChange={onFileChange} />
+                <div className='d-flex align-items-center'>
+                    <input type="file" onChange={onFileChange} />
+                    <img src={"https://" +imagePath} alt='profile' className='ms-2' style={{width: 55, height: 55, borderRadius: '50%'}} />
+                </div>
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Instagram URL</label>

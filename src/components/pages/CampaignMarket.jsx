@@ -89,6 +89,7 @@ const CampaignMarket = () => {
     const handleInfluenceVisit = (event) => {
         setInfluenceVisit(event.target.value);
     }
+
     useEffect(() => {
         const names = [];
         marketId?.forEach((ids) => {
@@ -117,9 +118,6 @@ const CampaignMarket = () => {
         setDraftProds(draftNames);
 
     }, [productNames, marketId, marketDraftId])
-
-
-    console.log("Testing in Market", testing)
 
     function deleteConfirm(value) {
         console.log(value);
@@ -176,13 +174,14 @@ const CampaignMarket = () => {
         setDeleteConfirm(false)
     }
 
+    console.log("Testing in Market", testing)
     console.log("draftProd", testing)
 
   return (
     <>
     <div className="campaign-market p-4 page">
         {/* <MenuBar /> */}
-        {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
+        {loading && <div className='loader'><span></span></div>}
 
         <div className="campaign-market-container d-flex flex-column w-100">
             <h2 className='text-center my-5'>Campaign Marketplace</h2>

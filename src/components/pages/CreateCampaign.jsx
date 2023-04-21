@@ -30,6 +30,7 @@ const CreateCampaign = () => {
     const [selectedCouponAmounts ,setSelectedCouponAmounts] = useState([]);
     const [isVisitChecked, setIsVisitChecked] = useState(false);
     const [isOfferChecked, setIsOfferChecked] = useState(false);
+    const [initialCoupons, setInitialCoupons] = useState([]);
     const { setMarketId, setMarketList,setMarketDraftId, setMarketDraftList, countCamp, setCountCamp} = useContext(UserContext);
     const token = localStorage.getItem("Token");
     const [productDetails, setProductDetails] = useState([]);
@@ -320,9 +321,13 @@ const CreateCampaign = () => {
                 setSelectedDate(response.data.data[0].date);
                 setInfluenceOffer(response.data.data[0].offer);
                 setInfluencerVisit(response.data.data[0].influencer_visit);
-                setProductName( [response.data.data[0].product_name]);
-                setProductIds([response.data.data[0].product_id]);
-                setSelectedCouponNames([response.data.data[0].coupon_name]);
+                const products = response.data.data[0].product;
+                const productNames = products.map(product => product.product_name);
+                const productIds = products.map(product => product.product_id);
+                const couponNames = products.flatMap(product => product.coupon_name);
+                setProductName(productNames);
+                setProductIds(productIds);
+                setSelectedCouponNames(couponNames);
             })
             .catch(function (error) {
                 console.log(error)

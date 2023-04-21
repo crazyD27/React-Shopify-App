@@ -49,7 +49,7 @@ const SideBar = () => {
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
                 <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
-                    {image != "" && localStorage.getItem("Image") != "" ? (
+                    {image != "" || localStorage.getItem("Image") != "" ? (
                         <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     ) :
                     <img src={User} alt='notification' style={{width: 45}} />}
@@ -71,7 +71,7 @@ const SideBar = () => {
                         <img src={Manage} className="me-2" alt='menu-img' />
                         Manage Campaign
                     </NavLink>
-                    <NavLink to='/create' className='text-white py-2'>
+                    <NavLink to='/create' className='text-white py-2' exact>
                         <img src={CampNew} className="me-2" alt='menu-img' />
                         Create new Campaign
                     </NavLink>

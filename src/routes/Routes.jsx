@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, redirect } from 'react-router-dom';
 import Home from '../components/home/Home';
 import SideBar from '../components/sidebar/Sidebar';
 import CampaignOver from '../components/pages/CampaignOver';
@@ -18,7 +18,7 @@ const Routing = () => {
     <div className="routes">
       <SideBar />
       <Routes>
-        <Route path='/' element={<CampaignOver />} />
+        <Route exact path='/' element={<CampaignOver />} />
         <Route path='/overview' element={<CampaignOver />} />
         <Route path='/create' element={<CampaignNew />} />
         <Route path='/manage' element={<CampaignManage />} />
