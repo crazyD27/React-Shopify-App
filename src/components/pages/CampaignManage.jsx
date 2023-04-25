@@ -54,7 +54,7 @@ const CampaignManage = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'active/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -68,7 +68,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -82,7 +82,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -94,7 +94,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'draft/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -110,7 +110,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -140,7 +140,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
         }})
         .then(function (response) {
             console.log("Single Market Data" ,response.data.data)
@@ -169,7 +169,7 @@ const CampaignManage = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -177,14 +177,14 @@ const CampaignManage = () => {
             toast.success("Campaign Edited!");
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
                 }
             })
             .then(function (response) {
                 setCampList(response.data.data);
                 axios.get(API.BASE_URL + 'active/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
                     }
                 })
                 .then(function (response) {
@@ -197,7 +197,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'pending/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
                     }
                 })
                 .then(function (response) {
@@ -210,7 +210,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'product/list/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
                     }
                 })
                 .then(function (response) {
@@ -222,7 +222,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'draft/list/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
                     }
                 })
                 .then(function (response) {
@@ -239,7 +239,7 @@ const CampaignManage = () => {
     
             axios.get(API.BASE_URL + 'pending/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
                 }
             })
             .then(function (response) {
@@ -333,15 +333,9 @@ const CampaignManage = () => {
                                         <>
                                         <tr key={i} className='campaign-inputs'>
                                             <td>{name.campaign_name}</td>
-                                            <td>
-                                                {name.product?.map((prod) => {return(prod.product_name)})}
-                                            </td>
-                                            <td>
-                                                {name.product?.map((prod) => {return(prod.coupon_name?.length > 0 ? prod.coupon_name?.join(", ") : "")})}
-                                            </td>
-                                            <td className='category'>
-                                                {name.product?.map((prod) => {return(prod.amount?.length > 0 ? prod.amount?.join(", ") : "")})}
-                                            </td>
+                                            <td className='category'>{name.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
+                                            <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
+                                            <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
                                             <td>
                                                 <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
@@ -431,15 +425,9 @@ const CampaignManage = () => {
                                         <>
                                         <tr key={i} className='campaign-inputs'>
                                             <td>{name.campaign_name}</td>
-                                            <td>
-                                                {name.product?.map((prod) => {return(prod.product_name)})}
-                                            </td>
-                                            <td>
-                                                {name.product?.map((prod) => {return(prod.coupon_name?.length > 0 ? prod.coupon_name?.join(", ") : "")})}
-                                            </td>
-                                            <td className='category'>
-                                                {name.product?.map((prod) => {return(prod.amount?.length > 0 ? prod.amount?.join(", ") : "")})}
-                                            </td>
+                                            <td className='category'>{name.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
+                                            <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
+                                            <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
                                             <td>
                                                 <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                     <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
@@ -527,15 +515,9 @@ const CampaignManage = () => {
                                         <>
                                             <tr key={i} className='campaign-inputs'>
                                                 <td>{name.campaign_name}</td>
-                                                <td>
-                                                {name.product?.map((prod) => {return(prod.product_name)})}
-                                            </td>
-                                            <td>
-                                                {name.product?.map((prod) => {return(prod.coupon_name?.length > 0 ? prod.coupon_name?.join(", ") : "")})}
-                                            </td>
-                                            <td className='category'>
-                                                {name.product?.map((prod) => {return(prod.amount?.length > 0 ? prod.amount?.join(", ") : "")})}
-                                            </td>
+                                                <td className='category'>{name.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
+                                                    <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
+                                                    <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
                                                 <td>
                                                     <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                         <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />

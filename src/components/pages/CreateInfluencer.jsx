@@ -127,7 +127,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -140,7 +140,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -186,7 +186,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -259,7 +259,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -332,33 +332,33 @@ const CreateInfluencer = () => {
 
     useEffect(() => {
         if (Array.isArray(productName)) {
-            Promise.all(
-                productName?.map((product) => {
-                    setLoading(true);
-                    return axios
-                    .post(API.BASE_URL + "product/url/", {
-                        products: productIds.toString()
-                    }, {
-                        headers: {
-                            Authorization: `Token ${token}`,
-                        },
-                    })
-                    .then((response) => {
-                        console.log("Response 1",response);
-                        setProductDetails(response.data.product_details);
-                        setProductUrl(response.data.product_url)
-                    })
-                    .catch((error) => console.log(error))
-                    .finally(() => setLoading(false));
+          Promise.all(
+            productName?.map((product) => {
+              setLoading(true);
+              return axios
+                .post(API.BASE_URL + "product/url/", {
+                  products: productIds.toString()
+                }, {
+                  headers: {
+                    Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`,
+                  },
                 })
-            ).then((responses) => {
-                setProdDesc(
-                    responses.reduce((acc, curr) => {
-                      console.log("Response 2",responses);
-                    }, [])
-                );
+                .then((response) => {
+                  console.log("Response 1",response);
+                  setProductDetails(response.data.product_details);
+                  setProductUrl(response.data.product_url)
+                  const filteredDetails = response.data.product_details.filter(detail => detail.name == "");
+                  if (filteredDetails.length > 0) {
+                    const existingDetails = selectedCouponAmounts.filter(detail => detail.product_id === filteredDetails[0].product_id);
+                    if (existingDetails.length === 0) {
+                      setSelectedCouponAmounts(prevState => [...prevState, ...filteredDetails]);
+                    }
+                  }
+                })
+                .catch((error) => console.log(error))
+                .finally(() => setLoading(false));
             })
-            .finally(() => setLoading(false));
+          ).finally(() => setLoading(false));
         }
     }, [productName, token]);
 
@@ -409,7 +409,7 @@ const CreateInfluencer = () => {
             product_discount: selectedCouponAmounts
           },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
           }
         })
         .then(function (response) {
@@ -428,7 +428,7 @@ const CreateInfluencer = () => {
         if(id?.length > 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }})
             .then(function (response) {
                 console.log("Single Influencer Data" ,response.data.data);
@@ -550,34 +550,34 @@ const CreateInfluencer = () => {
                             value={productName}
                             />
                             {showList && (
-                            <ul className='product-list'>
-                            {
-                                prodList?.length > 0 ? (
-                                    prodList?.map((name, i) => (
-                                        <li
-                                            key={i}
-                                            onClick={() => {
-                                            setProductName((prevValues) =>
-                                                prevValues.includes(name.title)
-                                                ? prevValues.filter((value) => value !== name.title)
-                                                : [...prevValues, name.title]
-                                            );
-                                            setProductIds(prevIds =>
-                                                prevIds.includes(name.id)
-                                                    ? prevIds.filter(value => value !== name.id)
-                                                    : [...prevIds, name.id]
-                                            );
-                                            setShowList(false);
-                                            }}
-                                        >
-                                            {name.title}
-                                        </li>
-                                        ))
-                                )
-                                :
-                                "No Products"
-                            }
-                        </ul>
+                                <ul className='product-list'>
+                                {
+                                    prodList?.length > 0 ? (
+                                        prodList?.map((name, i) => (
+                                            <li
+                                                key={i}
+                                                onClick={() => {
+                                                setProductName((prevValues) =>
+                                                    prevValues.includes(name.title)
+                                                    ? prevValues.filter((value) => value !== name.title)
+                                                    : [...prevValues, name.title]
+                                                );
+                                                setProductIds(prevIds =>
+                                                    prevIds.includes(name.id)
+                                                        ? prevIds.filter(value => value !== name.id)
+                                                        : [...prevIds, name.id]
+                                                );
+                                                setShowList(false);
+                                                }}
+                                            >
+                                                {name.title}
+                                            </li>
+                                            ))
+                                    )
+                                    :
+                                    "No Products"
+                                }
+                                </ul>
                             )}
                         </div>
 
@@ -628,59 +628,61 @@ const CreateInfluencer = () => {
                                 {productDetails?.length > 0 ? (
                                     productDetails?.map(product => (
                                     <li className='d-flex flex-row align-items-center'>
-                                        <span>{product.product_name}</span>
+                                        <span>{product?.product_name}:- </span>
                                         <div className='d-flex align-items-center'>
-                                        {product.coupons?.map((coupon, i) => {
-                                            const couponObject = {
-                                                name: coupon,
-                                                product_name: product.product_name,
-                                                product_id: product.product_id,
-                                                amount: product.amount[i].substring(1)
-                                            };
-                                            const isCouponSelected = selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
-                                            const handleClick = () => {
-                                            const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
-                                            if (selectedCouponIndex !== -1) {
-                                                setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
-                                                setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
-                                                setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
-                                            } else {
-                                                setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
-                                                setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
-                                                setSelectedCouponAmounts(prevSelectedCouponAmounts => {
-                                                const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
-                                                if (existingProductIndex !== -1) {
-                                                    const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
-                                                    return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
-                                                    if (index === existingProductIndex) {
-                                                        return {
-                                                        ...existingProduct,
-                                                        name: [...existingProduct.name, couponObject.name],
-                                                        amount: [...existingProduct.amount, couponObject.amount]
-                                                        };
-                                                    }
-                                                    return selectedCouponAmount;
-                                                    });
-                                                }
-                                                return [...prevSelectedCouponAmounts, {
-                                                    product_name: product.product_name,
-                                                    product_id: product.product_id,
-                                                    name: [couponObject.name],
-                                                    amount: [couponObject.amount]
-                                                }];
-                                                });
-                                            }
-                                            };
-                                            return (
-                                            <p
-                                                key={coupon}
-                                                className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
-                                                onClick={handleClick}
-                                            >
-                                                {coupon} - {product.amount[i].substring(1)}
-                                            </p>
-                                            );
-                                        })}
+                                            {product?.name?.length > 0 ? (
+                                                product?.name?.map((coupon, i) => {
+                                                    const couponObject = {
+                                                        name: coupon,
+                                                        product_name: product.product_name,
+                                                        product_id: product.product_id,
+                                                        amount: product.amount[i].substring(1)
+                                                    };
+                                                    const isCouponSelected = selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
+                                                    const handleClick = () => {
+                                                        const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
+                                                        if (selectedCouponIndex !== -1) {
+                                                            setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
+                                                            setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
+                                                            setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
+                                                        } else {
+                                                            setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
+                                                            setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
+                                                            setSelectedCouponAmounts(prevSelectedCouponAmounts => {
+                                                            const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
+                                                            if (existingProductIndex !== -1) {
+                                                                const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
+                                                                return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
+                                                                if (index === existingProductIndex) {
+                                                                    return {
+                                                                    ...existingProduct,
+                                                                    name: [...existingProduct.name, couponObject.name],
+                                                                    amount: [...existingProduct.amount, couponObject.amount]
+                                                                    };
+                                                                }
+                                                                return selectedCouponAmount;
+                                                                });
+                                                            }
+                                                            return [...prevSelectedCouponAmounts, {
+                                                                product_name: product.product_name,
+                                                                product_id: product.product_id,
+                                                                name: [couponObject.name],
+                                                                amount: [couponObject.amount]
+                                                            }];
+                                                            });
+                                                        }
+                                                    };
+                                                    return (
+                                                    <p
+                                                        key={coupon}
+                                                        className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
+                                                        onClick={handleClick}
+                                                    >
+                                                        {coupon} - {product.amount[i].substring(1)}
+                                                    </p>
+                                                    );
+                                                })
+                                            ) : <h5 className='fw-light'>No Coupons</h5>}
                                         </div>
                                     </li>
                                     ))

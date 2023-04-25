@@ -34,7 +34,7 @@ function Profile() {
         setLoading(true);
         axios.get(API.BASE_URL + 'user/id/',  {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
             }
         })
         .then(function (response) {
@@ -68,7 +68,7 @@ function Profile() {
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
             headers: {
-                Authorization: `Token ${token}`,
+                Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`,
                 'Content-Type': 'multipart/form-data'
             },
         }
@@ -88,7 +88,7 @@ function Profile() {
             navigatePath('/profile')
             axios.get(API.BASE_URL + 'user/id/',  {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 03724f2b05b74f6a10b62ba862b84e921d72490f`
                 }
             })
             .then(function (response) {
@@ -158,7 +158,7 @@ function Profile() {
                 <label>Image</label>
                 <div className='d-flex align-items-center'>
                     <input type="file" onChange={onFileChange} />
-                    <img src={"https://" +imagePath} alt='profile' className='ms-2' style={{width: 55, height: 55, borderRadius: '50%'}} />
+                    <img src={"https://" +imagePath} alt='profile' className='ms-2' style={{width: 55, height: 55, borderRadius: '50%', objectFit: 'cover'}} />
                 </div>
             </div>
             <div className="input-container d-flex flex-column mb-4">
