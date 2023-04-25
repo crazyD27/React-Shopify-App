@@ -477,7 +477,7 @@ const CreateCampaign = () => {
                     <ul className="coupons coupons-list flex-column">
                         {productDetails?.length > 0 ? (
                             productDetails?.map(product => (
-                            <li className='d-flex flex-row align-items-center'>
+                            <li className='d-flex flex-row align-items-center mb-2'>
                                 <span>{product?.product_name}:- </span>
                                 <div className='d-flex align-items-center'>
                                     {product?.name?.length > 0 ? (
@@ -532,7 +532,7 @@ const CreateCampaign = () => {
                                             </p>
                                             );
                                         })
-                                    ) : <h5 className='fw-light'>No Coupons</h5>}
+                                    ) : <h5 className='fw-light mb-0 ms-2'>No Coupons</h5>}
                                 </div>
                             </li>
                             ))
