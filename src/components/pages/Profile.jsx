@@ -45,6 +45,7 @@ function Profile() {
             setInstagramUrl(response.data.Instagram_url)
             setShopifyUrl(response.data.shop_url)
             setImagePath(response.data.url)
+            localStorage.setItem("Image", response.data.url);
         })
         .catch(function (error) {
             console.log(error);
@@ -82,7 +83,6 @@ function Profile() {
             setInstagramUrl('');
             setEmail('');
             localStorage.setItem("User_Name", response.data.data.username);
-            localStorage.setItem("Image", response.data.url);
             setName(response.data.data.username);
             setImage(response.data.url);
             navigatePath('/profile')
@@ -100,6 +100,7 @@ function Profile() {
                 setShopifyUrl(response.data.shop_url)
                 setImagePath(response.data.url)
                 setImage(response.data.url);
+                localStorage.setItem("Image", response.data.url)
             })
             .catch(function (error) {
                 console.log(error);
@@ -137,7 +138,7 @@ function Profile() {
         .finally(() => setLoading(false));
     }
 
-    // localStorage.setItem("Image", image)
+    
   return (
     <div className="profile p-4 page">
         {loading && <div className='loader'><span></span></div>}
