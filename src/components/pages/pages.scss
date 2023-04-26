@@ -103,6 +103,7 @@
                 {
                     background-color: transparent;
                     height: 7px;
+                    width: 8px;
                 }
                 &::-webkit-scrollbar-thumb
                 {
@@ -127,7 +128,7 @@
 
     .prod-coupons ul {
         display: flex;
-        width: 800px;
+        width: 780px;
         overflow-x: scroll;
         &::-webkit-scrollbar-track
         {
@@ -148,7 +149,7 @@
             flex-direction: column;
             align-items: center;
             margin: 0 10px;
-            min-width: max-content;
+            min-width: 760px;
             span.names {
                 background-color: #d9d9d9;
                 padding: 12px 16px;

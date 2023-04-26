@@ -306,7 +306,7 @@ const CreateCampaign = () => {
         })
         .then(function (response) {
           console.log("EDITED MARKET", response)
-          toast.success("Coupon Edited Successfully");
+          toast.success("Campaign Edited Successfully");
           navigate('/market')
         })
         .catch(function (error) {
@@ -335,6 +335,9 @@ const CreateCampaign = () => {
                 setProductName(productNames);
                 setProductIds(productIds);
                 setSelectedCouponNames(couponNames);
+                setSelectedCouponAmounts(response.data.data[0].product)
+                setInfluenceFee(response.data.data[0].influencer_fee)
+                setCampaignDesc(response.data.data[0].description)
             })
             .catch(function (error) {
                 console.log(error)
@@ -357,201 +360,227 @@ const CreateCampaign = () => {
             <h3 className='my-4'>{id?.length > 0 ? "Edit Campaign for Marketplace" : "Create Campaign for Marketplace"}</h3>
             
             <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
-                <div className="input-container d-flex flex-column mb-4">
+                        <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Campaign name</label>
                             <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
-                </div>
-
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Influencer need to visit you</label>
-                    <div className="input d-flex align-items-center">
-                        <span className='d-flex align-items-center justify-content-center me-4'>
-                            <input type="radio" id="yes" name="influencerVisit" value="Yes" checked={influencerVisit === "Yes"} onChange={handleInfluencerVisit} />
-                            <label htmlFor="yes">Yes</label>
-                        </span>
-                        <span className='d-flex align-items-center justify-content-center'>
-                            <input type="radio" id="no" name="influencerVisit" value="No" checked={influencerVisit === "No"} onChange={handleInfluencerVisit} />
-                            <label htmlFor="no">No</label>
-                        </span>
-                    </div>
-
-                </div>
-
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Campaign date or range</label>
-                    <input type="date" min={today} onChange={handleDateChange} value={selectedDate} />
-                </div>
-
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Offer to influencers</label>
-                    <div className="input d-flex align-items-center">
-                        <span className='d-flex align-items-center justify-content-center me-4'>
-                            <input type="radio" id="percentage" name="influenceOffer" value="percentage" checked={influenceOffer === "percentage"} onChange={handleInfluenceOffer} />
-                            <label htmlFor="percentage">Commission</label>
-                        </span>
-                        <span className='d-flex align-items-center justify-content-center'>
-                            <input type="radio" id="commission" name="influenceOffer" value="commission" checked={influenceOffer === "commission"} onChange={handleInfluenceOffer} />
-                            <label htmlFor="commission">Fixed Fee</label>
-                        </span>
-                    </div>
-                </div>
-
-                <div className="input-container test d-flex flex-column mb-4 drop">
-                    <label className="mb-3">Product</label>
-                    <input
-                    type="text"
-                    placeholder="---Select an option---"
-                    onClick={() => setShowList(!showList)}
-                    value={productName}
-                    />
-                    {showList && (
-                    <ul className='product-list'>
-                    {
-                        prodList?.length > 0 ? (
-                            prodList?.map((name, i) => (
-                                <li
-                                    key={i}
-                                    onClick={() => {
-                                    setProductName((prevValues) =>
-                                        prevValues.includes(name.title)
-                                        ? prevValues.filter((value) => value !== name.title)
-                                        : [...prevValues, name.title]
-                                    );
-                                    setProductIds(prevIds =>
-                                        prevIds.includes(name.id)
-                                            ? prevIds.filter(value => value !== name.id)
-                                            : [...prevIds, name.id]
-                                    );
-                                    setShowList(false);
-                                    }}
-                                >
-                                    {name.title}
-                                </li>
-                                ))
-                        )
-                        :
-                        "No Products"
-                    }
-                </ul>
-                    )}
-                </div>
-
-                {influenceOffer.length > 0 ? (
-                    <div className="input-container d-flex flex-column mb-4">
-                        <label className="mb-3">{influenceOffer === "percentage" ? "Commission" : "Fixed Fee"}</label>
-                        <input type="number" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
-                    </div>
-                ): ""}
-
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Product URL</label>
-                    {productIds.length > 0 ? (
-                        <div className='product-urls'>
-                            {productUrl?.map((url, index) => (
-                                <a key={index} href={url} target="_blank">
-                                    <FontAwesomeIcon icon={faSearch} style={{ color: "#5172fc", width: "15px", height: "15px", marginRight: 10 }} />
-                                    {url}
-                                </a>
-                            ))}
                         </div>
-                    ) : (
-                        <p className='no-url'>No products selected.</p>
-                    )}
-                </div>
 
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Description</label>
-                    <textarea
-                        name=""
-                        id=""
-                        cols="30"
-                        onChange={handleCampDesc}
-                        value={campaignDesc}
-                        // value={prodDesc.map((desc) => desc.description).join('\n')}
-                        style={{ color: '#666' }}
-                    ></textarea>
-                </div>
-            
-                <div className="input-container d-flex flex-column mb-4 prod-coupons w-100">
-                    <label className="mb-3">Product coupons</label>
-                    <ul className="coupons coupons-list flex-column">
-                        {productDetails?.length > 0 ? (
-                            productDetails?.map(product => (
-                            <li className='d-flex flex-row align-items-center mb-2'>
-                                <span>{product?.product_name}:- </span>
-                                <div className='d-flex align-items-center'>
-                                    {product?.name?.length > 0 ? (
-                                        product?.name?.map((coupon, i) => {
-                                            const couponObject = {
-                                                name: coupon,
-                                                product_name: product.product_name,
-                                                product_id: product.product_id,
-                                                amount: product.amount[i].substring(1)
-                                            };
-                                            const isCouponSelected = selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
-                                            const handleClick = () => {
-                                                const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
-                                                if (selectedCouponIndex !== -1) {
-                                                    setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
-                                                    setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
-                                                    setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
-                                                } else {
-                                                    setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
-                                                    setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
-                                                    setSelectedCouponAmounts(prevSelectedCouponAmounts => {
-                                                    const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
-                                                    if (existingProductIndex !== -1) {
-                                                        const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
-                                                        return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
-                                                        if (index === existingProductIndex) {
-                                                            return {
-                                                            ...existingProduct,
-                                                            name: [...existingProduct.name, couponObject.name],
-                                                            amount: [...existingProduct.amount, couponObject.amount]
-                                                            };
-                                                        }
-                                                        return selectedCouponAmount;
-                                                        });
-                                                    }
-                                                    return [...prevSelectedCouponAmounts, {
+                        <div className="input-container d-flex flex-column mb-4">
+                            <label className="mb-3">Influencer need to visit you</label>
+                            <div className="input d-flex align-items-center">
+                                <span className='d-flex align-items-center justify-content-center me-4'>
+                                    <input type="radio" id="yes" name="influencerVisit" value="Yes" checked={influencerVisit === "Yes"} onChange={handleInfluencerVisit} />
+                                    <label htmlFor="yes">Yes</label>
+                                </span>
+                                <span className='d-flex align-items-center justify-content-center'>
+                                    <input type="radio" id="no" name="influencerVisit" value="No" checked={influencerVisit === "No"} onChange={handleInfluencerVisit} />
+                                    <label htmlFor="no">No</label>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div className="input-container d-flex flex-column mb-4">
+                            <label className="mb-3">Campaign date or range</label>
+                            <input type="date" min={today} onChange={handleDateChange} value={selectedDate} />
+                        </div>
+
+                        <div className="input-container d-flex flex-column mb-4">
+                            <label className="mb-3">Offer to influencers</label>
+                            <div className="input d-flex align-items-center">
+                                <span className='d-flex align-items-center justify-content-center me-4'>
+                                    <input type="radio" id="percentage" name="influenceOffer" value="percentage" checked={influenceOffer === "percentage"} onChange={handleInfluenceOffer} />
+                                    <label htmlFor="percentage">Commission</label>
+                                </span>
+                                <span className='d-flex align-items-center justify-content-center'>
+                                    <input type="radio" id="commission" name="influenceOffer" value="commission" checked={influenceOffer === "commission"} onChange={handleInfluenceOffer} />
+                                    <label htmlFor="commission">Fixed Fee</label>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="input-container test d-flex flex-column mb-4 drop">
+                            <label className="mb-3">Product</label>
+                            <input
+                            type="text"
+                            placeholder="---Select an option---"
+                            onClick={() => setShowList(!showList)}
+                            value={productName}
+                            />
+                            {showList && (
+                            <ul className='product-list'>
+                            {
+                                prodList?.length > 0 ? (
+                                    prodList?.map((name, i) => (
+                                        <li
+                                            key={i}
+                                            onClick={() => {
+                                            setProductName((prevValues) =>
+                                                prevValues.includes(name.title)
+                                                ? prevValues.filter((value) => value !== name.title)
+                                                : [...prevValues, name.title]
+                                            );
+                                            setProductIds(prevIds =>
+                                                prevIds.includes(name.id)
+                                                    ? prevIds.filter(value => value !== name.id)
+                                                    : [...prevIds, name.id]
+                                            );
+                                            setShowList(false);
+                                            }}
+                                        >
+                                            {name.title}
+                                        </li>
+                                        ))
+                                )
+                                :
+                                "No Products"
+                            }
+                        </ul>
+                            )}
+                        </div>
+
+                        {influenceOffer.length > 0 ? (
+                            <div className="input-container d-flex flex-column mb-4">
+                                <label className="mb-3">{influenceOffer === "percentage" ? "Commission" : "Fixed Fee"}</label>
+                                <input type="number" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
+                            </div>
+                        ): ""}
+
+                        <div className="input-container d-flex flex-column mb-4">
+                            <label className="mb-3">Product URL</label>
+                            {productIds.length > 0 ? (
+                                <div className='product-urls'>
+                                    {productUrl?.map((url, index) => (
+                                        <a key={index} href={url} target="_blank">
+                                            <FontAwesomeIcon icon={faSearch} style={{ color: "#5172fc", width: "15px", height: "15px", marginRight: 10 }} />
+                                            {url}
+                                        </a>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className='no-url'>No products selected.</p>
+                            )}
+                        </div>
+
+                        <div className="input-container d-flex flex-column mb-4">
+                            <label className="mb-3">Description</label>
+                            <textarea
+                                name=""
+                                id=""
+                                cols="30"
+                                onChange={handleCampDesc}
+                                value={campaignDesc}
+                                // value={prodDesc.map((desc) => desc.description).join('\n')}
+                                style={{ color: '#666' }}
+                            ></textarea>
+                        </div>
+                    
+                        <div className="input-container d-flex flex-column mb-4 prod-coupons w-100">
+                            <label className="mb-3">Product coupons</label>
+                            <ul className="coupons coupons-list flex-column">
+                                {productDetails?.length > 0 ? (
+                                    productDetails?.map(product => (
+                                    <li className='d-flex flex-row align-items-center mb-2'>
+                                        <span>{product?.product_name}:- </span>
+                                        <div className='d-flex align-items-center'>
+                                            {product?.name?.length > 0 ? (
+                                                product?.name?.map((coupon, i) => {
+                                                    const couponObject = {
+                                                        name: coupon,
                                                         product_name: product.product_name,
                                                         product_id: product.product_id,
-                                                        name: [couponObject.name],
-                                                        amount: [couponObject.amount]
-                                                    }];
-                                                    });
-                                                }
-                                            };
-                                            return (
-                                            <p
-                                                key={coupon}
-                                                className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
-                                                onClick={handleClick}
-                                            >
-                                                {coupon} - {product.amount[i].substring(1)}
-                                            </p>
-                                            );
-                                        })
-                                    ) : <h5 className='fw-light mb-0 ms-2'>No Coupons</h5>}
-                                </div>
-                            </li>
-                            ))
-                        ) : (
-                            <li className='align-items-start'>No Coupon Available</li>
-                            )}
-                    </ul>
-                </div>
+                                                        amount: product.amount[i].substring(1)
+                                                    };
+                                                    const isCouponSelected = selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
+                                                    const handleClick = () => {
+                                                        const couponObject = {
+                                                          name: coupon,
+                                                          product_name: product.product_name,
+                                                          product_id: product.product_id,
+                                                          amount: product.amount[i].substring(1)
+                                                        };
+                                                      
+                                                        if (id?.length > 0) {
+                                                          setSelectedCouponAmounts(prevSelectedCouponAmounts => {
+                                                            const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
+                                                            if (existingProductIndex !== -1) {
+                                                              const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
+                                                              if (existingProduct && existingProduct.name.includes(couponObject.name)) {
+                                                                return prevSelectedCouponAmounts;
+                                                              }
+                                                              return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
+                                                                if (index === existingProductIndex) {
+                                                                  return {
+                                                                    ...existingProduct,
+                                                                    name: [...existingProduct.name, couponObject.name],
+                                                                    amount: [...existingProduct.amount, couponObject.amount]
+                                                                  };
+                                                                }
+                                                                return selectedCouponAmount;
+                                                              });
+                                                            }
+                                                            return [...prevSelectedCouponAmounts, {
+                                                              product_name: product.product_name,
+                                                              product_id: product.product_id,
+                                                              name: [couponObject.name],
+                                                              amount: [couponObject.amount]
+                                                            }];
+                                                          });
+                                                        } else {
+                                                          setSelectedCouponAmounts(prevSelectedCouponAmounts => [
+                                                            ...prevSelectedCouponAmounts,
+                                                            {
+                                                              product_name: product.product_name,
+                                                              product_id: product.product_id,
+                                                              name: [couponObject.name],
+                                                              amount: [couponObject.amount]
+                                                            }
+                                                          ]);
+                                                        }
+                                                      
+                                                        setSelectedCoupons(prevSelectedCoupons => [
+                                                          ...prevSelectedCoupons,
+                                                          couponObject
+                                                        ]);
+                                                      
+                                                        setSelectedCouponNames(prevSelectedCouponNames => [
+                                                          ...prevSelectedCouponNames,
+                                                          couponObject.name
+                                                        ]);
+                                                      };
+                                                      
+                                                      
 
-                <div className="buttons d-flex justify-content-center">
+                                                    return (
+                                                        <p
+                                                        key={coupon}
+                                                        className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
+                                                        onClick={handleClick}
+                                                        >
+                                                        {coupon} - {product.amount[i].substring(1)}
+                                                        </p>
+                                                    );
+                                                })
+                                            ) : <h5 className='fw-light mb-0 ms-2'>No Coupons</h5>}
+                                        </div>
+                                    </li>
+                                    ))
+                                ) : (
+                                    <li className='align-items-start'>No Coupon Available</li>
+                                    )}
+                            </ul>
+                        </div>
+
+                        <div className="buttons d-flex justify-content-center">
                     {id?.length > 0 ? 
-                    <button type='button' className='button button-blue' onClick={(e) => {editCampaign(e)}}>Edit Campaign</button> 
+                    <button type='button' className='button button-blue' onClick={(e) => {editCampaign(e)}}>Update Campaign</button> 
                     :
                     <>
                         <button className='button button-blue' onClick={createNewCampaignDraft}>Save in draft</button>
                         <button className='button ms-4' onClick={createNewCampaign}>Send to MarketPlace</button>
                     </>}
                 </div>
-            </form>
+                    </form>
         </div>
     </div>
   );

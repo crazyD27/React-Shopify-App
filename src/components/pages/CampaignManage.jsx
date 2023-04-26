@@ -516,8 +516,8 @@ const CampaignManage = () => {
                                             <tr key={i} className='campaign-inputs'>
                                                 <td>{name.campaign_name}</td>
                                                 <td className='category'>{name.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
-                                                    <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
-                                                    <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
+                                                <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
+                                                <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
                                                 <td>
                                                     <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
                                                         <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
