@@ -526,17 +526,44 @@ const CreateCampaign = () => {
                                                               amount: [couponObject.amount]
                                                             }];
                                                           });
-                                                        } else {
-                                                          setSelectedCouponAmounts(prevSelectedCouponAmounts => [
-                                                            ...prevSelectedCouponAmounts,
-                                                            {
-                                                              product_name: product.product_name,
-                                                              product_id: product.product_id,
-                                                              name: [couponObject.name],
-                                                              amount: [couponObject.amount]
-                                                            }
-                                                          ]);
-                                                        }
+                                                        } 
+                                                        else {
+                                                            setSelectedCouponAmounts(prevSelectedCouponAmounts => {
+                                                              const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_id === product.product_id);
+                                                              if (existingProductIndex !== -1) {
+                                                                // There is already an array for the same product_id
+                                                                const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
+                                                                return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
+                                                                  if (index === existingProductIndex) {
+                                                                    return {
+                                                                      ...existingProduct,
+                                                                      name: [...existingProduct.name, couponObject.name],
+                                                                      amount: [...existingProduct.amount, couponObject.amount]
+                                                                    };
+                                                                  }
+                                                                  return selectedCouponAmount;
+                                                                });
+                                                              } else {
+                                                                // Create a new object for the new product
+                                                                return [...prevSelectedCouponAmounts, {
+                                                                  product_name: product.product_name,
+                                                                  product_id: product.product_id,
+                                                                  name: [couponObject.name],
+                                                                  amount: [couponObject.amount]
+                                                                }];
+                                                              }
+                                                            });
+                                                          
+                                                            setSelectedCoupons(prevSelectedCoupons => [
+                                                              ...prevSelectedCoupons,
+                                                              couponObject
+                                                            ]);
+                                                          
+                                                            setSelectedCouponNames(prevSelectedCouponNames => [
+                                                              ...prevSelectedCouponNames,
+                                                              couponObject.name
+                                                            ]);
+                                                          }
                                                       
                                                         setSelectedCoupons(prevSelectedCoupons => [
                                                           ...prevSelectedCoupons,
@@ -547,10 +574,7 @@ const CreateCampaign = () => {
                                                           ...prevSelectedCouponNames,
                                                           couponObject.name
                                                         ]);
-                                                      };
-                                                      
-                                                      
-
+                                                    };
                                                     return (
                                                         <p
                                                         key={coupon}
