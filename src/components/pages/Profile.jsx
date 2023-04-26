@@ -36,7 +36,7 @@ function Profile() {
             headers: {
                 Authorization: `Token ${token}`
             }
-        })
+        }) 
         .then(function (response) {
             console.log("Profile Details", response);
             setUserDetails(response.data);
@@ -65,6 +65,7 @@ function Profile() {
         console.log("FormData" ,formData)
         console.log("selectedFile",selectedFile?.name)
         console.log("name", selectedFile)
+        console.log("FORM", formData)
         setLoading(true);
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {

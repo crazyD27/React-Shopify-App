@@ -644,15 +644,13 @@ const CreateInfluencer = () => {
                                                         product_id: product.product_id,
                                                         amount: product.amount[i].substring(1)
                                                     };
-                                                    const isCouponSelected = selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
+                                                    const isCouponSelected = id?.length > 0 ?(
+                                                        selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
+                                                    )
+                                                    : (
+                                                        selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
+                                                    );
                                                     const handleClick = () => {
-                                                        const couponObject = {
-                                                            name: coupon,
-                                                            product_name: product.product_name,
-                                                            product_id: product.product_id,
-                                                            amount: product.amount[i].substring(1)
-                                                        };
-                                                        
                                                         if (id?.length > 0) {
                                                             setSelectedCouponAmounts(prevSelectedCouponAmounts => {
                                                             const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
@@ -679,63 +677,49 @@ const CreateInfluencer = () => {
                                                                 amount: [couponObject.amount]
                                                             }];
                                                             });
-                                                        } 
+                                                        }
                                                         else {
+                                                            const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
+                                                        if (selectedCouponIndex !== -1) {
+                                                            setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
+                                                            setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
+                                                            setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
+                                                        } else {
+                                                            setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
+                                                            setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
                                                             setSelectedCouponAmounts(prevSelectedCouponAmounts => {
-                                                                const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_id === product.product_id);
-                                                                if (existingProductIndex !== -1) {
-                                                                // There is already an array for the same product_id
+                                                            const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
+                                                            if (existingProductIndex !== -1) {
                                                                 const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
                                                                 return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
-                                                                    if (index === existingProductIndex) {
+                                                                if (index === existingProductIndex) {
                                                                     return {
-                                                                        ...existingProduct,
-                                                                        name: [...existingProduct.name, couponObject.name],
-                                                                        amount: [...existingProduct.amount, couponObject.amount]
+                                                                    ...existingProduct,
+                                                                    name: [...existingProduct.name, couponObject.name],
+                                                                    amount: [...existingProduct.amount, couponObject.amount]
                                                                     };
-                                                                    }
-                                                                    return selectedCouponAmount;
-                                                                });
-                                                                } else {
-                                                                // Create a new object for the new product
-                                                                return [...prevSelectedCouponAmounts, {
-                                                                    product_name: product.product_name,
-                                                                    product_id: product.product_id,
-                                                                    name: [couponObject.name],
-                                                                    amount: [couponObject.amount]
-                                                                }];
                                                                 }
-                                                            });
-                                                            
-                                                            setSelectedCoupons(prevSelectedCoupons => [
-                                                                ...prevSelectedCoupons,
-                                                                couponObject
-                                                            ]);
-                                                            
-                                                            setSelectedCouponNames(prevSelectedCouponNames => [
-                                                                ...prevSelectedCouponNames,
-                                                                couponObject.name
-                                                            ]);
+                                                                return selectedCouponAmount;
+                                                                });
                                                             }
-                                                        
-                                                        setSelectedCoupons(prevSelectedCoupons => [
-                                                            ...prevSelectedCoupons,
-                                                            couponObject
-                                                        ]);
-                                                        
-                                                        setSelectedCouponNames(prevSelectedCouponNames => [
-                                                            ...prevSelectedCouponNames,
-                                                            couponObject.name
-                                                        ]);
+                                                            return [...prevSelectedCouponAmounts, {
+                                                                product_name: product.product_name,
+                                                                product_id: product.product_id,
+                                                                name: [couponObject.name],
+                                                                amount: [couponObject.amount]
+                                                            }];
+                                                            });
+                                                        }
+                                                        }
                                                     };
                                                     return (
-                                                        <p
+                                                    <p
                                                         key={coupon}
                                                         className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
                                                         onClick={handleClick}
-                                                        >
+                                                    >
                                                         {coupon} - {product.amount[i].substring(1)}
-                                                        </p>
+                                                    </p>
                                                     );
                                                 })
                                             ) : <h5 className='fw-light mb-0 ms-2'>No Coupons</h5>}
