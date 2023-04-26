@@ -51,11 +51,11 @@ const SideBar = () => {
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
                 <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
-                    {localStorage.getItem("Image") && (
+                    {localStorage.getItem("Image") && image != '' && (
                         <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     )}
 
-                    {!localStorage.getItem("Image") &&(
+                    {!localStorage.getItem("Image") || image =='' &&(
                         <img src={User} alt='notification' style={{width: 45}} />
                     )}
                     

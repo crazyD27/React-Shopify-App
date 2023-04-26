@@ -114,6 +114,7 @@ const CouponList = () => {
             setCouponDesc('')
             setDiscountType('')
             setCouponAmount('')
+            couponCross()
         })
         .catch(function (error) {
             console.log(error);
@@ -198,6 +199,12 @@ const CouponList = () => {
         setTracking(false)
         setOneTime(false)
         setGetCoupon(false)
+        setCouponDesc('')
+        setDiscountType('')
+        setProductName('')
+        setProductIds([]);
+        setCouponAmount('')
+        setCouponAmount('')
     }
 
     const trackingApi = (event) => {
@@ -218,7 +225,9 @@ const CouponList = () => {
             setCouponData([...couponData, response.data]);
             setCouponDesc('')
             setDiscountType('')
+            setProductName('')
             setProductIds([]);
+            setCouponAmount('')
             setCouponAmount('')
             couponCross()
         })
@@ -383,14 +392,14 @@ const CouponList = () => {
                         <div className="input-container">
                             <label>Discount Types</label>
                             <select value={discountType} onChange={handleDiscountType}>
-                                <option value="">Discount Type</option>
+                                <option value="" disabled>Discount Type</option>
                                 <option value="fixed_amount">Fixed Amount</option>
                                 <option value="percentage">Precentage</option>
                             </select>
                         </div>
                         <div className="input-container">
-                            <label>{discountType == "fixed_amount" ? "Amount" : "Percent"}</label>
-                            <input type="text" placeholder={discountType == "fixed_amount" ? "Amount" : "Percent"} value={couponAmount} onChange={handleCouponAmount} />
+                            <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
+                            <input type="number" placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={(e) => {trackingApi(e)}} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>
@@ -411,14 +420,14 @@ const CouponList = () => {
                         <div className="input-container">
                             <label>Discount Types</label>
                             <select name="" id="" value={discountType} onChange={handleDiscountType}>
-                                <option value="">Discount Type</option>
+                                <option value="" disabled>Discount Type</option>
                                 <option value="fixed_amount">Fixed Amount</option>
                                 <option value="percentage">Precentage</option>
                             </select>
                         </div>
                         <div className="input-container">
-                            <label>{discountType == "fixed_amount" ? "Amount" : "Percent"}</label>
-                            <input type="text" placeholder={discountType == "fixed_amount" ? "Amount" : "Percent"} value={couponAmount} onChange={handleCouponAmount} />
+                        <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
+                            <input type="number" placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={createCoupon} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>

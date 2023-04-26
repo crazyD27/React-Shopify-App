@@ -63,8 +63,8 @@ function Profile() {
         formData.append("instagram_url", instagramUrl)
         formData.append('type','normal');
         console.log("FormData" ,formData)
-        console.log("selectedFile",selectedFile)
-        console.log("name", selectedFile.name)
+        console.log("selectedFile",selectedFile?.name)
+        console.log("name", selectedFile)
         setLoading(true);
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
