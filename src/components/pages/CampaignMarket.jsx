@@ -14,6 +14,7 @@ import SideBar from '../sidebar/Sidebar';
 import './pages.scss';
 import NoData from '../../assests/img/no-data.png';
 import { useNavigate } from 'react-router-dom';
+import CampaignTable from '../table/CampTable';
 
 const CampaignMarket = () => {
     const [productNames, setProductNames] = useState([]);
@@ -201,54 +202,24 @@ const CampaignMarket = () => {
                 <Tab.Content>
                     <Tab.Pane eventKey="first">
                         {marketList?.length > 0 ? (
-                            <table className='w-100 campaign'>
-                                <tbody className='w-100'>
-                                    <tr className='headings'>
-                                        <th>Campaign Name</th>
-                                        <th>Products</th>
-                                        <th>Coupons</th>
-                                        <th>Discount</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    
-                                        {marketList?.map((marketContent, i) => {
-                                            return(
-                                                <>
-                                                <tr>
-                                                    <td>{marketContent.campaign_name}</td>
-                                                    <td className='category'>{marketContent.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
-                                                    <td>{marketContent.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
-                                                    <td>{marketContent.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
-                                                    <td>
-                                                        <button onClick={(event) => {getSingleMarket(marketContent.campaignid_id, event)}} style={{marginRight: 15}}>
-                                                            <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
-                                                            </button>
-                                                        <button onClick={() => { deleteConfirm(marketContent.campaignid_id)}}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
-                                                    </td>
-                                                </tr>
-                                                {getDeleteConfirm && 
-                                                    <div className="get-coupon">
-                                                        <div className="get-coupon-contianer">
-                                                            <button className='close' onClick={couponCross}>
-                                                                <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                            </button>
-                                                            <div className="confirm">
-                                                                <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                                                <div className="buttons d-flex justify-content-center align-items-center">
-                                                                    <button onClick={() => { deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                                    <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                                </>
-                                            )
-                                        })}
-                                    
-                                    
-                                </tbody>
-                            </table>
+                            <CampaignTable 
+                                campList={marketList}
+                                getSingleMarket={getSingleMarket}
+                                deleteConfirm={deleteConfirm}
+                                getDeleteConfirm={getDeleteConfirm}
+                                getMarket={getMarket}
+                                couponCross={couponCross}
+                                getMarketInfo={getMarketInfo}
+                                handleProdDiscount={handleProdDiscount}
+                                prodDiscount={prodDiscount}
+                                handleInfluenceVisit={handleInfluenceVisit}
+                                influenceVisit={influenceVisit}
+                                deleteCampaign={deleteCampaign}
+                                getId={getId}
+                                handleCampName={handleCampName}
+                                campName={campName}
+                                handleProdOffer={handleProdOffer}
+                            />
                             ) :
                             (
                                 <>
@@ -260,76 +231,24 @@ const CampaignMarket = () => {
                     </Tab.Pane>
                     <Tab.Pane eventKey="second" className='campaign'>
                         {marketDraftList?.length > 0 ? (
-                            <table className='w-100 campaign'>
-                                <tbody className='w-100'>
-                                    <tr className='headings'>
-                                        <th>Campaign Name</th>
-                                        <th>Products</th>
-                                        <th>Coupons</th>
-                                        <th>Discount</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    
-                                        {marketDraftList?.map((marketContent, i) => {
-                                            return(
-                                                <>
-                                                <tr>
-                                                    <td>{marketContent.campaign_name}</td>
-                                                    <td className='category'>{marketContent.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
-                                                    <td>{marketContent.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
-                                                    <td>{marketContent.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
-                                                    <td>
-                                                        <button onClick={(event) => {getSingleMarket(marketContent.campaignid_id, event)}} style={{marginRight: 15}}>
-                                                            <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
-                                                            </button>
-                                                        <button onClick={() => { deleteConfirm(marketContent.campaignid_id)}}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
-                                                    </td>
-                                                </tr>
-                                                <form action="">
-                                                    <div className="input-container">
-                                                        <label>Campaign Name</label>
-                                                        <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Offer</label>
-                                                        <select onChange={handleProdOffer} value={prodOffer}>
-                                                            <option value="" disabled>{getMarketInfo?.offer}</option>
-                                                            <option value="fixed_amount">Fixed Amount</option>
-                                                            <option value="percentage">Precentage</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Discount</label>
-                                                        <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Description</label>
-                                                        <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
-                                                    </div>
-                                                </form>
-                                                {getDeleteConfirm && 
-                                                    <div className="get-coupon">
-                                                        <div className="get-coupon-contianer">
-                                                            <button className='close' onClick={couponCross}>
-                                                                <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                            </button>
-                                                            <div className="confirm">
-                                                                <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                                                <div className="buttons d-flex justify-content-center align-items-center">
-                                                                    <button onClick={() => { deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                                    <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                                </>
-                                            )
-                                        })}
-                                    
-                                    
-                                </tbody>
-                            </table>
+                            <CampaignTable 
+                                campList={marketDraftList}
+                                getSingleMarket={getSingleMarket}
+                                deleteConfirm={deleteConfirm}
+                                getDeleteConfirm={getDeleteConfirm}
+                                getMarket={getMarket}
+                                couponCross={couponCross}
+                                getMarketInfo={getMarketInfo}
+                                handleProdDiscount={handleProdDiscount}
+                                prodDiscount={prodDiscount}
+                                handleInfluenceVisit={handleInfluenceVisit}
+                                influenceVisit={influenceVisit}
+                                deleteCampaign={deleteCampaign}
+                                getId={getId}
+                                handleCampName={handleCampName}
+                                campName={campName}
+                                handleProdOffer={handleProdOffer}
+                            />
                             ) :
                             (
                                 <>

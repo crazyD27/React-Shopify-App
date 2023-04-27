@@ -10,6 +10,7 @@ import { API } from '../../config/Api';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import CampaignTable from '../table/CampTable';
 
 import Delete from '../../assests/img/delete.svg';
 import NoData from '../../assests/img/no-data.png';
@@ -28,6 +29,7 @@ const CampaignManage = () => {
     const [loading, setLoading] = useState(false);
     const [pendingId, setPendingId] = useState([]);
     const [activeId, setActiveId] = useState([]);
+    const [approvedList, setApprovedList] = useState([]);
     const [productNames, setProductNames] = useState([]);
     const [pendingNames, setPendingNames] = useState([]);
     const [activeNames, setActiveNames] = useState([]);
@@ -100,6 +102,19 @@ const CampaignManage = () => {
         .then(function (response) {
             console.log("Draft List",response)
             setDraftList(response.data.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
+        axios.get('https://api.myrefera.com/influencer/approval/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Approved List",response)
+            setApprovedList(response.data.data);
         })
         .catch(function (error) {
             console.log(error);
@@ -312,94 +327,33 @@ const CampaignManage = () => {
                 <Nav.Item>
                     <Nav.Link eventKey="third">Draft Campaigns</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="four">Approved Campaigns</Nav.Link>
+                </Nav.Item>
             </Nav>
             </Col>
             <Col sm={12}>
             <Tab.Content>
                 <Tab.Pane eventKey="first">
                     {campList?.length > 0 ? (
-                    <table className='w-100 campaign'>
-                        <tbody className='w-100'>
-                            <tr className='headings'>
-                                <th>Campaign Name</th>
-                                <th>Product</th>
-                                <th>Coupons</th>
-                                <th>Discount</th>
-                                <th>Actions</th>
-                            </tr>
-                           
-                                {campList?.map((name, i) => {
-                                    return(
-                                        <>
-                                        <tr key={i} className='campaign-inputs'>
-                                            <td>{name.campaign_name}</td>
-                                            <td className='category'>{name.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
-                                            <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
-                                            <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
-                                            <td>
-                                                <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
-                                                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
-                                                    </button>
-                                                    <button onClick={() => { deleteConfirm(name.campaignid_id) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
-                                            </td>
-                                        </tr>
-
-                                        {getDeleteConfirm && 
-                                            <div className="get-coupon">
-                                                <div className="get-coupon-contianer">
-                                                    <button className='close' onClick={couponCross}>
-                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                    </button>
-                                                    <div className="confirm">
-                                                        <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                                        <div className="buttons d-flex justify-content-center align-items-center">
-                                                            <button onClick={() => { deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                            <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                        {getMarket && 
-                                            <div className="get-coupon">
-                                                <div className="get-coupon-contianer">
-                                                <h3>Edit Campaign</h3>
-                                                <button className='close' onClick={couponCross}>
-                                                    <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                </button>
-                                                <form action="">
-                                                    <div className="input-container">
-                                                        <label>Campaign Name</label>
-                                                        <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Offer</label>
-                                                        <select onChange={handleProdOffer}>
-                                                            <option value="" disabled>{getMarketInfo?.offer}</option>
-                                                            <option value="fixed_amount">Fixed Amount</option>
-                                                            <option value="percentage">Precentage</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Discount</label>
-                                                        <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Description</label>
-                                                        <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
-                                                    </div>
-                                                    <button className='button button-blue mt-4 mx-auto' onClick={(event) => editCampaign(name.id, event)}>Edit</button>
-                                                </form>
-                                                </div>
-                                            </div>
-                                        }
-                                        </>
-                                        
-                                    )
-                                })}
-                        
-                        </tbody>
-                    </table>
+                        <CampaignTable campList={campList}
+                            getSingleMarket={getSingleMarket}
+                            deleteConfirm={deleteConfirm}
+                            getDeleteConfirm={getDeleteConfirm}
+                            getMarket={getMarket}
+                            couponCross={couponCross}
+                            getMarketInfo={getMarketInfo}
+                            handleProdDiscount={handleProdDiscount}
+                            prodDiscount={prodDiscount}
+                            handleInfluenceVisit={handleInfluenceVisit}
+                            influenceVisit={influenceVisit}
+                            editCampaign={editCampaign}
+                            deleteCampaign={deleteCampaign}
+                            getId={getId}
+                            handleCampName={handleCampName}
+                            campName={campName}
+                            handleProdOffer={handleProdOffer}
+                        />
                     )
                     :
                     (
@@ -411,85 +365,25 @@ const CampaignManage = () => {
                 </Tab.Pane>
                 <Tab.Pane eventKey="second" className='campaign'>
                     {campListPending?.length > 0 ? (
-                        <table className='w-100'>
-                            <tbody className='w-100'>
-                                <tr className='headings'>
-                                    <th>Campaign Name</th>
-                                    <th>Product</th>
-                                    <th>Coupons</th>
-                                    <th>Discount</th>
-                                    <th>Actions</th>
-                                </tr>
-                                {campListPending?.length > 0 && campListPending?.map((name, i) => {
-                                    return(
-                                        <>
-                                        <tr key={i} className='campaign-inputs'>
-                                            <td>{name.campaign_name}</td>
-                                            <td className='category'>{name.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
-                                            <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
-                                            <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
-                                            <td>
-                                                <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
-                                                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
-                                                    </button>
-                                                    <button onClick={() => { deleteConfirm(name.campaignid_id ) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
-                                            </td>
-                                        </tr>
-
-                                        {getDeleteConfirm && 
-                                            <div className="get-coupon">
-                                                <div className="get-coupon-contianer">
-                                                    <button className='close' onClick={couponCross}>
-                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                    </button>
-                                                    <div className="confirm">
-                                                        <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                                        <div className="buttons d-flex justify-content-center align-items-center">
-                                                            <button onClick={() => { deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                            <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
-                                                        </div>
-                                                    </div>
-                                             </div>
-                                            </div>
-                                        }
-                                        {getMarket && 
-                                            <div className="get-coupon">
-                                                <div className="get-coupon-contianer">
-                                                <h3>Edit Campaign</h3>
-                                                <button className='close' onClick={couponCross}>
-                                                    <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                </button>
-                                                <form action="">
-                                                    <div className="input-container">
-                                                        <label>Campaign Name</label>
-                                                        <input type="text" onChange={handleCampName} value={campName} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Offer</label>
-                                                        <select onChange={handleProdOffer}>
-                                                            <option value="" disabled>{getMarketInfo?.offer}</option>
-                                                            <option value="fixed_amount">Fixed Amount</option>
-                                                            <option value="percentage">Precentage</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Discount</label>
-                                                        <input type="text" onChange={handleProdDiscount} value={prodDiscount} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Description</label>
-                                                        <input type="text" onChange={handleInfluenceVisit} value={influenceVisit} />
-                                                    </div>
-                                                    <button onClick={(event) => {editCampaign(getMarketInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
-                                                </form>
-                                                </div>
-                                            </div>
-                                        }
-                                        </>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
+                        <CampaignTable 
+                            campList={campListPending}
+                            getSingleMarket={getSingleMarket}
+                            deleteConfirm={deleteConfirm}
+                            getDeleteConfirm={getDeleteConfirm}
+                            getMarket={getMarket}
+                            couponCross={couponCross}
+                            getMarketInfo={getMarketInfo}
+                            handleProdDiscount={handleProdDiscount}
+                            prodDiscount={prodDiscount}
+                            handleInfluenceVisit={handleInfluenceVisit}
+                            influenceVisit={influenceVisit}
+                            editCampaign={editCampaign}
+                            deleteCampaign={deleteCampaign}
+                            getId={getId}
+                            handleCampName={handleCampName}
+                            campName={campName}
+                            handleProdOffer={handleProdOffer}
+                        />
                     ) 
                     : 
                     (
@@ -501,85 +395,56 @@ const CampaignManage = () => {
                 </Tab.Pane>
                 <Tab.Pane eventKey="third" className='campaign'>
                     {draftList?.length > 0 ? (
-                        <table className='w-100'>
-                            <tbody className='w-100'>
-                                <tr className='headings'>
-                                    <th>Campaign Name</th>
-                                    <th>Product</th>
-                                    <th>Coupons</th>
-                                    <th>Discount</th>
-                                    <th>Actions</th>
-                                </tr>
-                                {draftList?.length > 0 && draftList?.map((name, i) => {
-                                    return(
-                                        <>
-                                            <tr key={i} className='campaign-inputs'>
-                                                <td>{name.campaign_name}</td>
-                                                <td className='category'>{name.product?.map((name) => name.product_name).filter(Boolean).join(', ')}</td>
-                                                <td>{name.product?.map((name) => name.coupon_name).filter(Boolean).join(', ')}</td>
-                                                <td>{name.product?.map((name) => name.amount).filter(Boolean).join(', ')}</td>
-                                                <td>
-                                                    <button onClick={(event) => {getSingleMarket(name.campaignid_id, event)}} style={{marginRight: 15}}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#fff", width: "15px", height: "15px"}} />
-                                                        </button>
-                                                        <button onClick={() => { deleteConfirm(name.campaignid_id) }}><img src={Delete} alt='delete' style={{ color: "#fff", width: "15px", height: "15px"}} /></button>
-                                                </td>
-                                                </tr>
-
-                                        {getDeleteConfirm && 
-                                            <div className="get-coupon">
-                                                <div className="get-coupon-contianer">
-                                                    <button className='close' onClick={couponCross}>
-                                                        <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                    </button>
-                                                    <div className="confirm">
-                                                        <h4 className='mb-4 text-center'>Delete Campaign?</h4>
-                                                        <div className="buttons d-flex justify-content-center align-items-center">
-                                                            <button onClick={() => {deleteCampaign(getId)}} className='btn btn-danger w-25 me-4'>Confirm</button>
-                                                            <button onClick={couponCross} className='btn w-25 btn-primary'>Cancel</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                        {getMarket && 
-                                            <div className="get-coupon">
-                                                <div className="get-coupon-contianer">
-                                                <h3>Edit Campaign</h3>
-                                                <button className='close' onClick={couponCross}>
-                                                    <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
-                                                </button>
-                                                <form action="">
-                                                    <div className="input-container">
-                                                        <label>Campaign Name</label>
-                                                        <input type="text" placeholder={getMarketInfo?.campaign_name} onChange={handleCampName} value={campName} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Offer</label>
-                                                        <select onChange={handleProdOffer}>
-                                                            <option value="" disabled>{getMarketInfo?.offer}</option>
-                                                            <option value="fixed_amount">Fixed Amount</option>
-                                                            <option value="percentage">Precentage</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Discount</label>
-                                                        <input type="text" placeholder={getMarketInfo?.product_discount}  onChange={handleProdDiscount} value={prodDiscount} />
-                                                    </div>
-                                                    <div className="input-container">
-                                                        <label>Description</label>
-                                                        <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
-                                                    </div>
-                                                    <button onClick={(event) => {editCampaign(name?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
-                                                </form>
-                                                </div>
-                                            </div>
-                                        }
-                                        </>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
+                        <CampaignTable 
+                        campList={draftList}
+                        getSingleMarket={getSingleMarket}
+                        deleteConfirm={deleteConfirm}
+                        getDeleteConfirm={getDeleteConfirm}
+                        getMarket={getMarket}
+                        couponCross={couponCross}
+                        getMarketInfo={getMarketInfo}
+                        handleProdDiscount={handleProdDiscount}
+                        prodDiscount={prodDiscount}
+                        handleInfluenceVisit={handleInfluenceVisit}
+                        influenceVisit={influenceVisit}
+                        editCampaign={editCampaign}
+                        deleteCampaign={deleteCampaign}
+                        getId={getId}
+                        handleCampName={handleCampName}
+                        campName={campName}
+                        handleProdOffer={handleProdOffer}
+                    />
+                    ) 
+                    : 
+                    (
+                        <>
+                    <h5 className='mt-4 text-center'>No Campaigns in Draft right now</h5>
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    </>
+                    )}
+                </Tab.Pane>
+                <Tab.Pane eventKey="four" className='campaign'>
+                    {approvedList?.length > 0 ? (
+                        <CampaignTable 
+                            campList={approvedList}
+                            getSingleMarket={getSingleMarket}
+                            deleteConfirm={deleteConfirm}
+                            getDeleteConfirm={getDeleteConfirm}
+                            getMarket={getMarket}
+                            couponCross={couponCross}
+                            getMarketInfo={getMarketInfo}
+                            handleProdDiscount={handleProdDiscount}
+                            prodDiscount={prodDiscount}
+                            handleInfluenceVisit={handleInfluenceVisit}
+                            influenceVisit={influenceVisit}
+                            editCampaign={editCampaign}
+                            deleteCampaign={deleteCampaign}
+                            getId={getId}
+                            handleCampName={handleCampName}
+                            campName={campName}
+                            handleProdOffer={handleProdOffer}
+                            showButtons={false}
+                        />
                     ) 
                     : 
                     (

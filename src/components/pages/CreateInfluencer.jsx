@@ -16,6 +16,7 @@ const CreateInfluencer = () => {
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
     const [influencerVisit, setInfluencerVisit] = useState('');
+    const [userData, setUserData] = useState([]);
     const [showList, setShowList] = useState(false);
     const [campaignDesc, setCampaignDesc] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
@@ -416,7 +417,33 @@ const CreateInfluencer = () => {
         })
         .then(function (response) {
           console.log("EDITED MARKET", response)
-          toast.success("Coupon Edited Successfully");
+          toast.success("Campaign Edited Successfully");
+          navigate('/manage')
+        })
+        .catch(function (error) {
+          console.log(error);
+          toast.warn("Unable to edit. Please try again later")
+        })
+        .finally(() => setLoading(false));
+    }
+    const changeStatus = (event) => {
+        event.preventDefault();
+        setLoading(true);
+        axios.put(API.BASE_URL + 'draft/update/' + id + '/',{
+            campaign_name: campaignName,
+            description: campaignDesc,
+            offer: influenceOffer,
+            product_discount: selectedCouponAmounts,
+            influencer_fee: influenceFee,
+            date: selectedDate
+          },{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        .then(function (response) {
+          console.log("Changed Status", response)
+          toast.success("Status Changed Successfully");
           navigate('/manage')
         })
         .catch(function (error) {
@@ -438,6 +465,7 @@ const CreateInfluencer = () => {
                 setSelectedDate(response.data.data[0].date);
                 setInfluenceOffer(response.data.data[0].offer);
                 setInfluencerVisit(response.data.data[0].influencer_visit);
+                setUserData(response.data.data[0])
                 const products = response.data.data[0].product;
                 const productNames = products.map(product => product.product_name);
                 const productIds = products.map(product => product.product_id);
@@ -474,24 +502,24 @@ const CreateInfluencer = () => {
                     </Link>
                     <div className='w-100 influencer-list px-5'>
                         <h3>Influencer List</h3>
-                    {influencerList.length > 0 ? (
-                        <div className='influencer-list-main'>
-                        {influencerList?.map((list, i) => (
-                            <label  for={list.username} className='influencer-list-container d-flex align-items-center justify-content-between'>
-                                <div className='d-flex align-items-center col-4'>
-                                    <input id={list.username} type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
-                                    <img src={list.image} alt='profile-pic' />
-                                    <div className='ms-4'>
-                                        <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
-                                        <span>@{list.username}</span>
-                                    </div>
+                        {influencerList.length > 0 ? (
+                    <div className='influencer-list-main'>
+                    {influencerList?.map((list, i) => (
+                        <label  for={list.username} className='influencer-list-container d-flex align-items-center justify-content-between'>
+                            <div className='d-flex align-items-center col-4'>
+                                <input id={list.username} type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
+                                <img src={list.image} alt='profile-pic' />
+                                <div className='ms-4'>
+                                    <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
+                                    <span>@{list.username}</span>
                                 </div>
-                                <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
-                                <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
-                            </label>
-                        ))}
-                        </div>
-                    ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
+                            </div>
+                            <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
+                            <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
+                        </label>
+                    ))}
+                    </div>
+                        ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
                         <button onClick={handleContinue} className='button button-blue'>
                             Continue
                         </button>
@@ -594,9 +622,9 @@ const CreateInfluencer = () => {
                             </div>
                         ): ""}
 
-                        <div className="input-container d-flex flex-column mb-4">
-                            <label className="mb-3">Product URL</label>
-                            {productIds.length > 0 ? (
+                        {productIds.length > 0&& (
+                            <div className="input-container d-flex flex-column mb-4">
+                                <label className="mb-3">Product URL</label>
                                 <div className='product-urls'>
                                     {productUrl?.map((url, index) => (
                                         <a key={index} href={url} target="_blank">
@@ -605,10 +633,8 @@ const CreateInfluencer = () => {
                                         </a>
                                     ))}
                                 </div>
-                            ) : (
-                                <p className='no-url'>No products selected.</p>
-                            )}
-                        </div>
+                            </div>
+                        )}
 
                         <div className="input-container d-flex flex-column mb-4 influen-list">
                             <label className="mb-3">Influencer from the list.</label>
@@ -644,12 +670,7 @@ const CreateInfluencer = () => {
                                                         product_id: product.product_id,
                                                         amount: product.amount[i].substring(1)
                                                     };
-                                                    const isCouponSelected = id?.length > 0 ?(
-                                                        selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
-                                                    )
-                                                    : (
-                                                        selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
-                                                    );
+                                                    const isCouponSelected = selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
                                                     const handleClick = () => {
                                                         if (id?.length > 0) {
                                                             setSelectedCouponAmounts(prevSelectedCouponAmounts => {
@@ -734,7 +755,12 @@ const CreateInfluencer = () => {
 
                         <div className="buttons d-flex justify-content-center">
                             {id?.length > 0 ? (
+                                <>
                                 <button className='button button-blue' onClick={(e) => {editCampaign(e)}}>Update Campaign</button>
+                                {userData?.draft_status == true && (
+                                    <button className='button ms-4' onClick={(e) => {changeStatus(e)}}>Change Status to Pending</button>
+                                )}
+                                </>
                             ):
                             <>
                             <button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>

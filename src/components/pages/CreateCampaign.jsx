@@ -15,6 +15,7 @@ const CreateCampaign = () => {
     const [campaignName, setCampaignName] = useState('');
     const [selectedDate, setSelectedDate] = useState("");
     const [influencerVisit, setInfluencerVisit] = useState('');
+    const [userData, setUserData] = useState([]);
     const [showList, setShowList] = useState(false);
     const [campaignDesc, setCampaignDesc] = useState('');
     const [influenceOffer, setInfluenceOffer] = useState('');
@@ -339,6 +340,7 @@ const CreateCampaign = () => {
                 setProductName(productNames);
                 setProductIds(productIds);
                 setSelectedCouponNames(couponNames);
+                setUserData(response.data.data[0]);
                 setSelectedCouponAmounts(response.data.data[0].product)
                 setInfluenceFee(response.data.data[0].influencer_fee)
                 setCampaignDesc(response.data.data[0].description)
@@ -348,6 +350,33 @@ const CreateCampaign = () => {
             })
         }
     },[id])
+
+    const changeStatus = (event) => {
+        event.preventDefault();
+        setLoading(true);
+        axios.put(API.BASE_URL + 'draft/update/' + id + '/',{
+            campaign_name: campaignName,
+            description: campaignDesc,
+            offer: influenceOffer,
+            product_discount: selectedCouponAmounts,
+            influencer_fee: influenceFee,
+            date: selectedDate
+          },{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        .then(function (response) {
+          console.log("Changed Status", response)
+          toast.success("Status Changed Successfully");
+          navigate('/market')
+        })
+        .catch(function (error) {
+          console.log(error);
+          toast.warn("Unable to edit. Please try again later")
+        })
+        .finally(() => setLoading(false));
+    }
 
     console.log("PRDDDDDDDDD", productName)
     console.log("Coupons Name", selectedCouponNames[0])
@@ -451,9 +480,9 @@ const CreateCampaign = () => {
                     </div>
                 ): ""}
 
-                <div className="input-container d-flex flex-column mb-4">
-                    <label className="mb-3">Product URL</label>
-                    {productIds.length > 0 ? (
+                {productIds.length > 0&& (
+                    <div className="input-container d-flex flex-column mb-4">
+                        <label className="mb-3">Product URL</label>
                         <div className='product-urls'>
                             {productUrl?.map((url, index) => (
                                 <a key={index} href={url} target="_blank">
@@ -462,10 +491,8 @@ const CreateCampaign = () => {
                                 </a>
                             ))}
                         </div>
-                    ) : (
-                        <p className='no-url'>No products selected.</p>
-                    )}
-                </div>
+                    </div>
+                )}
 
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Description</label>
@@ -585,8 +612,14 @@ const CreateCampaign = () => {
                 </div>
 
                 <div className="buttons d-flex justify-content-center">
+                    
                     {id?.length > 0 ? 
-                    <button type='button' className='button button-blue' onClick={(e) => {editCampaign(e)}}>Update Campaign</button> 
+                    <>
+                        <button type='button' className='button button-blue' onClick={(e) => {editCampaign(e)}}>Update Campaign</button>
+                        {userData?.draft_status == true && (
+                            <button className='button ms-4' onClick={(e) => {changeStatus(e)}}>Change Status to Pending</button>
+                        )}
+                    </>
                     :
                     <>
                         <button className='button button-blue' onClick={createNewCampaignDraft}>Save in draft</button>
