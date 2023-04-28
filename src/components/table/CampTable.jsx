@@ -21,6 +21,8 @@ const CampaignTable = ({
   handleCampName,
   campName,
   handleProdOffer,
+  handleVendorAccept,
+  handleVendorDecline,
   showButtons = true
 }) => {
   return (
@@ -79,6 +81,7 @@ const CampaignTable = ({
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Accept"
+                    onClick={() => {handleVendorAccept(name.campaignid_id)}}
                   >
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -95,6 +98,7 @@ const CampaignTable = ({
                     data-placement="top"
                     style={{ marginRight: 15 }}
                     title="Decline"
+                    onClick={() => {handleVendorDecline(name.campaignid_id)}}
                   >
                     <FontAwesomeIcon
                       icon={faXmark}

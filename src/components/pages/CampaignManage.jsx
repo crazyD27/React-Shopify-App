@@ -305,6 +305,49 @@ const CampaignManage = () => {
         setActiveNames(names);
     };
 
+    const handleVendorAccept = (value) => {
+        setLoading(true);
+        axios.post(API.BASE_URL + 'vendor/accept/' + value + '/',{},{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Delete" ,response)
+            toast.success("Campaign Accepted!");
+            setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
+            setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
+            setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
+        })
+        .catch(function (error) {
+            console.log(error);
+            toast.warn("Cannot Accept right now. Please try again later")
+        })
+        .finally(() => setLoading(false));
+    }
+
+    const handleVendorDecline = (value) => {
+        setLoading(true);
+        axios.post(API.BASE_URL + 'vendor/decline/' + value + '/',{},{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Decline" ,response)
+            toast.success("Campaign Declined!");
+            setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
+            setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
+            setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
+        })
+        .catch(function (error) {
+            console.log(error);
+            toast.warn("Cannot Decline right now. Please try again later")
+        })
+        .finally(() => setLoading(false));
+    }
+
+
     useEffect(() => {
         getPendingProduct()
         getActiveProduct()
@@ -444,6 +487,8 @@ const CampaignManage = () => {
                             campName={campName}
                             handleProdOffer={handleProdOffer}
                             showButtons={false}
+                            handleVendorAccept={handleVendorAccept}
+                            handleVendorDecline={handleVendorDecline}
                         />
                     ) 
                     : 
