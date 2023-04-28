@@ -25,7 +25,6 @@ function Profile() {
     const onFileChange = event => {
         setSelectedFile(event.target.files[0]);
         console.log(event.target.files[0])
-        
     };
 
     console.log("Selected File", selectedFile)

@@ -12,13 +12,13 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <AuthProvider>
       <HashRouter hashType="noslash">
         <App />
       </HashRouter>
     </AuthProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

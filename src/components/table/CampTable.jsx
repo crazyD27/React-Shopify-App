@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faClose } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faClose, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Delete from '../../assests/img/delete.svg';
 
 const CampaignTable = ({
@@ -31,7 +31,7 @@ const CampaignTable = ({
           <th>Products</th>
           <th>Coupons</th>
           <th>Discount</th>
-          {showButtons && (<th>Actions</th>)}
+          <th>Actions</th>
         </tr>
         {campList?.map((name, i) => {
           return (
@@ -53,7 +53,7 @@ const CampaignTable = ({
                     name.amount
                     ).filter(Boolean).join(", ")}
                 </td>
-               {showButtons && (
+               {showButtons == true ? (
                  <td>
                     <button
                     onClick={(event) => {
@@ -70,7 +70,45 @@ const CampaignTable = ({
                     <img src={Delete} alt='delete-icon' />
                     </button>
                 </td>
-               )}
+               ):
+               (
+                <td>
+                    <button
+                    type="button"
+                    style={{ marginRight: 15 }}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Accept"
+                  >
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      style={{
+                        color: "#fff",
+                        width: "15px",
+                        height: "15px",
+                      }}
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    style={{ marginRight: 15 }}
+                    title="Decline"
+                  >
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      style={{
+                        color: "#fff",
+                        width: "15px",
+                        height: "15px",
+                      }}
+                    />
+                  </button>
+                </td>
+                
+               )
+               }
                 </tr>
                 {getDeleteConfirm && 
                     <div className="get-coupon">

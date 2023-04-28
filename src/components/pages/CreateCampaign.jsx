@@ -381,6 +381,7 @@ const CreateCampaign = () => {
     console.log("PRDDDDDDDDD", productName)
     console.log("Coupons Name", selectedCouponNames[0])
     console.log("Product Details", selectedCouponAmounts)
+    console.log("id",id)
 
   return (
     <div className="campaign-new p-4 page">
@@ -523,9 +524,9 @@ const CreateCampaign = () => {
                                                 amount: product.amount[i].substring(1)
                                             };
                                             const isCouponSelected = id?.length > 0 ?(
-                                                selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
-                                            )
-                                             : (
+                                                selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name.includes(String(couponObject.name)) && selectedCoupon.product_id === couponObject.product_id)
+                                                )
+                                            : (
                                                 selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
                                             );
                                             const handleClick = () => {
