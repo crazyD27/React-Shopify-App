@@ -418,7 +418,6 @@ const CreateCampaign = () => {
                     <input type="date" min={today} onChange={handleDateChange} value={selectedDate} />
                 </div>
 
-
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Offer to influencers</label>
                     <div className="input d-flex align-items-center">
@@ -531,12 +530,28 @@ const CreateCampaign = () => {
                                             );
                                             const handleClick = () => {
                                                 if (id?.length > 0) {
+                                                    console.log("couponObject",couponObject)
                                                     setSelectedCouponAmounts(prevSelectedCouponAmounts => {
                                                       const existingProductIndex = prevSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
                                                       if (existingProductIndex !== -1) {
                                                         const existingProduct = prevSelectedCouponAmounts[existingProductIndex];
                                                         if (existingProduct && existingProduct.name.includes(couponObject.name)) {
-                                                          return prevSelectedCouponAmounts;
+                                                          const updatedProduct = {
+                                                            ...existingProduct,
+                                                            name: existingProduct.name.filter(name => name !== couponObject.name),
+                                                            product_name: product.product_name,
+                                                            product_id: product.product_id,
+                                                            amount: existingProduct.amount.filter(amount => amount !== couponObject.amount)
+                                                          };
+                                                          if (updatedProduct.name.length === 0) {
+                                                            return prevSelectedCouponAmounts.filter((_, index) => index !== existingProductIndex);
+                                                          }
+                                                          return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
+                                                            if (index === existingProductIndex) {
+                                                              return updatedProduct;
+                                                            }
+                                                            return selectedCouponAmount;
+                                                          });
                                                         }
                                                         return prevSelectedCouponAmounts.map((selectedCouponAmount, index) => {
                                                           if (index === existingProductIndex) {
@@ -556,14 +571,14 @@ const CreateCampaign = () => {
                                                         amount: [couponObject.amount]
                                                       }];
                                                     });
-                                                  }
+                                                }
                                                 else {
                                                     const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
-                                                if (selectedCouponIndex !== -1) {
+                                                    if (selectedCouponIndex !== -1) {
                                                     setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
                                                     setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
                                                     setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
-                                                } else {
+                                                    } else {
                                                     setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
                                                     setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
                                                     setSelectedCouponAmounts(prevSelectedCouponAmounts => {
@@ -588,7 +603,7 @@ const CreateCampaign = () => {
                                                         amount: [couponObject.amount]
                                                     }];
                                                     });
-                                                }
+                                                    }
                                                 }
                                             };
                                             return (
