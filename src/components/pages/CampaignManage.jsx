@@ -107,7 +107,7 @@ const CampaignManage = () => {
             console.log(error);
         })
 
-        axios.get('https://api.myrefera.com/influencer/approval/',{
+        axios.get(API.BASE_URL + 'vendor_approval/',{
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -313,11 +313,36 @@ const CampaignManage = () => {
             }
         })
         .then(function (response) {
-            console.log("Delete" ,response)
+            console.log("Accepted" ,response)
             toast.success("Campaign Accepted!");
             setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
             setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
             setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
+            axios.get(API.BASE_URL + 'vendor_approval/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Approved List",response)
+                setApprovedList(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            axios.get(API.BASE_URL + 'active/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Active", response.data.data)
+                setCampList(response.data.data);
+                setActiveId(response.data.product_id)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         })
         .catch(function (error) {
             console.log(error);
@@ -338,7 +363,31 @@ const CampaignManage = () => {
             toast.success("Campaign Declined!");
             setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
             setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
-            setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
+            setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value));
+            axios.get(API.BASE_URL + 'vendor_approval/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Approved List",response)
+                setApprovedList(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            axios.get(API.BASE_URL + 'draft/list/',{
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            .then(function (response) {
+                console.log("Draft List",response)
+                setDraftList(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         })
         .catch(function (error) {
             console.log(error);
@@ -346,7 +395,6 @@ const CampaignManage = () => {
         })
         .finally(() => setLoading(false));
     }
-
 
     useEffect(() => {
         getPendingProduct()
