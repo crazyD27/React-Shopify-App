@@ -26,6 +26,7 @@ const CampaignManage = () => {
     const [getMarketInfo, setGetMarketInfo] = useState([]);
     const [getMarket, setGetMarket] = useState(false);
     const [getDeleteConfirm, setDeleteConfirm] = useState(false);
+    const [influencerList, setInfluencerList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pendingId, setPendingId] = useState([]);
     const [activeId, setActiveId] = useState([]);
@@ -54,6 +55,21 @@ const CampaignManage = () => {
     }
 
     useEffect(() => {
+
+        axios.get(API.BASE_URL + 'influencer/list/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Influencer List", response.data.data);
+            setInfluencerList(response.data.data)
+            matchInfluencerAndVendorApproval(response.data.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
         axios.get(API.BASE_URL + 'active/',{
             headers: {
                 Authorization: `Token ${token}`
@@ -100,7 +116,7 @@ const CampaignManage = () => {
             }
         })
         .then(function (response) {
-            console.log("Draft List",response)
+            console.log("Draft List",response);
             setDraftList(response.data.data);
         })
         .catch(function (error) {
@@ -115,10 +131,25 @@ const CampaignManage = () => {
         .then(function (response) {
             console.log("Approved List",response)
             setApprovedList(response.data.data);
+            matchInfluencerAndVendorApproval(influencerList);
         })
         .catch(function (error) {
             console.log(error);
         })
+
+        function matchInfluencerAndVendorApproval(influencerList) {
+            for (let i = 0; i < approvedList.length; i++) {
+                const vendorApproval = approvedList[i];
+                for (let j = 0; j < influencerList.length; j++) {
+                    const influencer = influencerList[j];
+                    if (vendorApproval.influencer_name === influencer.id) {
+                        vendorApproval.username = influencer.username;
+                    }
+                }
+            }
+            setApprovedList(approvedList);
+            console.log("Approved Names", approvedList);
+        }
     }, [token])
 
     function deleteCampaign(value) {
