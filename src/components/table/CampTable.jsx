@@ -23,7 +23,8 @@ const CampaignTable = ({
   handleProdOffer,
   handleVendorAccept,
   handleVendorDecline,
-  showButtons = true
+  showButtons = true,
+  approved = true
 }) => {
   return (
     <table className='w-100 campaign'>
@@ -31,9 +32,13 @@ const CampaignTable = ({
         <tr className='headings'>
           <th>Campaign Name</th>
           <th>Products</th>
+          {approved && (
+            <th>Influencer</th>
+          )}
           <th>Coupons</th>
           <th>Discount</th>
           <th>Actions</th>
+          
         </tr>
         {campList?.map((name, i) => {
           return (
@@ -45,6 +50,9 @@ const CampaignTable = ({
                     name.product_name
                     ).filter(Boolean).join(", ")}
                 </td>
+                {approved && (
+                  <td>{name.username}</td>
+                )}
                 <td>
                     {name.product?.map((name) =>
                     name.coupon_name

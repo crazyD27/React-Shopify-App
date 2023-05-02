@@ -56,20 +56,46 @@ const CampaignManage = () => {
 
     useEffect(() => {
 
-        axios.get(API.BASE_URL + 'influencer/list/',{
-            headers: {
-                Authorization: `Token ${token}`
+        const fetchData = async () => {
+            try {
+              const [influencerResponse, approvalResponse] = await Promise.all([
+                axios.get(API.BASE_URL + 'influencer/list/', {
+                  headers: {
+                    Authorization: `Token ${token}`
+                  }
+                }),
+                axios.get(API.BASE_URL + 'vendor_approval/', {
+                  headers: {
+                    Authorization: `Token ${token}`
+                  }
+                })
+              ]);
+        
+              console.log("Influencer List", influencerResponse.data.data);
+              setInfluencerList(influencerResponse.data.data);
+        
+              console.log("Approved List", approvalResponse.data.data);
+              setApprovedList(approvalResponse.data.data);
+        
+              const updatedApprovedList = approvalResponse.data.data.map((approved) => {
+                const matchingInfluencer = influencerResponse.data.data.find(
+                  (influencer) => influencer.id === approved.influencer_name
+                );
+                if (matchingInfluencer) {
+                  return { ...approved, username: matchingInfluencer.username };
+                }
+                return approved;
+              });
+              setApprovedList(updatedApprovedList);
+              console.log("Approved Names", updatedApprovedList);
+        
+            } catch (error) {
+              console.log(error);
             }
-        })
-        .then(function (response) {
-            console.log("Influencer List", response.data.data);
-            setInfluencerList(response.data.data)
-            matchInfluencerAndVendorApproval(response.data.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-
+        };
+        
+        fetchData();
+        
         axios.get(API.BASE_URL + 'active/',{
             headers: {
                 Authorization: `Token ${token}`
@@ -122,34 +148,6 @@ const CampaignManage = () => {
         .catch(function (error) {
             console.log(error);
         })
-
-        axios.get(API.BASE_URL + 'vendor_approval/',{
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        })
-        .then(function (response) {
-            console.log("Approved List",response)
-            setApprovedList(response.data.data);
-            matchInfluencerAndVendorApproval(influencerList);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-
-        function matchInfluencerAndVendorApproval(influencerList) {
-            for (let i = 0; i < approvedList.length; i++) {
-                const vendorApproval = approvedList[i];
-                for (let j = 0; j < influencerList.length; j++) {
-                    const influencer = influencerList[j];
-                    if (vendorApproval.influencer_name === influencer.id) {
-                        vendorApproval.username = influencer.username;
-                    }
-                }
-            }
-            setApprovedList(approvedList);
-            console.log("Approved Names", approvedList);
-        }
     }, [token])
 
     function deleteCampaign(value) {
@@ -435,7 +433,7 @@ const CampaignManage = () => {
   return (
     <>
     <div className="campaign-manage-container p-4 page">
-        {loading && <div className='loader'><span></span></div>} {/* Conditionally render the loader */}
+        {loading && <div className='loader'><span></span></div>}
         <h2 className='text-center my-5'>Manage Campaign</h2>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Col sm={12}>
@@ -469,6 +467,7 @@ const CampaignManage = () => {
                             prodDiscount={prodDiscount}
                             handleInfluenceVisit={handleInfluenceVisit}
                             influenceVisit={influenceVisit}
+                            approved={false}
                             editCampaign={editCampaign}
                             deleteCampaign={deleteCampaign}
                             getId={getId}
@@ -499,6 +498,7 @@ const CampaignManage = () => {
                             prodDiscount={prodDiscount}
                             handleInfluenceVisit={handleInfluenceVisit}
                             influenceVisit={influenceVisit}
+                            approved={false}
                             editCampaign={editCampaign}
                             deleteCampaign={deleteCampaign}
                             getId={getId}
@@ -532,6 +532,7 @@ const CampaignManage = () => {
                         editCampaign={editCampaign}
                         deleteCampaign={deleteCampaign}
                         getId={getId}
+                        approved={false}
                         handleCampName={handleCampName}
                         campName={campName}
                         handleProdOffer={handleProdOffer}
