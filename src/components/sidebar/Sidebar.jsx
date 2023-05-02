@@ -45,19 +45,16 @@ const SideBar = () => {
     //     })
     // }, [token])
 
-    localStorage.getItem("Image")
+    console.log(localStorage.getItem("Image"))
   return (
     <div className="sidebar">
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
                 <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
-                    {localStorage.getItem("Image") && image != '' && (
+                    {localStorage.getItem("Image") !=null ? (
                         <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
-                    )}
-
-                    {!localStorage.getItem("Image") || image =='' &&(
-                        <img src={User} alt='notification' style={{width: 45}} />
-                    )}
+                    ):
+                    <img src={User} alt='notification' style={{width: 45}} />}
                     
                     <p className='text-white mb-0 ms-3'>Hello, {name != "" ? name : localStorage.getItem("User_Name")}</p>
                 </NavLink>

@@ -265,30 +265,32 @@ const CouponList = () => {
     return (
     <>
     <div className="coupon p-4 page">
-        {/* <MenuBar /> */}
         <div className="coupon-container d-flex flex-column mt-5 w-100">
             <h4 className='mb-4'>Coupon List</h4>
+            {couponData?.length > 0 ? (
                 <div className="filters d-flex justify-content-between align-items-center">
-                    <div className="input-container d-flex flex-column">
-                        <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
-                        <div className="search-button d-flex align-items-center">
-                            <input type="text" placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
-                            <button type='button'>Filter</button>
-                        </div>
-                    </div>
-                    <div className="input-container d-flex flex-column">
-                        <label className='w-100 text-dark mb-3'>Search</label>
-                        <div className="search-button d-flex align-items-center">
-                            <input type="text" placeholder='Search coupons' />
-                            <img src={Search} alt='search' />
-                        </div>
+                <div className="input-container d-flex flex-column">
+                    <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
+                    <div className="search-button d-flex align-items-center">
+                        <input type="text" placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
+                        <button type='button'>Filter</button>
                     </div>
                 </div>
+                <div className="input-container d-flex flex-column">
+                    <label className='w-100 text-dark mb-3'>Search</label>
+                    <div className="search-button d-flex align-items-center">
+                        <input type="text" placeholder='Search coupons' />
+                        <img src={Search} alt='search' />
+                    </div>
+                </div>
+            </div>
+            ) : ""}
+                
                 <div className="coupon-buttons d-flex justify-content-end align-items-center">
                     <button onClick={couponCreateShow}><img src={Plus} aly='plus' /> Create Coupon</button>
                     <button><img src={Download} aly='download' /> Export Coupon</button>
                 </div>
-                {couponData.length > 0 ? (
+                {couponData?.length > 0 ? (
                     <table className="coupon-table">
                         <tr className='table-heading'>
                             {/* <th><input type="checkbox" name="" id="" /></th> */}

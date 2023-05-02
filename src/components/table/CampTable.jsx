@@ -89,7 +89,7 @@ const CampaignTable = ({
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Accept"
-                    onClick={() => {handleVendorAccept(name.campaignid_id)}}
+                    onClick={() => {handleVendorAccept(name.campaignid_id, name.influencer_name)}}
                   >
                     <FontAwesomeIcon
                       icon={faCheck}

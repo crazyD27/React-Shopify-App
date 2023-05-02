@@ -55,7 +55,6 @@ const CampaignManage = () => {
     }
 
     useEffect(() => {
-
         const fetchData = async () => {
             try {
               const [influencerResponse, approvalResponse] = await Promise.all([
@@ -334,9 +333,9 @@ const CampaignManage = () => {
         setActiveNames(names);
     };
 
-    const handleVendorAccept = (value) => {
+    const handleVendorAccept = (value, idValue) => {
         setLoading(true);
-        axios.post(API.BASE_URL + 'vendor/accept/' + value + '/',{},{
+        axios.post(API.BASE_URL + 'vendor/accept/' + value + '/' + idValue + '/',{},{
             headers: {
                 Authorization: `Token ${token}`
             }
