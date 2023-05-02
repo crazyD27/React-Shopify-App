@@ -135,16 +135,19 @@
         &::-webkit-scrollbar-track
         {
             background-color: #d7d7d7;
+            cursor: pointer;
         }
         &::-webkit-scrollbar
         {
             background-color: transparent;
             height: 7px;
+            cursor: pointer;
         }
         &::-webkit-scrollbar-thumb
         {
             background-color: #5172fc;
             border-radius: 20px;
+            cursor: pointer;
         }
         li {
             display: flex;

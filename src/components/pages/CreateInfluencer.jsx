@@ -537,22 +537,22 @@ const CreateInfluencer = () => {
                     <div className='w-100 influencer-list px-5'>
                         <h3>Influencer List</h3>
                         {influencerList.length > 0 ? (
-                    <div className='influencer-list-main'>
-                    {influencerList?.map((list, i) => (
-                        <div className='influencer-list-container d-flex align-items-center justify-content-between'>
-                            <div className='d-flex align-items-center col-4'>
-                                <input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
-                                <img src={list.image} alt='profile-pic' />
-                                <div className='ms-4'>
-                                    <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
-                                    <span>@{list.username}</span>
+                            <div className='influencer-list-main'>
+                            {influencerList?.map((list, i) => (
+                                <div className='influencer-list-container d-flex align-items-center justify-content-between'>
+                                    <div className='d-flex align-items-center col-4'>
+                                        <input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
+                                        <img src={list.image} alt='profile-pic' />
+                                        <div className='ms-4'>
+                                            <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
+                                            <span>@{list.username}</span>
+                                        </div>
+                                    </div>
+                                    <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
+                                    <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
                                 </div>
+                            ))}
                             </div>
-                            <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
-                            <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
-                        </div>
-                    ))}
-                    </div>
                         ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
                         <button onClick={handleContinue} className='button button-blue'>
                             Continue
