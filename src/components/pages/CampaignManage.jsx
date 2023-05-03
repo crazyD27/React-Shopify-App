@@ -516,7 +516,7 @@ const CampaignManage = () => {
     <>
     <div className="campaign-manage-container p-4 page">
         {loading && <div className='loader'><span></span></div>}
-        <h2 className='text-center my-5'>Manage Campaign</h2>
+        <h2 className='my-5'>Manage Campaign</h2>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Col sm={12}>
             <Nav variant="pills" className="flex-row mb-4 tab-header">

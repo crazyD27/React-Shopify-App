@@ -185,7 +185,7 @@ const CampaignMarket = () => {
             {loading && <div className='loader'><span></span></div>}
 
             <div className="campaign-market-container d-flex flex-column w-100">
-                <h2 className='text-center my-5'>Campaign Marketplace</h2>
+                <h2 className='my-5'>Campaign Marketplace</h2>
 
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Col sm={12}>

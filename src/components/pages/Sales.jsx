@@ -30,7 +30,7 @@ function Sales() {
     <>
     <div className="sales p-4 page">
         <div className="sales-container">
-            <h2 className='text-center'>Sales overview</h2>
+            <h2 className='my-5'>Sales overview</h2>
             <div className="earnings-list d-flex justify-content-between">
                 <div className="earning-box px-3">
                     <h5>Total earnings</h5>
