@@ -482,7 +482,6 @@ const CreateCampaign = () => {
                 </ul>
                     )}
                 </div>
-
                 {influenceOffer.length > 0 ? (
                     <div className="input-container d-flex flex-column mb-4">
                         <label className="mb-3">{influenceOffer === "percentage" ? "Commission (%)" : "Fixed Fee"}</label>
