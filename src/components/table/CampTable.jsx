@@ -24,19 +24,25 @@ const CampaignTable = ({
   handleVendorAccept,
   handleVendorDecline,
   showButtons = true,
-  approved = true
+  approved = true,
+  approvedButtons = true,
 }) => {
   return (
     <table className='w-100 campaign'>
       <tbody className='w-100'>
         <tr className='headings'>
           <th>Campaign Name</th>
-          <th>Products</th>
+          {!approvedButtons && (<th>Products</th>)}
           {approved && (
             <th>Influencer</th>
           )}
-          <th>Coupons</th>
-          <th>Discount</th>
+          {!approvedButtons && (
+            <>
+            <th>Coupons</th>
+            <th>Discount</th>
+            </>
+          )}
+          
           <th>Actions</th>
           
         </tr>
@@ -45,24 +51,30 @@ const CampaignTable = ({
             <>
                 <tr key={i} className='campaign-inputs'>
                 <td>{name.campaign_name}</td>
-                <td className='category'>
+                {!approvedButtons && (
+                  <td className='category'>
                     {name.product?.map((name) =>
                     name.product_name
                     ).filter(Boolean).join(", ")}
-                </td>
-                {approved && (
+                  </td>
+                )}
+                {approvedButtons && (
                   <td>{name.username}</td>
                 )}
-                <td>
+                {!approved && (
+                  <td>
                     {name.product?.map((name) =>
                     name.coupon_name
                     ).filter(Boolean).join(", ")}
-                </td>
+                  </td>
+                )}
+                {!approvedButtons && (
                 <td>
                     {name.product?.map((name) =>
                     name.amount
                     ).filter(Boolean).join(", ")}
                 </td>
+                )}
                {showButtons == true ? (
                  <td>
                     <button
@@ -106,7 +118,7 @@ const CampaignTable = ({
                     data-placement="top"
                     style={{ marginRight: 15 }}
                     title="Decline"
-                    onClick={() => {handleVendorDecline(name.campaignid_id)}}
+                    onClick={() => {handleVendorDecline(name.campaignid_id, name.influencer_name)}}
                   >
                     <FontAwesomeIcon
                       icon={faXmark}

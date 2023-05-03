@@ -216,6 +216,8 @@ const CampaignMarket = () => {
                                 influenceVisit={influenceVisit}
                                 deleteCampaign={deleteCampaign}
                                 getId={getId}
+                                approved={false}
+                                approvedButtons = {false}
                                 handleCampName={handleCampName}
                                 campName={campName}
                                 handleProdOffer={handleProdOffer}
@@ -245,6 +247,8 @@ const CampaignMarket = () => {
                                 influenceVisit={influenceVisit}
                                 deleteCampaign={deleteCampaign}
                                 getId={getId}
+                                approved={false}
+                                approvedButtons = {false}
                                 handleCampName={handleCampName}
                                 campName={campName}
                                 handleProdOffer={handleProdOffer}

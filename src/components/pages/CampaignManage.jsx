@@ -94,20 +94,60 @@ const CampaignManage = () => {
         };
         
         fetchData();
+
+        const fetchActiveData = async () => {
+            try {
+              const [influencerResponse, activeResponse] = await Promise.all([
+                axios.get(API.BASE_URL + 'influencer/list/', {
+                  headers: {
+                    Authorization: `Token ${token}`
+                  }
+                }),
+                axios.get(API.BASE_URL + 'active/', {
+                  headers: {
+                    Authorization: `Token ${token}`
+                  }
+                })
+              ]);
         
-        axios.get(API.BASE_URL + 'active/',{
-            headers: {
-                Authorization: `Token ${token}`
+              console.log("Influencer List", influencerResponse.data.data);
+              setInfluencerList(influencerResponse.data.data);
+        
+              console.log("Active List", activeResponse.data.data);
+              setCampList(activeResponse.data.data);
+        
+              const updatedActiveList = activeResponse.data.data.map((approved) => {
+                const matchingInfluencer = influencerResponse.data.data.find(
+                  (influencer) => influencer.id === approved.influencer_name
+                );
+                if (matchingInfluencer) {
+                  return { ...approved, username: matchingInfluencer.username };
+                }
+                return approved;
+              });
+              setCampList(updatedActiveList);
+              console.log("Active Names", updatedActiveList);
+        
+            } catch (error) {
+              console.log(error);
             }
-        })
-        .then(function (response) {
-            console.log("Active", response.data.data)
-            setCampList(response.data.data);
-            setActiveId(response.data.product_id)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+        };
+        
+        fetchActiveData();
+        
+        // axios.get(API.BASE_URL + 'active/',{
+        //     headers: {
+        //         Authorization: `Token ${token}`
+        //     }
+        // })
+        // .then(function (response) {
+        //     console.log("Active", response.data.data)
+        //     setCampList(response.data.data);
+        //     setActiveId(response.data.product_id)
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // })
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
@@ -346,18 +386,45 @@ const CampaignManage = () => {
             setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
             setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
             setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
-            axios.get(API.BASE_URL + 'vendor_approval/',{
-                headers: {
-                    Authorization: `Token ${token}`
+            const fetchData = async () => {
+                try {
+                  const [influencerResponse, approvalResponse] = await Promise.all([
+                    axios.get(API.BASE_URL + 'influencer/list/', {
+                      headers: {
+                        Authorization: `Token ${token}`
+                      }
+                    }),
+                    axios.get(API.BASE_URL + 'vendor_approval/', {
+                      headers: {
+                        Authorization: `Token ${token}`
+                      }
+                    })
+                  ]);
+            
+                  console.log("Influencer List", influencerResponse.data.data);
+                  setInfluencerList(influencerResponse.data.data);
+            
+                  console.log("Approved List", approvalResponse.data.data);
+                  setApprovedList(approvalResponse.data.data);
+            
+                  const updatedApprovedList = approvalResponse.data.data.map((approved) => {
+                    const matchingInfluencer = influencerResponse.data.data.find(
+                      (influencer) => influencer.id === approved.influencer_name
+                    );
+                    if (matchingInfluencer) {
+                      return { ...approved, username: matchingInfluencer.username };
+                    }
+                    return approved;
+                  });
+                  setApprovedList(updatedApprovedList);
+                  console.log("Approved Names", updatedApprovedList);
+            
+                } catch (error) {
+                  console.log(error);
                 }
-            })
-            .then(function (response) {
-                console.log("Approved List",response)
-                setApprovedList(response.data.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+            };
+            
+            fetchData();
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
                     Authorization: `Token ${token}`
@@ -379,9 +446,9 @@ const CampaignManage = () => {
         .finally(() => setLoading(false));
     }
 
-    const handleVendorDecline = (value) => {
+    const handleVendorDecline = (value, idValue) => {
         setLoading(true);
-        axios.post(API.BASE_URL + 'vendor/decline/' + value + '/',{},{
+        axios.post(API.BASE_URL + 'vendor/decline/' + value + '/' + idValue + '/',{},{
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -392,30 +459,46 @@ const CampaignManage = () => {
             setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
             setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
             setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value));
-            axios.get(API.BASE_URL + 'vendor_approval/',{
-                headers: {
-                    Authorization: `Token ${token}`
+            console.log("Approve Listttt", approvedList);
+            const fetchData = async () => {
+                try {
+                  const [influencerResponse, approvalResponse] = await Promise.all([
+                    axios.get(API.BASE_URL + 'influencer/list/', {
+                      headers: {
+                        Authorization: `Token ${token}`
+                      }
+                    }),
+                    axios.get(API.BASE_URL + 'vendor_approval/', {
+                      headers: {
+                        Authorization: `Token ${token}`
+                      }
+                    })
+                  ]);
+            
+                  console.log("Influencer List", influencerResponse.data.data);
+                  setInfluencerList(influencerResponse.data.data);
+            
+                  console.log("Approved List", approvalResponse.data.data);
+                  setApprovedList(approvalResponse.data.data);
+            
+                  const updatedApprovedList = approvalResponse.data.data.map((approved) => {
+                    const matchingInfluencer = influencerResponse.data.data.find(
+                      (influencer) => influencer.id === approved.influencer_name
+                    );
+                    if (matchingInfluencer) {
+                      return { ...approved, username: matchingInfluencer.username };
+                    }
+                    return approved;
+                  });
+                  setApprovedList(updatedApprovedList);
+                  console.log("Approved Names", updatedApprovedList);
+            
+                } catch (error) {
+                  console.log(error);
                 }
-            })
-            .then(function (response) {
-                console.log("Approved List",response)
-                setApprovedList(response.data.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            axios.get(API.BASE_URL + 'draft/list/',{
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            })
-            .then(function (response) {
-                console.log("Draft List",response)
-                setDraftList(response.data.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+            };
+            
+            fetchData();
         })
         .catch(function (error) {
             console.log(error);
@@ -466,7 +549,8 @@ const CampaignManage = () => {
                             prodDiscount={prodDiscount}
                             handleInfluenceVisit={handleInfluenceVisit}
                             influenceVisit={influenceVisit}
-                            approved={false}
+                            approved={true}
+                            approvedButtons = {true}
                             editCampaign={editCampaign}
                             deleteCampaign={deleteCampaign}
                             getId={getId}
@@ -498,6 +582,7 @@ const CampaignManage = () => {
                             handleInfluenceVisit={handleInfluenceVisit}
                             influenceVisit={influenceVisit}
                             approved={false}
+                            approvedButtons = {false}
                             editCampaign={editCampaign}
                             deleteCampaign={deleteCampaign}
                             getId={getId}
@@ -532,6 +617,7 @@ const CampaignManage = () => {
                         deleteCampaign={deleteCampaign}
                         getId={getId}
                         approved={false}
+                        approvedButtons = {false}
                         handleCampName={handleCampName}
                         campName={campName}
                         handleProdOffer={handleProdOffer}
