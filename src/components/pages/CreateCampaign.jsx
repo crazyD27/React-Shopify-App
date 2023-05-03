@@ -287,7 +287,7 @@ const CreateCampaign = () => {
             })
           ).finally(() => setLoading(false));
         }
-    }, [productName, token]);
+    }, [productName, productIds, token]);
 
     useEffect(() => {
         setPrevCouponClicked(couponClicked);
@@ -380,7 +380,8 @@ const CreateCampaign = () => {
 
     console.log("PRDDDDDDDDD", productName)
     console.log("Coupons Name", selectedCoupon)
-    console.log("Product Details", selectedCouponAmounts)
+    console.log("Product Id", productIds)
+    console.log("Product Details", productDetails)
     console.log("id",id)
 
   return (
@@ -449,22 +450,25 @@ const CreateCampaign = () => {
                                 <li
                                     key={i}
                                     onClick={() => {
-                                    setProductName((prevValues) =>
-                                        prevValues.includes(name.title)
-                                        ? prevValues.filter((value) => value !== name.title)
-                                        : [...prevValues, name.title]
-                                    );
-                                    setProductIds(prevIds =>
-                                        prevIds.includes(name.id)
-                                            ? prevIds.filter(value => value !== name.id)
-                                            : [...prevIds, name.id]
-                                    );
-                                    setShowList(false);
+                                        setProductName((prevValues) =>
+                                            prevValues.includes(name.title)
+                                            ? prevValues.filter((value) => value !== name.title)
+                                            : [...prevValues, name.title]
+                                        );
+                                        setProductIds(prevIds =>
+                                            prevIds.includes(name.id)
+                                                ? prevIds.filter(value => value !== name.id)
+                                                : [...prevIds, name.id]
+                                        );
+                                        setShowList(false);
+                                        if (productDetails.some(detail => detail.product_id === name.id)) {
+                                            setProductDetails(productDetails.filter(detail => detail.product_id !== name.id));
+                                        }
                                     }}
                                 >
                                     {name.title}
                                 </li>
-                                ))
+                            ))
                         )
                         :
                         "No Products"
