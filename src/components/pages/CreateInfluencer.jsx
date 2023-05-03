@@ -224,6 +224,7 @@ const CreateInfluencer = () => {
             setProductName([]);
             setCampaignName('');
             setSelectedDate('');
+            setProdDesc('')
             setInfluenceOffer('');
             setInfluencerVisit('');
             setCampaignDesc('')
@@ -262,7 +263,7 @@ const CreateInfluencer = () => {
             else if(error.response.data.coupon) {
                 toast.warn("Coupon may not be blank.");
             }
-            else if(error.response.data.coupon) {
+            else if(error.response.data.description) {
                 toast.warn("Description may not be blank.");
             }
             
@@ -299,6 +300,7 @@ const CreateInfluencer = () => {
             setCampListPending([...campListPending, response.data.product_details])
             setProductName([]);
             setCampaignName('');
+            setProdDesc('')
             setSelectedDate('');
             setInfluenceOffer('');
             setInfluencerVisit('');
@@ -338,7 +340,7 @@ const CreateInfluencer = () => {
             else if(error.response.data.coupon) {
                 toast.warn("Coupon may not be blank.");
             }
-            else if(error.response.data.coupon) {
+            else if(error.response.data.description) {
                 toast.warn("Description may not be blank.");
             }
             else {

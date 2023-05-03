@@ -167,6 +167,9 @@ const CreateCampaign = () => {
             else if(error.response.data.coupon) {
                 toast.warn("Coupon may not be blank.");
             }
+            else if(error.response.data.description) {
+                toast.warn("Description may not be blank.");
+            }
             
             else {
                 toast.warn("Request failed. Please try again later");
@@ -234,6 +237,9 @@ const CreateCampaign = () => {
             }
             else if(error.response.data.coupon) {
                 toast.warn("Coupon may not be blank.");
+            }
+            else if(error.response.data.description) {
+                toast.warn("Description may not be blank.");
             }
             else {
                 toast.warn("Request failed. Please try again later");
@@ -479,7 +485,7 @@ const CreateCampaign = () => {
 
                 {influenceOffer.length > 0 ? (
                     <div className="input-container d-flex flex-column mb-4">
-                        <label className="mb-3">{influenceOffer === "percentage" ? "Commission" : "Fixed Fee"}</label>
+                        <label className="mb-3">{influenceOffer === "percentage" ? "Commission (%)" : "Fixed Fee"}</label>
                         <input type="number" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
                     </div>
                 ): ""}
