@@ -401,7 +401,7 @@ const CouponList = () => {
                         </div>
                         <div className="input-container">
                             <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
-                            <input type="number" placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
+                            <input type="number" onWheel={(e) => e.target.blur()} placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={(e) => {trackingApi(e)}} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>
@@ -429,7 +429,7 @@ const CouponList = () => {
                         </div>
                         <div className="input-container">
                         <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
-                            <input type="number" placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
+                            <input type="number" onWheel={(e) => e.target.blur()} placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={createCoupon} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>
@@ -458,7 +458,7 @@ const CouponList = () => {
                         </div>
                         <div className="input-container">
                             <label>Amount</label>
-                            <input type="text" value={couponAmount} onChange={handleCouponAmount} />
+                            <input type="number" onWheel={(e) => e.target.blur()} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
                     </form>

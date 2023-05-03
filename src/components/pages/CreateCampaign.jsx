@@ -443,10 +443,10 @@ const CreateCampaign = () => {
                 <div className="input-container test d-flex flex-column mb-4 drop">
                     <label className="mb-3">Product</label>
                     <input
-                    type="text"
-                    placeholder="---Select an option---"
-                    onClick={() => setShowList(!showList)}
-                    value={productName}
+                        type="text"
+                        placeholder="---Select an option---"
+                        onClick={() => setShowList(!showList)}
+                        value={productName.length > 0 ? productName.join(', ') : ''}
                     />
                     {showList && (
                     <ul className='product-list'>
@@ -485,7 +485,7 @@ const CreateCampaign = () => {
                 {influenceOffer.length > 0 ? (
                     <div className="input-container d-flex flex-column mb-4">
                         <label className="mb-3">{influenceOffer === "percentage" ? "Commission (%)" : "Fixed Fee"}</label>
-                        <input type="number" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
+                        <input type="number" onWheel={(e) => e.target.blur()} value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
                     </div>
                 ): ""}
 

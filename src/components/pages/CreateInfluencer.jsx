@@ -444,6 +444,7 @@ const CreateInfluencer = () => {
             offer: influenceOffer,
             product_discount: selectedCouponAmounts,
             influencer_fee: influenceFee,
+            influencer_name: selectedUsersId.toString(),
             date: selectedDate
           },{
           headers: {
@@ -470,6 +471,7 @@ const CreateInfluencer = () => {
             offer: influenceOffer,
             product_discount: selectedCouponAmounts,
             influencer_fee: influenceFee,
+            influencer_name: selectedUsersId.toString(),
             date: selectedDate
           },{
           headers: {
@@ -505,7 +507,9 @@ const CreateInfluencer = () => {
                 const productNames = products.map(product => product.product_name);
                 const productIds = products.map(product => product.product_id);
                 const couponNames = products.flatMap(product => product.coupon_name);
-                setProductName(productNames);
+                if(productName !== null) {
+                    setProductName(productNames);
+                }
 				setInfluenceFee(response.data.data[0].influencer_fee)
                 setCampaignDesc(response.data.data[0].description)
                 setProductIds(productIds);
@@ -523,6 +527,7 @@ const CreateInfluencer = () => {
     console.log("isVisitChecked", isVisitChecked)
     console.log("Details", selectedCouponAmounts)
     console.log("ID", id)
+    console.log("Product Name", productName)
 
 
   return (
@@ -617,7 +622,7 @@ const CreateInfluencer = () => {
                             type="text"
                             placeholder="---Select an option---"
                             onClick={() => setShowList(!showList)}
-                            value={productName}
+                            value={productName.filter(Boolean).join(', ')}
                             />
                             {showList && (
                             <ul className='product-list'>
@@ -657,7 +662,7 @@ const CreateInfluencer = () => {
                         {influenceOffer.length > 0 ? (
                             <div className="input-container d-flex flex-column mb-4">
                                 <label className="mb-3">{influenceOffer === "percentage" ? "Commission (%)" : "Fixed Fee"}</label>
-                                <input type="number" value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
+                                <input type="number" onWheel={(e) => e.target.blur()} value={influenceFee} onChange={(e) => {setInfluenceFee(e.target.value)}} />
                             </div>
                         ): ""}
 
