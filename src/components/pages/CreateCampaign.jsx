@@ -270,7 +270,7 @@ const CreateCampaign = () => {
               setLoading(true);
               return axios
                 .post(API.BASE_URL + "product/url/", {
-                  products: productIds.toString()
+                  products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
                     Authorization: `Token ${token}`,
@@ -533,8 +533,8 @@ const CreateCampaign = () => {
                                                 amount: product.amount[i].substring(1)
                                             };
                                             const isCouponSelected = id?.length > 0 ?(
-                                                selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name.includes(String(couponObject.name)) && selectedCoupon.product_id === couponObject.product_id)
-                                                )
+                                                selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name && selectedCoupon.name.includes(String(couponObject.name)) && selectedCoupon.product_id === couponObject.product_id)
+                                              )
                                             : (
                                                 selectedCoupons.some(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id)
                                             );
