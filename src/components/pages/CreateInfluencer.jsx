@@ -528,6 +528,7 @@ const CreateInfluencer = () => {
     console.log("Details", selectedCouponAmounts)
     console.log("ID", id)
     console.log("Product Name", productName)
+    console.log("ProductIds", productIds)
 
 
   return (
