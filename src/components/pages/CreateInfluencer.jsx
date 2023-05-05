@@ -521,14 +521,16 @@ const CreateInfluencer = () => {
             })
         }
     },[id])
-    
 
-    console.log("influencerVisit", influencerVisit)
-    console.log("isVisitChecked", isVisitChecked)
-    console.log("Details", selectedCouponAmounts)
-    console.log("ID", id)
-    console.log("Product Name", productName)
-    console.log("ProductIds", productIds)
+    console.log("influencerVisit", influencerVisit);
+    console.log("isVisitChecked", isVisitChecked);
+    console.log("Details", selectedCouponAmounts);
+    console.log("ID", id);
+    console.log("Product Name", productName);
+    console.log("ProductIds", productIds);
+    console.log("checkboxStates", checkboxStates);
+    console.log("isChecked", isChecked);
+    console.log("selectedRows", selectedRows);
 
 
   return (

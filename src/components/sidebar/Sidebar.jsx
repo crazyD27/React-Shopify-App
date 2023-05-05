@@ -107,7 +107,7 @@ const SideBar = () => {
     <div className="sidebar">
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
-                <div className='notifications' style={{marginLeft: 40, cursor: 'pointer'}} onClick={() =>       {handleNotifications()}} ref={notificationsRef}>
+                <div className='notifications' style={{cursor: 'pointer'}} onClick={() =>       {handleNotifications()}} ref={notificationsRef}>
                     <span>{notifications?.length ? notifications.length : 0}</span>
                     <FontAwesomeIcon 
                     icon={faBell}
