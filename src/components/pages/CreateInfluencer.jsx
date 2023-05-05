@@ -400,38 +400,24 @@ const CreateInfluencer = () => {
 
     const handleCheckboxChange = (event, row, index) => {
         const checked = event.target.checked;
-        const newCheckboxStates = { ...checkboxStates, [index]: checked };
-        setCheckboxStates(newCheckboxStates);
-    
-        if (checked) {
-          setSelectedRows((prevSelectedRows) => [...prevSelectedRows, row]);
+        setCheckboxStates({
+            ...checkboxStates,
+            [index]: checked
+          });
+        setIsChecked(checked);
+        if (event.target.checked) {
+          setSelectedRows([...selectedRows, row]);
         } else {
-          setSelectedRows((prevSelectedRows) =>
-            prevSelectedRows.filter((selectedRow) => selectedRow !== row)
-          );
+          setSelectedRows(selectedRows.filter(selectedRow => selectedRow !== row));
         }
-    
-        localStorage.setItem("checkboxStates", JSON.stringify(newCheckboxStates));
-        localStorage.setItem("selectedRows", JSON.stringify(selectedRows));
-      };
-    
-      useEffect(() => {
-        const savedCheckboxStates = JSON.parse(localStorage.getItem('checkboxStates'));
-        if (savedCheckboxStates) {
-          setCheckboxStates(savedCheckboxStates);
-        }
-        const savedSelectedRows = JSON.parse(localStorage.getItem('selectedRows'));
-        if (savedSelectedRows) {
-          setSelectedRows(savedSelectedRows);
-        }
-      }, []); 
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         const checkbox = document.querySelector('input[type="checkbox"]');
         if (checkbox) {
           setIsChecked(checkbox.checked);
         }
-      }, []);
+    }, []);
 
     const selectedUsernames = selectedRows.map(row => row.username);
     const selectedUsersId = selectedRows.map(row => row.id);
@@ -565,7 +551,7 @@ const CreateInfluencer = () => {
                             {influencerList?.map((list, i) => (
                                 <div className='influencer-list-container d-flex align-items-center justify-content-between'>
                                     <div className='d-flex align-items-center col-4'>
-                                    <input type="checkbox" checked={checkboxStates[i]} onChange={event => handleCheckboxChange(event, list, i)} />
+                                        <input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
                                         <img src={list.image} alt='profile-pic' />
                                         <div className='ms-4'>
                                             <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
