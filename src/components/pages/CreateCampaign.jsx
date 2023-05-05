@@ -110,7 +110,7 @@ const CreateCampaign = () => {
         setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'create/', {
-            product: productIds.toString(),
+            product: productIds,
             campaign_name: campaignName,
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
@@ -182,7 +182,7 @@ const CreateCampaign = () => {
         setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'markplace/camp', {
-            product: productIds.toString(),
+            product: productIds,
             campaign_name: campaignName,
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
