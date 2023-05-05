@@ -201,7 +201,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'inflcampaign/create/', {
-            product: productIds.toString(),
+            product: productIds,
             campaign_name: campaignName,
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
@@ -278,7 +278,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         e.preventDefault();
         axios.post(API.BASE_URL + 'request/', {
-            product: productIds.toString(),
+            product: productIds,
             campaign_name: campaignName,
             date: selectedDate,
             coupon: selectedCouponNames.toString(),
