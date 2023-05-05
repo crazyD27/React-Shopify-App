@@ -1,10 +1,12 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect, useRef} from 'react';
 import { Container } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import UserContext from '../context/UserContext';
 import './sidebar.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import { API } from '../../config/Api';
 
@@ -21,6 +23,9 @@ import User from '../../assests/img/user.png';
 
 const SideBar = () => {
     const [activeLink, setActiveLink] = useState('1');
+    const [notifications, setNotifications] = useState([])
+    const [shownotification, setShowNotification] = useState(false);
+    const notificationsRef = useRef(null);
     const token = localStorage.getItem("Token");
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
@@ -30,26 +35,89 @@ const SideBar = () => {
     console.log("Name in Sidebar", name)
     console.log("Image in SIdebar", image)
 
-    // useEffect(() => {
-    //     axios.get(API.BASE_URL + 'user/id/',  {
-    //         headers: {
-    //             Authorization: `Token ${token}`
-    //         }
-    //     })
-    //     .then(function (response) {
-    //         console.log("Profile Details", response);
-    //         // setImage(response.data.url)
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error);
-    //     })
-    // }, [token])
+    const handleNotifications = () => {
+        setShowNotification(!shownotification);
+    }
+
+    useEffect(() => {
+        axios.get(API.BASE_URL + 'notification/list/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Notification", response.data)
+            setNotifications(response.data.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }, [])
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+        axios.get(API.BASE_URL + 'notification/list/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Notification", response.data)
+            setNotifications(response.data.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }, 5000);
+    return () => clearInterval(intervalId);
+    }, [])
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+          if (
+            notificationsRef.current &&
+            !notificationsRef.current.contains(event.target)
+          ) {
+            setShowNotification(false);
+          }
+        };
+        document.addEventListener("click", handleOutsideClick);
+        return () => {
+          document.removeEventListener("click", handleOutsideClick);
+        };
+      }, []);
+
+    const handleClearNotifications = () => {
+        axios.get(API.BASE_URL + 'change/status/',{
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Status", response.data);
+            setNotifications([])
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
 
     console.log(localStorage.getItem("Image"))
   return (
     <div className="sidebar">
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
+                <div className='notifications' style={{marginLeft: 40, cursor: 'pointer'}} onClick={() =>       {handleNotifications()}} ref={notificationsRef}>
+                    <span>{notifications?.length ? notifications.length : 0}</span>
+                    <FontAwesomeIcon 
+                    icon={faBell}
+                    style={{
+                        color: "#fff",
+                        width: "20px",
+                        height: "20px",
+                    }}
+                    />
+                </div>
                 <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
                     {localStorage.getItem("Image") !=null ? (
                         <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
@@ -57,6 +125,7 @@ const SideBar = () => {
                     <img src={User} alt='notification' style={{width: 45}} />}
                     
                     <p className='text-white mb-0 ms-3'>Hello, {name != "" ? name : localStorage.getItem("User_Name")}</p>
+                    
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">
                 <Nav
@@ -99,6 +168,16 @@ const SideBar = () => {
                     </NavLink>
                 </Nav>
                 </Navbar.Collapse>
+                {shownotification === true && (
+                    notifications?.length > 0 ? (
+                        <ul className="notification-list">
+                            <button onClick={(e) => {handleClearNotifications(e)}}>clear all</button>
+                            {notifications?.map((data) => {
+                            return <li>{data.message}</li>;
+                            })}
+                        </ul>
+                    ) : <ul className="notification-list"><li style={{textAlign: 'center'}}>No Notifications</li></ul>
+                )}
             </Container>
         </Navbar>
     </div>
