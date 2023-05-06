@@ -134,20 +134,6 @@ const CampaignManage = () => {
         };
         
         fetchActiveData();
-        
-        // axios.get(API.BASE_URL + 'active/',{
-        //     headers: {
-        //         Authorization: `Token ${token}`
-        //     }
-        // })
-        // .then(function (response) {
-        //     console.log("Active", response.data.data)
-        //     setCampList(response.data.data);
-        //     setActiveId(response.data.product_id)
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // })
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
@@ -423,21 +409,47 @@ const CampaignManage = () => {
                   console.log(error);
                 }
             };
-            
             fetchData();
-            axios.get(API.BASE_URL + 'active/',{
-                headers: {
-                    Authorization: `Token ${token}`
+    
+            const fetchActiveData = async () => {
+                try {
+                  const [influencerResponse, activeResponse] = await Promise.all([
+                    axios.get(API.BASE_URL + 'influencer/list/', {
+                      headers: {
+                        Authorization: `Token ${token}`
+                      }
+                    }),
+                    axios.get(API.BASE_URL + 'active/', {
+                      headers: {
+                        Authorization: `Token ${token}`
+                      }
+                    })
+                  ]);
+            
+                  console.log("Influencer List", influencerResponse.data.data);
+                  setInfluencerList(influencerResponse.data.data);
+            
+                  console.log("Active List", activeResponse.data.data);
+                  setCampList(activeResponse.data.data);
+            
+                  const updatedActiveList = activeResponse.data.data.map((approved) => {
+                    const matchingInfluencer = influencerResponse.data.data.find(
+                      (influencer) => influencer.id === approved.influencer_name
+                    );
+                    if (matchingInfluencer) {
+                      return { ...approved, username: matchingInfluencer.username };
+                    }
+                    return approved;
+                  });
+                  setCampList(updatedActiveList);
+                  console.log("Active Names", updatedActiveList);
+            
+                } catch (error) {
+                  console.log(error);
                 }
-            })
-            .then(function (response) {
-                console.log("Active", response.data.data)
-                setCampList(response.data.data);
-                setActiveId(response.data.product_id)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+            };
+            fetchActiveData();
+            
         })
         .catch(function (error) {
             console.log(error);
@@ -511,6 +523,8 @@ const CampaignManage = () => {
         getPendingProduct()
         getActiveProduct()
     }, [])
+
+    console.log("CampList", approvedList);
 
   return (
     <>

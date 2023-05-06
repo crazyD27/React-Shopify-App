@@ -33,18 +33,15 @@ const CampaignTable = ({
         <tr className='headings'>
           <th>Campaign Name</th>
           {!approvedButtons && (<th>Products</th>)}
-          {approved && (
-            <th>Influencer</th>
-          )}
+          {approved && (<th>Influencer</th>)}
+          
           {!approvedButtons && (
             <>
             <th>Coupons</th>
             <th>Discount</th>
             </>
           )}
-          
           <th>Actions</th>
-          
         </tr>
         {campList?.map((name, i) => {
           return (
