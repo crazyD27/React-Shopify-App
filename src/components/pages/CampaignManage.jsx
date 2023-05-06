@@ -60,12 +60,12 @@ const CampaignManage = () => {
               const [influencerResponse, approvalResponse] = await Promise.all([
                 axios.get(API.BASE_URL + 'influencer/list/', {
                   headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                   }
                 }),
                 axios.get(API.BASE_URL + 'vendor_approval/', {
                   headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                   }
                 })
               ]);
@@ -100,12 +100,12 @@ const CampaignManage = () => {
               const [influencerResponse, activeResponse] = await Promise.all([
                 axios.get(API.BASE_URL + 'influencer/list/', {
                   headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                   }
                 }),
                 axios.get(API.BASE_URL + 'active/', {
                   headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                   }
                 })
               ]);
@@ -137,7 +137,7 @@ const CampaignManage = () => {
         
         // axios.get(API.BASE_URL + 'active/',{
         //     headers: {
-        //         Authorization: `Token ${token}`
+        //         Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
         //     }
         // })
         // .then(function (response) {
@@ -151,7 +151,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -165,7 +165,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -177,7 +177,7 @@ const CampaignManage = () => {
 
         axios.get(API.BASE_URL + 'draft/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -193,7 +193,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -223,7 +223,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
         }})
         .then(function (response) {
             console.log("Single Market Data" ,response.data.data)
@@ -252,7 +252,7 @@ const CampaignManage = () => {
             product_discount: prodDiscount
         },{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -260,14 +260,14 @@ const CampaignManage = () => {
             toast.success("Campaign Edited!");
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                 }
             })
             .then(function (response) {
                 setCampList(response.data.data);
                 axios.get(API.BASE_URL + 'active/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                     }
                 })
                 .then(function (response) {
@@ -280,7 +280,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'pending/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                     }
                 })
                 .then(function (response) {
@@ -293,7 +293,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'product/list/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                     }
                 })
                 .then(function (response) {
@@ -305,7 +305,7 @@ const CampaignManage = () => {
         
                 axios.get(API.BASE_URL + 'draft/list/',{
                     headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                     }
                 })
                 .then(function (response) {
@@ -322,7 +322,7 @@ const CampaignManage = () => {
     
             axios.get(API.BASE_URL + 'pending/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                 }
             })
             .then(function (response) {
@@ -377,7 +377,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.post(API.BASE_URL + 'vendor/accept/' + value + '/' + idValue + '/',{},{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -391,12 +391,12 @@ const CampaignManage = () => {
                   const [influencerResponse, approvalResponse] = await Promise.all([
                     axios.get(API.BASE_URL + 'influencer/list/', {
                       headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                       }
                     }),
                     axios.get(API.BASE_URL + 'vendor_approval/', {
                       headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                       }
                     })
                   ]);
@@ -427,7 +427,7 @@ const CampaignManage = () => {
             fetchData();
             axios.get(API.BASE_URL + 'active/',{
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                 }
             })
             .then(function (response) {
@@ -450,7 +450,7 @@ const CampaignManage = () => {
         setLoading(true);
         axios.post(API.BASE_URL + 'vendor/decline/' + value + '/' + idValue + '/',{},{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -465,12 +465,12 @@ const CampaignManage = () => {
                   const [influencerResponse, approvalResponse] = await Promise.all([
                     axios.get(API.BASE_URL + 'influencer/list/', {
                       headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                       }
                     }),
                     axios.get(API.BASE_URL + 'vendor_approval/', {
                       headers: {
-                        Authorization: `Token ${token}`
+                        Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
                       }
                     })
                   ]);

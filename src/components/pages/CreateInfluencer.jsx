@@ -31,7 +31,7 @@ const CreateInfluencer = () => {
     const [loading, setLoading] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [checkboxStates, setCheckboxStates] = useState({});
-    const [selectedCouponProducts, setSelectedCouponProducts] = useState([]);
+    const [selectedCouponProducts, setSelectedCouponProducts] = useState({});
     const [productUrl, setProductUrl] = useState([]);
     const [selectedCoupons, setSelectedCoupons] = useState([]);
     const [prevCouponClicked, setPrevCouponClicked] = useState('');
@@ -82,20 +82,14 @@ const CreateInfluencer = () => {
         setInfluencerVisit('');
         setProductIds([]);
         setProductDetails([]);
-        setSelectedRows([]);
-        setCheckboxStates(prevStates => {
-            const newState = {};
-            for (const [key, value] of Object.entries(prevStates)) {
-              newState[key] = false;
-            }
-            return newState;
-          });
-          setInfluencerList(prevList => prevList.map(influencer => ({ ...influencer, checked: false })));
     };
 
     const handleContinue = (i) => {
         const checkboxStateValues = Object.values(checkboxStates);
+        console.log("checkboxStateValues", checkboxStateValues)
+        setSelectedCouponProducts(checkboxStateValues)
         const allUnchecked = checkboxStateValues.every(value => !value);
+        console.log("allUnchecked", allUnchecked)
 
         if (allUnchecked) {
             toast.warn('Please select at least one influencer');
@@ -107,7 +101,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -155,7 +149,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -168,7 +162,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -214,7 +208,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -291,7 +285,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }
         })
         .then(function (response) {
@@ -376,7 +370,7 @@ const CreateInfluencer = () => {
                   products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
-                    Authorization: `Token ${token}`,
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`,
                   },
                 })
                 .then((response) => {
@@ -398,17 +392,22 @@ const CreateInfluencer = () => {
         }
     }, [productName, token]);
 
-    const handleCheckboxChange = (event, row, index) => {
+    const handleCheckboxChange = (event, row, id) => {
         const checked = event.target.checked;
-        setCheckboxStates({
-            ...checkboxStates,
-            [index]: checked
-          });
         setIsChecked(checked);
-        if (event.target.checked) {
+      
+        setCheckboxStates({
+          ...checkboxStates,
+          [id]: checked
+        });
+      
+        if (checked) {
           setSelectedRows([...selectedRows, row]);
         } else {
-          setSelectedRows(selectedRows.filter(selectedRow => selectedRow !== row));
+          const updatedRows = selectedRows.filter(selectedRow => selectedRow.id !== row.id);
+          setSelectedRows(updatedRows);
+          const { [id]: removedIndex, ...updatedStates } = checkboxStates;
+          setCheckboxStates(updatedStates);
         }
     };
 
@@ -425,10 +424,10 @@ const CreateInfluencer = () => {
     useEffect(() => {
         const initialStates = {};
         influencerList.forEach((list, i) => {
-          initialStates[i] = false;
+            initialStates[list.id] = false;
         });
         setCheckboxStates(initialStates);
-      }, [influencerList]);
+    }, [influencerList]);
 
     useEffect(() => {
         setPrevCouponClicked(couponClicked);
@@ -448,7 +447,7 @@ const CreateInfluencer = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
           }
         })
         .then(function (response) {
@@ -475,7 +474,7 @@ const CreateInfluencer = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
           }
         })
         .then(function (response) {
@@ -494,7 +493,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -502,7 +501,15 @@ const CreateInfluencer = () => {
                 setSelectedDate(response.data.data[0].date);
                 setInfluenceOffer(response.data.data[0].offer);
                 setInfluencerVisit(response.data.data[0].influencer_visit);
-                setUserData(response.data.data[0])
+                setUserData(response.data.data[0]);
+                
+                const influencerNames = response.data.data[0].influencer_name;
+                console.log("influencerNamesssss", influencerNames);
+                const filteredInfluencers = influencerList.filter(influencer =>
+                    influencerNames.includes(influencer.id) && !selectedRows.find(row => row.id === influencer.id)
+                );
+                setSelectedRows(filteredInfluencers);
+                console.log("filteredInfluencers", filteredInfluencers);
                 const products = response.data.data[0].product;
                 const productNames = products.map(product => product.product_name);
                 const productIds = products.map(product => product.product_id);
@@ -510,18 +517,28 @@ const CreateInfluencer = () => {
                 if(productName !== null) {
                     setProductName(productNames);
                 }
-				setInfluenceFee(response.data.data[0].influencer_fee)
-                setCampaignDesc(response.data.data[0].description)
+                setInfluenceFee(response.data.data[0].influencer_fee);
+                setCampaignDesc(response.data.data[0].description);
                 setProductIds(productIds);
                 setSelectedCouponNames(couponNames);
-                setSelectedCouponAmounts(response.data.data[0].product)
+                setSelectedCouponAmounts(response.data.data[0].product);
+    
+                const initialStates = {};
+                influencerList.forEach((list) => {
+                    initialStates[list.id] = false;
+                });
+                filteredInfluencers.forEach((influencer) => {
+                    initialStates[influencer.id] = true;
+                });
+                setCheckboxStates(initialStates);
+    
             })
             .catch(function (error) {
                 console.log(error)
             })
         }
-    },[id])
-
+    }, [id, influencerList]);
+    
     console.log("influencerVisit", influencerVisit);
     console.log("isVisitChecked", isVisitChecked);
     console.log("Details", selectedCouponAmounts);
@@ -531,6 +548,7 @@ const CreateInfluencer = () => {
     console.log("checkboxStates", checkboxStates);
     console.log("isChecked", isChecked);
     console.log("selectedRows", selectedRows);
+    console.log("selectedCouponProducts", selectedCouponProducts)
 
 
   return (
@@ -548,20 +566,20 @@ const CreateInfluencer = () => {
                         <h3>Influencer List</h3>
                         {influencerList.length > 0 ? (
                             <div className='influencer-list-main'>
-                            {influencerList?.map((list, i) => (
-                                <div className='influencer-list-container d-flex align-items-center justify-content-between'>
-                                    <div className='d-flex align-items-center col-4'>
-                                        <input type="checkbox" checked={checkboxStates[i] || false} onChange={event => handleCheckboxChange(event, list, i)} />
-                                        <img src={list.image} alt='profile-pic' />
-                                        <div className='ms-4'>
-                                            <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
-                                            <span>@{list.username}</span>
+                                {influencerList?.map((list, i) => (
+                                    <div className='influencer-list-container d-flex align-items-center justify-content-between'>
+                                        <div className='d-flex align-items-center col-4'>
+                                            <input type="checkbox" checked={checkboxStates[list.id] || false} onChange={event => handleCheckboxChange(event, list, list.id)} />
+                                            <img src={list.image} alt='profile-pic' />
+                                            <div className='ms-4'>
+                                                <p className='d-flex align-items-center'>{list.fullname} {list.isverified === true ? <img src={Verified} alt='verified' style={{width: 18, height: 'fit-content', marginLeft: 7}} /> : ""}</p>
+                                                <span>@{list.username}</span>
+                                            </div>
                                         </div>
+                                        <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
+                                        <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
                                     </div>
-                                    <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
-                                    <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
-                                </div>
-                            ))}
+                                ))}
                             </div>
                         ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
                         <button onClick={handleContinue} className='button button-blue'>
@@ -683,11 +701,6 @@ const CreateInfluencer = () => {
                             </div>
                         )}
 
-                        <div className="input-container d-flex flex-column mb-4 influen-list">
-                            <label className="mb-3">Influencer from the list.</label>
-                            <textarea name="" id="" cols="30" rows="2" value={selectedUsernames} disabled></textarea>
-                        </div>
-
                         <div className="input-container d-flex flex-column mb-4">
                             <label className="mb-3">Description</label>
                             <textarea
@@ -699,6 +712,22 @@ const CreateInfluencer = () => {
                                 // value={prodDesc.map((desc) => desc.description).join('\n')}
                                 style={{ color: '#666' }}
                             ></textarea>
+                        </div>
+
+                        <div className="input-container d-flex flex-column mb-4 influen-list">
+                            <label className="mb-3">Influencer from the list.</label>
+                            <div className='selected-influencers'>
+                                <ul>
+                                    {selectedRows?.map((influ) => {
+                                        return(
+                                            <li>
+                                                <img src={influ.image} alt="influencer-image" style={{marginRight: 15}} />
+                                                {influ.username}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
                         </div>
                     
                         <div className="input-container d-flex flex-column mb-4 prod-coupons w-100">
@@ -802,13 +831,13 @@ const CreateInfluencer = () => {
                                                             }
                                                         };
                                                         return (
-                                                        <p
+                                                            <p
                                                             key={coupon}
                                                             className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
                                                             onClick={handleClick}
-                                                        >
-                                                            {coupon} - {product.amount[i].substring(1)}
-                                                        </p>
+                                                            >
+                                                            {coupon} - {product.discout_type == 'fixed_amount' && "$"}{Math.abs(parseInt(product.amount[i]))}{product.discout_type != 'fixed_amount' && "%"}
+                                                            </p>
                                                         );
                                                     })
                                                 ) : <h5 className='fw-light mb-0 ms-2'>No Coupons</h5>}

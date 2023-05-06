@@ -85,6 +85,32 @@
         }
     }
 
+    .selected-influencers {
+        ul {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            max-height: 100px;
+            overflow-y: scroll;
+            li {
+                font-size: 1vw;
+                color: #2657b3;
+                margin-bottom: 20px;
+                font-weight: bold;
+                img {
+                    border-radius: 50%;
+                    height: 50px;
+                    width: 50px;
+                    object-fit: contain;
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
     .coupons-list {
         width: 700px;
                 overflow-x: scroll;
