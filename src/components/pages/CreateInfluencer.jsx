@@ -101,7 +101,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                    Authorization: `Token ${token}`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -149,7 +149,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -162,7 +162,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -208,7 +208,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -251,6 +251,9 @@ const CreateInfluencer = () => {
             else if(error.response.data.product) {
                 toast.warn("Please selecta any Product.");
             }
+            else if(error.response.data.influencer_fee) {
+                toast.warn("Please add a fee for Influencer.");
+            }
             else if(error.response.data.product_discount) {
                 toast.warn("Please select any value of Product Discount.");
             }
@@ -285,7 +288,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -327,6 +330,9 @@ const CreateInfluencer = () => {
             }
             else if(error.response.data.product) {
                 toast.warn("Please selecta any Product.");
+            }
+            else if(error.response.data.influencer_fee) {
+                toast.warn("Please add a fee for Influencer.");
             }
             else if(error.response.data.product_discount) {
                 toast.warn("Please select any value of Product Discount.");
@@ -370,7 +376,7 @@ const CreateInfluencer = () => {
                   products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
-                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`,
+                    Authorization: `Token ${token}`,
                   },
                 })
                 .then((response) => {
@@ -447,7 +453,7 @@ const CreateInfluencer = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+            Authorization: `Token ${token}`
           }
         })
         .then(function (response) {
@@ -474,7 +480,7 @@ const CreateInfluencer = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+            Authorization: `Token ${token}`
           }
         })
         .then(function (response) {
@@ -493,7 +499,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                    Authorization: `Token ${token}`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);

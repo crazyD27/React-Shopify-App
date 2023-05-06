@@ -42,7 +42,7 @@ const SideBar = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
             headers: {
-                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -58,7 +58,7 @@ const SideBar = () => {
         const intervalId = setInterval(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
             headers: {
-                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -90,7 +90,7 @@ const SideBar = () => {
     const handleClearNotifications = () => {
         axios.get(API.BASE_URL + 'change/status/',{
             headers: {
-                Authorization: `Token b43433d7a2ec93228d1674e3c03bc4a02fd9840b`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
