@@ -34,6 +34,8 @@ const CouponList = () => {
     const [productIds, setProductIds] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [filterValue, setFilterValue] = useState("");
+    const [selectedProductNames, setSelectedProductNames] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
 
     const handleCouponDesc = (event) => {
         setCouponDesc(event.target.value);
@@ -162,23 +164,30 @@ const CouponList = () => {
     const getSingleCoupon = (value, event) => {
         event.preventDefault();
         setLoading(true);
-        axios.get(API.SHOPIFY_URL +  'single/data/?price=' + value, {
-            headers: {
-                Authorization: `Token ${token}`
-        }})
+        axios.get(API.SHOPIFY_URL + 'single/data/?price=' + value, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
         .then(function (response) {
-            console.log("Single Coupon", response.data);
-            setGetCouponInfo(response.data)
-            setGetCoupon(true);
-            setCouponDesc(response.data.title)
-            setDiscountType(response.data.discount_type)
-            setCouponAmount(response.data.amount.substring(1))
+          console.log("Single Coupon", response.data);
+          setGetCouponInfo(response.data);
+          setGetCoupon(true);
+          setCouponDesc(response.data.title);
+          setDiscountType(response.data.discount_type);
+          setCouponAmount(response.data.amount.substring(1));
         })
         .catch(function (error) {
-            console.log(error);
+          console.log(error);
         })
         .finally(() => setLoading(false));
     }
+
+    useEffect(() => {
+        const productIds = getCouponInfo?.product_name || [];
+        const selectedProducts = prodList && prodList.filter(prod => productIds.includes(prod.id)) || [];
+        setSelectedProductNames(selectedProducts.map(prod => prod.title));
+    }, [getCouponInfo, prodList]);
 
     const couponCreateShow = () => {
         setCouponList(true)
@@ -261,6 +270,7 @@ const CouponList = () => {
     };
 
     console.log("productIds", productIds.toString())
+    console.log("showList", selectedProductNames)
 
     return (
     <>
@@ -444,6 +454,47 @@ const CouponList = () => {
                         <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
                     </button>
                     <form action="">
+                    <div className="input-container tracking-container" style={{padding: 0}}>
+                        <label>Products Name</label>
+                        <input
+                            type="text"
+                            placeholder={prodList?.length > 0 ? "---Select an option---" : "---No Products Available---"}
+                            onClick={() => setShowList(true)}
+                            value={selectedProductNames.join(', ')}
+                        />
+                        {showList && (
+                            <ul>
+                            {prodList?.map((name, i) => (
+                                    <li
+                                    key={i}
+                                    onClick={() => {
+                                        if (!productName.includes(name.title)) {
+                                            setProductName((prevValues) => [...prevValues, name.title]);
+                                            setProductIds((prevIds) => [...prevIds, name.id]);
+                                            handleClick(name.title, name.id);
+                                        }
+                                        if (selectedProductNames.includes(name.title)) {
+                                            setSelectedProductNames((prevValues) =>
+                                                prevValues.filter((value) => value !== name.title)
+                                            );
+                                            setProductIds((prevIds) =>
+                                                prevIds.filter((value) => value !== name.id)
+                                            );
+                                        } else {
+                                            setSelectedProductNames((prevValues) =>
+                                                [...prevValues, name.title]
+                                            );
+                                            setProductIds((prevIds) => [...prevIds, name.id]);
+                                        }
+                                    }}
+                                >
+                                    {name.title}
+                                </li>
+                                ))}
+                            </ul>
+                        )}
+                        </div>
+
                         <div className="input-container">
                             <label>Coupon</label>
                             <input type="text" value={couponDesc} onChange={handleCouponDesc} />
