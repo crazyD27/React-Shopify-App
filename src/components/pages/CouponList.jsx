@@ -27,6 +27,7 @@ const CouponList = () => {
     const [couponDesc, setCouponDesc] = useState('');
     const [discountType, setDiscountType] = useState('');
     const [couponAmount, setCouponAmount] = useState('');
+    const [couponStatus, setCouponStatus] = useState('');
     const [loading, setLoading] = useState(false);
     const [prodList, setProdList] = useState('');
     const [showList, setShowList] = useState(false);
@@ -161,6 +162,45 @@ const CouponList = () => {
         .finally(() => setLoading(false));
     }
 
+    const editCouponProducts = (value, event) => {
+        event.preventDefault();
+        setLoading(true);
+        axios.post(API.SHOPIFY_URL +  'particular/edit/?price=' + value, {
+            discount_code: couponDesc,
+            discount_type: discountType,
+            amount: couponAmount,
+            product_id: productIds.toString()
+        }, {
+            headers: {
+                Authorization: `Token ${token}`
+        }})
+        .then(function (response) {
+            console.log("Coupon Edited", response);
+            toast.success("Coupon Edited Successfully");
+            setCouponDesc('')
+            setDiscountType('')
+            setCouponAmount('')
+            setProductIds('')
+            axios.get(API.SHOPIFY_URL +  'coupon/list/',{
+                headers: {
+                    Authorization: `Token ${token}`
+            }})
+            .then(function (response) {
+                console.log("Coupon List", response);
+                setCouponData(response.data.coupon);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            couponCross()
+        })
+        .catch(function (error) {
+            console.log(error);
+            toast.warn("Fields should not be empty!");
+        })
+        .finally(() => setLoading(false));
+    }
+
     const getSingleCoupon = (value, event) => {
         event.preventDefault();
         setLoading(true);
@@ -176,6 +216,7 @@ const CouponList = () => {
           setCouponDesc(response.data.title);
           setDiscountType(response.data.discount_type);
           setCouponAmount(response.data.amount.substring(1));
+          setCouponStatus(response.data.status);
         })
         .catch(function (error) {
           console.log(error);
@@ -188,6 +229,11 @@ const CouponList = () => {
         const selectedProducts = prodList && prodList.filter(prod => productIds.includes(prod.id)) || [];
         setSelectedProductNames(selectedProducts.map(prod => prod.title));
     }, [getCouponInfo, prodList]);
+      
+    useEffect(() => {
+        const selectedProductIds = prodList && prodList.filter(prod => selectedProductNames.includes(prod.title)).map(prod => prod.id) || [];
+        setProductIds(selectedProductIds);
+    }, [selectedProductNames, prodList]);
 
     const couponCreateShow = () => {
         setCouponList(true)
@@ -269,7 +315,7 @@ const CouponList = () => {
         }
     };
 
-    console.log("productIds", productIds.toString())
+    console.log("productIds", productIds)
     console.log("showList", selectedProductNames)
 
     return (
@@ -279,18 +325,10 @@ const CouponList = () => {
             <h4 className='mb-4'>Coupon List</h4>
             {couponData?.length > 0 ? (
                 <div className="filters d-flex justify-content-between align-items-center">
-                <div className="input-container d-flex flex-column">
+                <div className="input-container d-flex flex-column" style={{width: 200}}>
                     <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
                     <div className="search-button d-flex align-items-center">
                         <input type="text" placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
-                        <button type='button'>Filter</button>
-                    </div>
-                </div>
-                <div className="input-container d-flex flex-column">
-                    <label className='w-100 text-dark mb-3'>Search</label>
-                    <div className="search-button d-flex align-items-center">
-                        <input type="text" placeholder='Search coupons' />
-                        <img src={Search} alt='search' />
                     </div>
                 </div>
             </div>
@@ -454,47 +492,48 @@ const CouponList = () => {
                         <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
                     </button>
                     <form action="">
-                    <div className="input-container tracking-container" style={{padding: 0}}>
-                        <label>Products Name</label>
-                        <input
-                            type="text"
-                            placeholder={prodList?.length > 0 ? "---Select an option---" : "---No Products Available---"}
-                            onClick={() => setShowList(true)}
-                            value={selectedProductNames.join(', ')}
-                        />
-                        {showList && (
-                            <ul>
-                            {prodList?.map((name, i) => (
-                                    <li
-                                    key={i}
-                                    onClick={() => {
-                                        if (!productName.includes(name.title)) {
-                                            setProductName((prevValues) => [...prevValues, name.title]);
-                                            setProductIds((prevIds) => [...prevIds, name.id]);
-                                            handleClick(name.title, name.id);
-                                        }
-                                        if (selectedProductNames.includes(name.title)) {
-                                            setSelectedProductNames((prevValues) =>
-                                                prevValues.filter((value) => value !== name.title)
-                                            );
-                                            setProductIds((prevIds) =>
-                                                prevIds.filter((value) => value !== name.id)
-                                            );
-                                        } else {
-                                            setSelectedProductNames((prevValues) =>
-                                                [...prevValues, name.title]
-                                            );
-                                            setProductIds((prevIds) => [...prevIds, name.id]);
-                                        }
-                                    }}
-                                >
-                                    {name.title}
-                                </li>
-                                ))}
-                            </ul>
+                        {couponStatus == 2 && (
+                            <div className="input-container tracking-container" style={{padding: 0}}>
+                                <label>Products Name</label>
+                                <input
+                                    type="text"
+                                    placeholder={prodList?.length > 0 ? "---Select an option---" : "---No Products Available---"}
+                                    onClick={() => setShowList(true)}
+                                    value={selectedProductNames.join(', ')}
+                                />
+                                {showList && (
+                                    <ul>
+                                    {prodList?.map((name, i) => (
+                                            <li
+                                            key={i}
+                                            onClick={() => {
+                                                if (!productName.includes(name.title)) {
+                                                    setProductName((prevValues) => [...prevValues, name.title]);
+                                                    // setProductIds((prevIds) => [...prevIds, name.id]);
+                                                    handleClick(name.title, name.id);
+                                                }
+                                                if (selectedProductNames.includes(name.title)) {
+                                                    setSelectedProductNames((prevValues) =>
+                                                        prevValues.filter((value) => value !== name.title)
+                                                    );
+                                                    setProductIds((prevIds) =>
+                                                        prevIds.filter((value) => value !== name.id)
+                                                    );
+                                                } else {
+                                                    setSelectedProductNames((prevValues) =>
+                                                        [...prevValues, name.title]
+                                                    );
+                                                    // setProductIds((prevIds) => [...prevIds, name.id]);
+                                                }
+                                            }}
+                                        >
+                                            {name.title}
+                                        </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
                         )}
-                        </div>
-
                         <div className="input-container">
                             <label>Coupon</label>
                             <input type="text" value={couponDesc} onChange={handleCouponDesc} />
@@ -511,7 +550,12 @@ const CouponList = () => {
                             <label>Amount</label>
                             <input type="number" onWheel={(e) => e.target.blur()} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
-                        <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                        {couponStatus == 1 ? (
+                            <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                        ) : (
+                            <button onClick={(event) => {editCouponProducts(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                        )}
+                        
                     </form>
                     </div>
                 </div>
