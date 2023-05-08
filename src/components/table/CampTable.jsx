@@ -26,6 +26,7 @@ const CampaignTable = ({
   showButtons = true,
   approved = true,
   approvedButtons = true,
+  declineInflu = true,
 }) => {
   return (
     <table className='w-100 campaign'>
@@ -41,7 +42,9 @@ const CampaignTable = ({
             <th>Discount</th>
             </>
           )}
-          <th>Actions</th>
+          {declineInflu && (
+            <th>Actions</th>
+          )}
         </tr>
         {campList?.map((name, i) => {
           return (
@@ -72,64 +75,66 @@ const CampaignTable = ({
                     ).filter(Boolean).join(", ")}
                 </td>
                 )}
-               {showButtons == true ? (
+               {declineInflu && (
+                showButtons == true ? (
+                  <td>
+                     <button
+                     onClick={(event) => {
+                         getSingleMarket(name.campaignid_id, event);
+                     }}
+                     style={{ marginRight: 15 }}
+                     >
+                     <FontAwesomeIcon
+                         icon={faPenToSquare}
+                         style={{ color: "#fff", width: "15px", height: "15px" }}
+                     />
+                     </button>
+                     <button onClick={() => { deleteConfirm(name.campaignid_id) }}>
+                     <img src={Delete} alt='delete-icon' />
+                     </button>
+                 </td>
+                ):
+                (
                  <td>
-                    <button
-                    onClick={(event) => {
-                        getSingleMarket(name.campaignid_id, event);
-                    }}
-                    style={{ marginRight: 15 }}
-                    >
-                    <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        style={{ color: "#fff", width: "15px", height: "15px" }}
-                    />
-                    </button>
-                    <button onClick={() => { deleteConfirm(name.campaignid_id) }}>
-                    <img src={Delete} alt='delete-icon' />
-                    </button>
-                </td>
-               ):
-               (
-                <td>
-                    <button
-                    type="button"
-                    style={{ marginRight: 15 }}
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Accept"
-                    onClick={() => {handleVendorAccept(name.campaignid_id, name.influencer_name)}}
-                  >
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      style={{
-                        color: "#fff",
-                        width: "15px",
-                        height: "15px",
-                      }}
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    style={{ marginRight: 15 }}
-                    title="Decline"
-                    onClick={() => {handleVendorDecline(name.campaignid_id, name.influencer_name)}}
-                  >
-                    <FontAwesomeIcon
-                      icon={faXmark}
-                      style={{
-                        color: "#fff",
-                        width: "15px",
-                        height: "15px",
-                      }}
-                    />
-                  </button>
-                </td>
+                     <button
+                     type="button"
+                     style={{ marginRight: 15 }}
+                     data-toggle="tooltip"
+                     data-placement="top"
+                     title="Accept"
+                     onClick={() => {handleVendorAccept(name.campaignid_id, name.influencer_name)}}
+                   >
+                     <FontAwesomeIcon
+                       icon={faCheck}
+                       style={{
+                         color: "#fff",
+                         width: "15px",
+                         height: "15px",
+                       }}
+                     />
+                   </button>
+                   <button
+                     type="button"
+                     data-toggle="tooltip"
+                     data-placement="top"
+                     style={{ marginRight: 15 }}
+                     title="Decline"
+                     onClick={() => {handleVendorDecline(name.campaignid_id, name.influencer_name)}}
+                   >
+                     <FontAwesomeIcon
+                       icon={faXmark}
+                       style={{
+                         color: "#fff",
+                         width: "15px",
+                         height: "15px",
+                       }}
+                     />
+                   </button>
+                 </td>
+                 
+                )
                 
-               )
-               }
+               )}
                 </tr>
                 {getDeleteConfirm && 
                     <div className="get-coupon">

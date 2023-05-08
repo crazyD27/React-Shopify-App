@@ -34,6 +34,8 @@ const CampaignManage = () => {
     const [productNames, setProductNames] = useState([]);
     const [pendingNames, setPendingNames] = useState([]);
     const [activeNames, setActiveNames] = useState([]);
+    const [vendorDecline, setVendorDecline] = useState([]);
+    const [vendorDeclineList, setVendorDeclineList] = useState([]);
     const [getId, setGetId] = useState('');
     const token = localStorage.getItem('Token');
     const navigate = useNavigate();
@@ -135,6 +137,86 @@ const CampaignManage = () => {
         
         fetchActiveData();
 
+        const fetchDeclineData = async () => {
+            try {
+              const [influencerResponse, declineResponse] = await Promise.all([
+                axios.get(API.BASE_URL + 'influencer/list/', {
+                  headers: {
+                    Authorization: `Token ${token}`
+                  }
+                }),
+                axios.get(API.BASE_URL + 'vendor_decline/',{
+                    headers: {
+                        Authorization: `Token ${token}`
+                    }
+                })
+              ]);
+        
+              console.log("Influencer List", influencerResponse.data.data);
+              setInfluencerList(influencerResponse.data.data);
+        
+              console.log("Decline List", declineResponse.data.data);
+              setVendorDecline(declineResponse.data.data);
+        
+              const updatedDeclinedList = declineResponse.data.data.map((approved) => {
+                const matchingInfluencer = influencerResponse.data.data.find(
+                  (influencer) => influencer.id === approved.influencer_name
+                );
+                if (matchingInfluencer) {
+                  return { ...approved, username: matchingInfluencer.username };
+                }
+                return approved;
+              });
+              setApprovedList(updatedDeclinedList);
+              console.log("Approved Names", updatedDeclinedList);
+        
+            } catch (error) {
+              console.log(error);
+            }
+        };
+        
+        fetchDeclineData();
+
+        const fetchUpdatedDeclineData = async () => {
+            try {
+              const [influencerResponse, updatedDeclineResponse] = await Promise.all([
+                axios.get(API.BASE_URL + 'influencer/list/', {
+                  headers: {
+                    Authorization: `Token ${token}`
+                  }
+                }),
+                axios.get(API.BASE_URL + 'vendor_decline/', {
+                  headers: {
+                    Authorization: `Token ${token}`
+                  }
+                })
+              ]);
+        
+              console.log("Influencer List", influencerResponse.data.data);
+              setInfluencerList(influencerResponse.data.data);
+        
+              console.log("Active List", updatedDeclineResponse.data.data);
+              setVendorDeclineList(updatedDeclineResponse.data.data);
+        
+              const updatedDeclineList = updatedDeclineResponse.data.data.map((approved) => {
+                const matchingInfluencer = influencerResponse.data.data.find(
+                  (influencer) => influencer.id === approved.influencer_name
+                );
+                if (matchingInfluencer) {
+                  return { ...approved, username: matchingInfluencer.username };
+                }
+                return approved;
+              });
+              setVendorDeclineList(updatedDeclineList);
+              console.log("Active Names", updatedDeclineList);
+        
+            } catch (error) {
+              console.log(error);
+            }
+        };
+        
+        fetchUpdatedDeclineData();
+
         axios.get(API.BASE_URL + 'pending/',{
             headers: {
                 Authorization: `Token ${token}`
@@ -173,6 +255,8 @@ const CampaignManage = () => {
         .catch(function (error) {
             console.log(error);
         })
+
+        
     }, [token])
 
     function deleteCampaign(value) {
@@ -546,6 +630,9 @@ const CampaignManage = () => {
                 <Nav.Item>
                     <Nav.Link eventKey="four">Approved Campaigns</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="five">Declined Campaigns</Nav.Link>
+                </Nav.Item>
             </Nav>
             </Col>
             <Col sm={12}>
@@ -649,6 +736,40 @@ const CampaignManage = () => {
                     {approvedList?.length > 0 ? (
                         <CampaignTable 
                             campList={approvedList}
+                            getSingleMarket={getSingleMarket}
+                            deleteConfirm={deleteConfirm}
+                            getDeleteConfirm={getDeleteConfirm}
+                            getMarket={getMarket}
+                            couponCross={couponCross}
+                            getMarketInfo={getMarketInfo}
+                            handleProdDiscount={handleProdDiscount}
+                            prodDiscount={prodDiscount}
+                            handleInfluenceVisit={handleInfluenceVisit}
+                            influenceVisit={influenceVisit}
+                            editCampaign={editCampaign}
+                            deleteCampaign={deleteCampaign}
+                            getId={getId}
+                            handleCampName={handleCampName}
+                            campName={campName}
+                            handleProdOffer={handleProdOffer}
+                            showButtons={false}
+                            handleVendorAccept={handleVendorAccept}
+                            handleVendorDecline={handleVendorDecline}
+                        />
+                    ) 
+                    : 
+                    (
+                        <>
+                    <h5 className='mt-4 text-center'>No Campaigns in Draft right now</h5>
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    </>
+                    )}
+                </Tab.Pane>
+                <Tab.Pane eventKey="five" className='campaign'>
+                    {vendorDeclineList?.length > 0 ? (
+                        <CampaignTable 
+                            campList={vendorDeclineList}
+                            declineInflu = {false}
                             getSingleMarket={getSingleMarket}
                             deleteConfirm={deleteConfirm}
                             getDeleteConfirm={getDeleteConfirm}
