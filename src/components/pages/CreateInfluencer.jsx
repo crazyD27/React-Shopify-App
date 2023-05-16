@@ -101,7 +101,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -149,7 +149,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -162,7 +162,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -208,7 +208,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -288,7 +288,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -376,7 +376,7 @@ const CreateInfluencer = () => {
                   products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
-                    Authorization: `Token ${token}`,
+                    Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`,
                   },
                 })
                 .then((response) => {
@@ -447,13 +447,13 @@ const CreateInfluencer = () => {
             campaign_name: campaignName,
             description: campaignDesc,
             offer: influenceOffer,
-            product_discount: productDetails,
+            product_discount: selectedCouponAmounts,
             influencer_fee: influenceFee,
             influencer_name: selectedUsersId.toString(),
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
           }
         })
         .then(function (response) {
@@ -480,7 +480,7 @@ const CreateInfluencer = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
           }
         })
         .then(function (response) {
@@ -499,7 +499,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -644,47 +644,50 @@ const CreateInfluencer = () => {
                         </div>
 
                         <div className="input-container test d-flex flex-column mb-4 drop">
-                            <label className="mb-3">Product</label>
-                            <input
-                            type="text"
-                            placeholder="---Select an option---"
-                            onClick={() => setShowList(!showList)}
-                            value={productName.filter(Boolean).join(', ')}
-                            />
-                            {showList && (
-                            <ul className='product-list'>
-                            {
-                                prodList?.length > 0 ? (
-                                    prodList?.map((name, i) => (
-                                        <li
-                                            key={i}
-                                            onClick={() => {
-                                                setProductName((prevValues) =>
-                                                    prevValues.includes(name.title)
-                                                    ? prevValues.filter((value) => value !== name.title)
-                                                    : [...prevValues, name.title]
-                                                );
-                                                setProductIds(prevIds =>
-                                                    prevIds.includes(name.id)
-                                                        ? prevIds.filter(value => value !== name.id)
-                                                        : [...prevIds, name.id]
-                                                );
-                                                setShowList(false);
-                                                if (productDetails.some(detail => detail.product_id === name.id)) {
-                                                    setProductDetails(productDetails.filter(detail => detail.product_id !== name.id));
-                                                }
-                                            }}
-                                        >
-                                            {name.title}
-                                        </li>
-                                        ))
-                                )
-                                :
-                                "No Products"
-                            }
+                    <label className="mb-3">Product</label>
+                    <input
+                        type="text"
+                        placeholder="---Select an option---"
+                        onClick={() => setShowList(!showList)}
+                        value={productName.filter(Boolean).join(", ")}
+                    />
+                    {showList && (
+                        <ul className="product-list">
+                        {prodList?.length > 0 ? (
+                            prodList?.map((name, i) => (
+                            <li
+                                key={i}
+                                onClick={() => {
+                                setProductName((prevValues) =>
+                                    prevValues.includes(name.title)
+                                    ? prevValues.filter((value) => value !== name.title)
+                                    : [...prevValues, name.title]
+                                );
+                                setProductIds((prevIds) =>
+                                    prevIds.includes(name.id)
+                                    ? prevIds.filter((value) => value !== name.id)
+                                    : [...prevIds, name.id]
+                                );
+                                setShowList(false);
+                                if (id?.length > 0) {
+                                    if (productDetails.some((detail) => detail.product_id === name.id)) {
+                                    setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
+                                    }
+                                    if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
+                                    setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
+                                    }
+                                }
+                                }}
+                            >
+                                {name.title}
+                            </li>
+                            ))
+                        ) : (
+                            "No Products"
+                        )}
                         </ul>
-                            )}
-                        </div>
+                    )}
+                </div>
 
                         {influenceOffer.length > 0 ? (
                             <div className="input-container d-flex flex-column mb-4">

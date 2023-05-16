@@ -49,7 +49,7 @@ const CampaignOver = () => {
         })
         axios.get(API.BASE_URL + 'user/id/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
         }})
         .then(function (response) {
             console.log("User ID", response);
