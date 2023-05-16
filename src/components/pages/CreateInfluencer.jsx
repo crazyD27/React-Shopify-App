@@ -447,7 +447,7 @@ const CreateInfluencer = () => {
             campaign_name: campaignName,
             description: campaignDesc,
             offer: influenceOffer,
-            product_discount: selectedCouponAmounts,
+            product_discount: productDetails,
             influencer_fee: influenceFee,
             influencer_name: selectedUsersId.toString(),
             date: selectedDate
