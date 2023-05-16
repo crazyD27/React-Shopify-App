@@ -307,7 +307,7 @@ const CreateCampaign = () => {
             campaign_name: campaignName,
             description: campaignDesc,
             offer: influenceOffer,
-            product_discount: selectedCouponAmounts,
+            product_discount: productDetails,
             influencer_fee: influenceFee,
             date: selectedDate
           },{

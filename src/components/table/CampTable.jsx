@@ -27,6 +27,7 @@ const CampaignTable = ({
   approved = true,
   approvedButtons = true,
   declineInflu = true,
+  showEdit = true
 }) => {
   return (
     <table className='w-100 campaign'>
@@ -78,17 +79,19 @@ const CampaignTable = ({
                {declineInflu && (
                 showButtons == true ? (
                   <td>
-                     <button
-                     onClick={(event) => {
-                         getSingleMarket(name.campaignid_id, event);
-                     }}
-                     style={{ marginRight: 15 }}
-                     >
-                     <FontAwesomeIcon
-                         icon={faPenToSquare}
-                         style={{ color: "#fff", width: "15px", height: "15px" }}
-                     />
-                     </button>
+                    {showEdit && (
+                       <button
+                       onClick={(event) => {
+                           getSingleMarket(name.campaignid_id, event);
+                       }}
+                       style={{ marginRight: 15 }}
+                       >
+                       <FontAwesomeIcon
+                           icon={faPenToSquare}
+                           style={{ color: "#fff", width: "15px", height: "15px" }}
+                       />
+                       </button>
+                    )}
                      <button onClick={() => { deleteConfirm(name.campaignid_id) }}>
                      <img src={Delete} alt='delete-icon' />
                      </button>

@@ -658,6 +658,7 @@ const CampaignManage = () => {
                             handleCampName={handleCampName}
                             campName={campName}
                             handleProdOffer={handleProdOffer}
+                            showEdit={false}
                         />
                     )
                     :
