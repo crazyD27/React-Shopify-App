@@ -167,7 +167,7 @@ const CampaignManage = () => {
                 }
                 return approved;
               });
-              setApprovedList(updatedDeclinedList);
+              setVendorDeclineList(updatedDeclinedList);
               console.log("Approved Names", updatedDeclinedList);
         
             } catch (error) {
