@@ -29,7 +29,7 @@ function App() {
       console.log(token);
       localStorage.setItem('shop_url', token)
       console.log('///////////////////////////////');
-    }, 4000)
+    }, 5500)
   }, [])
   console.log("NAMEEEEE", name)
   console.log("Image", image)
@@ -37,7 +37,7 @@ function App() {
     <div className="App">
       <Routing />
       <GoToTop />
-      <ToastContainer autoclose={3000} />
+      <ToastContainer autoclose={2000} />
     </div>
   );
 }
