@@ -644,50 +644,51 @@ const CreateInfluencer = () => {
                         </div>
 
                         <div className="input-container test d-flex flex-column mb-4 drop">
-                    <label className="mb-3">Product</label>
-                    <input
-                        type="text"
-                        placeholder="---Select an option---"
-                        onClick={() => setShowList(!showList)}
-                        value={productName.filter(Boolean).join(", ")}
-                    />
-                    {showList && (
-                        <ul className="product-list">
-                        {prodList?.length > 0 ? (
-                            prodList?.map((name, i) => (
-                            <li
-                                key={i}
-                                onClick={() => {
-                                setProductName((prevValues) =>
-                                    prevValues.includes(name.title)
-                                    ? prevValues.filter((value) => value !== name.title)
-                                    : [...prevValues, name.title]
-                                );
-                                setProductIds((prevIds) =>
-                                    prevIds.includes(name.id)
-                                    ? prevIds.filter((value) => value !== name.id)
-                                    : [...prevIds, name.id]
-                                );
-                                setShowList(false);
-                                if (id?.length > 0) {
-                                    if (productDetails.some((detail) => detail.product_id === name.id)) {
-                                    setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
-                                    }
-                                    if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
-                                    setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
-                                    }
-                                }
-                                }}
-                            >
-                                {name.title}
-                            </li>
-                            ))
-                        ) : (
-                            "No Products"
-                        )}
-                        </ul>
-                    )}
-                </div>
+                            <label className="mb-3">Product</label>
+                            <input
+                                type="text"
+                                placeholder="---Select an option---"
+                                onClick={() => setShowList(!showList)}
+                                value={productName.filter(Boolean).join(", ")}
+                            />
+                            {showList && (
+                                <ul className="product-list">
+                                {prodList?.length > 0 ? (
+                                    prodList?.map((name, i) => (
+                                    <li
+                                        key={i}
+                                        onClick={() => {
+                                        setProductName((prevValues) =>
+                                            prevValues.includes(name.title)
+                                            ? prevValues.filter((value) => value !== name.title)
+                                            : [...prevValues, name.title]
+                                        );
+                                        setProductIds((prevIds) =>
+                                            prevIds.includes(name.id)
+                                            ? prevIds.filter((value) => value !== name.id)
+                                            : [...prevIds, name.id]
+                                        );
+                                        if (productDetails.some((detail) => detail.product_id === name.id)) {
+                                            setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
+                                        }
+                                        setShowList(false);
+                                        if (id?.length > 0) {
+                                            
+                                            if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
+                                            setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
+                                            }
+                                        }
+                                        }}
+                                    >
+                                        {name.title}
+                                    </li>
+                                    ))
+                                ) : (
+                                    "No Products"
+                                )}
+                                </ul>
+                            )}
+                        </div>
 
                         {influenceOffer.length > 0 ? (
                             <div className="input-container d-flex flex-column mb-4">

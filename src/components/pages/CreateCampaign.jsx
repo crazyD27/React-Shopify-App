@@ -455,25 +455,26 @@ const CreateCampaign = () => {
                             <li
                                 key={i}
                                 onClick={() => {
-                                setProductName((prevValues) =>
-                                    prevValues.includes(name.title)
-                                    ? prevValues.filter((value) => value !== name.title)
-                                    : [...prevValues, name.title]
-                                );
-                                setProductIds((prevIds) =>
-                                    prevIds.includes(name.id)
-                                    ? prevIds.filter((value) => value !== name.id)
-                                    : [...prevIds, name.id]
-                                );
-                                setShowList(false);
-                                if (id?.length > 0) {
+                                    setProductName((prevValues) =>
+                                        prevValues.includes(name.title)
+                                        ? prevValues.filter((value) => value !== name.title)
+                                        : [...prevValues, name.title]
+                                    );
+                                    setProductIds((prevIds) =>
+                                        prevIds.includes(name.id)
+                                        ? prevIds.filter((value) => value !== name.id)
+                                        : [...prevIds, name.id]
+                                    );
                                     if (productDetails.some((detail) => detail.product_id === name.id)) {
-                                    setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
+                                        setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
                                     }
-                                    if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
-                                    setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
+                                    setShowList(false);
+                                    if (id?.length > 0) {
+                                        
+                                        if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
+                                            setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
+                                        }
                                     }
-                                }
                                 }}
                             >
                                 {name.title}

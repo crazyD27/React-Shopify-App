@@ -29,7 +29,7 @@ function App() {
       console.log(token);
       localStorage.setItem('shop_url', token)
       console.log('///////////////////////////////');
-    }, 3000)
+    }, 4000)
   }, [])
   console.log("NAMEEEEE", name)
   console.log("Image", image)
