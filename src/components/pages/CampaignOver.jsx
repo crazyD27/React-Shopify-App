@@ -23,7 +23,8 @@ const CampaignOver = () => {
 
     
     useEffect(() => {
-        console.log("TOKEN APIIII")
+        if(token) {
+            console.log("TOKEN APIIII")
         axios.post(API.BASE_URL + 'get/token/', {
             shop_name: localStorage.getItem('shop_url')
         })
@@ -59,6 +60,7 @@ const CampaignOver = () => {
         .catch(function (error) {
             console.log(error);
         })
+        }
 
     }, [])
 

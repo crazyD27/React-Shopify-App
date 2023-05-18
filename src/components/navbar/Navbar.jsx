@@ -21,26 +21,11 @@ const MenuBar = () => {
       <Container fluid>
         <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll" className='align-items-center'>
-            {/* <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form> */}
             <Nav
               className="ms-auto my-2 my-lg-0"
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              {/* <Link to="/dashboard">
-                <img src={Notification} alt='notification' />
-              </Link>
-              <Link to="/dashboard">
-                <img src={Message} alt='notification' />
-              </Link> */}
               <Link to="/dashboard">
                 <img src={User} alt='notification' />
                 <p>{userName}</p>

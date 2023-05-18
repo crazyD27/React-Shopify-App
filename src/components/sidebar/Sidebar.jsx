@@ -118,7 +118,7 @@ const SideBar = () => {
                     }}
                     />
                 </div>
-                <NavLink to="/overview" className='d-flex align-items-center mb-3 px-3 user'>
+                <NavLink to="/" className='d-flex align-items-center mb-3 px-3 user'>
                     {localStorage.getItem("Image") !=null ? (
                         <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     ):
@@ -132,9 +132,9 @@ const SideBar = () => {
                     className="me-auto my-2 my-lg-0"
                     style={{ maxHeight: '100px' }}
                     navbarScroll
-                    activeKey="/overview"
+                    activeKey="/"
                 >
-                    <NavLink to='/overview' className='text-white py-2'>
+                    <NavLink to='/' className='text-white py-2'>
                         <img src={CampaignOverview} className="me-2" alt='menu-img' />
                         Campaign Overview
                     </NavLink>
