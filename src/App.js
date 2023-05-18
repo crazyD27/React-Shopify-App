@@ -15,9 +15,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const {image, name} = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('Token')
   const location = useLocation();
   console.log('Current route:', location.pathname);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
   useEffect(() => {
     setTimeout(() => {
       console.log('///////////////////////////////');
@@ -35,6 +43,7 @@ function App() {
   console.log("Image", image)
   return (
     <div className="App">
+      {loading && <div className='loader'><span></span></div>}
       <Routing />
       <GoToTop />
       <ToastContainer autoclose={2000} />

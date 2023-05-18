@@ -8,6 +8,11 @@ import { API } from '../../config/Api';
 import SideBar from '../sidebar/Sidebar';
 
 // Images
+import Tracking from '../../assests/img/tracking.png';
+import Recruit from '../../assests/img/recruit.png';
+import Setting from '../../assests/img/settings.png';
+import Payments from '../../assests/img/payments.png';
+import Like from '../../assests/img/like.png';
 import Date from '../../assests/img/date.png';
 import Chat from '../../assests/img/chat.png';
 import Join from '../../assests/img/join.png';
@@ -15,46 +20,49 @@ import Question from '../../assests/img/question.png';
 
 const CampaignOver = () => {
     const {setUserToken, setInfluenceList, countCamp, setCountCamp} = useContext(UserContext);
-    const [loading, setLoading] = useState(false);
 
     
     useEffect(() => {
-        const fetchUserData = async () => {
-          try {
-            const response = await axios.post(API.BASE_URL + 'get/token/', {
-              shop_name: localStorage.getItem('shop_url')
-            });
+        setTimeout(() => {
+            console.log("TOKEN APIIII")
+        axios.post(API.BASE_URL + 'get/token/', {
+            shop_name: localStorage.getItem('shop_url')
+        })
+        .then(function (response) {
+            console.log("Shop Token", response);
             setUserToken(response.data.user_token);
-            localStorage.setItem('Token', response.data.user_token);
-    
-            const influencerResponse = await axios.get(API.BASE_URL + 'influencer/list/', {
-              headers: {
-                Authorization: `Token ${response.data.user_token}`
-              }
-            });
-            setInfluenceList(influencerResponse.data.data);
-    
-            const userIdResponse = await axios.get(API.BASE_URL + 'user/id/', {
-              headers: {
-                Authorization: `Token ${response.data.user_token}`
-              }
-            });
-            localStorage.setItem('User_ID', userIdResponse.data.user_id);
-            localStorage.setItem('User_Name', userIdResponse.data.username);
-    
-            setLoading(false); // API requests completed, hide the loader
-          } catch (error) {
+            localStorage.setItem("Token", response.data.user_token);
+
+            axios.get(API.BASE_URL + 'influencer/list/',{
+                headers: {
+                    Authorization: `Token ${response.data.user_token}`
+            }})
+            .then(function (response) {
+                console.log("Influencer List", response);
+                setInfluenceList(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        })
+        .catch(function (error) {
             console.log(error);
-          }
-        };
-    
-        const timer = setTimeout(() => {
-          console.log('TOKEN APIIII');
-          fetchUserData();
-        }, 5000);
-    
-        return () => clearTimeout(timer); // Cleanup the timer on component unmount
-      }, []);
+        })
+        axios.get(API.BASE_URL + 'user/id/',{
+            headers: {
+                Authorization: `Token ${token}`
+        }})
+        .then(function (response) {
+            console.log("User ID", response);
+            localStorage.setItem("User_ID", response.data.user_id)
+            localStorage.setItem("User_Name", response.data.username)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }, 5000)
+
+    }, [])
 
 
     const token = localStorage.getItem('Token')
@@ -80,7 +88,6 @@ const CampaignOver = () => {
   return (
     <>
     <div className="campaign-over p-3 page">
-        {loading && <div className='loader'><span></span></div>}
         <h2 className='text-left w-100 main-heading mt-3'>Welcome to <strong style={{color: '#2657b4'}}>Dashboard</strong></h2>
         {/* <MenuBar /> */}
         <div className="campaign-over-container d-flex flex-column justify-content-center align-items-center mt-4 w-100">
