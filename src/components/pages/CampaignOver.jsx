@@ -60,7 +60,7 @@ const CampaignOver = () => {
         .catch(function (error) {
             console.log(error);
         })
-    }, 4000)
+    }, 5000)
 
     }, [])
 
