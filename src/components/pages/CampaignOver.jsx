@@ -48,19 +48,21 @@ const CampaignOver = () => {
         .catch(function (error) {
             console.log(error);
         })
-        axios.get(API.BASE_URL + 'user/id/',{
-            headers: {
-                Authorization: `Token ${token}`
-        }})
-        .then(function (response) {
-            console.log("User ID", response);
-            localStorage.setItem("User_ID", response.data.user_id)
-            localStorage.setItem("User_Name", response.data.username)
-            localStorage.setItem("Profile_Image", response.data.url)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+        if(localStorage.getItem("Token")) {
+            axios.get(API.BASE_URL + 'user/id/',{
+                headers: {
+                    Authorization: `Token ${localStorage.getItem("Token")}`
+            }})
+            .then(function (response) {
+                console.log("User ID", response);
+                localStorage.setItem("User_ID", response.data.user_id)
+                localStorage.setItem("User_Name", response.data.username)
+                localStorage.setItem("Profile_Image", response.data.url)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
     }, 6000)
 
     }, [])
