@@ -56,6 +56,7 @@ const CampaignOver = () => {
             console.log("User ID", response);
             localStorage.setItem("User_ID", response.data.user_id)
             localStorage.setItem("User_Name", response.data.username)
+            localStorage.setItem("Profile_Image", response.data.url)
         })
         .catch(function (error) {
             console.log(error);

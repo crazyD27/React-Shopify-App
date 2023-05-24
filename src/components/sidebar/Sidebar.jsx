@@ -27,6 +27,7 @@ const SideBar = () => {
     const [shownotification, setShowNotification] = useState(false);
     const notificationsRef = useRef(null);
     const token = localStorage.getItem("Token");
+    const profile_image = localStorage.getItem("Profile_Image")
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
     };
@@ -120,7 +121,7 @@ const SideBar = () => {
                 </div>
                 <NavLink to="/" className='d-flex align-items-center mb-3 px-3 user'>
                     {localStorage.getItem("Image") !=null ? (
-                        <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
+                        <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     ):
                     <img src={User} alt='notification' style={{width: 45}} />}
                     
