@@ -146,7 +146,7 @@ function Profile() {
         <form className="profile-form d-flex flex-wrap justify-content-between mt-4">
             <div className="input-container d-flex flex-column mb-4">
                 <label>Username</label>
-                <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value)}} />
+                <input type="text" maxLength='30' value={userName} onChange={(e) => {setUserName(e.target.value)}} />
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Email</label>
@@ -154,12 +154,12 @@ function Profile() {
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Password</label>
-                <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                <input type="password" maxLength='30' value={password} onChange={(e) => {setPassword(e.target.value)}} />
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Image</label>
                 <div className='d-flex align-items-center'>
-                    <input type="file" onChange={onFileChange} />
+                    <input type="file" onChange={onFileChange} accept="image/*" />
                     <img src={"https://" +imagePath} alt='profile' className='ms-2' style={{width: 55, height: 55, borderRadius: '50%', objectFit: 'cover'}} />
                 </div>
             </div>

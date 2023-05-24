@@ -403,7 +403,7 @@ const CreateCampaign = () => {
             <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Campaign name</label>
-                    <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
+                    <input type="text" maxLength='30' onChange={handleCampaignNameChange} value={campaignName} />
                 </div>
 
                 <div className="input-container d-flex flex-column mb-4">

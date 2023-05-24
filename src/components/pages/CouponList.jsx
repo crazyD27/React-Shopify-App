@@ -328,7 +328,7 @@ const CouponList = () => {
                 <div className="input-container d-flex flex-column" style={{width: 200}}>
                     <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
                     <div className="search-button d-flex align-items-center">
-                        <input type="text" placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
+                        <input type="text" maxLength='30' placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
                     </div>
                 </div>
             </div>
@@ -437,7 +437,7 @@ const CouponList = () => {
                         </div>
                         <div className="input-container">
                             <label>Coupon</label>
-                            <input type="text" placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
+                            <input type="text" maxLength='30' placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
                             <label>Discount Types</label>
@@ -465,7 +465,7 @@ const CouponList = () => {
                     <form action="">
                         <div className="input-container">
                             <label>Coupon</label>
-                            <input type="text" placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
+                            <input type="text" maxLength='30' placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
                             <label>Discount Types</label>
@@ -536,7 +536,7 @@ const CouponList = () => {
                         )}
                         <div className="input-container">
                             <label>Coupon</label>
-                            <input type="text" value={couponDesc} onChange={handleCouponDesc} />
+                            <input type="text" maxLength='30' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
                             <label>Discount Types</label>
