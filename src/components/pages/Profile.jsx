@@ -141,7 +141,7 @@ function Profile() {
     
   return (
     <div className="profile p-4 page">
-        {loading && <div className='loader'><span></span></div>}
+        {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p>Processing...</p></div>}
         <h2 className='my-5 mx-auto' style={{maxWidth: 800,}}>Profile</h2>
         <form className="profile-form d-flex flex-wrap justify-content-between mt-4">
             <div className="input-container d-flex flex-column mb-4">
