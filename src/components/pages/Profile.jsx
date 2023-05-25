@@ -33,7 +33,7 @@ function Profile() {
         setLoading(true);
         axios.get(API.BASE_URL + 'user/id/',  {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         }) 
         .then(function (response) {
@@ -69,7 +69,7 @@ function Profile() {
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
             headers: {
-                Authorization: `Token ${token}`,
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`,
                 'Content-Type': 'multipart/form-data'
             },
         }
@@ -88,7 +88,7 @@ function Profile() {
             navigatePath('/profile')
             axios.get(API.BASE_URL + 'user/id/',  {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
                 }
             })
             .then(function (response) {

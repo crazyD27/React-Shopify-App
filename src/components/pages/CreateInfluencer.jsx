@@ -101,7 +101,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -149,7 +149,7 @@ const CreateInfluencer = () => {
         setLoading(true);
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -162,7 +162,7 @@ const CreateInfluencer = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -208,7 +208,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -288,7 +288,7 @@ const CreateInfluencer = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }
         })
         .then(function (response) {
@@ -376,7 +376,7 @@ const CreateInfluencer = () => {
                   products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
-                    Authorization: `Token ${token}`,
+                    Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`,
                   },
                 })
                 .then((response) => {
@@ -453,7 +453,7 @@ const CreateInfluencer = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
           }
         })
         .then(function (response) {
@@ -480,7 +480,7 @@ const CreateInfluencer = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token ${token}`
+            Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
           }
         })
         .then(function (response) {
@@ -499,7 +499,7 @@ const CreateInfluencer = () => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);

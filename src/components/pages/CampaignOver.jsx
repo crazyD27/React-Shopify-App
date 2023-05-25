@@ -19,7 +19,7 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignOver = () => {
-    const {setUserToken, setInfluenceList, countCamp, setCountCamp} = useContext(UserContext);
+    const {setUserToken, setInfluenceList, countCamp, setCountCamp,userName, setUserName} = useContext(UserContext);
 
     
     useEffect(() => {
@@ -50,12 +50,13 @@ const CampaignOver = () => {
         })
         axios.get(API.BASE_URL + 'user/id/',{
             headers: {
-                Authorization: `Token ${token}`
+                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
         }})
         .then(function (response) {
             console.log("User ID", response);
             localStorage.setItem("User_ID", response.data.user_id)
-            localStorage.setItem("User_Name", response.data.username)
+            localStorage.setItem("User_Name", response.data.username);
+            setUserName(localStorage.getItem("User_Name"));
         })
         .catch(function (error) {
             console.log(error);
