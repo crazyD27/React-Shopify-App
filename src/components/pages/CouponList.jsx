@@ -53,7 +53,11 @@ const CouponList = () => {
     useEffect(() => {
         axios.get(API.SHOPIFY_URL +  'coupon/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -68,7 +72,11 @@ const CouponList = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -85,7 +93,11 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL +  'coupon/delete/?price=' + value,{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
         }})
         .then(function (response) {
             console.log("Coupon List", response);
@@ -108,7 +120,11 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
         }})
         .then(function (response) {
             console.log("Coupon Created", response);
@@ -134,7 +150,11 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
@@ -144,7 +164,11 @@ const CouponList = () => {
             setCouponAmount('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
+<<<<<<< HEAD
                     Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                    Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -172,7 +196,11 @@ const CouponList = () => {
             product_id: productIds.toString()
         }, {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
@@ -183,7 +211,11 @@ const CouponList = () => {
             setProductIds('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
+<<<<<<< HEAD
                     Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                    Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -206,7 +238,11 @@ const CouponList = () => {
         setLoading(true);
         axios.get(API.SHOPIFY_URL + 'single/data/?price=' + value, {
           headers: {
+<<<<<<< HEAD
             Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+            Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
           }
         })
         .then(function (response) {
@@ -272,7 +308,11 @@ const CouponList = () => {
             product_id: productIds?.toString()
         }, {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
@@ -328,7 +368,7 @@ const CouponList = () => {
                 <div className="input-container d-flex flex-column" style={{width: 200}}>
                     <label className='w-100 text-dark mb-3'>Offer & Tracking</label>
                     <div className="search-button d-flex align-items-center">
-                        <input type="text" placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
+                        <input type="text" maxLength='30' placeholder='Filter Coupons'  value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
                     </div>
                 </div>
             </div>
@@ -437,7 +477,7 @@ const CouponList = () => {
                         </div>
                         <div className="input-container">
                             <label>Coupon</label>
-                            <input type="text" placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
+                            <input type="text" maxLength='30' placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
                             <label>Discount Types</label>
@@ -465,7 +505,7 @@ const CouponList = () => {
                     <form action="">
                         <div className="input-container">
                             <label>Coupon</label>
-                            <input type="text" placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
+                            <input type="text" maxLength='30' placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
                             <label>Discount Types</label>
@@ -536,7 +576,7 @@ const CouponList = () => {
                         )}
                         <div className="input-container">
                             <label>Coupon</label>
-                            <input type="text" value={couponDesc} onChange={handleCouponDesc} />
+                            <input type="text" maxLength='30' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
                             <label>Discount Types</label>

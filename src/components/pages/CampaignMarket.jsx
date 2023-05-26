@@ -35,7 +35,11 @@ const CampaignMarket = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'market/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -49,7 +53,11 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'markdraft/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -63,7 +71,11 @@ const CampaignMarket = () => {
 
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -131,7 +143,11 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.delete(API.BASE_URL + 'delete/' + value + '/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -152,7 +168,11 @@ const CampaignMarket = () => {
         setLoading(true);
         axios.get(API.BASE_URL +  'single/' + value + '/', {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
         }})
         .then(function (response) {
             console.log("Single Market Data" ,response.data.data)

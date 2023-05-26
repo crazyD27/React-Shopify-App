@@ -27,6 +27,7 @@ const SideBar = () => {
     const [shownotification, setShowNotification] = useState(false);
     const notificationsRef = useRef(null);
     const token = localStorage.getItem("Token");
+    const profile_image = localStorage.getItem("Profile_Image")
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
     };
@@ -42,7 +43,11 @@ const SideBar = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -58,7 +63,11 @@ const SideBar = () => {
         const intervalId = setInterval(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -90,7 +99,11 @@ const SideBar = () => {
     const handleClearNotifications = () => {
         axios.get(API.BASE_URL + 'change/status/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -131,7 +144,7 @@ const SideBar = () => {
                 
                 <NavLink to="/" className='d-flex align-items-center mb-3 px-3 user'>
                     {localStorage.getItem("Image") !=null ? (
-                        <img src={image !="" ? 'https://' + image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
+                        <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     ):
                     <img src={User} alt='notification' style={{width: 45}} />}
                     

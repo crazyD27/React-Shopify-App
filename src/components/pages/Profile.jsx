@@ -33,7 +33,11 @@ function Profile() {
         setLoading(true);
         axios.get(API.BASE_URL + 'user/id/',  {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         }) 
         .then(function (response) {
@@ -69,7 +73,11 @@ function Profile() {
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`,
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`,
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
                 'Content-Type': 'multipart/form-data'
             },
         }
@@ -88,7 +96,11 @@ function Profile() {
             navigatePath('/profile')
             axios.get(API.BASE_URL + 'user/id/',  {
                 headers: {
+<<<<<<< HEAD
                     Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                    Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
                 }
             })
             .then(function (response) {
@@ -141,12 +153,12 @@ function Profile() {
     
   return (
     <div className="profile p-4 page">
-        {loading && <div className='loader'><span></span></div>}
+        {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p>Processing...</p></div>}
         <h2 className='my-5 mx-auto' style={{maxWidth: 800,}}>Profile</h2>
         <form className="profile-form d-flex flex-wrap justify-content-between mt-4">
             <div className="input-container d-flex flex-column mb-4">
                 <label>Username</label>
-                <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value)}} />
+                <input type="text" maxLength='30' value={userName} onChange={(e) => {setUserName(e.target.value)}} />
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Email</label>
@@ -154,12 +166,12 @@ function Profile() {
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Password</label>
-                <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                <input type="password" maxLength='30' value={password} onChange={(e) => {setPassword(e.target.value)}} />
             </div>
             <div className="input-container d-flex flex-column mb-4">
                 <label>Image</label>
                 <div className='d-flex align-items-center'>
-                    <input type="file" onChange={onFileChange} />
+                    <input type="file" onChange={onFileChange} accept="image/*" />
                     <img src={"https://" +imagePath} alt='profile' className='ms-2' style={{width: 55, height: 55, borderRadius: '50%', objectFit: 'cover'}} />
                 </div>
             </div>

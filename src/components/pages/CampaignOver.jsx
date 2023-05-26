@@ -24,7 +24,7 @@ const CampaignOver = () => {
     
     useEffect(() => {
         setTimeout(() => {
-            console.log("TOKEN APIIII")
+        console.log("TOKEN APIIII")
         axios.post(API.BASE_URL + 'get/token/', {
             shop_name: localStorage.getItem('shop_url')
         })
@@ -50,13 +50,12 @@ const CampaignOver = () => {
         })
         axios.get(API.BASE_URL + 'user/id/',{
             headers: {
-                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+                Authorization: `Token ${token}`
         }})
         .then(function (response) {
             console.log("User ID", response);
             localStorage.setItem("User_ID", response.data.user_id)
-            localStorage.setItem("User_Name", response.data.username);
-            setUserName(localStorage.getItem("User_Name"));
+            localStorage.setItem("User_Name", response.data.username)
         })
         .catch(function (error) {
             console.log(error);

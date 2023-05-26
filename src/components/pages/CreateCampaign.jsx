@@ -65,7 +65,11 @@ const CreateCampaign = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -78,7 +82,11 @@ const CreateCampaign = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -122,7 +130,11 @@ const CreateCampaign = () => {
             description: campaignDesc
         }, {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -194,7 +206,11 @@ const CreateCampaign = () => {
             description: campaignDesc
         }, {
             headers: {
+<<<<<<< HEAD
                 Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }
         })
         .then(function (response) {
@@ -273,7 +289,11 @@ const CreateCampaign = () => {
                   products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
+<<<<<<< HEAD
                     Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`,
+=======
+                    Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`,
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
                   },
                 })
                 .then((response) => {
@@ -312,7 +332,11 @@ const CreateCampaign = () => {
             date: selectedDate
           },{
           headers: {
+<<<<<<< HEAD
             Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+            Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
           }
         })
         .then(function (response) {
@@ -331,7 +355,11 @@ const CreateCampaign = () => {
         if(id?.length > 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
+<<<<<<< HEAD
                     Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+                    Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -369,7 +397,11 @@ const CreateCampaign = () => {
             date: selectedDate
           },{
           headers: {
+<<<<<<< HEAD
             Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
+=======
+            Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+>>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
           }
         })
         .then(function (response) {
@@ -403,7 +435,7 @@ const CreateCampaign = () => {
             <form action="" className='d-flex flex-wrap justify-content-between mt-5'>
                 <div className="input-container d-flex flex-column mb-4">
                     <label className="mb-3">Campaign name</label>
-                    <input type="text"  onChange={handleCampaignNameChange} value={campaignName} />
+                    <input type="text" maxLength='30' onChange={handleCampaignNameChange} value={campaignName} />
                 </div>
 
                 <div className="input-container d-flex flex-column mb-4">

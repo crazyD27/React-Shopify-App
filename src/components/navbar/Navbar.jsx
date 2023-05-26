@@ -16,6 +16,7 @@ import Message from '../../assests/img/message.png';
 const MenuBar = () => {
 
   const userName = localStorage.getItem("User_Name")
+
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
