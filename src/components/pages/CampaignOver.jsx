@@ -19,7 +19,7 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignOver = () => {
-    const {setUserToken, setInfluenceList, countCamp, setCountCamp,userName, setUserName} = useContext(UserContext);
+    const {setUserToken, setInfluenceList, countCamp, setCountCamp,setName, setUserName} = useContext(UserContext);
 
     
     useEffect(() => {
@@ -56,6 +56,7 @@ const CampaignOver = () => {
             console.log("User ID", response);
             localStorage.setItem("User_ID", response.data.user_id)
             localStorage.setItem("User_Name", response.data.username)
+            setName(localStorage.getItem("User_Name"))
         })
         .catch(function (error) {
             console.log(error);

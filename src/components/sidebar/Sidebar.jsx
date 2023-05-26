@@ -31,9 +31,10 @@ const SideBar = () => {
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
     };
-    const {name, image,userName} = useContext(UserContext)
-
+    const {image, userName} = useContext(UserContext)
+    const name = localStorage.getItem("User_Name");
     console.log("Name in Sidebar", name)
+    console.log("NAMEEEEE", localStorage.getItem("User_Name"))
     console.log("Image in SIdebar", image)
 
     const handleNotifications = () => {
@@ -136,7 +137,7 @@ const SideBar = () => {
                     ):
                     <img src={User} alt='notification' style={{width: 45}} />}
                     
-                    <p className='text-white mb-0 ms-3'>Hello, {name != "" ? name : userName}</p>
+                    <p className='text-white mb-0 ms-3'>Hello, {name ? name : 'User'}</p>
                     
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">
