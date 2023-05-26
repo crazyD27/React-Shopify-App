@@ -14,7 +14,7 @@ export const AuthProvider = ({children})=>{
     const [marketDraftList, setMarketDraftList] = useState([]);
     const [marketDraftId, setMarketDraftId] = useState([]);
     const [testing, setTesting] = useState([]);
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState('');
     const [name, setName] = useState('');
     const [userName,setuserName]=useState('');
 
