@@ -134,7 +134,9 @@ const CouponList = () => {
             amount: couponAmount
         }, {
             headers: {
+ 
                 Authorization: `Token ${token}`
+
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
@@ -144,7 +146,9 @@ const CouponList = () => {
             setCouponAmount('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
+ 
                     Authorization: `Token ${token}`
+ 
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -172,7 +176,9 @@ const CouponList = () => {
             product_id: productIds.toString()
         }, {
             headers: {
+ 
                 Authorization: `Token ${token}`
+
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
@@ -183,7 +189,9 @@ const CouponList = () => {
             setProductIds('')
             axios.get(API.SHOPIFY_URL +  'coupon/list/',{
                 headers: {
+ 
                     Authorization: `Token ${token}`
+ 
             }})
             .then(function (response) {
                 console.log("Coupon List", response);
@@ -272,7 +280,9 @@ const CouponList = () => {
             product_id: productIds?.toString()
         }, {
             headers: {
+ 
                 Authorization: `Token ${token}`
+
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);

@@ -176,7 +176,7 @@ const CampaignMarket = () => {
     }
 
     console.log("Testing in Market", testing)
-    console.log("draftProd", testing)
+    console.log("productNames", productNames)
 
   return (
     <>

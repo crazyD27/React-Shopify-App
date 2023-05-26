@@ -19,7 +19,7 @@ import Join from '../../assests/img/join.png';
 import Question from '../../assests/img/question.png';
 
 const CampaignOver = () => {
-    const {setUserToken, setInfluenceList, countCamp, setCountCamp} = useContext(UserContext);
+    const {setUserToken, setInfluenceList, countCamp, setCountCamp,userName, setUserName} = useContext(UserContext);
 
     
     useEffect(() => {
@@ -48,22 +48,19 @@ const CampaignOver = () => {
         .catch(function (error) {
             console.log(error);
         })
-        if(localStorage.getItem("Token")) {
-            axios.get(API.BASE_URL + 'user/id/',{
-                headers: {
-                    Authorization: `Token ${localStorage.getItem("Token")}`
-            }})
-            .then(function (response) {
-                console.log("User ID", response);
-                localStorage.setItem("User_ID", response.data.user_id)
-                localStorage.setItem("User_Name", response.data.username)
-                localStorage.setItem("Profile_Image", response.data.url)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        }
-    }, 6000)
+        axios.get(API.BASE_URL + 'user/id/',{
+            headers: {
+                Authorization: `Token ${token}`
+        }})
+        .then(function (response) {
+            console.log("User ID", response);
+            localStorage.setItem("User_ID", response.data.user_id)
+            localStorage.setItem("User_Name", response.data.username)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }, 5000)
 
     }, [])
 

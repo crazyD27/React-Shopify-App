@@ -321,23 +321,23 @@ const CampaignManage = () => {
             offer: prodOffer,
             product_discount: prodDiscount
         },{
-            headers: {
-                Authorization: `Token ${token}`
+            headers: { 
+                Authorization: `Token ${token}` 
             }
         })
         .then(function (response) {
             couponCross();
             toast.success("Campaign Edited!");
             axios.get(API.BASE_URL + 'active/',{
-                headers: {
-                    Authorization: `Token ${token}`
+                headers: { 
+                    Authorization: `Token ${token}` 
                 }
             })
             .then(function (response) {
                 setCampList(response.data.data);
                 axios.get(API.BASE_URL + 'active/',{
-                    headers: {
-                        Authorization: `Token ${token}`
+                    headers: { 
+                        Authorization: `Token ${token}` 
                     }
                 })
                 .then(function (response) {
@@ -349,8 +349,8 @@ const CampaignManage = () => {
                 })
         
                 axios.get(API.BASE_URL + 'pending/',{
-                    headers: {
-                        Authorization: `Token ${token}`
+                    headers: { 
+                        Authorization: `Token ${token}` 
                     }
                 })
                 .then(function (response) {
@@ -362,8 +362,8 @@ const CampaignManage = () => {
                 })
         
                 axios.get(API.BASE_URL + 'product/list/',{
-                    headers: {
-                        Authorization: `Token ${token}`
+                    headers: { 
+                        Authorization: `Token ${token}` 
                     }
                 })
                 .then(function (response) {
@@ -374,8 +374,8 @@ const CampaignManage = () => {
                 })
         
                 axios.get(API.BASE_URL + 'draft/list/',{
-                    headers: {
-                        Authorization: `Token ${token}`
+                    headers: { 
+                        Authorization: `Token ${token}` 
                     }
                 })
                 .then(function (response) {
@@ -391,8 +391,8 @@ const CampaignManage = () => {
             })
     
             axios.get(API.BASE_URL + 'pending/',{
-                headers: {
-                    Authorization: `Token ${token}`
+                headers: { 
+                    Authorization: `Token ${token}` 
                 }
             })
             .then(function (response) {
@@ -446,8 +446,8 @@ const CampaignManage = () => {
     const handleVendorAccept = (value, idValue) => {
         setLoading(true);
         axios.post(API.BASE_URL + 'vendor/accept/' + value + '/' + idValue + '/',{},{
-            headers: {
-                Authorization: `Token ${token}`
+            headers: { 
+                Authorization: `Token ${token}` 
             }
         })
         .then(function (response) {
@@ -460,13 +460,13 @@ const CampaignManage = () => {
                 try {
                   const [influencerResponse, approvalResponse] = await Promise.all([
                     axios.get(API.BASE_URL + 'influencer/list/', {
-                      headers: {
-                        Authorization: `Token ${token}`
+                      headers: { 
+                        Authorization: `Token ${token}` 
                       }
                     }),
                     axios.get(API.BASE_URL + 'vendor_approval/', {
-                      headers: {
-                        Authorization: `Token ${token}`
+                      headers: { 
+                        Authorization: `Token ${token}` 
                       }
                     })
                   ]);
@@ -499,13 +499,13 @@ const CampaignManage = () => {
                 try {
                   const [influencerResponse, activeResponse] = await Promise.all([
                     axios.get(API.BASE_URL + 'influencer/list/', {
-                      headers: {
-                        Authorization: `Token ${token}`
+                      headers: { 
+                        Authorization: `Token ${token}` 
                       }
                     }),
                     axios.get(API.BASE_URL + 'active/', {
-                      headers: {
-                        Authorization: `Token ${token}`
+                      headers: { 
+                        Authorization: `Token ${token}` 
                       }
                     })
                   ]);
@@ -545,8 +545,8 @@ const CampaignManage = () => {
     const handleVendorDecline = (value, idValue) => {
         setLoading(true);
         axios.post(API.BASE_URL + 'vendor/decline/' + value + '/' + idValue + '/',{},{
-            headers: {
-                Authorization: `Token ${token}`
+            headers: { 
+                Authorization: `Token ${token}` 
             }
         })
         .then(function (response) {

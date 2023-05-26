@@ -32,8 +32,8 @@ function Profile() {
     useEffect(() => {
         setLoading(true);
         axios.get(API.BASE_URL + 'user/id/',  {
-            headers: {
-                Authorization: `Token ${token}`
+            headers: { 
+                Authorization: `Token ${token}` 
             }
         }) 
         .then(function (response) {
@@ -68,8 +68,8 @@ function Profile() {
         setLoading(true);
         e.preventDefault();
         axios.put(API.BASE_URL + 'profile/' + userId + '/', formData, {
-            headers: {
-                Authorization: `Token ${token}`,
+            headers: { 
+                Authorization: `Token ${token}`, 
                 'Content-Type': 'multipart/form-data'
             },
         }
@@ -87,8 +87,8 @@ function Profile() {
             setImage(response.data.url);
             navigatePath('/profile')
             axios.get(API.BASE_URL + 'user/id/',  {
-                headers: {
-                    Authorization: `Token ${token}`
+                headers: { 
+                    Authorization: `Token ${token}` 
                 }
             })
             .then(function (response) {
