@@ -106,30 +106,30 @@ const SideBar = () => {
     console.log(localStorage.getItem("Image"))
   return (
     <div className="sidebar">
-         <div className='notifications' style={{cursor: 'pointer'}} onClick={() =>       {handleNotifications()}} ref={notificationsRef}>
-                    <span>{notifications?.length ? notifications.length : 0}</span>
-                    <FontAwesomeIcon 
-                    icon={faBell}
-                    style={{
-                        color: "#0d6efd",
-                        width: "20px",
-                        height: "20px",
-                    }}
-                    />
-                </div>
-                {shownotification === true && (
-                    notifications?.length > 0 ? (
-                        <ul className="notification-list">
-                            <button onClick={(e) => {handleClearNotifications(e)}}>clear all</button>
-                            {notifications?.map((data) => {
-                            return <li>{data.message}</li>;
-                            })}
-                        </ul>
-                    ) : <ul className="notification-list"><li style={{textAlign: 'center'}}>No Notifications</li></ul>
-                )}
+        <div className='notifications' style={{cursor: 'pointer'}} onClick={() => {handleNotifications()}} ref={notificationsRef}>
+            <span>{notifications?.length ? notifications.length : 0}</span>
+            <FontAwesomeIcon 
+                icon={faBell}
+                style={{
+                    color: "#0d6efd",
+                    width: "20px",
+                    height: "20px",
+                }}
+            />
+        </div>
+        {shownotification === true && (
+            notifications?.length > 0 ? (
+                <ul className="notification-list">
+                    <button onClick={(e) => {handleClearNotifications(e)}}>clear all</button>
+                    {notifications?.map((data) => {
+                    return <li>{data.message}</li>;
+                    })}
+                </ul>
+            ) : <ul className="notification-list"><li style={{textAlign: 'center'}}>No Notifications</li></ul>
+        )}
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
-                
+
                 <NavLink to="/" className='d-flex align-items-center mb-3 px-3 user'>
                     {localStorage.getItem("Image") !=null ? (
                         <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />

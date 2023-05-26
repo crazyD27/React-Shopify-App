@@ -14,7 +14,7 @@ function Profile() {
     const [userDetails, setUserDetails] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
-    const {setImage, setName} = useContext(UserContext);
+    const {setImage, name, setName} = useContext(UserContext);
     const [imagePath, setImagePath] = useState('');
 
     const tokenId = localStorage.getItem('Token_ID');
@@ -40,6 +40,8 @@ function Profile() {
             console.log("Profile Details", response);
             setUserDetails(response.data);
             setUserName(response.data.username);
+            setName(response.data.username);
+            localStorage.setItem("User_Name", name);
             setEmail(response.data.email)
             setInstagramUrl(response.data.Instagram_url)
             setShopifyUrl(response.data.shop_url)
