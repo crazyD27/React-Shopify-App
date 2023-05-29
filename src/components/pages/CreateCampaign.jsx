@@ -28,7 +28,7 @@ const CreateCampaign = () => {
     const [prevCouponClicked, setPrevCouponClicked] = useState('');
     const [couponClicked, setCouponClicked] = useState('');
     const [selectedCouponNames, setSelectedCouponNames] = useState([]);
-    const [selectedCouponAmounts ,setSelectedCouponAmounts] = useState([]);
+    const [selectedCouponAmounts, setSelectedCouponAmounts] = useState([]);
     const [isVisitChecked, setIsVisitChecked] = useState(false);
     const [isOfferChecked, setIsOfferChecked] = useState(false);
     const [initialCoupons, setInitialCoupons] = useState([]);
@@ -535,7 +535,9 @@ const CreateCampaign = () => {
                                                         name: coupon,
                                                         product_name: product.product_name,
                                                         product_id: product.product_id,
-                                                        amount: product.amount[i].substring(1)
+                                                        amount: product.amount[i].substring(1),
+                                                        productName: productName,
+                                                        productId: productIds,
                                                     };
                                                     const isCouponSelected = id?.length > 0 ?(
                                                         selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name && selectedCoupon.name.includes(String(couponObject.name)) && selectedCoupon.product_id === couponObject.product_id)
@@ -583,7 +585,9 @@ const CreateCampaign = () => {
                                                                 product_name: product.product_name,
                                                                 product_id: product.product_id,
                                                                 name: [couponObject.name],
-                                                                amount: [couponObject.amount]
+                                                                amount: [couponObject.amount],
+                                                                productName: productName,
+                                                                productId: productIds,
                                                             }];
                                                             });
                                                         }
@@ -615,7 +619,9 @@ const CreateCampaign = () => {
                                                                 product_name: product.product_name,
                                                                 product_id: product.product_id,
                                                                 name: [couponObject.name],
-                                                                amount: [couponObject.amount]
+                                                                amount: [couponObject.amount],
+                                                                productName: productName,
+                                                                productId: productIds,
                                                             }];
                                                             });
                                                             }

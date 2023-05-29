@@ -31,9 +31,10 @@ const SideBar = () => {
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
     };
-    const {name, image,userName} = useContext(UserContext)
-
-    console.log("Name in Sidebar", name)
+    const {image, userName} = useContext(UserContext);
+    const name = localStorage.getItem("User_Name");
+    // console.log("Name in Sidebar", name)
+    console.log("NAMEEEEE", localStorage.getItem("User_Name"))
     console.log("Image in SIdebar", image)
 
     const handleNotifications = () => {
@@ -42,12 +43,8 @@ const SideBar = () => {
 
     useEffect(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
-            headers: {
-<<<<<<< HEAD
-                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
-=======
-                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
->>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
+            headers: { 
+                Authorization: `Token ${token}` 
             }
         })
         .then(function (response) {
@@ -62,12 +59,8 @@ const SideBar = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
-            headers: {
-<<<<<<< HEAD
-                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
-=======
-                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
->>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
+            headers: { 
+                Authorization: `Token ${token}` 
             }
         })
         .then(function (response) {
@@ -98,12 +91,8 @@ const SideBar = () => {
 
     const handleClearNotifications = () => {
         axios.get(API.BASE_URL + 'change/status/',{
-            headers: {
-<<<<<<< HEAD
-                Authorization: `Token 865cbdf7f6bd60fdadb8cd9164f06c13f91d0127`
-=======
-                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
->>>>>>> 6d52d40680a68f9517a17cb7144eac8e5622acfe
+            headers: { 
+                Authorization: `Token ${token}` 
             }
         })
         .then(function (response) {
@@ -118,37 +107,37 @@ const SideBar = () => {
     console.log(localStorage.getItem("Image"))
   return (
     <div className="sidebar">
-         <div className='notifications' style={{cursor: 'pointer'}} onClick={() =>       {handleNotifications()}} ref={notificationsRef}>
-                    <span>{notifications?.length ? notifications.length : 0}</span>
-                    <FontAwesomeIcon 
-                    icon={faBell}
-                    style={{
-                        color: "#0d6efd",
-                        width: "20px",
-                        height: "20px",
-                    }}
-                    />
-                </div>
-                {shownotification === true && (
-                    notifications?.length > 0 ? (
-                        <ul className="notification-list">
-                            <button onClick={(e) => {handleClearNotifications(e)}}>clear all</button>
-                            {notifications?.map((data) => {
-                            return <li>{data.message}</li>;
-                            })}
-                        </ul>
-                    ) : <ul className="notification-list"><li style={{textAlign: 'center'}}>No Notifications</li></ul>
-                )}
+        <div className='notifications' style={{cursor: 'pointer'}} onClick={() => {handleNotifications()}} ref={notificationsRef}>
+            <span>{notifications?.length ? notifications.length : 0}</span>
+            <FontAwesomeIcon 
+                icon={faBell}
+                style={{
+                    color: "#0d6efd",
+                    width: "20px",
+                    height: "20px",
+                }}
+            />
+        </div>
+        {shownotification === true && (
+            notifications?.length > 0 ? (
+                <ul className="notification-list">
+                    <button onClick={(e) => {handleClearNotifications(e)}}>clear all</button>
+                    {notifications?.map((data) => {
+                    return <li>{data.message}</li>;
+                    })}
+                </ul>
+            ) : <ul className="notification-list"><li style={{textAlign: 'center'}}>No Notifications</li></ul>
+        )}
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
-                
+
                 <NavLink to="/" className='d-flex align-items-center mb-3 px-3 user'>
                     {localStorage.getItem("Image") !=null ? (
                         <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     ):
                     <img src={User} alt='notification' style={{width: 45}} />}
                     
-                    <p className='text-white mb-0 ms-3'>Hello, {name != "" ? name : userName}</p>
+                    <p className='text-white mb-0 ms-3'>Hello, {userName ? userName : 'User123'}</p>
                     
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">
