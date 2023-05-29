@@ -65,7 +65,7 @@ const CreateCampaign = () => {
     useEffect(() => {
         axios.get(API.BASE_URL + 'product/list/',{
             headers: {
-                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -78,7 +78,7 @@ const CreateCampaign = () => {
 
         axios.get(API.BASE_URL + 'influencer/list/',{
             headers: {
-                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -122,7 +122,7 @@ const CreateCampaign = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -194,7 +194,7 @@ const CreateCampaign = () => {
             description: campaignDesc
         }, {
             headers: {
-                Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+                Authorization: `Token ${token}`
             }
         })
         .then(function (response) {
@@ -273,7 +273,7 @@ const CreateCampaign = () => {
                   products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
-                    Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`,
+                    Authorization: `Token ${token}`,
                   },
                 })
                 .then((response) => {
@@ -312,7 +312,7 @@ const CreateCampaign = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+            Authorization: `Token ${token}`
           }
         })
         .then(function (response) {
@@ -331,7 +331,7 @@ const CreateCampaign = () => {
         if(id?.length > 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
-                    Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+                    Authorization: `Token ${token}`
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -369,7 +369,7 @@ const CreateCampaign = () => {
             date: selectedDate
           },{
           headers: {
-            Authorization: `Token c8e3c7d2c0b6f981da129c7d998ee960550cd9b3`
+            Authorization: `Token ${token}`
           }
         })
         .then(function (response) {

@@ -32,32 +32,20 @@ const CampaignOver = () => {
             console.log("Shop Token", response);
             setUserToken(response.data.user_token);
             localStorage.setItem("Token", response.data.user_token);
-
-            axios.get(API.BASE_URL + 'influencer/list/',{
+            axios.get(API.BASE_URL + 'user/id/',{
                 headers: {
-                    Authorization: `Token ${response.data.user_token}`
+                    Authorization: `Token ${localStorage.getItem('Token')}`
             }})
             .then(function (response) {
-                console.log("Influencer List", response);
-                setInfluenceList(response.data.data);
+                console.log("User ID", response);
+                localStorage.setItem("User_ID", response.data.user_id)
+                localStorage.setItem("User_Name", response.data.username);
+                setName(localStorage.getItem("User_Name"));
+                setuserName(localStorage.getItem("User_Name"))
             })
             .catch(function (error) {
                 console.log(error);
             })
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        axios.get(API.BASE_URL + 'user/id/',{
-            headers: {
-                Authorization: `Token ${localStorage.getItem('Token')}`
-        }})
-        .then(function (response) {
-            console.log("User ID", response);
-            localStorage.setItem("User_ID", response.data.user_id)
-            localStorage.setItem("User_Name", response.data.username);
-            setName(localStorage.getItem("User_Name"));
-            setuserName(localStorage.getItem("User_Name"))
         })
         .catch(function (error) {
             console.log(error);
