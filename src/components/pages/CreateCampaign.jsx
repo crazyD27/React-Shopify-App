@@ -536,6 +536,7 @@ const CreateCampaign = () => {
                                                         product_name: product.product_name,
                                                         product_id: product.product_id,
                                                         amount: product.amount[i].substring(1),
+                                                        productID: productIds,
                                                     };
                                                     const isCouponSelected = id?.length > 0 ?(
                                                         selectedCouponAmounts.some(selectedCoupon => selectedCoupon.name && selectedCoupon.name.includes(String(couponObject.name)) && selectedCoupon.product_id === couponObject.product_id)
@@ -583,7 +584,9 @@ const CreateCampaign = () => {
                                                                 product_name: product.product_name,
                                                                 product_id: product.product_id,
                                                                 name: [couponObject.name],
-                                                                amount: [couponObject.amount]
+                                                                amount: [couponObject.amount],
+                                                                productID: productIds,
+                                                                productName: productName
                                                             }];
                                                             });
                                                         }
@@ -616,7 +619,8 @@ const CreateCampaign = () => {
                                                                 product_id: product.product_id,
                                                                 name: [couponObject.name],
                                                                 amount: [couponObject.amount],
-                                                                product_name: productName
+                                                                productID: productIds,
+                                                                productName: productName
                                                             }];
                                                             });
                                                             }

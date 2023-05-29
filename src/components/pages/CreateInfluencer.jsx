@@ -600,7 +600,7 @@ const CreateInfluencer = () => {
                                                 <span>@{list.username}</span>
                                             </div>
                                         </div>
-                                        <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(2)} M </strong> <span>Followers</span> </p>
+                                        <p className='d-flex flex-column align-items-center col-4'><strong>{(list.follower / 1000000).toFixed(4)} M </strong> <span>Followers</span> </p>
                                         <p className='d-flex flex-column align-items-end col-4'><strong>{(list.engagements / 1000000).toFixed(2) + "M"}<span className='ms-1'>({list.engagement_rate.toFixed(2)}%)</span></strong> <span>Engagement</span> </p>
                                     </div>
                                 ))}
