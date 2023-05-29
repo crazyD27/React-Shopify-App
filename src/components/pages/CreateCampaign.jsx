@@ -450,39 +450,39 @@ const CreateCampaign = () => {
                     />
                     {showList && (
                         <ul className="product-list">
-                        {prodList?.length > 0 ? (
-                            prodList?.map((name, i) => (
-                            <li
-                                key={i}
-                                onClick={() => {
-                                    setProductName((prevValues) =>
-                                        prevValues.includes(name.title)
-                                        ? prevValues.filter((value) => value !== name.title)
-                                        : [...prevValues, name.title]
-                                    );
-                                    setProductIds((prevIds) =>
-                                        prevIds.includes(name.id)
-                                        ? prevIds.filter((value) => value !== name.id)
-                                        : [...prevIds, name.id]
-                                    );
-                                    if (productDetails.some((detail) => detail.product_id === name.id)) {
-                                        setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
-                                    }
-                                    setShowList(false);
-                                    if (id?.length > 0) {
-                                        
-                                        if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
-                                            setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
-                                        }
-                                    }
-                                }}
-                            >
-                                {name.title}
-                            </li>
-                            ))
-                        ) : (
-                            "No Products"
-                        )}
+                            {prodList?.length > 0 ? (
+                                prodList?.map((name, i) => (
+                                    <li
+                                        key={i}
+                                        onClick={() => {
+                                            setProductName((prevValues) =>
+                                                prevValues.includes(name.title)
+                                                    ? prevValues.filter((value) => value !== name.title)
+                                                    : [...prevValues, name.title]
+                                            );
+                                            setProductIds((prevIds) =>
+                                                prevIds.includes(name.id)
+                                                    ? prevIds.filter((value) => value !== name.id)
+                                                    : [...prevIds, name.id]
+                                            );
+                                            if (productDetails.some((detail) => detail.product_id === name.id)) {
+                                                setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
+                                            }
+                                            setShowList(false);
+                                            if (id?.length > 0) {
+                                                if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
+                                                    setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
+                                                }
+                                            }
+                                        }}
+                                        className={productName.includes(name.title) ? "active-prod" : ""}
+                                    >
+                                        {name.title}
+                                    </li>
+                                ))
+                            ) : (
+                                "No Products"
+                            )}
                         </ul>
                     )}
                 </div>
@@ -646,7 +646,7 @@ const CreateCampaign = () => {
                         ): (
                         <p className='align-items-start'>No Coupon Available</p>
                         )}
-                    </div>
+                </div>
 
                 <div className="buttons d-flex justify-content-center">
                     
