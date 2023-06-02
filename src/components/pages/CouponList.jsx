@@ -121,6 +121,21 @@ const CouponList = () => {
         })
         .catch(function (error) {
             console.log(error);
+            if (error.response.data.error == "Coupon field is required") {
+                toast.warn("Coupon field is required")
+            }
+            else if (error.response.data.error == "discount code  field is required") {
+                toast.warn("Coupon field is required")
+            }
+            else if (error.response.data.error == "discount type field is required") {
+                toast.warn("Discount type field is required")
+            }
+            else if (error.response.data.error == "Amount field is required") {
+                toast.warn("Amount field is required")
+            }
+            else {
+                toast.error("Could not create a coupon right now")
+            }
         })
         .finally(() => setLoading(false));
     }
@@ -298,6 +313,21 @@ const CouponList = () => {
         })
         .catch(function (error) {
             console.log(error);
+            if (error.response.data.error == "Product  field is required") {
+                toast.warn("Product field is required")
+            }
+            else if (error.response.data.error == "discount code  field is required") {
+                toast.warn("Coupon field is required")
+            }
+            else if (error.response.data.error == "discount type field is required") {
+                toast.warn("Discount type field is required")
+            }
+            else if (error.response.data.error == "Amount field is required") {
+                toast.warn("Amount field is required")
+            }
+            else {
+                toast.error("Could not create a coupon right now")
+            }
         })
         .finally(() => setLoading(false));
     }
