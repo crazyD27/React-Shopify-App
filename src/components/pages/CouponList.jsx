@@ -22,6 +22,8 @@ const CouponList = () => {
     const [couponList, setCouponList] = useState(false);
     const [tracking, setTracking] = useState(false);
     const [getCoupon, setGetCoupon] = useState(false);
+    const [influencerList, setInfluencerList] = useState([]);
+    const [selectedInfluencer, setSelectedInfluencer] = useState(null);
     const [getCouponInfo, setGetCouponInfo] = useState('')
     const [oneTime, setOneTime] = useState(false);
     const [couponDesc, setCouponDesc] = useState('');
@@ -31,12 +33,15 @@ const CouponList = () => {
     const [loading, setLoading] = useState(false);
     const [prodList, setProdList] = useState('');
     const [showList, setShowList] = useState(false);
+    const [showInfluencer, setShowInfluencer] = useState(false);
     const [productName, setProductName] = useState([]);
+    const [influencerNames, setInfluencerNames] = useState([]);
     const [productIds, setProductIds] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [filterValue, setFilterValue] = useState("");
     const [selectedProductNames, setSelectedProductNames] = useState([]);
-    const [selectedProducts, setSelectedProducts] = useState([]);
+    const [showInfluencerDropdown, setShowInfluencerDropdown] = useState(false);
+    const [matchingInfluencers, setMatchingInfluencers] = useState([]);
 
     const handleCouponDesc = (event) => {
         setCouponDesc(event.target.value);
@@ -62,6 +67,20 @@ const CouponList = () => {
         .catch(function (error) {
             console.log(error);
         })
+        axios.get(API.BASE_URL + 'influencer/list/',{
+            headers: {
+ 
+                Authorization: `Token ${token}`
+            }
+        })
+        .then(function (response) {
+            console.log("Influencer List", response.data.data);
+            setInfluencerList(response.data.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .finally(() => setLoading(false));
     }, [token])
 
     useEffect(() => {
@@ -146,7 +165,7 @@ const CouponList = () => {
         axios.post(API.SHOPIFY_URL +  'coupon/edit/?price=' + value, {
             discount_code: couponDesc,
             discount_type: discountType,
-            amount: couponAmount
+            amount: couponAmount,
         }, {
             headers: {
  
@@ -187,8 +206,10 @@ const CouponList = () => {
         axios.post(API.SHOPIFY_URL +  'particular/edit/?price=' + value, {
             discount_code: couponDesc,
             discount_type: discountType,
-            amount: couponAmount,
-            product_id: productIds.toString()
+            amount: couponAmount.toString(),
+            influencer_id: getCouponInfo?.indb,
+            product_id: productIds.toString(),
+            influ_ids: selectedInfluencer?.id
         }, {
             headers: {
  
@@ -238,8 +259,12 @@ const CouponList = () => {
           setGetCoupon(true);
           setCouponDesc(response.data.title);
           setDiscountType(response.data.discount_type);
-          setCouponAmount(response.data.amount.substring(1));
+          setCouponAmount(Math.trunc(response.data.amount.substring(1)));
           setCouponStatus(response.data.status);
+          const matchingInfluencers = influencerList.filter(
+            (influencer) => influencer.id === response.data.infl_id[0].influencer_id
+          );
+          setMatchingInfluencers(matchingInfluencers);
         })
         .catch(function (error) {
           console.log(error);
@@ -283,6 +308,8 @@ const CouponList = () => {
         setProductIds([]);
         setCouponAmount('')
         setCouponAmount('')
+        setSelectedInfluencer('')
+        setMatchingInfluencers('')
     }
 
     const trackingApi = (event) => {
@@ -292,7 +319,8 @@ const CouponList = () => {
             discount_code: couponDesc,
             discount_type: discountType,
             amount: couponAmount,
-            product_id: productIds?.toString()
+            product_id: productIds?.toString(),
+            influencer_name: selectedInfluencer?.id
         }, {
             headers: {
  
@@ -309,6 +337,7 @@ const CouponList = () => {
             setProductIds([]);
             setCouponAmount('')
             setCouponAmount('')
+            setSelectedInfluencer('')
             couponCross()
         })
         .catch(function (error) {
@@ -324,6 +353,9 @@ const CouponList = () => {
             }
             else if (error.response.data.error == "Amount field is required") {
                 toast.warn("Amount field is required")
+            }
+            else if (error.response.data.error == "amount should be less than 100") {
+                toast.warn("Percentage should be less than 100")
             }
             else {
                 toast.error("Could not create a coupon right now")
@@ -352,11 +384,19 @@ const CouponList = () => {
         const list = document.querySelector(".tracking-container ul");
         if (!input?.contains(event.target) && !list?.contains(event.target)) {
           setShowList(false);
+          setShowInfluencer(false);
         }
+    };
+
+    const handleInfluencerSelection = (influencer) => {
+        setSelectedInfluencer(influencer);
+        setShowInfluencerDropdown(false);
     };
 
     console.log("productIds", productIds)
     console.log("showList", selectedProductNames)
+    console.log("selectedInfluencer", selectedInfluencer?.id)
+    console.log("matching Influencer", matchingInfluencers)
 
     return (
     <>
@@ -491,6 +531,33 @@ const CouponList = () => {
                             <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
                             <input type="number" onWheel={(e) => e.target.blur()} placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
+                        <div className="input-container">
+                            <label>Select Influencer</label>
+                            <input
+                            type="text"
+                            placeholder={
+                                influencerList.length > 0
+                                ? "---Select an option---"
+                                : "---No Influencers Available---"
+                            }
+                            onClick={() => setShowInfluencerDropdown(!showInfluencerDropdown)}
+                            value={selectedInfluencer ? selectedInfluencer.fullname : ""}
+                            />
+                            {showInfluencerDropdown && (
+                            <ul>
+                                {influencerList.map((influencer) => (
+                                <li
+                                    className='influencer-box'
+                                    key={influencer.id}
+                                    onClick={() => handleInfluencerSelection(influencer)}
+                                >
+                                    <img src={influencer.image} alt="influencer" />
+                                    {influencer.fullname}
+                                </li>
+                                ))}
+                            </ul>
+                            )}
+                        </div>
                         <button onClick={(e) => {trackingApi(e)}} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>
                 </div>
@@ -589,6 +656,35 @@ const CouponList = () => {
                         <div className="input-container">
                             <label>Amount</label>
                             <input type="number" onWheel={(e) => e.target.blur()} value={couponAmount} onChange={handleCouponAmount} />
+                        </div>
+                        <div className="input-container">
+                            <label>Select Influencer</label>
+                            <input
+                            type="text"
+                            placeholder={
+                                matchingInfluencers?.length > 0
+                                ? matchingInfluencers[0].fullname
+                                : influencerList?.length > 0
+                                ? "---Select an option---"
+                                : "---No Influencers Available---"
+                            }
+                            onClick={() => setShowInfluencerDropdown(!showInfluencerDropdown)}
+                            value={selectedInfluencer ? selectedInfluencer.fullname : ""}
+                            />
+                            {showInfluencerDropdown && (
+                            <ul>
+                                {influencerList.map((influencer) => (
+                                <li
+                                    className='influencer-box'
+                                    key={influencer.id}
+                                    onClick={() => handleInfluencerSelection(influencer)}
+                                >
+                                    <img src={influencer.image} alt="influencer" />
+                                    {influencer.fullname}
+                                </li>
+                                ))}
+                            </ul>
+                            )}
                         </div>
                         {couponStatus == 1 ? (
                             <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
