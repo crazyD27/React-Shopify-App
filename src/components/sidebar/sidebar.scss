@@ -1,6 +1,6 @@
 .sidebar {
     width: fit-content;
-    width: 22%;
+    width: 25%;
     .navbar {
         min-height: 100vh;
         align-items: flex-start;
@@ -9,14 +9,18 @@
         position: relative;
         .container-fluid {
             flex-direction: column;
-            background: #2657b3;
+            background: #1c4672;
             align-items: flex-start;
             height: 100%;
             padding-top: 1.5rem;
             padding-left: 0;
             padding-right: 0;
+            border-right: 1px solid;
             a {
                 text-decoration: none;
+                width: 100%;
+                border-bottom: 2px solid #ffffff;
+                padding-bottom: 15px;
             }
             .navbar-collapse {
                 flex-direction: column;
@@ -32,7 +36,8 @@
                     a {
                         margin-left: 0;
                         margin-right: 0;
-                        padding: .8rem 1rem !important;
+                        padding: 1.5rem 1rem !important;
+                        border-bottom: 1px solid #b9b9b9;
                     }
                     a.active {
                         background: #3965c0;

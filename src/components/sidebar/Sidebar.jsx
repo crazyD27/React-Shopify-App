@@ -131,7 +131,7 @@ const SideBar = () => {
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
 
-                <NavLink to="/" className='d-flex align-items-center mb-3 px-3 user'>
+                <NavLink to="/" className='d-flex align-items-center px-3 user'>
                     {localStorage.getItem("Image") !=null ? (
                         <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                     ):

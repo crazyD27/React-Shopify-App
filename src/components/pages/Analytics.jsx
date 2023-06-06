@@ -9,7 +9,7 @@ import ArrowUp from '../../assests/img/arrow-up.png';
 function Analytics() {
   return (
     <>
-    <div className="analytics p-4">
+    <div className="analytics p-4 d-flex flex-column justify-content-center align-items-center">
         <div className="analytics-container d-flex justify-content-between mt-4">
             <div className="analytics-status bg-light p-4 col-7">
                 <h3 className='fw-bold'>Analytics</h3>
