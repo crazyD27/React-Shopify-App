@@ -18,18 +18,18 @@ function Analytics() {
     const [graphData, setGraphData] = useState([])
     useEffect(() => {
         setLoading(true);
-        axios.get(API.BASE_URL + 'sale_record/',  {
-            headers: { 
-                Authorization: `Token ${token}` 
-            }
-        }) 
-        .then(function (response) {
-            console.log("Sales Details", response);
-            setGraphData(response.data)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+            axios.get(API.BASE_URL + 'sale_record/',  {
+                headers: { 
+                    Authorization: `Token ${token}` 
+                }
+            }) 
+            .then(function (response) {
+                console.log("Sales Details", response);
+                setGraphData(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         
         .finally(() => setLoading(false));
     }, [token])

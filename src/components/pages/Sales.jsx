@@ -40,6 +40,7 @@ function createGradient(ctx, area) {
 }
 
 function Sales() {
+  const token = localStorage.getItem("Token");
   const chartSalesRef = useRef(null);
   const chartOrdersRef = useRef(null);
   const [chartSalesData, setChartSalesData] = useState({
@@ -123,7 +124,7 @@ function Sales() {
     axios
       .get(API.BASE_URL + 'analytics/', {
         headers: {
-          Authorization: 'Token ${token}',
+          Authorization: `Token ${token}`,
         },
       })
       .then(function (response) {
