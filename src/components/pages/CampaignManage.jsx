@@ -613,7 +613,7 @@ const CampaignManage = () => {
   return (
     <>
     <div className="campaign-manage-container p-4 page">
-        {loading && <div className='loader'><span></span></div>}
+        {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
         <h2 className='my-5'>Manage Campaign</h2>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Col sm={12}>

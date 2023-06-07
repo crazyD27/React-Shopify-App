@@ -440,7 +440,7 @@ const CouponList = () => {
                                         <td>{couponData.created_at}</td>
                                         <td>
                                             <button onClick={(event) => {getSingleCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Edit</button>
-                                            {loading && <div className='loader'><span></span></div>}
+                                            {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
                                             <button onClick={(event) => {deleteCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Delete</button>
                                             
                                         </td>

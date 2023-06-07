@@ -577,7 +577,7 @@ const CreateInfluencer = () => {
 
   return (
     <div className="campaign-new p-4 page">
-        {loading && <div className='loader'><span></span></div>}
+        {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
         <div className="campaign-new-container d-flex flex-column justify-content-start align-items-center">
 
             {showInfluList && (

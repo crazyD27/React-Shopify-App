@@ -392,7 +392,7 @@ const CreateCampaign = () => {
 
   return (
     <div className="campaign-new p-4 page">
-        {loading && <div className='loader'><span></span></div>}
+        {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
         <div className="campaign-new-container d-flex flex-column justify-content-center align-items-center">
             <Link to='/create' className={"button button-blue d-flex me-auto back"}>
                 <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />

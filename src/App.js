@@ -43,7 +43,7 @@ function App() {
   console.log("Image", image)
   return (
     <div className="App">
-      {loading && <div className='loader'><span></span></div>}
+      {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
       <Routing />
       <GoToTop />
       <ToastContainer autoclose={2000} />

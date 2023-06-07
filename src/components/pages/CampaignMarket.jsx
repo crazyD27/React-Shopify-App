@@ -182,7 +182,7 @@ const CampaignMarket = () => {
     <>
         <div className="campaign-market p-4 page">
             {/* <MenuBar /> */}
-            {loading && <div className='loader'><span></span></div>}
+            {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
 
             <div className="campaign-market-container d-flex flex-column w-100">
                 <h2 className='my-5'>Campaign Marketplace</h2>

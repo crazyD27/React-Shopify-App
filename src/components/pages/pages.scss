@@ -1,6 +1,28 @@
 .page {
     width: 75%;
     margin-left: auto;
+    .canvasjs-chart-credit {
+        display: none !important;
+    }
+    .graph {
+        div:nth-child(1) {
+            &:before {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background: #fff;
+                width: 65px;
+                height: 20px;
+                z-index: 99;
+            }
+        }
+        .canvasjs-chart-container, .canvasjs-chart-tooltip div {
+            &::before {
+                display: none;
+            }
+        }
+    }
 }
 
 .campaign-new {

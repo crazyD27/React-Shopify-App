@@ -76,7 +76,7 @@ function Profile() {
         )
         .then(function (response) {
             console.log("Profile", response);
-            toast.success("Profile Edited Successfully!");
+            toast.success("Proy these features on all of the above plansfile Edited Successfully!");
             setUserName('');
             setPassword('');
             setShopifyUrl('');
