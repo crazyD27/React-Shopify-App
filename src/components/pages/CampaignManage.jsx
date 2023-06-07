@@ -610,6 +610,8 @@ const CampaignManage = () => {
 
     console.log("CampList", approvedList);
 
+    console.log("campListPending", campListPending)
+
   return (
     <>
     <div className="campaign-manage-container p-4 page">

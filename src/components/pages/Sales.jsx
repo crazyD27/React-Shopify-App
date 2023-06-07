@@ -1,89 +1,205 @@
-import React, {useState} from 'react';
-import { MDBContainer, MDBDatatable } from 'mdb-react-ui-kit';
+import React, { useRef, useEffect, useState } from 'react';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import { Chart } from 'react-chartjs-2';
+import axios from 'axios';
+import { API } from '../../config/Api';
 
-import MenuBar from '../navbar/Navbar';
-import SideBar from '../sidebar/Sidebar';
 import './pages.scss';
 
-import EarningsGraph from '../../assests/img/earning-graph.png';
-import AverageGraph from '../../assests/img/average-graph.png';
-import TotalGraph from '../../assests/img/total-graph.png';
-import ProductOne from '../../assests/img/product-1.png';
-import ProductTwo from '../../assests/img/product-2.png';
-import ProductThree from '../../assests/img/product-3.png';
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-function Sales() {
-    const [searchQuery, setSearchQuery] = useState('');
+function createGradient(ctx, area) {
+  const colors = [
+    'red',
+    'orange',
+    'yellow',
+    'lime',
+    'green',
+    'teal',
+    'blue',
+    'purple',
+  ];
 
-    const data = [
-        { id: '#12598', image: ProductOne, name: 'Off-white shoulder wide s...', price: '₹4,099', sales: 48, stock: 25, status: 'In Stock' },
-        { id: '#20587', image: ProductTwo, name: 'Green Velvet semi-sleeve...', price: '₹10,000', sales: 74, stock: 0, status: 'Out of Stock' },
-        { id: '#10020', image: ProductThree, name: 'Nike air max 2099', price: '₹17,500', sales: 32, stock: 3, status: 'Restock' }
-      ];
+  const colorStart = colors[Math.floor(Math.random() * colors.length)];
+  let colorMid = colors[Math.floor(Math.random() * colors.length)];
+  while (colorMid === colorStart) {
+    colorMid = colors[Math.floor(Math.random() * colors.length)];
+  }
+  let colorEnd = colors[Math.floor(Math.random() * colors.length)];
+  while (colorEnd === colorStart || colorEnd === colorMid) {
+    colorEnd = colors[Math.floor(Math.random() * colors.length)];
+  }
 
-    const filteredData = data.filter(row => {
-        return Object.values(row).some(value =>
-          value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-        );
-    });
-  return (
-    <>
-    <div className="sales p-4 page">
-        <div className="sales-container">
-            <h2 className='my-5'>Sales overview</h2>
-            <div className="earnings-list d-flex justify-content-between">
-                <div className="earning-box px-3">
-                    <h5>Total earnings</h5>
-                    <p className='d-flex align-items-start fs-6'> <span>$</span><strong className='fs-3 fw-normal'>5,548.54</strong></p>
-                    <img src={EarningsGraph} alt="earning" />
-                </div>
-                <div className="earning-box px-3">
-                    <h5>Average cart size</h5>
-                    <p className='d-flex align-items-start fs-6'><span>$</span> <strong className='fs-3 fw-normal'>232.32</strong></p>
-                    <img src={AverageGraph} alt="average" />
-                </div>
-                <div className="earning-box px-3">
-                    <h5>Total purchases</h5>
-                    <p><strong className='fs-3 fw-normal'>20</strong></p>
-                    <img src={TotalGraph} alt="total" />
-                </div>
-            </div>
-            <div className="sales-table mt-5 p-3">
-                <div className="table-search d-flex justify-content-between align-items-center mb-5">
-                    <h5>Purchases</h5>
-                    <input type="text" placeholder='Search' value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-                </div>
-                <table className='w-100'>
-                    <thead>
-                    <tr>
-                        <th>Product ID</th>
-                        <th>Image</th>
-                        <th>Product name</th>
-                        <th>Price</th>
-                        <th>Total sales</th>
-                        <th>Stock</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData.map(row => (
-                            <tr key={row.id}>
-                            <td>{row.id}</td>
-                            <td><img src={row.image} alt="prod-img" /></td>
-                            <td>{row.name}</td>
-                            <td>{row.price}</td>
-                            <td>{row.sales}</td>
-                            <td>{row.stock}</td>
-                            <td>{row.status}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    </>
-  )
+  const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
+
+  gradient.addColorStop(0, colorStart);
+  gradient.addColorStop(0.5, colorMid);
+  gradient.addColorStop(1, colorEnd);
+
+  return gradient;
 }
 
-export default Sales
+function Sales() {
+  const chartSalesRef = useRef(null);
+  const chartOrdersRef = useRef(null);
+  const [chartSalesData, setChartSalesData] = useState({
+    labels: [],
+    datasets: [],
+  });
+  const [chartOrdersData, setChartOrdersData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  useEffect(() => {
+    const chartSales = chartSalesRef.current;
+
+    if (!chartSales) {
+      return;
+    }
+
+    const updatedSalesData = {
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+      datasets: [
+        {
+          label: 'Sales Data',
+          data: [],
+          backgroundColor: createGradient(chartSales.ctx, chartSales.chartArea),
+        },
+      ],
+    };
+
+    setChartSalesData(updatedSalesData);
+  }, []);
+
+  useEffect(() => {
+    const chartOrders = chartOrdersRef.current;
+
+    if (!chartOrders) {
+      return;
+    }
+
+    const updatedOrdersData = {
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+      datasets: [
+        {
+          label: 'Order Data',
+          data: [],
+          backgroundColor: createGradient(chartOrders.ctx, chartOrders.chartArea),
+        },
+      ],
+    };
+
+    setChartOrdersData(updatedOrdersData);
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(API.BASE_URL + 'analytics/', {
+        headers: {
+          Authorization: 'Token ${token}',
+        },
+      })
+      .then(function (response) {
+        const analyticsData = response.data;
+        const updatedSalesData = {
+          labels: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+          ],
+          datasets: [
+            {
+              label: 'Sales Data',
+              data: analyticsData.sales_data,
+              backgroundColor: createGradient(chartSalesRef.current?.ctx, chartSalesRef.current?.chartArea),
+            },
+          ],
+        };
+
+        const updatedOrdersData = {
+          labels: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+          ],
+          datasets: [
+            {
+              label: 'Order Data',
+              data: analyticsData.order,
+              backgroundColor: createGradient(chartOrdersRef.current?.ctx, chartOrdersRef.current?.chartArea),
+            },
+          ],
+        };
+
+        setChartSalesData(updatedSalesData);
+        setChartOrdersData(updatedOrdersData);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
+  return (
+    <>
+      <div className="sales p-4 page">
+        <div className="sales-container">
+          <h2 className="my-5">Sales overview</h2>
+          <div className="earnings-list d-flex flex-column justify-content-center align-items-center">
+              <h4 className='text-left w-100 d-flex ps-5'>Sales Data</h4>
+            <Chart className='mb-5' ref={chartSalesRef} type="line" data={chartSalesData} />
+            <h4 className='text-left w-100 d-flex ps-5 mt-4'>Order Data</h4>
+            <Chart ref={chartOrdersRef} type="line" data={chartOrdersData} />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Sales;
+

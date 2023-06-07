@@ -51,7 +51,7 @@ const CampaignTable = ({
           return (
             <>
                 <tr key={i} className='campaign-inputs'>
-                <td>{name.campaign_name}</td>
+                <td>{name?.campaign_name}</td>
                 {!approvedButtons && (
                   <td className='category'>
                     {name.product?.map((name) =>
