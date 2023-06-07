@@ -831,11 +831,25 @@ const CreateInfluencer = () => {
                                                             }
                                                             else {
                                                                 const selectedCouponIndex = selectedCoupons.findIndex(selectedCoupon => selectedCoupon.name === couponObject.name && selectedCoupon.product_id === couponObject.product_id);
-                                                                if (selectedCouponIndex !== -1) {
+                                                            if (selectedCouponIndex !== -1) {
                                                                 setSelectedCoupons(prevSelectedCoupons => prevSelectedCoupons.filter((selectedCoupon, index) => index !== selectedCouponIndex));
                                                                 setSelectedCouponNames(prevSelectedCouponNames => prevSelectedCouponNames.filter((selectedCouponName, index) => index !== selectedCouponIndex));
-                                                                setSelectedCouponAmounts(prevSelectedCouponAmounts => prevSelectedCouponAmounts.filter((selectedCouponAmount, index) => index !== selectedCouponIndex));
-                                                                } else {
+                                                                setSelectedCouponAmounts(prevSelectedCouponAmounts => {
+                                                                    const updatedSelectedCouponAmounts = [...prevSelectedCouponAmounts];
+                                                                    const existingProductIndex = updatedSelectedCouponAmounts.findIndex(selectedCouponAmount => selectedCouponAmount.product_name === product.product_name && selectedCouponAmount.product_id === product.product_id);
+                                                                    if (existingProductIndex !== -1) {
+                                                                        const existingProduct = updatedSelectedCouponAmounts[existingProductIndex];
+                                                                        const couponIndex = existingProduct.name.findIndex(name => name === couponObject.name);
+                                                                        if (couponIndex !== -1) {
+                                                                            existingProduct.name.splice(couponIndex, 1);
+                                                                            existingProduct.amount.splice(couponIndex, 1);
+                                                                            if (existingProduct.name.length === 0) {
+                                                                                updatedSelectedCouponAmounts.splice(existingProductIndex, 1);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    return updatedSelectedCouponAmounts;
+                                                                });} else {
                                                                 setSelectedCoupons(prevSelectedCoupons => [...prevSelectedCoupons, couponObject]);
                                                                 setSelectedCouponNames(prevSelectedCouponNames => [...prevSelectedCouponNames, couponObject.name]);
                                                                 setSelectedCouponAmounts(prevSelectedCouponAmounts => {
