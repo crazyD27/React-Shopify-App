@@ -84,7 +84,7 @@ const CampaignOver = () => {
             <div className="overview-container w-100 bg-light p-4">
                 <h3 className='mb-3'>Overview</h3>
                 <div className="overview-list d-flex flex-wrap justify-content-between align-items-center">
-                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-center justify-content-center mb-4">
                         <div className="overview-content">
                             <h5>Active Campaigns</h5>
                             <h3 className="mb-0">{countCamp.active_campaign ? countCamp.active_campaign : 0}</h3>
@@ -94,7 +94,7 @@ const CampaignOver = () => {
                             <img src={People} alt="overview-img" />
                         </div> */}
                     </div>
-                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-center justify-content-center mb-4">
                         <div className="overview-content">
                             <h5>Pending Campaigns</h5>
                             <h3 className="mb-0">{countCamp.pending_campaign ? countCamp.pending_campaign : 0}</h3>
@@ -104,7 +104,7 @@ const CampaignOver = () => {
                             <img src={Cursor} alt="overview-img" />
                         </div> */}
                     </div>
-                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-center justify-content-center mb-4">
                         <div className="overview-content">
                             <h5>Total Campaigns</h5>
                             <h3 className="mb-0">{countCamp.total ? countCamp.total : 0}</h3>
@@ -114,7 +114,7 @@ const CampaignOver = () => {
                             <img src={Completed} alt="overview-img" />
                         </div> */}
                     </div>
-                    <div className="overview-box d-flex align-items-start justify-content-between mb-4">
+                    <div className="overview-box d-flex align-items-center justify-content-center mb-4">
                         <div className="overview-content">
                             <h5>Sales Campaigns</h5>
                             <h3 className="mb-0">0</h3>
@@ -221,7 +221,7 @@ const CampaignOver = () => {
                 </div>
             </div> */}
             <div className="support-container mt-4 bg-light w-100 p-3">
-                <h3>Get Support</h3>
+                <h3 className='mb-4'>Get Support</h3>
                 <div className="support-list d-flex justify-content-between flex-wrap">
                     <div className="support-box d-flex mb-5 p-4 align-items-start">
                         <img src={Chat} alt="support-img" className='me-3' />

@@ -1,6 +1,8 @@
 .page {
     width: 75%;
     margin-left: auto;
+    background: #fff;
+    border-radius: 30px;
     .canvasjs-chart-credit {
         display: none !important;
     }
@@ -32,19 +34,25 @@
         margin-bottom: 30px;
         .influencer-list-container {
             padding: 20px 35px;
-            border-bottom: 1px solid #ebebeb;
+            border: 0.97px solid rgba(0, 0, 0, 0.2);
             width: 100%;
             background-color: #fff;
-            box-shadow: 0 0px 4px 0px rgba(0, 0, 0, .2);
             margin-bottom: 1.5rem;
+            border-radius: 30px;
             cursor: pointer;
+            &:nth-child(odd) {
+                background-color: #E3F5FF;
+            }
+            &:nth-child(even) {
+                background-color: #E5ECF6;
+            }
             input {
                 margin-right: 1.5rem;
             }
             img {
                 border-radius: 50%;
-                height: 50px;
-                width: 50px;
+                height: 60px;
+                width: 60px;
                 object-fit: contain;
             }
             span {
@@ -457,15 +465,14 @@
     .campaign-over-container {
         .overview-container {
             border-radius: 10px;
-            box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
             .overview-list {
                 .overview-box {
-                    background-position: 100%;
-                    background-size: cover;
                     width: 48%;
-                    color: #fff;
-                    border-radius: 10px;
+                    border-radius: 24px;
                     padding: 3.5rem 2rem;
+                    h5, h3 {
+                        text-align: center;
+                    }
                     .overview-image {
                         display: flex;
                         justify-content: center;
@@ -492,18 +499,17 @@
                         margin-top: 1rem;
                     }
                     &:nth-child(1) {
-                        background-image: linear-gradient(rgba(47,0,126,.49) 100%,rgba(47,0,126,.5) 100%),url(../../assests/img/overview-blue-bg.png);
-                    }
-                    &:nth-child(2) {
-                        background-image: linear-gradient(96.2deg,#a374f2 .62%,#6414e991 96.58%),url(../../assests/img/overview-blue-bg.png);
-                    }
-                    &:nth-child(3) {
-                        background-image: linear-gradient(96.2deg,#a374f2 .62%,#6414e991 96.58%),url(../../assests/img/overview-blue-bg.png);
+                        background: #E3F5FF;
                     }
                     &:nth-child(4) {
-                        background-image: linear-gradient(rgba(47,0,126,.49) 100%,rgba(47,0,126,.5) 100%),url(../../assests/img/overview-blue-bg.png);
+                        background: #E3F5FF;
                     }
-                    
+                    &:nth-child(2) {
+                        background: #E5ECF6;
+                    }
+                    &:nth-child(3) {
+                        background: #E5ECF6;
+                    }
                 }
             }
         }
@@ -576,12 +582,23 @@
         .support-container {
             border-radius: 5px;
             .support-box {
-                border: 1px solid #d9d9d9;
-                border-radius: 5px;
+                border-radius: 24px;
                 width: 48%;
+                &:nth-child(1) {
+                    background: #E3F5FF;
+                }
+                &:nth-child(4) {
+                    background: #E3F5FF;
+                }
+                &:nth-child(2) {
+                    background: #E5ECF6;
+                }
+                &:nth-child(3) {
+                    background: #E5ECF6;
+                }
                 h5 {
-                    width: 140px;
-                    font-size: 16px;
+                    width: 190px;
+                    font-size: 20px;
                 }
             }
         }
@@ -596,22 +613,22 @@
             align-items: center;
             justify-content: center;
             min-width: 100px;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border: none;
-            border-radius: 40px;
+            border-radius: 15px;
             font-size: 13px;
             outline: none;
             background: #fff;
-            border: 1px solid #7c7c7c;
+            border: 1px solid #E5ECF6;
             color: #000;
             &:nth-child(1) {
                 margin-right: .5rem;
             }
         }
         .nav-link.active {
-            background: #6414e9!important;
+            background: #1C4672!important;
             margin-right: .5rem;
-            border: 1px solid #6414e9!important;
+            border: 1px solid transparent !important;
             color: #fff;
         }
     }
@@ -793,7 +810,7 @@
         table.coupon-table {
             margin-top: 30px;
             .table-heading {
-                background-color: #5172FC;
+                background-color: #034870;
                 th {
                     color: #fff;
                     border-right: 1px solid #fff;

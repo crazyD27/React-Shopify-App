@@ -667,7 +667,7 @@ const CampaignManage = () => {
                     (
                         <>
                             <h5 className='mt-4 text-center'>No Active Campaigns right now</h5>
-                            <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                            <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
                         </>
                     )}
                 </Tab.Pane>
@@ -699,7 +699,7 @@ const CampaignManage = () => {
                     (
                         <>
                     <h5 className='mt-4 text-center'>No Pending Campaigns right now</h5>
-                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
                     </>
                     )}
                 </Tab.Pane>
@@ -731,7 +731,7 @@ const CampaignManage = () => {
                     (
                         <>
                     <h5 className='mt-4 text-center'>No Campaigns in Draft right now</h5>
-                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
                     </>
                     )}
                 </Tab.Pane>
@@ -764,7 +764,7 @@ const CampaignManage = () => {
                     (
                         <>
                     <h5 className='mt-4 text-center'>No Campaigns in Draft right now</h5>
-                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
                     </>
                     )}
                 </Tab.Pane>
@@ -798,7 +798,7 @@ const CampaignManage = () => {
                     (
                         <>
                     <h5 className='mt-4 text-center'>No Campaigns in Draft right now</h5>
-                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 500, objectFit: 'contain'}} />
+                    <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
                     </>
                     )}
                 </Tab.Pane>

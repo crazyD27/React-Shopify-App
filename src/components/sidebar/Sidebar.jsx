@@ -131,13 +131,15 @@ const SideBar = () => {
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
 
-                <NavLink to="/" className='d-flex align-items-center px-3 user'>
-                    {localStorage.getItem("Image") !=null ? (
-                        <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
-                    ):
-                    <img src={User} alt='notification' style={{width: 45}} />}
+                <NavLink to="/" className='d-flex flex-column align-items-center px-3 user'>
+                    <div className="user-img d-flex align-items-center justify-content-center">
+                        {localStorage.getItem("Image") !=null ? (
+                            <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
+                        ):
+                        <img src={User} alt='notification' style={{width: 45}} />}
+                    </div>
                     
-                    <p className='text-white mb-0 ms-3'>Hello, {userName ? userName : 'User123'}</p>
+                    <p className='text-white mb-5 mt-3'>Hello, {userName ? userName : 'User123'}</p>
                     
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">

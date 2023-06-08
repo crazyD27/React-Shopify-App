@@ -608,7 +608,7 @@ const CreateInfluencer = () => {
                                 ))}
                             </div>
                         ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
-                        <button onClick={handleContinue} className='button button-blue'>
+                        <button onClick={handleContinue} className='button button-blue mx-auto'>
                             Continue
                         </button>
                     </div>
