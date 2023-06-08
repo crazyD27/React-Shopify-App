@@ -309,7 +309,8 @@ const CreateCampaign = () => {
             offer: influenceOffer,
             product_discount: selectedCouponAmounts,
             influencer_fee: influenceFee,
-            date: selectedDate
+            date: selectedDate,
+            product_name: productName,
           },{
           headers: {
             Authorization: `Token ${token}`
@@ -366,7 +367,8 @@ const CreateCampaign = () => {
             offer: influenceOffer,
             product_discount: selectedCouponAmounts,
             influencer_fee: influenceFee,
-            date: selectedDate
+            date: selectedDate,
+            product_name: productName,
           },{
           headers: {
             Authorization: `Token ${token}`

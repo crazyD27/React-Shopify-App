@@ -462,7 +462,8 @@ const CreateInfluencer = () => {
             product_discount: selectedCouponAmounts,
             influencer_fee: influenceFee,
             influencer_name: selectedUsersId.toString(),
-            date: selectedDate
+            date: selectedDate,
+            product_name: productName,
           },{
           headers: {
  
@@ -491,7 +492,8 @@ const CreateInfluencer = () => {
             product_discount: selectedCouponAmounts,
             influencer_fee: influenceFee,
             influencer_name: selectedUsersId.toString(),
-            date: selectedDate
+            date: selectedDate,
+            product_name: productName,
           },{
           headers: {
  
