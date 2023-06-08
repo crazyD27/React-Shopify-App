@@ -395,13 +395,6 @@ const CreateInfluencer = () => {
                   console.log("Response 1",response);
                   setProductDetails(response.data.product_details);
                   setProductUrl(response.data.product_url)
-                  const filteredDetails = response.data.product_details.filter(detail => detail.name == "");
-                  if (filteredDetails.length > 0) {
-                    const existingDetails = selectedCouponAmounts.filter(detail => detail.product_id === filteredDetails[0].product_id);
-                    if (existingDetails.length === 0) {
-                      setSelectedCouponAmounts(prevState => [...prevState, ...filteredDetails]);
-                    }
-                  }
                 })
                 .catch((error) => console.log(error))
                 .finally(() => setLoading(false));
@@ -688,15 +681,7 @@ const CreateInfluencer = () => {
                                                             ? prevIds.filter((value) => value !== name.id)
                                                             : [...prevIds, name.id]
                                                     );
-                                                    if (productDetails.some((detail) => detail.product_id === name.id)) {
-                                                        setProductDetails(productDetails.filter((detail) => detail.product_id !== name.id));
-                                                    }
                                                     setShowList(false);
-                                                    if (id?.length > 0) {
-                                                        if (selectedCouponAmounts.some((detail) => detail.product_id === name.id)) {
-                                                            setSelectedCouponAmounts(selectedCouponAmounts.filter((detail) => detail.product_id !== name.id));
-                                                        }
-                                                    }
                                                 }}
                                                 className={productName.includes(name.title) ? "active-prod" : ""}
                                             >
