@@ -1,3 +1,4 @@
+$primarColor: #1c4672;
 .page {
     width: 75%;
     margin-left: auto;
@@ -67,7 +68,7 @@
             }
             span {
                 font-size: 1vw;
-                color: #2657b3;
+                color: $primarColor;
             }
         }
     }
@@ -116,21 +117,23 @@
     }
 
     .active-prod {
-        background: #2657b3;
+        background: $primarColor;
         color: #fff;
     }
 
     .selected-influencers {
         ul {
-            padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
-            max-height: 100px;
+            max-height: 150px;
             overflow-y: scroll;
+            border: 1px solid #03487047;
+            border-right: none;
+            padding: 10px 0 10px 0px !important;
             li {
                 font-size: 1vw;
-                color: #2657b3;
+                color: $primarColor;
                 margin-bottom: 20px;
                 font-weight: bold;
                 img {
@@ -257,7 +260,6 @@
                 border-radius: 8px;
                 min-height: 200px;
                 text-decoration: none;
-                color: #fff;
                 position: relative;
                 z-index: 2;
                 transition: 1s ease-in-out;
@@ -275,15 +277,17 @@
                     transition: 1s ease-in-out;
                 }
                 &:nth-child(odd) {
-                    background: #2657b4;
+                    background: #034870;
+                    color: #fff;
                     &::before {
-                        background-color: #7464ed;
+                        background-color: #7464ed8c;
                     }
                 }
                 &:nth-child(even) {
-                    background: #7464ed;
+                    background: #E3F5FF;
+                    color: #000;
                     &::before {
-                        background: #2657b4
+                        background: #2657b438
                     }
                 }
                 &:hover {
@@ -626,7 +630,7 @@
             }
         }
         .nav-link.active {
-            background: #1C4672!important;
+            background: $primarColor!important;
             margin-right: .5rem;
             border: 1px solid transparent !important;
             color: #fff;
@@ -719,22 +723,22 @@
             align-items: center;
             justify-content: center;
             min-width: 100px;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border: none;
-            border-radius: 40px;
+            border-radius: 15px;
             font-size: 13px;
             outline: none;
             background: #fff;
-            border: 1px solid #7c7c7c;
+            border: 1px solid #E5ECF6;
             color: #000;
             &:nth-child(1) {
                 margin-right: .5rem;
             }
         }
         .nav-link.active {
-            background: #6414e9!important;
-            margin-right: .5rem;
-            border: 1px solid #6414e9!important;
+            background: $primarColor !important;
+            margin-right: 0.5rem;
+            border: 1px solid transparent !important;
             color: #fff;
         }
     }
@@ -783,7 +787,7 @@
                 box-shadow: none;
                 border: none;
                 &:nth-child(odd) {
-                    background-color: #5172FC;
+                    background-color: #034870;
                     color: #fff;
                     margin-right: 25px;
                 }
@@ -796,30 +800,11 @@
                 }
             }
         }
-        tr {
-            border: 1px solid #d9d9d9;
-            border-top: none;
-            td {
-                border-right: 1px solid #d9d9d9;
-                &:last-child {
-                    border-right: none;
-                }
-            }
-        }
 
         table.coupon-table {
             margin-top: 30px;
             .table-heading {
-                background-color: #034870;
                 th {
-                    color: #fff;
-                    border-right: 1px solid #fff;
-                    font-weight: normal;
-                    line-height: 1;
-                    padding: 14px 0;
-                    &:last-child {
-                        border-right: none;
-                    }
                     input[type=checkbox] {
                         background-color: transparent !important;
                         border: 1px solid #fff;
@@ -1021,7 +1006,7 @@
                     max-height: 75px;
                     li.influencer-box {
                         font-size: 1vw;
-                        color: #2657b3;
+                        color: $primarColor;
                         margin-bottom: 20px;
                         font-weight: bold;
                         img {
@@ -1046,7 +1031,7 @@
         }
     }
     ul {
-        border: 1px solid #a5a5a5;
+        border: 0.97px solid rgba(0, 0, 0, 0.2);
         background: #fff;
         display: flex;
         flex-direction: column;
@@ -1062,6 +1047,19 @@
             padding: 5px 10px;
             border-bottom: 1px solid #efefef;
             cursor: pointer;
+        }
+    }
+    .get-coupon-contianer {
+        form {
+            .input-container {
+                ul {
+                    max-height: 160px !important;
+                    bottom: -162px !important;
+                    li {
+                        margin-bottom: 10px !important;
+                    }
+                }
+            }
         }
     }
 }

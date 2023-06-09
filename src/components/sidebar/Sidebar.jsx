@@ -5,8 +5,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import UserContext from '../context/UserContext';
 import './sidebar.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import { API } from '../../config/Api';
 
@@ -20,6 +18,8 @@ import AnalyticsImg from '../../assests/img/analytics.png';
 import SalesImg from '../../assests/img/sales.png';
 import ProfileImg from '../../assests/img/profile.png';
 import User from '../../assests/img/user.png';
+import Notification from '../../assests/img/notification.png';
+import NoNotification from '../../assests/img/no-notification.png';
 
 const SideBar = () => {
     const [activeLink, setActiveLink] = useState('1');
@@ -31,17 +31,17 @@ const SideBar = () => {
     const handleLinkClick = (event) => {
         setActiveLink(event.target.getAttribute('data-nav-link'));
     };
-    const {image, userName} = useContext(UserContext);
+    const {userName} = useContext(UserContext);
     const name = localStorage.getItem("User_Name");
     // console.log("Name in Sidebar", name)
     console.log("NAMEEEEE", localStorage.getItem("User_Name"))
-    console.log("Image in SIdebar", image)
 
     const handleNotifications = () => {
         setShowNotification(!shownotification);
     }
 
     useEffect(() => {
+        const intervalId = setInterval(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
             headers: { 
                 Authorization: `Token ${token}` 
@@ -54,18 +54,15 @@ const SideBar = () => {
         .catch(function (error) {
             console.log(error);
         })
-    }, [])
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-        axios.get(API.BASE_URL + 'notification/list/',{
+        axios.get(API.BASE_URL + 'user/id/',  {
             headers: { 
                 Authorization: `Token ${token}` 
             }
-        })
+        }) 
         .then(function (response) {
-            console.log("Notification", response.data)
-            setNotifications(response.data.data);
+            console.log("Profile Details in Sidebar", response);
+            localStorage.setItem("Image", response.data.url);
+            localStorage.setItem("User_Name", response.data.username);
         })
         .catch(function (error) {
             console.log(error);
@@ -109,79 +106,76 @@ const SideBar = () => {
     <div className="sidebar">
         <div className='notifications' style={{cursor: 'pointer'}} onClick={() => {handleNotifications()}} ref={notificationsRef}>
             <span>{notifications?.length ? notifications.length : 0}</span>
-            <FontAwesomeIcon 
-                icon={faBell}
-                style={{
-                    color: "#0d6efd",
-                    width: "20px",
-                    height: "20px",
-                }}
-            />
+            {notifications?.length > 0 ?
+                <img src={Notification} alt='notification' style={{height: 24, width: 24, objectFit: 'contain'}} />
+             : <img src={NoNotification} alt='notification' style={{height: 24, width: 24, objectFit: 'contain'}} />}
         </div>
+        <ul className= {shownotification === true ? "notification-list active" : "notification-list"}>
         {shownotification === true && (
             notifications?.length > 0 ? (
-                <ul className="notification-list">
-                    <button onClick={(e) => {handleClearNotifications(e)}}>clear all</button>
-                    {notifications?.map((data) => {
-                    return <li>{data.message}</li>;
-                    })}
-                </ul>
-            ) : <ul className="notification-list"><li style={{textAlign: 'center'}}>No Notifications</li></ul>
+                    <>
+                        <button onClick={(e) => {handleClearNotifications(e)}}>clear all</button>
+                        {notifications?.map((data) => {
+                        return <li>{data.message}</li>;
+                        })}
+                    </>
+            ) : <li style={{textAlign: 'center'}}>No Notifications</li>
         )}
+        </ul>
         <Navbar bg="light" expand="md" fixed="left">
             <Container fluid>
 
                 <NavLink to="/" className='d-flex flex-column align-items-center px-3 user'>
                     <div className="user-img d-flex align-items-center justify-content-center">
                         {localStorage.getItem("Image") !=null ? (
-                            <img src={image ? 'https://' + image : profile_image ? 'https://' + profile_image : 'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
+                            <img src={'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
                         ):
                         <img src={User} alt='notification' style={{width: 45}} />}
                     </div>
                     
-                    <p className='text-white mb-5 mt-3'>Hello, {userName ? userName : 'User123'}</p>
+                    <p className='text-white mb-5 mt-3'>Hello, {name ? name : 'User'}</p>
                     
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">
-                <Nav
-                    className="me-auto my-2 my-lg-0"
-                    style={{ maxHeight: '100px' }}
-                    navbarScroll
-                    activeKey="/dashboard"
-                >
-                    <NavLink to='/dashboard' className='text-white py-2'>
-                        <img src={CampaignOverview} className="me-2" alt='menu-img' />
-                        Campaign Overview
-                    </NavLink>
-                    <NavLink to='/manage' className='text-white py-2'>
-                        <img src={Manage} className="me-2" alt='menu-img' />
-                        Campaign Influencer
-                    </NavLink>
-                    <NavLink to='/create' className='text-white py-2' exact>
-                        <img src={CampNew} className="me-2" alt='menu-img' />
-                        Create new Campaign
-                    </NavLink>
-                    <NavLink to='/market' className='text-white py-2'>
-                        <img src={MarketPlace} className="me-2" alt='menu-img' />
-                        Campaign Marketplace
-                    </NavLink>
-                    <NavLink to='/create-coupon' className='text-white py-2'>
-                        <img src={Coupon} className="me-2" alt='menu-img' />
-                        Coupon
-                    </NavLink>
-                    <NavLink to='/analytics' className='text-white py-2'>
-                        <img src={AnalyticsImg} className="me-2" alt='menu-img' />
-                        Analytics
-                    </NavLink>
-                    <NavLink to='/sales' className='text-white py-2'>
-                        <img src={SalesImg} className="me-2" alt='menu-img' />
-                        Sales
-                    </NavLink>
-                    <NavLink to='/profile' className='text-white py-2'>
-                        <img src={ProfileImg} className="me-2" alt='menu-img' />
-                        Profile
-                    </NavLink>
-                </Nav>
+                    <Nav
+                        className="me-auto my-2 my-lg-0"
+                        style={{ maxHeight: '100px' }}
+                        navbarScroll
+                        activeKey="/dashboard"
+                    >
+                        <NavLink to='/dashboard' className='text-white py-2'>
+                            <img src={CampaignOverview} className="me-2" alt='menu-img' />
+                            Campaign Overview
+                        </NavLink>
+                        <NavLink to='/manage' className='text-white py-2'>
+                            <img src={Manage} className="me-2" alt='menu-img' />
+                            Campaign Influencer
+                        </NavLink>
+                        <NavLink to='/create' className='text-white py-2' exact>
+                            <img src={CampNew} className="me-2" alt='menu-img' />
+                            Create new Campaign
+                        </NavLink>
+                        <NavLink to='/market' className='text-white py-2'>
+                            <img src={MarketPlace} className="me-2" alt='menu-img' />
+                            Campaign Marketplace
+                        </NavLink>
+                        <NavLink to='/create-coupon' className='text-white py-2'>
+                            <img src={Coupon} className="me-2" alt='menu-img' />
+                            Coupon
+                        </NavLink>
+                        <NavLink to='/analytics' className='text-white py-2'>
+                            <img src={AnalyticsImg} className="me-2" alt='menu-img' />
+                            Analytics
+                        </NavLink>
+                        <NavLink to='/sales' className='text-white py-2'>
+                            <img src={SalesImg} className="me-2" alt='menu-img' />
+                            Sales
+                        </NavLink>
+                        <NavLink to='/profile' className='text-white py-2'>
+                            <img src={ProfileImg} className="me-2" alt='menu-img' />
+                            Profile
+                        </NavLink>
+                    </Nav>
                 </Navbar.Collapse>
                
             </Container>

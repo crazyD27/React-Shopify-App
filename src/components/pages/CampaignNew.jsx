@@ -15,7 +15,7 @@ const CampaignNew = () => {
             </Link>
             <Link to='/create-campaign' className={"button button-blue"}>
                 Create Campaign for Marketplace
-                <FontAwesomeIcon icon={faChevronRight} style={{ color: "#fff", width: "25px", height: "25px", marginLeft: 20 }} />
+                <FontAwesomeIcon icon={faChevronRight} style={{ color: "#000", width: "25px", height: "25px", marginLeft: 20 }} />
             </Link>
           </div>
         </div>

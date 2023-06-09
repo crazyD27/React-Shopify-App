@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import MenuBar from '../navbar/Navbar';
-import { Link } from 'react-router-dom';
+import { MDBDataTable } from 'mdbreact';
 import './pages.scss';
 import Plus from '../../assests/img/plus.png';
 import Download from '../../assests/img/download.png';
 import axios from 'axios';
 import { API } from '../../config/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import SideBar from '../sidebar/Sidebar';
 
 // Images
 import Search from '../../assests/img/search.png';
@@ -42,6 +40,8 @@ const CouponList = () => {
     const [selectedProductNames, setSelectedProductNames] = useState([]);
     const [showInfluencerDropdown, setShowInfluencerDropdown] = useState(false);
     const [matchingInfluencers, setMatchingInfluencers] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 5;
 
     const handleCouponDesc = (event) => {
         setCouponDesc(event.target.value);
@@ -82,6 +82,27 @@ const CouponList = () => {
         })
         .finally(() => setLoading(false));
     }, [token])
+
+    // Pagination logic
+    const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+    const currentItems = couponData.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(couponData.length / ITEMS_PER_PAGE);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+        }
+    };
 
     useEffect(() => {
 
@@ -418,44 +439,75 @@ const CouponList = () => {
                     <button onClick={couponCreateShow}><img src={Plus} aly='plus' /> Create Coupon</button>
                     <button><img src={Download} aly='download' /> Export Coupon</button>
                 </div>
-                {couponData?.length > 0 ? (
-                    <table className="coupon-table">
-                        <tr className='table-heading'>
-                            {/* <th><input type="checkbox" name="" id="" /></th> */}
-                            <th>Coupons</th>
-                            <th>Created at</th>
-                            <th>Actions</th>
-                        </tr>
-                        
-                            {couponData?.filter(
+                {couponData.length > 0 ? (
+                    <div>
+                        <table className="coupon-table w-100">
+                            <thead>
+                            <tr className="table-heading">
+                                <th>Coupons</th>
+                                <th>Created at</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {currentItems
+                                .filter(
                                 (coupon) =>
                                     coupon.title?.toLowerCase().includes(filterValue.toLowerCase()) ||
                                     coupon.email?.toLowerCase().includes(filterValue.toLowerCase())
-                            )
-                            .map((couponData, i) => {
-                                return(
-                                    <tr key={i}>
-                                        {/* <td>{couponData.id}</td> */}
-                                        <td>{couponData.title}</td>
-                                        <td>{couponData.created_at}</td>
-                                        <td>
-                                            <button onClick={(event) => {getSingleCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Edit</button>
-                                            {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
-                                            <button onClick={(event) => {deleteCoupon(couponData.id, event)}}><img src={Delete} style={{ marginRight: 5 }} /> Delete</button>
-                                            
-                                        </td>
-                                    </tr>
                                 )
-                            })}
-                        
-                    </table>
-            
+                                .map((couponData, i) => {
+                                return (
+                                    <tr key={i}>
+                                    <td>{couponData.title}</td>
+                                    <td>{couponData.created_at}</td>
+                                    <td>
+                                        <button onClick={(event) => getSingleCoupon(couponData.id, event)}>
+                                        <img src={Delete} style={{ marginRight: 5 }} /> Edit
+                                        </button>
+                                        {loading && (
+                                        <div className="d-flex loader-container flex-column">
+                                            <div className="loader">
+                                            <span></span>
+                                            </div>
+                                            <p className="text-white">Processing...</p>
+                                        </div>
+                                        )}
+                                        <button onClick={(event) => deleteCoupon(couponData.id, event)}>
+                                        <img src={Delete} style={{ marginRight: 5 }} /> Delete
+                                        </button>
+                                    </td>
+                                    </tr>
+                                );
+                                })}
+                            </tbody>
+                        </table>
+                        <div className="pagination d-flex justify-content-center align-items-center mt-4">
+                            <button onClick={handlePreviousPage} disabled={currentPage === 1} className='page-btn' style={{marginRight: 10}}>
+                                <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "15px", height: "15px"}} />
+                            </button>
+                            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                            <button
+                                key={pageNumber}
+                                onClick={() => paginate(pageNumber)}
+                                className={currentPage === pageNumber ? 'active page-num' : 'page-num'}
+                                style={{margin: '0 5px'}}
+                            >
+                                {pageNumber}
+                                </button>
+                            ))}
+                            <button onClick={handleNextPage} className='page-btn' disabled={currentPage === totalPages} style={{marginLeft: 10}}>
+                                <FontAwesomeIcon icon={faChevronLeft} style={{ transform: 'rotate(180deg)', color: "#fff", width: "15px", height: "15px"}} />
+                            </button>
+                        </div>
+                    </div>
                 )
                 :
                 (
                     <>
                         <h5 className='mt-4 text-center'>No Coupons Available</h5>
                         <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
+                            <h3 className='text-center'>No Data Found</h3>
                     </>
                 )}
             {couponList && (
@@ -520,18 +572,6 @@ const CouponList = () => {
                             <input type="text" maxLength='30' placeholder='Enter your coupon' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
-                            <label>Discount Types</label>
-                            <select value={discountType} onChange={handleDiscountType}>
-                                <option value="" disabled>Discount Type</option>
-                                <option value="fixed_amount">Fixed Amount</option>
-                                <option value="percentage">Precentage</option>
-                            </select>
-                        </div>
-                        <div className="input-container">
-                            <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
-                            <input type="number" onWheel={(e) => e.target.blur()} placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
-                        </div>
-                        <div className="input-container">
                             <label>Select Influencer</label>
                             <input
                             type="text"
@@ -557,6 +597,18 @@ const CouponList = () => {
                                 ))}
                             </ul>
                             )}
+                        </div>
+                        <div className="input-container">
+                            <label>Discount Types</label>
+                            <select value={discountType} onChange={handleDiscountType}>
+                                <option value="" disabled>Discount Type</option>
+                                <option value="fixed_amount">Fixed Amount</option>
+                                <option value="percentage">Precentage</option>
+                            </select>
+                        </div>
+                        <div className="input-container">
+                            <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
+                            <input type="number" onWheel={(e) => e.target.blur()} placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         <button onClick={(e) => {trackingApi(e)}} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
                     </form>
@@ -646,18 +698,6 @@ const CouponList = () => {
                             <input type="text" maxLength='30' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
                         <div className="input-container">
-                            <label>Discount Types</label>
-                            <select name="" id="" value={discountType} onChange={handleDiscountType}>
-                                <option value="" disabled>{getCouponInfo?.discount_type}</option>
-                                <option value="fixed_amount">Fixed Amount</option>
-                                <option value="percentage">Precentage</option>
-                            </select>
-                        </div>
-                        <div className="input-container">
-                            <label>Amount</label>
-                            <input type="number" onWheel={(e) => e.target.blur()} value={couponAmount} onChange={handleCouponAmount} />
-                        </div>
-                        <div className="input-container">
                             <label>Select Influencer</label>
                             <input
                             type="text"
@@ -675,16 +715,35 @@ const CouponList = () => {
                             <ul>
                                 {influencerList.map((influencer) => (
                                 <li
-                                    className='influencer-box'
+                                    className='influencer-box d-flex align-items-center px-4'
                                     key={influencer.id}
                                     onClick={() => handleInfluencerSelection(influencer)}
                                 >
                                     <img src={influencer.image} alt="influencer" />
-                                    {influencer.fullname}
+                                    <p className="ms-2 d-flex flex-column">
+                                        <span className='text-dark'>{influencer.fullname}</span>
+                                        <span>@{influencer.username}</span>
+                                    </p>
+                                    <p className='ms-auto d-flex flex-column'>
+                                        <span className='text-dark'>Followers</span>
+                                        <strong>{(influencer.follower / 1000000).toFixed(6)} M</strong>
+                                    </p>
                                 </li>
                                 ))}
                             </ul>
                             )}
+                        </div>
+                        <div className="input-container">
+                            <label>Discount Types</label>
+                            <select name="" id="" value={discountType} onChange={handleDiscountType}>
+                                <option value="" disabled>{getCouponInfo?.discount_type}</option>
+                                <option value="fixed_amount">Fixed Amount</option>
+                                <option value="percentage">Precentage</option>
+                            </select>
+                        </div>
+                        <div className="input-container">
+                            <label>{discountType == "fixed_amount" ? "Amount" : "Commision"}</label>
+                            <input type="number" onWheel={(e) => e.target.blur()} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         {couponStatus == 1 ? (
                             <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
@@ -696,7 +755,6 @@ const CouponList = () => {
                     </div>
                 </div>
             }
-
         </div>
     </div>
     </>

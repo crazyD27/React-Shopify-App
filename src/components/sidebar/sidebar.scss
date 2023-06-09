@@ -1,3 +1,4 @@
+$primarColor: #1c4672;
 .sidebar {
     width: fit-content;
     width: 25%;
@@ -9,7 +10,7 @@
         position: relative;
         .container-fluid {
             flex-direction: column;
-            background: #1c4672;
+            background: $primarColor;
             align-items: flex-start;
             height: 100%;
             padding-top: 1.5rem;
@@ -22,8 +23,8 @@
                 .user-img {
                     background: #E3F5FF;
                     border-radius: 50%;
-                    height: 55px;
-                    width: 55px;
+                    height: 60px;
+                    width: 60px;
                 }
             }
             .navbar-collapse {
@@ -37,13 +38,14 @@
                     max-height: 100% !important;
                     min-height: 100vh;
                     width: 100%;
-                    padding: 0 1.5rem 0 0.9rem;
+                    padding: 0 1.2rem 0 0.6rem;
                     a {
                         margin-left: 0;
                         margin-right: 0;
-                        padding: 0.8rem 1.5rem !important;
+                        padding: 0.8rem 1rem !important;
                         margin-bottom: 1.2rem;
                         border-radius: 15px;
+                        font-size: 1.5vw;
                     }
                     a.active {
                         background: #fff;
@@ -81,10 +83,10 @@
             height: 20px;
             width: 20px;
             border-radius: 50%;
-            // background-color: #0d6efd;
+            // background-color: #034870;
             background-color: #fff;
             // color: #fff;
-            color: #0d6efd;
+            color: #034870;
             font-size: 14px;
             // box-shadow: 0 0 8px 2px rgb(0 0 0 / 20%);
             box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
@@ -93,18 +95,17 @@
     }
     .notification-list {
         position: absolute;
-        // top: 8%;
-        // left: 90px;
         top: 65px;
-        right: 10px;
+        transition: .8s ease-in-out;
+        right: -250px;
         z-index: 3;
         width: fit-content;
         height: fit-content;
         background: #fff;
-        border: 1px solid #bdbdbd;
         border-radius: 5px;
         padding-left: 0;
         min-width: 185px;
+        border: none;
         button {
             text-decoration: underline;
             background-color: transparent;
@@ -119,9 +120,20 @@
             display: flex;
             font-size: 13px;
             border-bottom: 1px solid #e7e7e7;
-            padding: 6px 8px;
+            padding: 10px 12px;
+            color: #000;
+            &:last-child {
+                border-bottom: none;
+            }
 
 
         }
+    }
+    .notification-list.active {
+        right: 15px;
+        transition: .8s ease-in-out;
+        border: 1px solid #034870;
+        border-radius: 24px;
+        min-width: 185px;
     }
 }

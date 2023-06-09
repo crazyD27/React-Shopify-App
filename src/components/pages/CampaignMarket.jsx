@@ -227,6 +227,7 @@ const CampaignMarket = () => {
                                 <>
                                     <h5 className='mt-4 text-center'>No Campaign</h5>
                                     <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
+                            <h3 className='text-center'>No Data Found</h3>
                                 </>
                             )
                         }
@@ -258,6 +259,7 @@ const CampaignMarket = () => {
                                 <>
                                     <h5 className='mt-4 text-center'>No Campaign</h5>
                                     <img src={NoData} alt='no-data' style={{width: '100%', maxHeight: 220, marginTop: '4rem', objectFit: 'contain'}} />
+                            <h3 className='text-center'>No Data Found</h3>
                                 </>
                             )
                         }

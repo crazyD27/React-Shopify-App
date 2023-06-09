@@ -736,9 +736,19 @@ const CreateInfluencer = () => {
                                 <ul>
                                     {selectedRows?.map((influ) => {
                                         return(
-                                            <li>
-                                                <img src={influ.image} alt="influencer-image" style={{marginRight: 15}} />
-                                                {influ.username}
+                                            <li
+                                                className='influencer-box d-flex align-items-center px-4'
+                                                key={influ.id}
+                                            >
+                                                <img src={influ.image} alt="influencer" />
+                                                <p className="ms-2 d-flex flex-column">
+                                                    <span className='text-dark'>{influ.fullname}</span>
+                                                    <span>@{influ.username}</span>
+                                                </p>
+                                                <p className='ms-auto d-flex flex-column'>
+                                                    <span className='text-dark'>Followers</span>
+                                                    <strong>{(influ.follower / 1000000).toFixed(6)} M</strong>
+                                                </p>
                                             </li>
                                         )
                                     })}

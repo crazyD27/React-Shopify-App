@@ -23,8 +23,9 @@ function Profile() {
     const navigatePath = useNavigate()
 
     const onFileChange = event => {
-        setSelectedFile(event.target.files[0]);
-        console.log(event.target.files[0])
+        const file = event.target.files[0];
+        setSelectedFile(URL.createObjectURL(file));
+        console.log("onFileChange",event.target.files[0])
     };
 
     console.log("Selected File", selectedFile)
@@ -160,7 +161,7 @@ function Profile() {
                 <label>Image</label>
                 <div className='d-flex align-items-center'>
                     <input type="file" onChange={onFileChange} accept="image/*" />
-                    <img src={"https://" +imagePath} alt='profile' className='ms-2' style={{width: 55, height: 55, borderRadius: '50%', objectFit: 'cover'}} />
+                    <img src={selectedFile ? selectedFile : "https://" +imagePath} alt='profile' className='ms-2' style={{width: 55, height: 55, borderRadius: '50%', objectFit: 'cover'}} />
                 </div>
             </div>
             <div className="input-container d-flex flex-column mb-4">
