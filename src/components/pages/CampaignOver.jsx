@@ -78,7 +78,7 @@ const CampaignOver = () => {
   return (
     <>
     <div className="campaign-over p-3 page">
-        <h2 className='text-left w-100 main-heading mt-3'>Welcome to <strong style={{color: '#2657b4'}}>Dashboard</strong></h2>
+        <h2 className='text-left w-100 main-heading mt-3'>Welcome to <strong>Dashboard</strong></h2>
         {/* <MenuBar /> */}
         <div className="campaign-over-container d-flex flex-column justify-content-center align-items-center mt-4 w-100">
             <div className="overview-container w-100 p-4">
