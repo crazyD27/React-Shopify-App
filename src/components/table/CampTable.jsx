@@ -143,7 +143,7 @@ const CampaignTable = ({
                     <div className="get-coupon">
                         <div className="get-coupon-contianer">
                             <button className='close' onClick={couponCross}>
-                                <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                                <FontAwesomeIcon icon={faClose} style={{ color: "$blackColor", width: "25px", height: "25px"}} />
                             </button>
                             <div className="confirm">
                                 <h4 className='mb-4 text-center'>Delete Campaign?</h4>
@@ -160,7 +160,7 @@ const CampaignTable = ({
                         <div className="get-coupon-contianer">
                         <h3>Edit Campaign</h3>
                         <button className='close' onClick={couponCross}>
-                            <FontAwesomeIcon icon={faClose} style={{ color: "#000", width: "25px", height: "25px"}} />
+                            <FontAwesomeIcon icon={faClose} style={{ color: "$blackColor", width: "25px", height: "25px"}} />
                         </button>
                         <form action="">
                             <div className="input-container">
@@ -183,7 +183,7 @@ const CampaignTable = ({
                                 <label>Description</label>
                                 <input type="text" placeholder={getMarketInfo?.description} onChange={handleInfluenceVisit} value={influenceVisit} />
                             </div>
-                            <button className='button button-blue mt-4 mx-auto' onClick={(event) => editCampaign(name.id, event)}>Edit</button>
+                            <button className='button button-black mt-4 mx-auto' onClick={(event) => editCampaign(name.id, event)}>Edit</button>
                         </form>
                         </div>
                     </div>

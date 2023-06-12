@@ -174,7 +174,7 @@ function Profile() {
             </div>
         </form>
         <div className="buttons d-flex justify-content-center align-items-center">
-            <button className='button button-blue' onClick={(e) => {createProfile(e)}}>Update Profile</button>
+            <button className='button button-black' onClick={(e) => {createProfile(e)}}>Update Profile</button>
         </div>
     </div>
   )

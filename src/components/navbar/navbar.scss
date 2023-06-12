@@ -1,9 +1,10 @@
+$blackColor: #000000;
 nav.navbar {
     .navbar-toggler {
         outline: none;
         background: #E0EFFE;
         border: none;
-        color: #000;
+        color: $blackColor;
         padding: 0.5rem 0.75rem;
     }
 }

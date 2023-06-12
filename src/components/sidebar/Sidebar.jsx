@@ -128,12 +128,12 @@ const SideBar = () => {
                 <NavLink to="/" className='d-flex flex-column align-items-center px-3 user'>
                     <div className="user-img d-flex align-items-center justify-content-center">
                         {localStorage.getItem("Image") !=null ? (
-                            <img src={'https://' + localStorage.getItem("Image")} alt='notification' style={{width: 45}} />
+                            <img src={'https://' + localStorage.getItem("Image")} alt='notification' />
                         ):
-                        <img src={User} alt='notification' style={{width: 45}} />}
+                        <img src={User} alt='notification' />}
                     </div>
                     
-                    <p className='text-white mb-5 mt-3'>Hello, {name ? name : 'User'}</p>
+                    <p className='text-black mb-5 mt-3'>Hello, <strong>{name ? name : 'User'}</strong></p>
                     
                 </NavLink>
                 <Navbar.Collapse id="navbarScroll">
@@ -143,35 +143,35 @@ const SideBar = () => {
                         navbarScroll
                         activeKey="/dashboard"
                     >
-                        <NavLink to='/dashboard' className='text-white py-2'>
+                        <NavLink to='/dashboard' className='text-black py-2'>
                             <img src={CampaignOverview} className="me-2" alt='menu-img' />
                             Campaign Overview
                         </NavLink>
-                        <NavLink to='/manage' className='text-white py-2'>
+                        <NavLink to='/manage' className='text-black py-2'>
                             <img src={Manage} className="me-2" alt='menu-img' />
                             Campaign Influencer
                         </NavLink>
-                        <NavLink to='/create' className='text-white py-2' exact>
+                        <NavLink to='/create' className='text-black py-2' exact>
                             <img src={CampNew} className="me-2" alt='menu-img' />
                             Create new Campaign
                         </NavLink>
-                        <NavLink to='/market' className='text-white py-2'>
+                        <NavLink to='/market' className='text-black py-2'>
                             <img src={MarketPlace} className="me-2" alt='menu-img' />
                             Campaign Marketplace
                         </NavLink>
-                        <NavLink to='/create-coupon' className='text-white py-2'>
+                        <NavLink to='/create-coupon' className='text-black py-2'>
                             <img src={Coupon} className="me-2" alt='menu-img' />
                             Coupon
                         </NavLink>
-                        <NavLink to='/analytics' className='text-white py-2'>
+                        <NavLink to='/analytics' className='text-black py-2'>
                             <img src={AnalyticsImg} className="me-2" alt='menu-img' />
                             Analytics
                         </NavLink>
-                        <NavLink to='/sales' className='text-white py-2'>
+                        <NavLink to='/sales' className='text-black py-2'>
                             <img src={SalesImg} className="me-2" alt='menu-img' />
                             Sales
                         </NavLink>
-                        <NavLink to='/profile' className='text-white py-2'>
+                        <NavLink to='/profile' className='text-black py-2'>
                             <img src={ProfileImg} className="me-2" alt='menu-img' />
                             Profile
                         </NavLink>

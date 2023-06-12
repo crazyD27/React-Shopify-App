@@ -1,4 +1,5 @@
-$primarColor: #1c4672;
+$primarColor: #E6E6E6;
+$blackColor: #000000;
 .sidebar {
     width: fit-content;
     width: 25%;
@@ -21,10 +22,12 @@ $primarColor: #1c4672;
                 width: 100%;
                 padding-bottom: 15px;
                 .user-img {
-                    background: #E3F5FF;
                     border-radius: 50%;
                     height: 60px;
                     width: 60px;
+                }
+                p {
+                    font-size: 1.3vw;
                 }
             }
             .navbar-collapse {
@@ -46,24 +49,25 @@ $primarColor: #1c4672;
                         margin-bottom: 1.2rem;
                         border-radius: 15px;
                         font-size: 1.5vw;
-                    }
-                    a.active {
-                        background: #fff;
-                        color: #000 !important;
                         img {
                             filter: invert(1);
+                        }
+                    }
+                    a.active {
+                        background: $blackColor;
+                        color: #fff !important;
+                        img {
+                            filter: invert(0);
                         }
                     }
                 }
             }
             .user {
                 img {
-                    height: 45%;
+                    width: 100%;
                     border-radius: 50%;
-                    min-width: 45px;
-                    min-height: 45px;
                     object-fit: cover;
-                    max-height: 45px;
+                    object-position: center center;
                 }
             }
         }
@@ -121,7 +125,7 @@ $primarColor: #1c4672;
             font-size: 13px;
             border-bottom: 1px solid #e7e7e7;
             padding: 10px 12px;
-            color: #000;
+            color: $blackColor;
             &:last-child {
                 border-bottom: none;
             }

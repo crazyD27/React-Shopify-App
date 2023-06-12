@@ -3,7 +3,8 @@
   padding: 0;
 }
 
-$primarColor: #1c4672;
+$primarColor: #E6E6E6;
+$blackColor: #000000;
 
 p,h2,h3,span {
   text-align: left;
@@ -124,7 +125,7 @@ table {
               border-left: 0.97px solid rgba(0, 0, 0, 0.1);
           }
           button {
-            background: #034870;
+            background: $blackColor;
             color: #fff;
             min-width: 100px;
           }
@@ -252,14 +253,14 @@ input[type=number] {
   padding: 7px 18px;
   border-radius: 30px;
   border: 1px solid #ccc;
-  color: #000;
+  color: $blackColor;
   background: none;
   text-decoration: none;
   min-width: 150px;
 }
 
-.button-blue {
-  background: $primarColor;
+.button-black {
+  background: $blackColor;
   color: #fff;
   padding: 18px 46px;
 }
@@ -284,7 +285,7 @@ input[type=number] {
               text-decoration: none;
           }
           p {
-              color: #000;
+              color: $blackColor;
               margin-bottom: 0;
               margin-left: 15px;
           }
@@ -292,7 +293,7 @@ input[type=number] {
   }
 }
 .routes {
-  background: #034870;
+  background: $primarColor;
   padding: 10px;
 }
 
@@ -325,7 +326,7 @@ input[type=number] {
     color: #838383;
   }
   button.page-num.active {
-    color: #000;
+    color: $blackColor;
     border-bottom: 1px solid;
   }
   button.page-btn {
@@ -336,7 +337,7 @@ input[type=number] {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #034870;
+    background: $blackColor;
     border: 1px solid #fff;
   }
   button:disabled, button[disabled] {

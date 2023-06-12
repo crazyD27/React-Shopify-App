@@ -577,7 +577,7 @@ const CreateInfluencer = () => {
 
             {showInfluList && (
                 <>
-                    <Link to='/create' onClick={handleBack} className="button button-blue back w-100 justify-content-start mt-4 mb-5">
+                    <Link to='/create' onClick={handleBack} className="button button-black back w-100 justify-content-start mt-4 mb-5">
                         <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                         Back
                     </Link>
@@ -601,7 +601,7 @@ const CreateInfluencer = () => {
                                 ))}
                             </div>
                         ) : <h2 className='my-4 text-center w-100'>No Influencers</h2>}
-                        <button onClick={handleContinue} className='button button-blue mx-auto'>
+                        <button onClick={handleContinue} className='button button-black mx-auto'>
                             Continue
                         </button>
                     </div>
@@ -610,7 +610,7 @@ const CreateInfluencer = () => {
 
             {influForm && (
                 <>
-                <button onClick={handleInfluBack} className="button button-blue back justify-content-start w-100 my-4">
+                <button onClick={handleInfluBack} className="button button-black back justify-content-start w-100 my-4">
                     <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#000", width: "15px", height: "15px", marginRight: 5 }} />
                     Back
                 </button>
@@ -899,14 +899,14 @@ const CreateInfluencer = () => {
                         <div className="buttons d-flex justify-content-center">
                             {id?.length > 0 ? (
                                 <>
-                                <button className='button button-blue' onClick={(e) => {editCampaign(e)}}>Update Campaign</button>
+                                <button className='button button-black' onClick={(e) => {editCampaign(e)}}>Update Campaign</button>
                                 {userData?.draft_status == true && (
                                     <button className='button ms-4' onClick={(e) => {changeStatus(e)}}>Change Status to Pending</button>
                                 )}
                                 </>
                             ):
                             <>
-                            <button className='button button-blue' onClick={createIfluenceCampaign}>Save in draft</button>
+                            <button className='button button-black' onClick={createIfluenceCampaign}>Save in draft</button>
                             <button className='button ms-4' onClick={(e) => createIfluenceRequest(e)}>Send Request</button></>}
                             
                             

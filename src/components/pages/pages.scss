@@ -1,9 +1,11 @@
-$primarColor: #1c4672;
+$primarColor: #E6E6E6;
+$blackColor: #000000;
 .page {
     width: 75%;
     margin-left: auto;
     background: #fff;
     border-radius: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
     .canvasjs-chart-credit {
         display: none !important;
     }
@@ -68,7 +70,7 @@ $primarColor: #1c4672;
             }
             span {
                 font-size: 1vw;
-                color: $primarColor;
+                color: $blackColor;
             }
         }
     }
@@ -117,7 +119,7 @@ $primarColor: #1c4672;
     }
 
     .active-prod {
-        background: $primarColor;
+        background: $blackColor;
         color: #fff;
     }
 
@@ -133,9 +135,16 @@ $primarColor: #1c4672;
             padding: 10px 0 10px 0px !important;
             li {
                 font-size: 1vw;
-                color: $primarColor;
+                color: $blackColor;
                 margin-bottom: 20px;
                 font-weight: bold;
+                p {
+                    span {
+                        &:first-child {
+                            color: #707070 !important;
+                        }
+                    }
+                }
                 img {
                     border-radius: 50%;
                     height: 50px;
@@ -234,7 +243,7 @@ $primarColor: #1c4672;
             }
         }
         .selected {
-            background-color: #5172fc;
+            background-color: $blackColor;
             color: #fff;
         }
     }
@@ -285,7 +294,7 @@ $primarColor: #1c4672;
                 }
                 &:nth-child(even) {
                     background: #E3F5FF;
-                    color: #000;
+                    color: $blackColor;
                     &::before {
                         background: #2657b438
                     }
@@ -393,7 +402,7 @@ $primarColor: #1c4672;
             //         background-color: #cccccc;
             //         height: 52px;
             //         width: 4vw;
-            //         color: #000;
+            //         color: $blackColor;
             //         font-size: 1.4vw;
             //         border-radius: 0 4px 4px 0;
             //         justify-content: center;
@@ -455,7 +464,7 @@ $primarColor: #1c4672;
         .back {
             background-color: transparent;
             background: none;
-            color: #000;
+            color: $blackColor;
             border: none;
             width: fit-content;
             min-width: unset;
@@ -473,10 +482,36 @@ $primarColor: #1c4672;
                 .overview-box {
                     width: 48%;
                     border-radius: 24px;
-                    padding: 3.5rem 2rem;
-                    h5, h3 {
-                        text-align: center;
+                    padding: 3.5rem 2.5rem;
+                    background: #E3F5FF;
+                    .overview-content {
+                        width: 100%;
+                        span {
+                            background: $blackColor;
+                            height: 46px;
+                            width: 52px;
+                            border-radius: 17px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 12px;
+                            margin-right: 1rem;
+                            img {
+                                width: 100%;
+                                object-fit: contain;
+                            }
+                        }
+                        h3 {
+                            margin-left: auto;
+                            font-size: 38px;
+                            font-weight: bold;
+                        }
+                        h5, h3 {
+                            text-align: center;
+                            margin-bottom: 0;
+                        }
                     }
+                    
                     .overview-image {
                         display: flex;
                         justify-content: center;
@@ -496,23 +531,11 @@ $primarColor: #1c4672;
                         align-items: center;
                         padding: 5px 16px;
                         border-radius: 4px;
-                        color: #000;
+                        color: $blackColor;
                         border: none;
                         outline: none;
                         box-shadow: none;
                         margin-top: 1rem;
-                    }
-                    &:nth-child(1) {
-                        background: #E3F5FF;
-                    }
-                    &:nth-child(4) {
-                        background: #E3F5FF;
-                    }
-                    &:nth-child(2) {
-                        background: #E5ECF6;
-                    }
-                    &:nth-child(3) {
-                        background: #E5ECF6;
                     }
                 }
             }
@@ -588,18 +611,7 @@ $primarColor: #1c4672;
             .support-box {
                 border-radius: 24px;
                 width: 48%;
-                &:nth-child(1) {
-                    background: #E3F5FF;
-                }
-                &:nth-child(4) {
-                    background: #E3F5FF;
-                }
-                &:nth-child(2) {
-                    background: #E5ECF6;
-                }
-                &:nth-child(3) {
-                    background: #E5ECF6;
-                }
+                background: #E3F5FF;
                 h5 {
                     width: 190px;
                     font-size: 20px;
@@ -624,13 +636,13 @@ $primarColor: #1c4672;
             outline: none;
             background: #fff;
             border: 1px solid #E5ECF6;
-            color: #000;
+            color: $blackColor;
             &:nth-child(1) {
                 margin-right: .5rem;
             }
         }
         .nav-link.active {
-            background: $primarColor!important;
+            background: $blackColor!important;
             margin-right: .5rem;
             border: 1px solid transparent !important;
             color: #fff;
@@ -730,7 +742,7 @@ $primarColor: #1c4672;
             outline: none;
             background: #fff;
             border: 1px solid #E5ECF6;
-            color: #000;
+            color: $blackColor;
             &:nth-child(1) {
                 margin-right: .5rem;
             }
@@ -787,7 +799,7 @@ $primarColor: #1c4672;
                 box-shadow: none;
                 border: none;
                 &:nth-child(odd) {
-                    background-color: #034870;
+                    background-color: $blackColor;
                     color: #fff;
                     margin-right: 25px;
                 }
@@ -888,7 +900,7 @@ $primarColor: #1c4672;
                     }
                     h5 {
                         font-weight: normal;
-                        color: #000;
+                        color: $blackColor;
                         margin-bottom: 7px;
                         letter-spacing: 0;
                     }
@@ -911,7 +923,7 @@ $primarColor: #1c4672;
             width: 48%;
             label {
                 margin-bottom: 10px;
-                color: #000;
+                color: $blackColor;
                 font-size: 18px;
             }
             &:last-child {
@@ -939,7 +951,7 @@ $primarColor: #1c4672;
 
 .get-coupon h4 {
     background: none !important;
-    color: #000 !important;
+    color: $blackColor !important;
     padding: 0 !important;
 }
 
@@ -1006,9 +1018,16 @@ $primarColor: #1c4672;
                     max-height: 75px;
                     li.influencer-box {
                         font-size: 1vw;
-                        color: $primarColor;
+                        color: $blackColor;
                         margin-bottom: 20px;
                         font-weight: bold;
+                        p {
+                            span {
+                                &:first-child {
+                                    color: #707070 !important;
+                                }
+                            }
+                        }
                         img {
                             border-radius: 50%;
                             height: 50px;

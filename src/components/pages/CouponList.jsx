@@ -610,7 +610,7 @@ const CouponList = () => {
                             <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
                             <input type="number" onWheel={(e) => e.target.blur()} placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
-                        <button onClick={(e) => {trackingApi(e)}} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
+                        <button onClick={(e) => {trackingApi(e)}} className='button button-black mt-4 mx-auto'>Add Coupon</button>
                     </form>
                 </div>
             </div>}
@@ -638,7 +638,7 @@ const CouponList = () => {
                         <label>{discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'}</label>
                             <input type="number" onWheel={(e) => e.target.blur()} placeholder={discountType == "fixed_amount" ? "Amount" : discountType =="percentage" ? "Percent" : 'Discount'} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
-                        <button onClick={createCoupon} className='button button-blue mt-4 mx-auto'>Add Coupon</button>
+                        <button onClick={createCoupon} className='button button-black mt-4 mx-auto'>Add Coupon</button>
                     </form>
                 </div>
             </div>}
@@ -746,9 +746,9 @@ const CouponList = () => {
                             <input type="number" onWheel={(e) => e.target.blur()} value={couponAmount} onChange={handleCouponAmount} />
                         </div>
                         {couponStatus == 1 ? (
-                            <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                            <button onClick={(event) => {editCoupon(getCouponInfo?.id, event)}} className='button button-black mt-4 mx-auto'>Edit Coupon</button>
                         ) : (
-                            <button onClick={(event) => {editCouponProducts(getCouponInfo?.id, event)}} className='button button-blue mt-4 mx-auto'>Edit Coupon</button>
+                            <button onClick={(event) => {editCouponProducts(getCouponInfo?.id, event)}} className='button button-black mt-4 mx-auto'>Edit Coupon</button>
                         )}
                         
                     </form>
