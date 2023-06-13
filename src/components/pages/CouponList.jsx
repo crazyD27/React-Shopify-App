@@ -366,6 +366,9 @@ const CouponList = () => {
             if (error.response.data.error == "Product  field is required") {
                 toast.warn("Product field is required")
             }
+            else if (error.response.data.error == "Coupon already Exists") {
+                toast.warn("Coupon name already exsits")
+            }
             else if (error.response.data.error == "discount code  field is required") {
                 toast.warn("Coupon field is required")
             }
