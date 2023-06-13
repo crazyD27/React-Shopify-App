@@ -22,16 +22,10 @@ import Notification from '../../assests/img/notification.png';
 import NoNotification from '../../assests/img/no-notification.png';
 
 const SideBar = () => {
-    const [activeLink, setActiveLink] = useState('1');
     const [notifications, setNotifications] = useState([])
     const [shownotification, setShowNotification] = useState(false);
     const notificationsRef = useRef(null);
     const token = localStorage.getItem("Token");
-    const profile_image = localStorage.getItem("Profile_Image")
-    const handleLinkClick = (event) => {
-        setActiveLink(event.target.getAttribute('data-nav-link'));
-    };
-    const {userName} = useContext(UserContext);
     const name = localStorage.getItem("User_Name");
     // console.log("Name in Sidebar", name)
     console.log("NAMEEEEE", localStorage.getItem("User_Name"))
@@ -44,7 +38,7 @@ const SideBar = () => {
         const intervalId = setInterval(() => {
         axios.get(API.BASE_URL + 'notification/list/',{
             headers: { 
-                Authorization: `Token ${token}` 
+                Authorization: `Token ${localStorage.getItem("Token")}` 
             }
         })
         .then(function (response) {
@@ -56,7 +50,7 @@ const SideBar = () => {
         })
         axios.get(API.BASE_URL + 'user/id/',  {
             headers: { 
-                Authorization: `Token ${token}` 
+                Authorization: `Token ${localStorage.getItem("Token")}` 
             }
         }) 
         .then(function (response) {
@@ -89,7 +83,7 @@ const SideBar = () => {
     const handleClearNotifications = () => {
         axios.get(API.BASE_URL + 'change/status/',{
             headers: { 
-                Authorization: `Token ${token}` 
+                Authorization: `Token ${localStorage.getItem("Token")}` 
             }
         })
         .then(function (response) {
