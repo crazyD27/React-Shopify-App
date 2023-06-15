@@ -271,7 +271,19 @@ const CreateInfluencer = () => {
             else if(error.response.data.description) {
                 toast.warn("Description may not be blank.");
             }
-            
+            else if (error.response.status === 410) {
+                const errorNames = error.response.data.error;
+                console.log("error.response.data.error", error.response.data.error)
+                if (errorNames) {
+                    const errorMessages = errorNames.map((errName) => {
+                        return errName;
+                    });
+                    toast.warn(errorMessages + " already exists");
+                }
+                else {
+                    toast.warn("Error occurred. Please try again later");
+                }
+            }
             else {
                 toast.warn("Request failed. Please try again later");
             }
@@ -352,6 +364,19 @@ const CreateInfluencer = () => {
             }
             else if(error.response.data.description) {
                 toast.warn("Description may not be blank.");
+            }
+            else if (error.response.status === 410) {
+                const errorNames = error.response.data.error;
+                console.log("error.response.data.error", error.response.data.error)
+                if (errorNames) {
+                    const errorMessages = errorNames.map((errName) => {
+                        return errName;
+                    });
+                    toast.warn(errorMessages + " already exists");
+                }
+                else {
+                    toast.warn("Error occurred. Please try again later");
+                }
             }
             else {
                 toast.warn("Request failed. Please try again later");
@@ -471,7 +496,22 @@ const CreateInfluencer = () => {
         })
         .catch(function (error) {
           console.log(error);
-          toast.warn("Unable to edit. Please try again later")
+          if (error.response.status === 410) {
+            const errorNames = error.response.data.error;
+            console.log("error.response.data.error", error.response.data.error)
+            if (errorNames) {
+                const errorMessages = errorNames.map((errName) => {
+                    return errName;
+                });
+                toast.warn(errorMessages + " already exists");
+            }
+            else {
+                toast.warn("Error occurred. Please try again later");
+            }
+        }
+          else {
+            toast.warn("Unable to edit. Please try again later")
+          }
         })
         .finally(() => setLoading(false));
     }
@@ -501,7 +541,23 @@ const CreateInfluencer = () => {
         })
         .catch(function (error) {
           console.log(error);
-          toast.warn("Unable to edit. Please try again later")
+          
+          if (error.response.status === 410) {
+            const errorNames = error.response.data.error;
+            console.log("error.response.data.error", error.response.data.error)
+            if (errorNames) {
+                const errorMessages = errorNames.map((errName) => {
+                    return errName;
+                });
+                toast.warn(errorMessages + " already exists");
+            }
+            else {
+                toast.warn("Error occurred. Please try again later");
+            }
+        }
+          else {
+            toast.warn("Unable to edit. Please try again later")
+          }
         })
         .finally(() => setLoading(false));
     }

@@ -167,11 +167,11 @@ const CouponList = () => {
             else if (error.response.data.error == "discount code  field is required") {
                 toast.warn("Coupon field is required")
             }
-            else if (error.response.data.error == "discount type field is required") {
+            else if (error.response.data.error == "discount_type field is required") {
                 toast.warn("Discount type field is required")
             }
             else if (error.response.data.error == "Amount field is required") {
-                toast.warn("Amount field is required")
+                toast.warn("Amount or Percentage required")
             }
             else {
                 toast.error("Could not create a coupon right now")
@@ -376,10 +376,10 @@ const CouponList = () => {
                 toast.warn("Discount type field is required")
             }
             else if (error.response.data.error == "Amount field is required") {
-                toast.warn("Amount field is required")
+                toast.warn("Amount or Percentage required")
             }
             else if (error.response.data.error == "amount should be less than 100") {
-                toast.warn("Percentage should be less than 100")
+                toast.warn("Value should be less than 100")
             }
             else {
                 toast.error("Could not create a coupon right now")
