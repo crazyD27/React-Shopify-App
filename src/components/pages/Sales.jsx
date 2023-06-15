@@ -41,38 +41,12 @@ function createGradient(ctx, area) {
   return gradient;
 }
 
-function createPieGradient(ctx, area, labelCount) {
-  const colors = [
-    'red',
-    'orange',
-    'yellow',
-    'lime',
-    'green',
-    'teal',
-    'blue',
-    'purple',
-  ];
-
-  const colorIndex = labelCount % colors.length; // Get the color index based on the label count
-
-  const colorStart = colors[colorIndex];
-  let colorMid = colors[(colorIndex + 1) % colors.length]; // Get the next color in the sequence
-  let colorEnd = colors[(colorIndex + 2) % colors.length]; // Get the color after the next color
-
-  const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
-
-  gradient.addColorStop(0, colorStart);
-  gradient.addColorStop(0.5, colorMid);
-  gradient.addColorStop(1, colorEnd);
-
-  return gradient;
-}
-
 function Sales() {
   const token = localStorage.getItem("Token");
   const chartSalesRef = useRef(null);
   const chartOrdersRef = useRef(null);
   const chartPieRef = useRef(null);
+  const [loading, setLoading] = useState(false);
   const [chartSalesData, setChartSalesData] = useState({
     labels: [],
     datasets: [],
@@ -156,6 +130,7 @@ function Sales() {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     axios.get(API.BASE_URL + 'analytics/', {
         headers: {
           Authorization: `Token ${token}`,
@@ -264,12 +239,14 @@ function Sales() {
       })
       .catch(function (error) {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (
     <>
       <div className="sales p-4 page">
+      {loading && <div className='d-flex loader-container flex-column'><div className='loader'><span></span></div> <p className='text-white'>Processing...</p></div>}
         <div className="sales-container">
           <h2 className="my-5">Sales overview</h2>
           <div className="earnings-list d-flex flex-column justify-content-center align-items-center">

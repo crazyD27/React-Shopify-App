@@ -187,10 +187,18 @@ ul {
   overflow: hidden;
 }
 .loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 4;
   .loader {
-    position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
     width: 100%;
     min-height: 100vh;
@@ -215,8 +223,10 @@ ul {
     justify-content: center;
     align-items: center;
     z-index: 4;
-    bottom: -145px;
+    bottom: -143px;
+    left: -0.5%;
     text-shadow: 0px 0px 2px black;
+    font-size: 22px;
   }
 }
 

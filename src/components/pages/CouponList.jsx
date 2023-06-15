@@ -164,6 +164,9 @@ const CouponList = () => {
             if (error.response.data.error == "Coupon field is required") {
                 toast.warn("Coupon field is required")
             }
+            else if (error.response.data.response == "Coupon name already taken") {
+                toast.warn("Coupon name already taken")
+            }
             else if (error.response.data.error == "discount code  field is required") {
                 toast.warn("Coupon field is required")
             }
@@ -261,7 +264,13 @@ const CouponList = () => {
         })
         .catch(function (error) {
             console.log(error);
-            toast.warn("Fields should not be empty!");
+            if(error.response.data.message == "must be between 0 and 100") {
+                toast.warn("Amount must be between 0 to 100");
+            }
+            else {
+                toast.warn("Fields should not be empty!");
+            }
+            
         })
         .finally(() => setLoading(false));
     }
@@ -700,42 +709,44 @@ const CouponList = () => {
                             <label>Coupon</label>
                             <input type="text" maxLength='30' value={couponDesc} onChange={handleCouponDesc} />
                         </div>
-                        <div className="input-container">
-                            <label>Select Influencer</label>
-                            <input
-                            type="text"
-                            placeholder={
-                                matchingInfluencers?.length > 0
-                                ? matchingInfluencers[0].fullname
-                                : influencerList?.length > 0
-                                ? "---Select an option---"
-                                : "---No Influencers Available---"
-                            }
-                            onClick={() => setShowInfluencerDropdown(!showInfluencerDropdown)}
-                            value={selectedInfluencer ? selectedInfluencer.fullname : ""}
-                            />
-                            {showInfluencerDropdown && (
-                            <ul>
-                                {influencerList.map((influencer) => (
-                                <li
-                                    className='influencer-box d-flex align-items-center px-4'
-                                    key={influencer.id}
-                                    onClick={() => handleInfluencerSelection(influencer)}
-                                >
-                                    <img src={influencer.image} alt="influencer" />
-                                    <p className="ms-2 d-flex flex-column">
-                                        <span className='text-dark'>{influencer.fullname}</span>
-                                        <span>@{influencer.username}</span>
-                                    </p>
-                                    <p className='ms-auto d-flex flex-column'>
-                                        <span className='text-dark'>Followers</span>
-                                        <strong>{(influencer.follower / 1000000).toFixed(6)} M</strong>
-                                    </p>
-                                </li>
-                                ))}
-                            </ul>
-                            )}
-                        </div>
+                        {couponStatus == 2 && (
+                            <div className="input-container">
+                                <label>Select Influencer</label>
+                                <input
+                                type="text"
+                                placeholder={
+                                    matchingInfluencers?.length > 0
+                                    ? matchingInfluencers[0].fullname
+                                    : influencerList?.length > 0
+                                    ? "---Select an option---"
+                                    : "---No Influencers Available---"
+                                }
+                                onClick={() => setShowInfluencerDropdown(!showInfluencerDropdown)}
+                                value={selectedInfluencer ? selectedInfluencer.fullname : ""}
+                                />
+                                {showInfluencerDropdown && (
+                                <ul>
+                                    {influencerList.map((influencer) => (
+                                    <li
+                                        className='influencer-box d-flex align-items-center px-4'
+                                        key={influencer.id}
+                                        onClick={() => handleInfluencerSelection(influencer)}
+                                    >
+                                        <img src={influencer.image} alt="influencer" />
+                                        <p className="ms-2 d-flex flex-column">
+                                            <span className='text-dark'>{influencer.fullname}</span>
+                                            <span>@{influencer.username}</span>
+                                        </p>
+                                        <p className='ms-auto d-flex flex-column'>
+                                            <span className='text-dark'>Followers</span>
+                                            <strong>{(influencer.follower / 1000000).toFixed(6)} M</strong>
+                                        </p>
+                                    </li>
+                                    ))}
+                                </ul>
+                                )}
+                            </div>
+                        )}
                         <div className="input-container">
                             <label>Discount Types</label>
                             <select name="" id="" value={discountType} onChange={handleDiscountType}>
