@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, LineController } from 'chart.js';
-
+import { DoughnutController, ArcElement } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import axios from 'axios';
 import { API } from '../../config/Api';
 
 import './pages.scss';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, LineController);
+ChartJS.register(DoughnutController, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, LineController);
 
 
 function createGradient(ctx, area) {
@@ -41,15 +41,48 @@ function createGradient(ctx, area) {
   return gradient;
 }
 
+function createPieGradient(ctx, area, labelCount) {
+  const colors = [
+    'red',
+    'orange',
+    'yellow',
+    'lime',
+    'green',
+    'teal',
+    'blue',
+    'purple',
+  ];
+
+  const colorIndex = labelCount % colors.length; // Get the color index based on the label count
+
+  const colorStart = colors[colorIndex];
+  let colorMid = colors[(colorIndex + 1) % colors.length]; // Get the next color in the sequence
+  let colorEnd = colors[(colorIndex + 2) % colors.length]; // Get the color after the next color
+
+  const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
+
+  gradient.addColorStop(0, colorStart);
+  gradient.addColorStop(0.5, colorMid);
+  gradient.addColorStop(1, colorEnd);
+
+  return gradient;
+}
+
 function Sales() {
   const token = localStorage.getItem("Token");
   const chartSalesRef = useRef(null);
   const chartOrdersRef = useRef(null);
+  const chartPieRef = useRef(null);
   const [chartSalesData, setChartSalesData] = useState({
     labels: [],
     datasets: [],
   });
   const [chartOrdersData, setChartOrdersData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  const [chartPieData, setChartPieData] = useState({
     labels: [],
     datasets: [],
   });
@@ -123,8 +156,7 @@ function Sales() {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(API.BASE_URL + 'analytics/', {
+    axios.get(API.BASE_URL + 'analytics/', {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -185,6 +217,54 @@ function Sales() {
       .catch(function (error) {
         console.log(error);
       });
+
+      axios.get(API.BASE_URL + 'sale_coup/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+      .then(function (response) {
+        console.log("SALE COUP", response)
+        const campaignSalesData = response.data.campaign_sales;
+        const labels = [];
+        const data = [];
+    
+        for (const campaignId in campaignSalesData) {
+          if (campaignSalesData.hasOwnProperty(campaignId)) {
+            const [salesAmount, campaignName] = campaignSalesData[campaignId];
+            labels.push(campaignName);
+            data.push(salesAmount);
+            console.log("LABELS", labels)
+          }
+        }
+
+        const labelCount = Object.keys(campaignSalesData).length;
+        const colors = [
+          'red',
+          'orange',
+          'yellow',
+          'lime',
+          'green',
+          'teal',
+          'blue',
+          'purple',
+        ];
+    
+        const updatedPieData = {
+          labels: labels,
+          datasets: [
+            {
+              data: data,
+              backgroundColor: colors.slice(0, labelCount), // Use a subset of colors based on the label count
+            },
+          ],
+        };
+    
+        setChartPieData(updatedPieData);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -193,10 +273,26 @@ function Sales() {
         <div className="sales-container">
           <h2 className="my-5">Sales overview</h2>
           <div className="earnings-list d-flex flex-column justify-content-center align-items-center">
-              <h4 className='text-left w-100 d-flex ps-5'>Sales Data</h4>
-            <Chart className='mb-5' ref={chartSalesRef} type="line" data={chartSalesData} />
-            <h4 className='text-left w-100 d-flex ps-5 mt-4'>Order Data</h4>
-            <Chart ref={chartOrdersRef} type="line" data={chartOrdersData} />
+            <div className="chart">
+              <h4 className="text-left w-100 d-flex ps-5 mb-4">Campaign Sales</h4>
+              <Chart 
+              ref={chartPieRef} 
+              type="pie" 
+              data={chartPieData} 
+              options={{
+                responsive: true,
+              }} />
+            </div>
+
+            <div className="chart my-5">
+              <h4 className='text-left w-100 d-flex ps-5 mb-4'>Sales Data</h4>
+              <Chart ref={chartSalesRef} type="line" data={chartSalesData} />
+            </div>
+            
+            <div className="chart">
+              <h4 className='text-left w-100 d-flex ps-5 mb-4'>Order Data</h4>
+              <Chart ref={chartOrdersRef} type="line" data={chartOrdersData} />
+            </div>
           </div>
         </div>
       </div>

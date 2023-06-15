@@ -914,6 +914,22 @@ $blackColor: #000000;
     }
 }
 
+.sales {
+    .earnings-list {
+        .chart {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            &:nth-child(1) {
+                width: 60%;
+            }
+        }
+    }
+}
+
 .profile {
     position: relative;
     .profile-form {
