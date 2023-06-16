@@ -230,6 +230,13 @@ ul {
   }
 }
 
+.not-assigned {
+  display: none;
+  &:last-child {
+    display: block;
+  }
+}
+
 .main-heading {
   border-bottom: 1px solid #b3b3b3;
   padding-bottom: 1rem;

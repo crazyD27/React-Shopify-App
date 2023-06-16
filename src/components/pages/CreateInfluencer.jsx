@@ -28,6 +28,7 @@ const CreateInfluencer = () => {
     const [showCampaignList, setShowCampaignList] = useState(false);
     const [influForm, setInfluForm] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
+    const [prodInfluId, setProdInfluId] = useState([]);
     const [loading, setLoading] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [checkboxStates, setCheckboxStates] = useState({});
@@ -40,8 +41,10 @@ const CreateInfluencer = () => {
     const [selectedCouponAmounts ,setSelectedCouponAmounts] = useState([]);
     const [isVisitChecked, setIsVisitChecked] = useState(false);
     const [isOfferChecked, setIsOfferChecked] = useState(false);
-    const {setDraftList, draftList, setMarketId, setMarketList, campListPending, setCampListPending,setMarketDraftId, setMarketDraftList, countCamp, setCountCamp} = useContext(UserContext);
+    const {setDraftList, draftList, campListPending, setCampListPending, countCamp, setCountCamp} = useContext(UserContext);
     const token = localStorage.getItem("Token");
+    const [matchedInfluencerFullNames, setMatchedInfluencerFullNames] = useState([]);
+    const [matchedInfluencerNames, setMatchedInfluencerNames] = useState([]);
 
     const [couponAmounts, setCouponAmounts] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
@@ -419,6 +422,10 @@ const CreateInfluencer = () => {
                 .then((response) => {
                   console.log("Response 1",response);
                   setProductDetails(response.data.product_details);
+                  const influencerIds = response.data.product_details.map(
+                    (product) => product.influencer_id
+                  );
+                  setProdInfluId(influencerIds);
                   setProductUrl(response.data.product_url)
                 })
                 .catch((error) => console.log(error))
@@ -454,7 +461,6 @@ const CreateInfluencer = () => {
         }
     }, []);
 
-    const selectedUsernames = selectedRows.map(row => row.username);
     const selectedUsersId = selectedRows.map(row => row.id);
 
     useEffect(() => {
@@ -563,12 +569,29 @@ const CreateInfluencer = () => {
     }
 
     useEffect(() => {
+        if (Array.isArray(prodInfluId) && Array.isArray(influencerList)) {
+          const matchedNames = [];
+      
+          prodInfluId.forEach((id) => {
+            const matchingInfluencers = influencerList.filter(
+              (influencer) => influencer.id === id
+            );
+      
+            if (matchingInfluencers.length > 0) {
+              const fullname = matchingInfluencers[0].fullname;
+              matchedNames.push(fullname);
+            }
+          });
+      
+          setMatchedInfluencerNames(matchedNames);
+        }
+    }, [prodInfluId, influencerList]);
+
+    useEffect(() => {
         if(id?.length != 0) {
             axios.get(API.BASE_URL +  'single/' + id + '/', {
                 headers: {
- 
                     Authorization: `Token ${token}`
- 
             }})
             .then(function (response) {
                 console.log("Single Market Data" ,response.data.data);
@@ -614,7 +637,7 @@ const CreateInfluencer = () => {
         }
     }, [id, influencerList]);
     
-    console.log("influencerVisit", influencerVisit);
+    console.log("influencerVisit", influencerList);
     console.log("isVisitChecked", isVisitChecked);
     console.log("Details", selectedCouponAmounts);
     console.log("ID", id);
@@ -624,6 +647,8 @@ const CreateInfluencer = () => {
     console.log("isChecked", isChecked);
     console.log("selectedRows", selectedRows);
     console.log("selectedCouponProducts", selectedCouponProducts)
+    console.log("ProdInfluId", prodInfluId)
+    console.log("matchedInfluencerFullNames", matchedInfluencerNames)
 
 
   return (
@@ -816,8 +841,9 @@ const CreateInfluencer = () => {
                             <label className="mb-3">Product coupons</label>
                             {productDetails?.length > 0 ? (
                                 <ul className="coupons coupons-list flex-column">
-                                    {productDetails?.map(product => (
+                                    {productDetails?.map((product, i) => (
                                         <li className='d-flex flex-row align-items-center mb-2'>
+                                            <span>{matchedInfluencerNames[i]}</span>
                                             <span>{product?.product_name}:- </span>
                                             <div className='d-flex align-items-center'>
                                                 {product?.name?.length > 0 ? (
@@ -932,13 +958,21 @@ const CreateInfluencer = () => {
                                                             }
                                                         };
                                                         return (
-                                                            <p
-                                                            key={coupon}
-                                                            className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
-                                                            onClick={handleClick}
-                                                            >
-                                                            {coupon} - {product.discout_type == 'fixed_amount' && "$"}{Math.abs(parseInt(product.amount[i]))}{product.discout_type != 'fixed_amount' && "%"}
-                                                            </p>
+                                                            prodInfluId.includes(selectedRows[0]?.id) ? (
+                                                                // Render the <p> tag
+                                                                <p
+                                                                  key={coupon}
+                                                                  className={`d-flex flex-column mb-0 ${isCouponSelected ? 'selected' : ''}`}
+                                                                  onClick={handleClick}
+                                                                >
+                                                                  {coupon} - {product.discout_type === 'fixed_amount' && "$"}
+                                                                  {Math.abs(parseInt(product.amount[i]))}
+                                                                  {product.discout_type !== 'fixed_amount' && "%"}
+                                                                </p>
+                                                              ) : (
+                                                                // Render "No Data"
+                                                                <h5 className='fw-light mb-0 ms-2 not-assigned'>No coupon assigned to influencer for this particlular object</h5>
+                                                              )
                                                         );
                                                     })
                                                 ) : <h5 className='fw-light mb-0 ms-2'>No Coupons</h5>}
