@@ -1,13 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, LineController } from 'chart.js';
-import { DoughnutController, ArcElement } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, LineController, ArcElement } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import axios from 'axios';
 import { API } from '../../config/Api';
 
 import './pages.scss';
 
-ChartJS.register(DoughnutController, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, LineController);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, LineController, ArcElement);
 
 
 function createGradient(ctx, area) {
