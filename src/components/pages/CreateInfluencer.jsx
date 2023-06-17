@@ -218,7 +218,8 @@ const CreateInfluencer = () => {
             influencer_visit: influencerVisit,
             influencer_name: selectedUsersId.toString(),
             influencer_fee: influenceFee,
-            description: campaignDesc
+            description: campaignDesc,
+            end_date: endDate
         }, {
             headers: {
  
@@ -312,7 +313,8 @@ const CreateInfluencer = () => {
             influencer_visit: influencerVisit,
             influencer_name: selectedUsersId.toString(),
             influencer_fee: influenceFee,
-            description: campaignDesc
+            description: campaignDesc,
+            end_date: endDate
         }, {
             headers: {
  
