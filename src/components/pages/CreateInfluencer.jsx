@@ -43,7 +43,7 @@ const CreateInfluencer = () => {
     const [isOfferChecked, setIsOfferChecked] = useState(false);
     const {setDraftList, draftList, campListPending, setCampListPending, countCamp, setCountCamp} = useContext(UserContext);
     const token = localStorage.getItem("Token");
-    const [matchedInfluencerFullNames, setMatchedInfluencerFullNames] = useState([]);
+    const [endDate, setEndDate] = useState('');
     const [matchedInfluencerNames, setMatchedInfluencerNames] = useState([]);
 
     const [couponAmounts, setCouponAmounts] = useState([]);
@@ -148,6 +148,10 @@ const CreateInfluencer = () => {
 
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
+    }
+
+    const handleEndDate = (event) => {
+        setEndDate(event.target.value);
     }
 
     useEffect(() => {
@@ -719,8 +723,13 @@ const CreateInfluencer = () => {
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
-                            <label className="mb-3">Campaign date or range</label>
+                            <label className="mb-3">Campaign start date</label>
                             <input type="date" min={today} onChange={handleDateChange} value={selectedDate} />
+                        </div>
+
+                        <div className="input-container d-flex flex-column mb-4">
+                            <label className="mb-3">Campaign end date</label>
+                            <input type="date" min={selectedDate} onChange={handleEndDate} value={endDate} />
                         </div>
 
                         <div className="input-container d-flex flex-column mb-4">
