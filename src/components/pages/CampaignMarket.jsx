@@ -135,7 +135,7 @@ const CampaignMarket = () => {
             }
         })
         .then(function (response) {
-            toast.success("Campaign Deleted!");
+            toast.success("Campaign Deleted!", { autoClose: 1000 });
             setMarketList(marketList.filter(campaign => campaign.campaignid_id !== value));
             setMarketDraftList(marketDraftList.filter(campaign => campaign.campaignid_id !== value));
             setDeleteConfirm(false)

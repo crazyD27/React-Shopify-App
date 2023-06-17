@@ -268,7 +268,7 @@ const CampaignManage = () => {
         })
         .then(function (response) {
             console.log("Delete" ,response)
-            toast.success("Campaign Deleted!");
+            toast.success("Campaign Deleted!", { autoClose: 1000 });
             setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
             setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
             setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
@@ -276,7 +276,7 @@ const CampaignManage = () => {
         })
         .catch(function (error) {
             console.log(error);
-            toast.warn("Cannot Delete right now. Please try again later")
+            toast.warn("Cannot Delete right now. Please try again later", { autoClose: 1000 })
         })
         .finally(() => setLoading(false));
     }
@@ -327,7 +327,7 @@ const CampaignManage = () => {
         })
         .then(function (response) {
             couponCross();
-            toast.success("Campaign Edited!");
+            toast.success("Campaign Edited!", { autoClose: 1000 });
             axios.get(API.BASE_URL + 'active/',{
                 headers: { 
                     Authorization: `Token ${token}` 
@@ -452,7 +452,7 @@ const CampaignManage = () => {
         })
         .then(function (response) {
             console.log("Accepted" ,response)
-            toast.success("Campaign Accepted!");
+            toast.success("Campaign Accepted!", { autoClose: 1000 });
             setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
             setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
             setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value))
@@ -537,7 +537,7 @@ const CampaignManage = () => {
         })
         .catch(function (error) {
             console.log(error);
-            toast.warn("Cannot Accept right now. Please try again later")
+            toast.warn("Cannot Accept right now. Please try again later", { autoClose: 1000 })
         })
         .finally(() => setLoading(false));
     }
@@ -551,7 +551,7 @@ const CampaignManage = () => {
         })
         .then(function (response) {
             console.log("Decline" ,response)
-            toast.success("Campaign Declined!");
+            toast.success("Campaign Declined!", { autoClose: 1000 });
             setCampList(campList.filter(campaign => campaign.campaignid_id !== value));
             setCampListPending(campListPending.filter(campaign => campaign.campaignid_id !== value));
             setDraftList(draftList.filter(campaign => campaign.campaignid_id !== value));
@@ -598,7 +598,7 @@ const CampaignManage = () => {
         })
         .catch(function (error) {
             console.log(error);
-            toast.warn("Cannot Decline right now. Please try again later")
+            toast.warn("Cannot Decline right now. Please try again later", { autoClose: 1000 })
         })
         .finally(() => setLoading(false));
     }

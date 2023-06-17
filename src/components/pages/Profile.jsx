@@ -77,7 +77,7 @@ function Profile() {
         )
         .then(function (response) {
             console.log("Profile", response);
-            toast.success("Proy these features on all of the above plansfile Edited Successfully!");
+            toast.success("Proy these features on all of the above plansfile Edited Successfully!", { autoClose: 1000 });
             setUserName('');
             setPassword('');
             setShopifyUrl('');
@@ -111,29 +111,29 @@ function Profile() {
         .catch(function (error) {
             console.log(error);
             if(error.response.data.username) {
-                toast.warn("Username may not be blank")
+                toast.warn("Username may not be blank", { autoClose: 1000 })
             }
             else if(error.response.data.email == "This field may not be blank.") {
-                toast.warn("Email may not be blank")
+                toast.warn("Email may not be blank", { autoClose: 1000 })
             }
             else if(error.response.data.email == "Enter a valid email address.") {
-                toast.warn("Enter a valid email address")
+                toast.warn("Enter a valid email address", { autoClose: 1000 })
             }
             else if (error.response.data.password == "This field may not be blank.") {
-                toast.warn("Passsword may not be blank")
+                toast.warn("Passsword may not be blank", { autoClose: 1000 })
             }
 
             else if(error.response.data.password) {
-                toast.warn("Password must be more than 8 character")
+                toast.warn("Password must be more than 8 character", { autoClose: 1000 })
             }
             else if(error.response.data.instagram_url) {
-                toast.warn("Instagram URL cannot be empty")
+                toast.warn("Instagram URL cannot be empty", { autoClose: 1000 })
             }
             else if(error.response.data.shopify_url) {
-                toast.warn("Shopify URL cannot be empty")
+                toast.warn("Shopify URL cannot be empty", { autoClose: 1000 })
             }
             else {
-                toast.warn("Can not Update Profile right now.")
+                toast.warn("Can not Update Profile right now.", { autoClose: 1000 })
             }
         })
         .finally(() => setLoading(false));

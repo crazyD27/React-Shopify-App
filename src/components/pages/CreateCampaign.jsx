@@ -127,7 +127,7 @@ const CreateCampaign = () => {
         })
         .then(function (response) {
             console.log("Campaign Saved in Draft", response);
-            toast.success("Campaign Saved in Draft!");
+            toast.success("Campaign Saved in Draft!", { autoClose: 1000 });
             setProductName([]);
             setCampaignName('');
             setSelectedDate('');
@@ -147,32 +147,32 @@ const CreateCampaign = () => {
         .catch(function (error) {
             console.log(error);
             if(error.response.data.campaign_name) {
-                toast.warn("Campaign Name may not be blank.");
+                toast.warn("Campaign Name may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.influencer_visit) {
-                toast.warn("Influencer Visit may not be blank.");
+                toast.warn("Influencer Visit may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.date) {
-                toast.warn("Date may not be blank.");
+                toast.warn("Date may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.offer) {
-                toast.warn("Offer may not be blank.");
+                toast.warn("Offer may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.product) {
-                toast.warn("Please selecta any Product.");
+                toast.warn("Please selecta any Product.", { autoClose: 1000 });
             }
             else if(error.response.data.product_discount) {
-                toast.warn("Please select any value of Product Discount.");
+                toast.warn("Please select any value of Product Discount.", { autoClose: 1000 });
             }
             else if(error.response.data.coupon) {
-                toast.warn("Coupon may not be blank.");
+                toast.warn("Coupon may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.description) {
-                toast.warn("Description may not be blank.");
+                toast.warn("Description may not be blank.", { autoClose: 1000 });
             }
             
             else {
-                toast.warn("Request failed. Please try again later");
+                toast.warn("Request failed. Please try again later", { autoClose: 1000 });
             }
         })
         .finally(() => setLoading(false));
@@ -199,7 +199,7 @@ const CreateCampaign = () => {
         })
         .then(function (response) {
             console.log("Created New Campaign", response);
-            toast.success("New Campaign Created!");
+            toast.success("New Campaign Created!", { autoClose: 1000 });
             setProductName([]);
             setCampaignName('');
             setSelectedDate('');
@@ -218,31 +218,31 @@ const CreateCampaign = () => {
         .catch(function (error) {
             console.log(error);
             if(error.response.data.campaign_name) {
-                toast.warn("Campaign Name may not be blank.");
+                toast.warn("Campaign Name may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.influencer_visit) {
-                toast.warn("Influencer Visit may not be blank.");
+                toast.warn("Influencer Visit may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.date) {
-                toast.warn("Date may not be blank.");
+                toast.warn("Date may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.offer) {
-                toast.warn("Offer may not be blank.");
+                toast.warn("Offer may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.product) {
-                toast.warn("Please selecta any Product.");
+                toast.warn("Please selecta any Product.", { autoClose: 1000 });
             }
             else if(error.response.data.product_discount) {
-                toast.warn("Please select any value of Product Discount.");
+                toast.warn("Please select any value of Product Discount.", { autoClose: 1000 });
             }
             else if(error.response.data.coupon) {
-                toast.warn("Coupon may not be blank.");
+                toast.warn("Coupon may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.description) {
-                toast.warn("Description may not be blank.");
+                toast.warn("Description may not be blank.", { autoClose: 1000 });
             }
             else {
-                toast.warn("Request failed. Please try again later");
+                toast.warn("Request failed. Please try again later", { autoClose: 1000 });
             }
         })
         .finally(() => setLoading(false));
@@ -318,12 +318,12 @@ const CreateCampaign = () => {
         })
         .then(function (response) {
           console.log("EDITED MARKET", response)
-          toast.success("Campaign Edited Successfully");
+          toast.success("Campaign Edited Successfully", { autoClose: 1000 });
           navigate('/market')
         })
         .catch(function (error) {
           console.log(error);
-          toast.warn("Unable to edit. Please try again later")
+          toast.warn("Unable to edit. Please try again later", { autoClose: 1000 })
         })
         .finally(() => setLoading(false));
     }
@@ -376,12 +376,12 @@ const CreateCampaign = () => {
         })
         .then(function (response) {
           console.log("Changed Status", response)
-          toast.success("Status Changed Successfully");
+          toast.success("Status Changed Successfully", { autoClose: 1000 });
           navigate('/market')
         })
         .catch(function (error) {
           console.log(error);
-          toast.warn("Unable to edit. Please try again later")
+          toast.warn("Unable to edit. Please try again later", { autoClose: 1000 })
         })
         .finally(() => setLoading(false));
     }

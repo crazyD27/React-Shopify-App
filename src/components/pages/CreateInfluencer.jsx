@@ -95,7 +95,7 @@ const CreateInfluencer = () => {
         console.log("allUnchecked", allUnchecked)
 
         if (allUnchecked) {
-            toast.warn('Please select at least one influencer');
+            toast.warn('Please select at least one influencer', { autoClose: 1000 });
             return;
         }
 
@@ -229,7 +229,7 @@ const CreateInfluencer = () => {
         })
         .then(function (response) {
             console.log("Campaign Saved in Draft", response);
-            toast.success("Campaign Saved in Draft!");
+            toast.success("Campaign Saved in Draft!", { autoClose: 1000 });
             setDraftList([...draftList, response.data.product_details])
             setProductName([]);
             setCampaignName('');
@@ -253,31 +253,31 @@ const CreateInfluencer = () => {
         .catch(function (error) {
             console.log(error);
             if(error.response.data.campaign_name) {
-                toast.warn("Campaign Name may not be blank.");
+                toast.warn("Campaign Name may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.influencer_visit) {
-                toast.warn("Influencer Visit may not be blank.");
+                toast.warn("Influencer Visit may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.date) {
-                toast.warn("Date may not be blank.");
+                toast.warn("Date may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.offer) {
-                toast.warn("Offer may not be blank.");
+                toast.warn("Offer may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.product) {
-                toast.warn("Please selecta any Product.");
+                toast.warn("Please selecta any Product.", { autoClose: 1000 });
             }
             else if(error.response.data.influencer_fee) {
-                toast.warn("Please add a fee for Influencer.");
+                toast.warn("Please add a fee for Influencer.", { autoClose: 1000 });
             }
             else if(error.response.data.product_discount) {
-                toast.warn("Please select any value of Product Discount.");
+                toast.warn("Please select any value of Product Discount.", { autoClose: 1000 });
             }
             else if(error.response.data.coupon) {
-                toast.warn("Coupon may not be blank.");
+                toast.warn("Coupon may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.description) {
-                toast.warn("Description may not be blank.");
+                toast.warn("Description may not be blank.", { autoClose: 1000 });
             }
             else if (error.response.status === 410) {
                 const errorNames = error.response.data.error;
@@ -286,14 +286,14 @@ const CreateInfluencer = () => {
                     const errorMessages = errorNames.map((errName) => {
                         return errName;
                     });
-                    toast.warn(errorMessages + " already exists");
+                    toast.warn("Campaign with " + errorMessages + " already exists", { autoClose: 1000 });
                 }
                 else {
-                    toast.warn("Error occurred. Please try again later");
+                    toast.warn("Error occurred. Please try again later", { autoClose: 1000 });
                 }
             }
             else {
-                toast.warn("Request failed. Please try again later");
+                toast.warn("Request failed. Please try again later", { autoClose: 1000 });
             }
         })
         .finally(() => setLoading(false));
@@ -324,7 +324,7 @@ const CreateInfluencer = () => {
         })
         .then(function (response) {
             console.log("Created New Campaign", response);
-            toast.success("New Campaign Created!");
+            toast.success("New Campaign Created!", { autoClose: 1000 });
             setCampListPending([...campListPending, response.data.product_details])
             setProductName([]);
             setCampaignName('');
@@ -348,31 +348,31 @@ const CreateInfluencer = () => {
         .catch(function (error) {
             console.log(error);
             if(error.response.data.campaign_name) {
-                toast.warn("Campaign Name may not be blank.");
+                toast.warn("Campaign Name may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.influencer_visit) {
-                toast.warn("Influencer Visit may not be blank.");
+                toast.warn("Influencer Visit may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.date) {
-                toast.warn("Date may not be blank.");
+                toast.warn("Date may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.offer) {
-                toast.warn("Offer may not be blank.");
+                toast.warn("Offer may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.product) {
-                toast.warn("Please selecta any Product.");
+                toast.warn("Please selecta any Product.", { autoClose: 1000 });
             }
             else if(error.response.data.influencer_fee) {
-                toast.warn("Please add a fee for Influencer.");
+                toast.warn("Please add a fee for Influencer.", { autoClose: 1000 });
             }
             else if(error.response.data.product_discount) {
-                toast.warn("Please select any value of Product Discount.");
+                toast.warn("Please select any value of Product Discount.", { autoClose: 1000 });
             }
             else if(error.response.data.coupon) {
-                toast.warn("Coupon may not be blank.");
+                toast.warn("Coupon may not be blank.", { autoClose: 1000 });
             }
             else if(error.response.data.description) {
-                toast.warn("Description may not be blank.");
+                toast.warn("Description may not be blank.", { autoClose: 1000 });
             }
             else if (error.response.status === 410) {
                 const errorNames = error.response.data.error;
@@ -381,14 +381,14 @@ const CreateInfluencer = () => {
                     const errorMessages = errorNames.map((errName) => {
                         return errName;
                     });
-                    toast.warn(errorMessages + " already exists");
+                    toast.warn("Campaign with " + errorMessages + " already exists", { autoClose: 1000 });
                 }
                 else {
-                    toast.warn("Error occurred. Please try again later");
+                    toast.warn("Error occurred. Please try again later", { autoClose: 1000 });
                 }
             }
             else {
-                toast.warn("Request failed. Please try again later");
+                toast.warn("Request failed. Please try again later", { autoClose: 1000 });
             }
             
         })
@@ -503,7 +503,7 @@ const CreateInfluencer = () => {
         })
         .then(function (response) {
           console.log("EDITED MARKET", response)
-          toast.success("Campaign Edited Successfully");
+          toast.success("Campaign Edited Successfully", { autoClose: 1000 });
           navigate('/manage')
         })
         .catch(function (error) {
@@ -515,18 +515,19 @@ const CreateInfluencer = () => {
                 const errorMessages = errorNames.map((errName) => {
                     return errName;
                 });
-                toast.warn(errorMessages + " already exists");
+                toast.warn(errorMessages + " already exists", { autoClose: 1000 });
             }
             else {
-                toast.warn("Error occurred. Please try again later");
+                toast.warn("Error occurred. Please try again later", { autoClose: 1000 });
             }
         }
           else {
-            toast.warn("Unable to edit. Please try again later")
+            toast.warn("Unable to edit. Please try again later", { autoClose: 1000 })
           }
         })
         .finally(() => setLoading(false));
     }
+
     const changeStatus = (event) => {
         event.preventDefault();
         setLoading(true);
@@ -548,7 +549,7 @@ const CreateInfluencer = () => {
         })
         .then(function (response) {
           console.log("Changed Status", response)
-          toast.success("Status Changed Successfully");
+          toast.success("Status Changed Successfully", { autoClose: 1000 });
           navigate('/manage')
         })
         .catch(function (error) {
@@ -561,14 +562,14 @@ const CreateInfluencer = () => {
                 const errorMessages = errorNames.map((errName) => {
                     return errName;
                 });
-                toast.warn(errorMessages + " already exists");
+                toast.warn(errorMessages + " already exists", { autoClose: 1000 });
             }
             else {
-                toast.warn("Error occurred. Please try again later");
+                toast.warn("Error occurred. Please try again later", { autoClose: 1000 });
             }
         }
           else {
-            toast.warn("Unable to edit. Please try again later")
+            toast.warn("Unable to edit. Please try again later", { autoClose: 1000 })
           }
         })
         .finally(() => setLoading(false));
@@ -655,6 +656,8 @@ const CreateInfluencer = () => {
     console.log("selectedCouponProducts", selectedCouponProducts)
     console.log("ProdInfluId", prodInfluId)
     console.log("matchedInfluencerFullNames", matchedInfluencerNames)
+
+    console.log("endDate", endDate)
 
 
   return (
@@ -854,7 +857,7 @@ const CreateInfluencer = () => {
                                 <ul className="coupons coupons-list flex-column">
                                     {productDetails?.map((product, i) => (
                                         <li className='d-flex flex-row align-items-center mb-2'>
-                                            <span>{matchedInfluencerNames[i]}</span>
+                                            {/* <span>{matchedInfluencerNames[i]}</span> */}
                                             <span>{product?.product_name}:- </span>
                                             <div className='d-flex align-items-center'>
                                                 {product?.name?.length > 0 ? (

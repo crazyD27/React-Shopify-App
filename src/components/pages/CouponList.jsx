@@ -130,11 +130,11 @@ const CouponList = () => {
         .then(function (response) {
             console.log("Coupon List", response);
             setCouponData(couponData.filter(coupon => coupon.id !== value));
-            toast.success("Coupon Deleted Successfully")
+            toast.success("Coupon Deleted Successfully", { autoClose: 1000 })
         })
         .catch(function (error) {
             console.log(error);
-            toast.warn("Unable to Delete the Coupon")
+            toast.warn("Unable to Delete the Coupon", { autoClose: 1000 })
         })
         .finally(() => setLoading(false));
     }
@@ -153,7 +153,7 @@ const CouponList = () => {
         .then(function (response) {
             console.log("Coupon Created", response);
             setCouponData([...couponData, response.data]);
-            toast.success("Coupon Created Successfully");
+            toast.success("Coupon Created Successfully", { autoClose: 1000 });
             setCouponDesc('')
             setDiscountType('')
             setCouponAmount('')
@@ -162,22 +162,22 @@ const CouponList = () => {
         .catch(function (error) {
             console.log(error);
             if (error.response.data.error == "Coupon field is required") {
-                toast.warn("Coupon field is required")
+                toast.warn("Coupon field is required", { autoClose: 1000 })
             }
             else if (error.response.data.response == "Coupon name already taken") {
-                toast.warn("Coupon name already taken")
+                toast.warn("Coupon name already taken", { autoClose: 1000 })
             }
             else if (error.response.data.error == "discount code  field is required") {
-                toast.warn("Coupon field is required")
+                toast.warn("Coupon field is required", { autoClose: 1000 })
             }
             else if (error.response.data.error == "discount_type field is required") {
-                toast.warn("Discount type field is required")
+                toast.warn("Discount type field is required", { autoClose: 1000 })
             }
             else if (error.response.data.error == "Amount field is required") {
-                toast.warn("Amount or Percentage required")
+                toast.warn("Amount or Percentage required", { autoClose: 1000 })
             }
             else {
-                toast.error("Could not create a coupon right now")
+                toast.error("Could not create a coupon right now", { autoClose: 1000 })
             }
         })
         .finally(() => setLoading(false));
@@ -198,7 +198,7 @@ const CouponList = () => {
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
-            toast.success("Coupon Edited Successfully");
+            toast.success("Coupon Edited Successfully", { autoClose: 1000 });
             setCouponDesc('')
             setDiscountType('')
             setCouponAmount('')
@@ -219,7 +219,7 @@ const CouponList = () => {
         })
         .catch(function (error) {
             console.log(error);
-            toast.warn("Fields should not be empty!");
+            toast.warn("Fields should not be empty!", { autoClose: 1000 });
         })
         .finally(() => setLoading(false));
     }
@@ -242,7 +242,7 @@ const CouponList = () => {
         }})
         .then(function (response) {
             console.log("Coupon Edited", response);
-            toast.success("Coupon Edited Successfully");
+            toast.success("Coupon Edited Successfully", { autoClose: 1000 });
             setCouponDesc('')
             setDiscountType('')
             setCouponAmount('')
@@ -265,10 +265,10 @@ const CouponList = () => {
         .catch(function (error) {
             console.log(error);
             if(error.response.data.message == "must be between 0 and 100") {
-                toast.warn("Amount must be between 0 to 100");
+                toast.warn("Amount must be between 0 to 100", { autoClose: 1000 });
             }
             else {
-                toast.warn("Fields should not be empty!");
+                toast.warn("Fields should not be empty!", { autoClose: 1000 });
             }
             
         })
@@ -359,7 +359,7 @@ const CouponList = () => {
         }})
         .then(function (response) {
             console.log("Single Coupon", response.data);
-            toast.success("Tracking Coupon Created");
+            toast.success("Tracking Coupon Created", { autoClose: 1000 });
             setCouponData([...couponData, response.data]);
             setCouponDesc('')
             setDiscountType('')
@@ -373,25 +373,25 @@ const CouponList = () => {
         .catch(function (error) {
             console.log(error);
             if (error.response.data.error == "Product  field is required") {
-                toast.warn("Product field is required")
+                toast.warn("Product field is required", { autoClose: 1000 })
             }
             else if (error.response.data.error == "Coupon already Exists") {
-                toast.warn("Coupon name already exsits")
+                toast.warn("Coupon name already exsits", { autoClose: 1000 })
             }
             else if (error.response.data.error == "discount code  field is required") {
-                toast.warn("Coupon field is required")
+                toast.warn("Coupon field is required", { autoClose: 1000 })
             }
             else if (error.response.data.error == "discount type field is required") {
-                toast.warn("Discount type field is required")
+                toast.warn("Discount type field is required", { autoClose: 1000 })
             }
             else if (error.response.data.error == "Amount field is required") {
-                toast.warn("Amount or Percentage required")
+                toast.warn("Amount or Percentage required", { autoClose: 1000 })
             }
             else if (error.response.data.error == "amount should be less than 100") {
-                toast.warn("Value should be less than 100")
+                toast.warn("Value should be less than 100", { autoClose: 1000 })
             }
             else {
-                toast.error("Could not create a coupon right now")
+                toast.error("Could not create a coupon right now", { autoClose: 1000 })
             }
         })
         .finally(() => setLoading(false));
