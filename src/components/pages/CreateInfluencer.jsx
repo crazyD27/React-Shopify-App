@@ -412,34 +412,50 @@ const CreateInfluencer = () => {
 
     useEffect(() => {
         if (Array.isArray(productName)) {
+          setLoading(true);
           Promise.all(
             productName?.map((product) => {
-              setLoading(true);
               return axios
                 .post(API.BASE_URL + "product/url/", {
                   products: productIds.filter(Boolean).toString()
                 }, {
                   headers: {
- 
                     Authorization: `Token ${token}`,
- 
                   },
                 })
                 .then((response) => {
-                  console.log("Response 1",response);
-                  setProductDetails(response.data.product_details);
+                  console.log("Response 1", response);
                   const influencerIds = response.data.product_details.map(
                     (product) => product.influencer_id
                   );
                   setProdInfluId(influencerIds);
-                  setProductUrl(response.data.product_url)
+                  setProductUrl(response.data.product_url);
+                  const matchedRows = selectedRows.filter(
+                    (row) => influencerIds.includes(row.id)
+                  );
+      
+                  console.log("matchedRows", matchedRows)
+                  if (matchedRows.length > 0) {
+                    const matchedProductDetails = response.data.product_details.filter(
+                      (product) => matchedRows.some((row) => row.id === product.influencer_id)
+                    );
+                    setProductDetails(matchedProductDetails);
+                  } else {
+                    // Show toast error here
+                    toast.error("No matching rows found.");
+                  }
                 })
-                .catch((error) => console.log(error))
-                .finally(() => setLoading(false));
+                .catch((error) => console.log(error));
             })
           ).finally(() => setLoading(false));
         }
-    }, [productName, token]);
+      }, [productName, selectedRows, token]);
+      
+      
+      
+      
+      
+      
 
     const handleCheckboxChange = (event, row, id) => {
         const checked = event.target.checked;
@@ -656,6 +672,7 @@ const CreateInfluencer = () => {
     console.log("selectedCouponProducts", selectedCouponProducts)
     console.log("ProdInfluId", prodInfluId)
     console.log("matchedInfluencerFullNames", matchedInfluencerNames)
+    console.log("Product Details", productDetails)
 
     console.log("endDate", endDate)
 
@@ -972,7 +989,6 @@ const CreateInfluencer = () => {
                                                             }
                                                         };
                                                         return (
-                                                            prodInfluId.includes(selectedRows[0]?.id) ? (
                                                                 // Render the <p> tag
                                                                 <p
                                                                   key={coupon}
@@ -983,10 +999,6 @@ const CreateInfluencer = () => {
                                                                   {Math.abs(parseInt(product.amount[i]))}
                                                                   {product.discout_type !== 'fixed_amount' && "%"}
                                                                 </p>
-                                                              ) : (
-                                                                // Render "No Data"
-                                                                <h5 className='fw-light mb-0 ms-2 not-assigned'>No coupon assigned to influencer for this particlular object</h5>
-                                                              )
                                                         );
                                                     })
                                                 ) : <h5 className='fw-light mb-0 ms-2'>No Coupons</h5>}
