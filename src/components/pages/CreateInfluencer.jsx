@@ -451,11 +451,6 @@ const CreateInfluencer = () => {
         }
       }, [productName, selectedRows, token]);
       
-      
-      
-      
-      
-      
 
     const handleCheckboxChange = (event, row, id) => {
         const checked = event.target.checked;

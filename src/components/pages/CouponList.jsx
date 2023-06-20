@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { MDBDataTable } from 'mdbreact';
 import './pages.scss';
 import Plus from '../../assests/img/plus.png';
 import Download from '../../assests/img/download.png';

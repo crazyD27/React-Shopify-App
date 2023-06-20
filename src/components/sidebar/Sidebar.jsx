@@ -165,6 +165,10 @@ const SideBar = () => {
                             <img src={SalesImg} className="me-2" alt='menu-img' />
                             Sales
                         </NavLink>
+                        <NavLink to='/influencer-sales' className='text-black py-2'>
+                            <img src={SalesImg} className="me-2" alt='menu-img' />
+                            Influencer Sales
+                        </NavLink>
                         <NavLink to='/profile' className='text-black py-2'>
                             <img src={ProfileImg} className="me-2" alt='menu-img' />
                             Profile

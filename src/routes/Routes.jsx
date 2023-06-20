@@ -11,6 +11,7 @@ import Sales from '../components/pages/Sales';
 import Profile from '../components/pages/Profile';
 import CreateCampaign from '../components/pages/CreateCampaign';
 import CreateInfluencer from '../components/pages/CreateInfluencer';
+import InfluencerSales from '../components/pages/InfluencerSales';
 
 const Routing = () => {
   return (
@@ -32,6 +33,7 @@ const Routing = () => {
         <Route path='/create-campaign/:id' element={<CreateCampaign />} />
         <Route path='/create-influencer' element={<CreateInfluencer />} />
         <Route path='/create-influencer/:id' element={<CreateInfluencer />} />
+        <Route path='/influencer-sales' element={<InfluencerSales />} />
       </Routes>
     </div>
   );

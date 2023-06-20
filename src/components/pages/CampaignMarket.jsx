@@ -206,6 +206,7 @@ const CampaignMarket = () => {
                                 campList={marketList}
                                 getSingleMarket={getSingleMarket}
                                 deleteConfirm={deleteConfirm}
+                                influencerSale = {true}
                                 getDeleteConfirm={getDeleteConfirm}
                                 getMarket={getMarket}
                                 couponCross={couponCross}
@@ -240,6 +241,7 @@ const CampaignMarket = () => {
                                 deleteConfirm={deleteConfirm}
                                 getDeleteConfirm={getDeleteConfirm}
                                 getMarket={getMarket}
+                                influencerSale = {true}
                                 couponCross={couponCross}
                                 getMarketInfo={getMarketInfo}
                                 handleProdDiscount={handleProdDiscount}

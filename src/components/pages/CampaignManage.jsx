@@ -646,6 +646,7 @@ const CampaignManage = () => {
                             deleteConfirm={deleteConfirm}
                             getDeleteConfirm={getDeleteConfirm}
                             getMarket={getMarket}
+                            influencerSale = {true}
                             couponCross={couponCross}
                             getMarketInfo={getMarketInfo}
                             handleProdDiscount={handleProdDiscount}
@@ -680,6 +681,7 @@ const CampaignManage = () => {
                             deleteConfirm={deleteConfirm}
                             getDeleteConfirm={getDeleteConfirm}
                             getMarket={getMarket}
+                            influencerSale = {true}
                             couponCross={couponCross}
                             getMarketInfo={getMarketInfo}
                             handleProdDiscount={handleProdDiscount}
@@ -714,6 +716,7 @@ const CampaignManage = () => {
                         deleteConfirm={deleteConfirm}
                         getDeleteConfirm={getDeleteConfirm}
                         getMarket={getMarket}
+                        influencerSale = {true}
                         couponCross={couponCross}
                         getMarketInfo={getMarketInfo}
                         handleProdDiscount={handleProdDiscount}
@@ -747,6 +750,7 @@ const CampaignManage = () => {
                             deleteConfirm={deleteConfirm}
                             getDeleteConfirm={getDeleteConfirm}
                             getMarket={getMarket}
+                            influencerSale = {true}
                             couponCross={couponCross}
                             getMarketInfo={getMarketInfo}
                             handleProdDiscount={handleProdDiscount}
@@ -783,6 +787,7 @@ const CampaignManage = () => {
                             getDeleteConfirm={getDeleteConfirm}
                             getMarket={getMarket}
                             couponCross={couponCross}
+                            influencerSale = {true}
                             getMarketInfo={getMarketInfo}
                             handleProdDiscount={handleProdDiscount}
                             prodDiscount={prodDiscount}
